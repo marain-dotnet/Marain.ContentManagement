@@ -1,0 +1,6 @@
+<Project>
+  <PropertyGroup>
+    <GitHubOrg>marain-dotnet</GitHubOrg>
+    <GitHubProject>Marain.ContentManagement</GitHubProject>
+  </PropertyGroup>
+</Project>

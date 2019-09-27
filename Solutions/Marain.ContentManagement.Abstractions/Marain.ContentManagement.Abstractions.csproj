@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
+    <PackageDescription>
+    </PackageDescription>
+    <PackageTags>
+    </PackageTags>
+    <PackageReleaseNotes>
+    </PackageReleaseNotes>
+  </PropertyGroup>
+  
+  <Import Project="..\Common.NetStandard_2_0.proj" />
+  
+  <ItemGroup>
+    <PackageReference Include="Corvus.ContentHandling" Version="0.12.0" />
+    <PackageReference Include="Corvus.Extensions" Version="0.7.0" />
+    <PackageReference Include="Corvus.Extensions.Newtonsoft.Json" Version="0.8.0" />
+  </ItemGroup>
+
+</Project>
