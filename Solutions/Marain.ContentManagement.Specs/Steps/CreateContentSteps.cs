@@ -1,6 +1,5 @@
 ﻿namespace Marain.ContentManagement.Specs.Steps
 {
-    using System;
     using System.Linq;
     using System.Threading.Tasks;
     using Marain.Cms;
@@ -85,61 +84,61 @@
         [When(@"I get the published content for Slug '(.*)' and call it '(.*)'")]
         public async Task WhenIGetThePublishedContentForSlugAndCallIt(string slug, string contentName)
         {
-            try
-            {
-                IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
-                Content content = await store.GetPublishedContentAsync(ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(slug)));
-                this.scenarioContext.Set(content, contentName);
-            }
-            catch (Exception ex)
-            {
-                this.scenarioContext.Set(ex);
-            }
+            IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
+            Content content = await store.GetPublishedContentAsync(ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(slug)));
+            this.scenarioContext.Set(content, contentName);
         }
 
-        [Given(@"I archive the content with Slug '(.*)'")]
-        public async Task GivenIArchiveTheContentWithSlugAndId(string slug)
+        [Then(@"getting the published content for Slug '(.*)' throws a ContentNotFoundException")]
+        public async Task ThenGettingThePublishedContentForSlugThrowsAContentNotFoundException(string slug)
         {
             try
             {
                 IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
-                await store.ArchiveContentAsync(
-                    ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(slug)),
-                    new CmsIdentity("SomeId", "SomeName"));
+                Content content = await store.GetPublishedContentAsync(ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(slug)));
+                Assert.Fail("ContentNotFoundException should have been thrown.");
             }
-            catch (Exception ex)
+            catch (ContentNotFoundException)
             {
-                this.scenarioContext.Set(ex);
             }
+            catch
+            {
+                Assert.Fail("ContentNotFoundException should have been thrown.");
+            }
+        }
+
+        [Given(@"I archive the content with Slug '(.*)'")]
+        [When(@"I archive the content with Slug '(.*)'")]
+        public async Task GivenIArchiveTheContentWithSlugAndId(string slug)
+        {
+            IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
+            await store.ArchiveContentAsync(
+                ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(slug)),
+                new CmsIdentity("SomeId", "SomeName"));
         }
 
         [Given(@"I draft the content with Slug '(.*)'")]
         public async Task GivenIDraftTheContentWithSlugAndId(string slug)
         {
-            try
-            {
-                IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
-                await store.MakeDraftContentAsync(
-                    ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(slug)),
-                    new CmsIdentity("SomeId", "SomeName"));
-            }
-            catch (Exception ex)
-            {
-                this.scenarioContext.Set(ex);
-            }
-        }
-
-        [Then(@"it should throw a ContentNotFoundException")]
-        public void ThenItShouldThrowAContentNotFoundException()
-        {
-            Assert.IsInstanceOf<ContentNotFoundException>(this.scenarioContext.Get<Exception>());
+            IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
+            await store.MakeDraftContentAsync(
+                ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(slug)),
+                new CmsIdentity("SomeId", "SomeName"));
         }
 
         [When(@"I get the publication history for Slug '(.*)' with limit '(.*)' and continuationToken '(.*)' and call it '(.*)'")]
         public async Task WhenIGetThePublicationHistoryForSlugAndCallIt(string slug, int limit, string continuationToken, string contentSummariesName)
         {
             IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
-            ContentSummariesWithState summaries = await store.GetPublicationHistoryAsync(ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(slug)), limit, ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(continuationToken)));
+            ContentSummariesWithState summaries = await store.GetPublicationHistory(ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(slug)), limit, ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(continuationToken)));
+            this.scenarioContext.Set(summaries, contentSummariesName);
+        }
+
+        [When(@"I get the published history for Slug '(.*)' with limit '(.*)' and continuationToken '(.*)' and call it '(.*)'")]
+        public async Task WhenIGetThePublishedHistoryForSlugAndCallIt(string slug, int limit, string continuationToken, string contentSummariesName)
+        {
+            IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
+            ContentSummariesWithState summaries = await store.GetPublishedHistory(ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(slug)), limit, ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(continuationToken)));
             this.scenarioContext.Set(summaries, contentSummariesName);
         }
 
@@ -187,16 +186,9 @@
         [When(@"I get the content for Slug '(.*)' and call it '(.*)'")]
         public async Task WhenIGetTheContentForSlugAndCallItAsync(string slug, string contentName)
         {
-            try
-            {
-                IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
-                ContentWithState content = await store.GetContentWithStateAsync(ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(slug)));
-                this.scenarioContext.Set(content, contentName);
-            }
-            catch (Exception ex)
-            {
-                this.scenarioContext.Set(ex);
-            }
+            IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
+            ContentWithState content = await store.GetContentWithStateAsync(ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(slug)));
+            this.scenarioContext.Set(content, contentName);
         }
 
         [Then(@"the content called '(.*)' should be in the state '(.*)'")]

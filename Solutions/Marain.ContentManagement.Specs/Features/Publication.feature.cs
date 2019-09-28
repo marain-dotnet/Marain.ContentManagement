@@ -403,7 +403,7 @@ this.ScenarioInitialize(scenarioInfo);
         public virtual void PublishThenArchiveContent()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Publish then archive content", null, ((string[])(null)));
-#line 76
+#line 75
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -467,17 +467,16 @@ this.ScenarioInitialize(scenarioInfo);
                         "A description of the content",
                         "fr-FR",
                         "This is the fragment of text 4"});
-#line 77
+#line 76
  testRunner.Given("I have created content with a content fragment", ((string)(null)), table16, "Given ");
-#line 83
+#line 82
  testRunner.And("I publish the content with Slug \'{ExpectedFirst.Slug}\' and id \'{ExpectedFirst.Id}" +
                     "\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 83
+ testRunner.When("I archive the content with Slug \'{ExpectedFirst.Slug}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 84
- testRunner.And("I archive the content with Slug \'{ExpectedFirst.Slug}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 85
- testRunner.When("I get the published content for Slug \'{ExpectedFirst.Slug}\' and call it \'Actual\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 86
- testRunner.Then("it should throw a ContentNotFoundException", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("getting the published content for Slug \'{ExpectedFirst.Slug}\' throws a ContentNot" +
+                    "FoundException", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -487,7 +486,7 @@ this.ScenarioInitialize(scenarioInfo);
         public virtual void PublishThenDraftContent()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Publish then draft content", null, ((string[])(null)));
-#line 88
+#line 86
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -551,17 +550,20 @@ this.ScenarioInitialize(scenarioInfo);
                         "A description of the content",
                         "fr-FR",
                         "This is the fragment of text 4"});
-#line 89
+#line 87
  testRunner.Given("I have created content with a content fragment", ((string)(null)), table17, "Given ");
-#line 95
+#line 93
  testRunner.And("I publish the content with Slug \'{ExpectedFirst.Slug}\' and id \'{ExpectedFirst.Id}" +
                     "\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 96
+#line 94
  testRunner.And("I draft the content with Slug \'{ExpectedFirst.Slug}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 95
+ testRunner.When("I get the content for Slug \'{ExpectedFirst.Slug}\' and call it \'Actual\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 96
+ testRunner.Then("the content called \'Actual\' should be in the state \'draft\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 97
- testRunner.When("I get the published content for Slug \'{ExpectedFirst.Slug}\' and call it \'Actual\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 98
- testRunner.Then("it should throw a ContentNotFoundException", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.And("getting the published content for Slug \'{ExpectedFirst.Slug}\' throws a ContentNot" +
+                    "FoundException", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -641,23 +643,22 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.And("I publish the content with Slug \'{ExpectedFirst.Slug}\' and id \'{ExpectedFirst.Id}" +
                     "\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 108
- testRunner.And("I archive the content with Slug \'{ExpectedFirst.Slug}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.When("I archive the content with Slug \'{ExpectedFirst.Slug}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 109
  testRunner.And("I archive the content with Slug \'{ExpectedFirst.Slug}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 110
- testRunner.When("I get the published content for Slug \'{ExpectedFirst.Slug}\' and call it \'Actual\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 111
- testRunner.Then("it should throw a ContentNotFoundException", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("getting the published content for Slug \'{ExpectedFirst.Slug}\' throws a ContentNot" +
+                    "FoundException", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Get a publication history")]
-        public virtual void GetAPublicationHistory()
+        [NUnit.Framework.DescriptionAttribute("Get a published history")]
+        public virtual void GetAPublishedHistory()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get a publication history", null, ((string[])(null)));
-#line 113
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get a published history", null, ((string[])(null)));
+#line 112
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -709,26 +710,26 @@ this.ScenarioInitialize(scenarioInfo);
                         "A description of the content",
                         "fr-FR",
                         "This is the fragment of text 3"});
-#line 114
+#line 113
  testRunner.Given("I have created content with a content fragment", ((string)(null)), table19, "Given ");
+#line 118
+ testRunner.And("I publish the content with Slug \'{ExpectedFirst.Slug}\' and id \'{ExpectedFirst.Id}" +
+                    "\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 119
- testRunner.And("I publish the content with Slug \'{ExpectedFirst.Slug}\' and id \'{ExpectedFirst.Id}" +
-                    "\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I publish the content with Slug \'{ExpectedSecond.Slug}\' and id \'{ExpectedSecond.I" +
+                    "d}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 120
- testRunner.And("I publish the content with Slug \'{ExpectedSecond.Slug}\' and id \'{ExpectedSecond.I" +
-                    "d}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 121
  testRunner.And("I publish the content with Slug \'{ExpectedFirst.Slug}\' and id \'{ExpectedFirst.Id}" +
                     "\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 122
+#line 121
  testRunner.And("I publish the content with Slug \'{ExpectedSecond.Slug}\' and id \'{ExpectedSecond.I" +
                     "d}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 123
+#line 122
  testRunner.And("I publish the content with Slug \'{ExpectedThird.Slug}\' and id \'{ExpectedThird.Id}" +
                     "\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 124
- testRunner.When("I get the publication history for Slug \'{ExpectedFirst.Slug}\' with limit \'20\' and" +
-                    " continuationToken \'{null}\' and call it \'Actual\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 123
+ testRunner.When("I get the published history for Slug \'{ExpectedFirst.Slug}\' with limit \'20\' and c" +
+                    "ontinuationToken \'{null}\' and call it \'Actual\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table20 = new TechTalk.SpecFlow.Table(new string[] {
                         "ContentName",
@@ -748,18 +749,18 @@ this.ScenarioInitialize(scenarioInfo);
             table20.AddRow(new string[] {
                         "ExpectedFirst",
                         "published"});
-#line 125
+#line 124
  testRunner.Then("the content summaries with state called \'Actual\' should match", ((string)(null)), table20, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Get a publication history in batches")]
-        public virtual void GetAPublicationHistoryInBatches()
+        [NUnit.Framework.DescriptionAttribute("Get a publication history")]
+        public virtual void GetAPublicationHistory()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get a publication history in batches", null, ((string[])(null)));
-#line 133
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get a publication history", null, ((string[])(null)));
+#line 132
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -778,7 +779,7 @@ this.ScenarioInitialize(scenarioInfo);
             table21.AddRow(new string[] {
                         "ExpectedFirst",
                         "{newguid}",
-                        "batchpub/slug/",
+                        "histpublication/slug/",
                         "First tag; Second tag",
                         "/standard/content;/books/hobbit;/books/lotr",
                         "Bilbo Baggins",
@@ -790,7 +791,7 @@ this.ScenarioInitialize(scenarioInfo);
             table21.AddRow(new string[] {
                         "ExpectedSecond",
                         "{newguid}",
-                        "batchpub/slug/",
+                        "histpublication/slug/",
                         "First tag; Second tag",
                         "/standard/content;/books/hobbit;/books/lotr",
                         "Bilbo Baggins",
@@ -802,7 +803,7 @@ this.ScenarioInitialize(scenarioInfo);
             table21.AddRow(new string[] {
                         "ExpectedThird",
                         "{newguid}",
-                        "batchpub/slug/",
+                        "histpublication/slug/",
                         "First tag; Second tag",
                         "/standard/content;/books/hobbit;/books/lotr",
                         "Bilbo Baggins",
@@ -811,29 +812,32 @@ this.ScenarioInitialize(scenarioInfo);
                         "A description of the content",
                         "fr-FR",
                         "This is the fragment of text 3"});
-#line 134
+#line 133
  testRunner.Given("I have created content with a content fragment", ((string)(null)), table21, "Given ");
-#line 139
+#line 138
  testRunner.And("I publish the content with Slug \'{ExpectedFirst.Slug}\' and id \'{ExpectedFirst.Id}" +
                     "\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 139
+ testRunner.And("I draft the content with Slug \'{ExpectedFirst.Slug}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 140
  testRunner.And("I publish the content with Slug \'{ExpectedSecond.Slug}\' and id \'{ExpectedSecond.I" +
                     "d}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 141
+ testRunner.And("I draft the content with Slug \'{ExpectedFirst.Slug}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 142
  testRunner.And("I publish the content with Slug \'{ExpectedFirst.Slug}\' and id \'{ExpectedFirst.Id}" +
                     "\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 142
+#line 143
+ testRunner.And("I archive the content with Slug \'{ExpectedFirst.Slug}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 144
  testRunner.And("I publish the content with Slug \'{ExpectedSecond.Slug}\' and id \'{ExpectedSecond.I" +
                     "d}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 143
+#line 145
  testRunner.And("I publish the content with Slug \'{ExpectedThird.Slug}\' and id \'{ExpectedThird.Id}" +
                     "\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 144
- testRunner.When("I get the publication history for Slug \'{ExpectedFirst.Slug}\' with limit \'2\' and " +
-                    "continuationToken \'{null}\' and call it \'Actual1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 145
- testRunner.When("I get the publication history for Slug \'{ExpectedFirst.Slug}\' with limit \'5\' and " +
-                    "continuationToken \'{Actual1.ContinuationToken}\' and call it \'Actual2\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 146
+ testRunner.When("I get the publication history for Slug \'{ExpectedFirst.Slug}\' with limit \'20\' and" +
+                    " continuationToken \'{null}\' and call it \'Actual\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table22 = new TechTalk.SpecFlow.Table(new string[] {
                         "ContentName",
@@ -844,23 +848,137 @@ this.ScenarioInitialize(scenarioInfo);
             table22.AddRow(new string[] {
                         "ExpectedSecond",
                         "published"});
-#line 146
- testRunner.Then("the content summaries with state called \'Actual1\' should match", ((string)(null)), table22, "Then ");
-#line hidden
-            TechTalk.SpecFlow.Table table23 = new TechTalk.SpecFlow.Table(new string[] {
-                        "ContentName",
-                        "StateName"});
-            table23.AddRow(new string[] {
+            table22.AddRow(new string[] {
+                        "ExpectedFirst",
+                        "archived"});
+            table22.AddRow(new string[] {
                         "ExpectedFirst",
                         "published"});
-            table23.AddRow(new string[] {
+            table22.AddRow(new string[] {
+                        "ExpectedSecond",
+                        "draft"});
+            table22.AddRow(new string[] {
                         "ExpectedSecond",
                         "published"});
-            table23.AddRow(new string[] {
+            table22.AddRow(new string[] {
+                        "ExpectedFirst",
+                        "draft"});
+            table22.AddRow(new string[] {
                         "ExpectedFirst",
                         "published"});
-#line 150
- testRunner.Then("the content summaries with state called \'Actual2\' should match", ((string)(null)), table23, "Then ");
+#line 147
+ testRunner.Then("the content summaries with state called \'Actual\' should match", ((string)(null)), table22, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Get a publication history in batches")]
+        public virtual void GetAPublicationHistoryInBatches()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get a publication history in batches", null, ((string[])(null)));
+#line 158
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table23 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name",
+                        "Id",
+                        "Slug",
+                        "Tags",
+                        "CategoryPaths",
+                        "Author.Name",
+                        "Author.Id",
+                        "Title",
+                        "Description",
+                        "Culture",
+                        "Fragment"});
+            table23.AddRow(new string[] {
+                        "ExpectedFirst",
+                        "{newguid}",
+                        "batchpub/slug/",
+                        "First tag; Second tag",
+                        "/standard/content;/books/hobbit;/books/lotr",
+                        "Bilbo Baggins",
+                        "{newguid}",
+                        "This is the title",
+                        "A description of the content",
+                        "fr-FR",
+                        "This is the fragment of text 1"});
+            table23.AddRow(new string[] {
+                        "ExpectedSecond",
+                        "{newguid}",
+                        "batchpub/slug/",
+                        "First tag; Second tag",
+                        "/standard/content;/books/hobbit;/books/lotr",
+                        "Bilbo Baggins",
+                        "{newguid}",
+                        "This is the title",
+                        "A description of the content",
+                        "fr-FR",
+                        "This is the fragment of text 2"});
+            table23.AddRow(new string[] {
+                        "ExpectedThird",
+                        "{newguid}",
+                        "batchpub/slug/",
+                        "First tag; Second tag",
+                        "/standard/content;/books/hobbit;/books/lotr",
+                        "Bilbo Baggins",
+                        "{newguid}",
+                        "This is the title",
+                        "A description of the content",
+                        "fr-FR",
+                        "This is the fragment of text 3"});
+#line 159
+ testRunner.Given("I have created content with a content fragment", ((string)(null)), table23, "Given ");
+#line 164
+ testRunner.And("I publish the content with Slug \'{ExpectedFirst.Slug}\' and id \'{ExpectedFirst.Id}" +
+                    "\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 165
+ testRunner.And("I publish the content with Slug \'{ExpectedSecond.Slug}\' and id \'{ExpectedSecond.I" +
+                    "d}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 166
+ testRunner.And("I publish the content with Slug \'{ExpectedFirst.Slug}\' and id \'{ExpectedFirst.Id}" +
+                    "\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 167
+ testRunner.And("I publish the content with Slug \'{ExpectedSecond.Slug}\' and id \'{ExpectedSecond.I" +
+                    "d}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 168
+ testRunner.And("I publish the content with Slug \'{ExpectedThird.Slug}\' and id \'{ExpectedThird.Id}" +
+                    "\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 169
+ testRunner.When("I get the publication history for Slug \'{ExpectedFirst.Slug}\' with limit \'2\' and " +
+                    "continuationToken \'{null}\' and call it \'Actual1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 170
+ testRunner.When("I get the publication history for Slug \'{ExpectedFirst.Slug}\' with limit \'5\' and " +
+                    "continuationToken \'{Actual1.ContinuationToken}\' and call it \'Actual2\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table24 = new TechTalk.SpecFlow.Table(new string[] {
+                        "ContentName",
+                        "StateName"});
+            table24.AddRow(new string[] {
+                        "ExpectedThird",
+                        "published"});
+            table24.AddRow(new string[] {
+                        "ExpectedSecond",
+                        "published"});
+#line 171
+ testRunner.Then("the content summaries with state called \'Actual1\' should match", ((string)(null)), table24, "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table25 = new TechTalk.SpecFlow.Table(new string[] {
+                        "ContentName",
+                        "StateName"});
+            table25.AddRow(new string[] {
+                        "ExpectedFirst",
+                        "published"});
+            table25.AddRow(new string[] {
+                        "ExpectedSecond",
+                        "published"});
+            table25.AddRow(new string[] {
+                        "ExpectedFirst",
+                        "published"});
+#line 175
+ testRunner.Then("the content summaries with state called \'Actual2\' should match", ((string)(null)), table25, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

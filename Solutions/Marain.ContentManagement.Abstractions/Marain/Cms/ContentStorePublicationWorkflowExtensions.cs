@@ -87,7 +87,7 @@ namespace Marain.Cms
             }
 
             ContentState contentState = await contentStore.GetContentWorkflowStateAsync(slug, WellKnownWorkflowId.ContentPublication).ConfigureAwait(false);
-            await contentStore.SetContentWorkflowStateAsync(slug, contentState.ContentId, WellKnownWorkflowId.ContentPublication, ContentPublicationContentState.Archived, stateChangedBy).ConfigureAwait(false);
+            await contentStore.SetContentWorkflowStateAsync(slug, contentState.ContentId, WellKnownWorkflowId.ContentPublication, ContentPublicationContentState.Draft, stateChangedBy).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Marain.Cms
         /// <param name="limit">The maximum number of items to return in a batch.</param>
         /// <param name="continuationToken">The continuation token for the batch.</param>
         /// <returns>A <see cref="Task{ContentSummariesWithState}"/> which, when complete, returns the content.</returns>
-        public static async Task<ContentSummariesWithState> GetPublicationHistoryAsync(this IContentStore contentStore, string slug, int limit = 20, string continuationToken = null)
+        public static async Task<ContentSummariesWithState> GetPublishedHistory(this IContentStore contentStore, string slug, int limit = 20, string continuationToken = null)
         {
             if (contentStore is null)
             {
@@ -168,6 +168,30 @@ namespace Marain.Cms
             }
 
             return await contentStore.GetContentSummariesForWorkflowAsync(slug, WellKnownWorkflowId.ContentPublication, ContentPublicationContentState.Published, limit, continuationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the history of published content in the <see cref="WellKnownWorkflowId.ContentPublication"/>
+        /// workflow.
+        /// </summary>
+        /// <param name="contentStore">The content store for which this is an extension.</param>
+        /// <param name="slug">The slug for which to retrieve the published content.</param>
+        /// <param name="limit">The maximum number of items to return in a batch.</param>
+        /// <param name="continuationToken">The continuation token for the batch.</param>
+        /// <returns>A <see cref="Task{ContentSummariesWithState}"/> which, when complete, returns the content.</returns>
+        public static async Task<ContentSummariesWithState> GetPublicationHistory(this IContentStore contentStore, string slug, int limit = 20, string continuationToken = null)
+        {
+            if (contentStore is null)
+            {
+                throw new ArgumentNullException(nameof(contentStore));
+            }
+
+            if (slug is null)
+            {
+                throw new ArgumentNullException(nameof(slug));
+            }
+
+            return await contentStore.GetContentSummariesForWorkflowAsync(slug, WellKnownWorkflowId.ContentPublication, null, limit, continuationToken).ConfigureAwait(false);
         }
 
         /// <summary>
