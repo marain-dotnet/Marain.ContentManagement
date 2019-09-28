@@ -151,6 +151,17 @@
             content.ContentPayload = new ContentFragment { Fragment = SubstituteContent(row["Fragment"]) };
         }
 
+        /// <summary>
+        /// Sets a content fragment payload on a content instance.
+        /// </summary>
+        /// <param name="scenarioContext">The scenario context.</param>
+        /// <param name="content">The content instance on which to set the payload.</param>
+        /// <param name="row">The row from which to get the content fragment.</param>
+        public static void SetAbTestSet(ScenarioContext scenarioContext, Content content, TableRow row)
+        {
+            content.ContentPayload = scenarioContext.Get<AbTestSet>(row["AbTestSetName"]);
+        }
+
         public static (Content, string) GetContentFor(TableRow row)
         {
             var content = new Content

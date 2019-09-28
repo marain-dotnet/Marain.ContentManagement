@@ -27,6 +27,22 @@ namespace Marain.ContentManagement.Specs.Bindings
         public const string ContentManagementSpecsContentStore = "ContentManagementSpecsContentStore";
 
         /// <summary>
+        /// Initializes the container before each feature's tests are run.
+        /// </summary>
+        /// <param name="featureContext">The SpecFlow test context.</param>
+        [BeforeFeature("@setupContainer", Order = ContainerBeforeFeatureOrder.PopulateServiceCollection)]
+        public static void InitializeContainer(FeatureContext featureContext)
+        {
+            ContainerBindings.ConfigureServices(
+                featureContext,
+                serviceCollection =>
+                {
+                    serviceCollection.AddSingleton(featureContext);
+                    serviceCollection.AddSingleton(s => s.GetRequiredService<FeatureContext>().Get<IContentStore>(ContentManagementCosmosContainerBindings.ContentManagementSpecsContentStore));
+                });
+        }
+
+        /// <summary>
         /// Set up a tenanted Cloud Blob Container for the feature.
         /// </summary>
         /// <param name="featureContext">The feature context.</param>

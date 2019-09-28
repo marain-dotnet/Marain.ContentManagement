@@ -17,7 +17,7 @@ namespace Marain.Cms
         /// </summary>
         public const string RegisteredContentType = "application/vnd.marain.cms.contentpayload.abtestset";
         private readonly IContentStore contentStore;
-        private Dictionary<string, string> abTestContentMap;
+        private Dictionary<string, ContentSource> abTestContentMap;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbTestSet"/> class.
@@ -40,29 +40,28 @@ namespace Marain.Cms
         /// <summary>
         /// Gets or sets the map of ABTest group ID to <see cref="Content.Id"/>.
         /// </summary>
-        public Dictionary<string, string> AbTestContentMap
+        public Dictionary<string, ContentSource> AbTestContentMap
         {
-            get { return this.abTestContentMap ?? (this.abTestContentMap = new Dictionary<string, string>()); }
+            get { return this.abTestContentMap ?? (this.abTestContentMap = new Dictionary<string, ContentSource>()); }
             set { this.abTestContentMap = value; }
         }
 
         /// <inheritdoc/>
         public IContentPayload Copy(bool replaceId)
         {
-            return new AbTestSet(this.contentStore) { AbTestContentMap = new Dictionary<string, string>(this.AbTestContentMap) };
+            return new AbTestSet(this.contentStore) { AbTestContentMap = new Dictionary<string, ContentSource>(this.AbTestContentMap) };
         }
 
         /// <summary>
         /// Gets the content for the particular AB test group.
         /// </summary>
         /// <param name="abTestId">The AB test group id.</param>
-        /// <param name="slug">The slug for the content.</param>
         /// <returns>The <see cref="Content"/> for the given AB test group ID.</returns>
-        public Task<Content> GetContentForAbGroupAsync(string abTestId, string slug)
+        public Task<Content> GetContentForAbGroupAsync(string abTestId)
         {
-            if (this.abTestContentMap.TryGetValue(abTestId, out string contentId))
+            if (this.abTestContentMap.TryGetValue(abTestId, out ContentSource content))
             {
-                return this.contentStore.GetContentAsync(contentId, slug);
+                return this.contentStore.GetContentAsync(content.Id, content.Slug);
             }
 
             return Task.FromResult<Content>(null);

@@ -83,7 +83,7 @@ namespace Marain.ContentManagement.Specs.Features
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name",
                         "Id",
                         "Slug",
@@ -95,7 +95,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "Description",
                         "Culture",
                         "Fragment"});
-            table1.AddRow(new string[] {
+            table4.AddRow(new string[] {
                         "Expected",
                         "{newguid}",
                         "/",
@@ -108,7 +108,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "fr-FR",
                         "This is the fragment of text"});
 #line 9
- testRunner.Given("I have created content with a content fragment", ((string)(null)), table1, "Given ");
+ testRunner.Given("I have created content with a content fragment", ((string)(null)), table4, "Given ");
 #line 12
  testRunner.When("I get the content with Id \'{Expected.Id}\' and Slug \'{Expected.Slug}\' and call it " +
                     "\'Actual\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -127,7 +127,7 @@ this.ScenarioInitialize(scenarioInfo);
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name",
                         "Id",
                         "Slug",
@@ -139,7 +139,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "Description",
                         "Culture",
                         "Fragment"});
-            table2.AddRow(new string[] {
+            table5.AddRow(new string[] {
                         "ExpectedFirst",
                         "{newguid}",
                         "/",
@@ -151,7 +151,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "A description of the content",
                         "fr-FR",
                         "This is the fragment of text 1"});
-            table2.AddRow(new string[] {
+            table5.AddRow(new string[] {
                         "ExpectedSecond",
                         "{newguid}",
                         "/",
@@ -163,7 +163,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "A description of the content",
                         "fr-FR",
                         "This is the fragment of text 2"});
-            table2.AddRow(new string[] {
+            table5.AddRow(new string[] {
                         "ExpectedThird",
                         "{newguid}",
                         "/",
@@ -175,7 +175,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "A description of the content",
                         "fr-FR",
                         "This is the fragment of text 3"});
-            table2.AddRow(new string[] {
+            table5.AddRow(new string[] {
                         "ExpectedFourth",
                         "{newguid}",
                         "/",
@@ -188,7 +188,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "fr-FR",
                         "This is the fragment of text 4"});
 #line 16
- testRunner.Given("I have created content with a content fragment", ((string)(null)), table2, "Given ");
+ testRunner.Given("I have created content with a content fragment", ((string)(null)), table5, "Given ");
 #line 22
  testRunner.When("I get the content with Id \'{ExpectedFirst.Id}\' and Slug \'{ExpectedFirst.Slug}\' an" +
                     "d call it \'ActualFirst\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -224,7 +224,7 @@ this.ScenarioInitialize(scenarioInfo);
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name",
                         "Id",
                         "Slug",
@@ -236,7 +236,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "Description",
                         "Culture",
                         "Fragment"});
-            table3.AddRow(new string[] {
+            table6.AddRow(new string[] {
                         "ExpectedFirst",
                         "{newguid}",
                         "some/slug/",
@@ -248,7 +248,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "A description of the content",
                         "fr-FR",
                         "This is the fragment of text 1"});
-            table3.AddRow(new string[] {
+            table6.AddRow(new string[] {
                         "ExpectedSecond",
                         "{newguid}",
                         "some/slug/",
@@ -260,7 +260,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "A description of the content",
                         "fr-FR",
                         "This is the fragment of text 2"});
-            table3.AddRow(new string[] {
+            table6.AddRow(new string[] {
                         "ExpectedThird",
                         "{newguid}",
                         "some/slug/",
@@ -272,7 +272,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "A description of the content",
                         "fr-FR",
                         "This is the fragment of text 3"});
-            table3.AddRow(new string[] {
+            table6.AddRow(new string[] {
                         "ExpectedFourth",
                         "{newguid}",
                         "some/slug/",
@@ -285,23 +285,23 @@ this.ScenarioInitialize(scenarioInfo);
                         "fr-FR",
                         "This is the fragment of text 4"});
 #line 32
- testRunner.Given("I have created content with a content fragment", ((string)(null)), table3, "Given ");
+ testRunner.Given("I have created content with a content fragment", ((string)(null)), table6, "Given ");
 #line 38
  testRunner.When("I get the content summaries for Slug \'some/slug/\' with limit \'20\' and continuatio" +
                     "nToken \'{null}\' and call it \'Actual\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
                         "ContentName"});
-            table4.AddRow(new string[] {
+            table7.AddRow(new string[] {
                         "ExpectedFourth"});
-            table4.AddRow(new string[] {
+            table7.AddRow(new string[] {
                         "ExpectedThird"});
-            table4.AddRow(new string[] {
+            table7.AddRow(new string[] {
                         "ExpectedSecond"});
-            table4.AddRow(new string[] {
+            table7.AddRow(new string[] {
                         "ExpectedFirst"});
 #line 39
- testRunner.Then("the content summaries called \'Actual\' should match", ((string)(null)), table4, "Then ");
+ testRunner.Then("the content summaries called \'Actual\' should match", ((string)(null)), table7, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -315,7 +315,7 @@ this.ScenarioInitialize(scenarioInfo);
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name",
                         "Id",
                         "Slug",
@@ -327,7 +327,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "Description",
                         "Culture",
                         "Fragment"});
-            table5.AddRow(new string[] {
+            table8.AddRow(new string[] {
                         "ExpectedFirst",
                         "{newguid}",
                         "batch/slug/",
@@ -339,7 +339,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "A description of the content",
                         "fr-FR",
                         "This is the fragment of text 1"});
-            table5.AddRow(new string[] {
+            table8.AddRow(new string[] {
                         "ExpectedSecond",
                         "{newguid}",
                         "batch/slug/",
@@ -351,7 +351,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "A description of the content",
                         "fr-FR",
                         "This is the fragment of text 2"});
-            table5.AddRow(new string[] {
+            table8.AddRow(new string[] {
                         "ExpectedThird",
                         "{newguid}",
                         "batch/slug/",
@@ -363,7 +363,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "A description of the content",
                         "fr-FR",
                         "This is the fragment of text 3"});
-            table5.AddRow(new string[] {
+            table8.AddRow(new string[] {
                         "ExpectedFourth",
                         "{newguid}",
                         "batch/slug/",
@@ -376,7 +376,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "fr-FR",
                         "This is the fragment of text 4"});
 #line 47
- testRunner.Given("I have created content with a content fragment", ((string)(null)), table5, "Given ");
+ testRunner.Given("I have created content with a content fragment", ((string)(null)), table8, "Given ");
 #line 53
  testRunner.When("I get the content summaries for Slug \'batch/slug/\' with limit \'2\' and continuatio" +
                     "nToken \'{null}\' and call it \'ActualBatch1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -384,23 +384,23 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.And("I get the content summaries for Slug \'batch/slug/\' with limit \'2\' and continuatio" +
                     "nToken \'{ActualBatch1.ContinuationToken}\' and call it \'ActualBatch2\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
                         "ContentName"});
-            table6.AddRow(new string[] {
+            table9.AddRow(new string[] {
                         "ExpectedFourth"});
-            table6.AddRow(new string[] {
+            table9.AddRow(new string[] {
                         "ExpectedThird"});
 #line 55
- testRunner.Then("the content summaries called \'ActualBatch1\' should match", ((string)(null)), table6, "Then ");
+ testRunner.Then("the content summaries called \'ActualBatch1\' should match", ((string)(null)), table9, "Then ");
 #line hidden
-            TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
                         "ContentName"});
-            table7.AddRow(new string[] {
+            table10.AddRow(new string[] {
                         "ExpectedSecond"});
-            table7.AddRow(new string[] {
+            table10.AddRow(new string[] {
                         "ExpectedFirst"});
 #line 59
- testRunner.And("the content summaries called \'ActualBatch2\' should match", ((string)(null)), table7, "And ");
+ testRunner.And("the content summaries called \'ActualBatch2\' should match", ((string)(null)), table10, "And ");
 #line hidden
             this.ScenarioCleanup();
         }

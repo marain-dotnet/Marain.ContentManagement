@@ -7,6 +7,7 @@ namespace Marain.ContentManagement.Specs.Bindings
     using System.Collections.Generic;
     using Corvus.SpecFlow.Extensions;
     using Corvus.Tenancy;
+    using Marain.Cms;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using TechTalk.SpecFlow;
