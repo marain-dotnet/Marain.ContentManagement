@@ -219,6 +219,42 @@
             Assert.AreEqual(stateName, actual.StateName);
         }
 
+        [Then(@"getting the publication state for Slug '(.*)' should throw a ContentNotFoundException")]
+        public async Task ThenGettingThePublicationStateForSlugShouldThrowAContentNotFoundException(string slug)
+        {
+            try
+            {
+                IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
+                ContentState state = await store.GetContentWorkflowStateAsync(ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, slug), WellKnownWorkflowId.ContentPublication);
+                Assert.Fail("ContentNotFoundException should have been thrown.");
+            }
+            catch (ContentNotFoundException)
+            {
+            }
+            catch
+            {
+                Assert.Fail("ContentNotFoundException should have been thrown.");
+            }
+        }
+
+        [Then(@"getting the content for the publication workflow for Slug '(.*)' should throw a ContentNotFoundException")]
+        public async Task ThenGettingTheContentForThePublicationWorkflowForSlugShouldThrowAContentNotFoundException(string slug)
+        {
+            try
+            {
+                IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
+                ContentWithState state = await store.GetContentForWorkflowAsync(ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, slug), WellKnownWorkflowId.ContentPublication);
+                Assert.Fail("ContentNotFoundException should have been thrown.");
+            }
+            catch (ContentNotFoundException)
+            {
+            }
+            catch
+            {
+                Assert.Fail("ContentNotFoundException should have been thrown.");
+            }
+        }
+
         [Then(@"the content called '(.*)' should match the content with state called '(.*)'")]
         public void ThenTheContentCalledShouldMatchTheContentWithStateCalled(string expectedName, string actualName)
         {

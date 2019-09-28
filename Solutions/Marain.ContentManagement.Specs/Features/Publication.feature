@@ -5,6 +5,10 @@ Feature: ContentPublication
 	As a developer
 	I want to be publish and archive content
 
+Scenario: Get state for non-existent content
+	Then getting the content for the publication workflow for Slug '{newguid}/' should throw a ContentNotFoundException
+	Then getting the publication state for Slug '{newguid}/' should throw a ContentNotFoundException
+
 Scenario: Publish content
 	Given I have created content with a content fragment
 		| Name           | Id        | Slug                     | Tags                  | CategoryPaths                               | Author.Name   | Author.Id | Title             | Description                  | Culture | Fragment                       |

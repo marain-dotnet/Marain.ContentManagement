@@ -6,6 +6,7 @@
     using Marain.ContentManagement.Specs.Bindings;
     using Marain.ContentManagement.Specs.Drivers;
     using Microsoft.Extensions.DependencyInjection;
+    using NUnit.Framework;
     using TechTalk.SpecFlow;
 
     [Binding]
@@ -55,5 +56,23 @@
             this.scenarioContext.Set(abcontent, actualName);
         }
 
+        [Then(@"getting the ABTest content called '(.*)' from the content called '(.*)' should throw a ContentNotFoundException\.")]
+        public async Task ThenGettingTheABTestContentCalledFromTheContentCalledShouldThrowAContentNotFoundException_(string abTestGroup, string contentName)
+        {
+            try
+            {
+                Content content = this.scenarioContext.Get<Content>(contentName);
+                var testSet = content.ContentPayload as AbTestSet;
+                Content abcontent = await testSet.GetContentForAbGroupAsync(abTestGroup);
+                Assert.Fail("Should have thrown a ContentNotFoundException.");
+            }
+            catch (ContentNotFoundException)
+            {
+            }
+            catch
+            {
+                Assert.Fail("Should have thrown a ContentNotFoundException.");
+            }
+        }
     }
 }

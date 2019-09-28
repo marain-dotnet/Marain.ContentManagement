@@ -30,3 +30,4 @@ Scenario: Create draft content and aggregate it into an AB test group
 	Then the content called 'ExpectedSecond' should match the content called 'ActualSecond'
 	Then the content called 'ExpectedThird' should match the content called 'ActualThird'
 	Then the content called 'ExpectedFourth' should match the content called 'ActualFourth'
+	And getting the ABTest content called 'Group5' from the content called 'Actual' should throw a ContentNotFoundException.

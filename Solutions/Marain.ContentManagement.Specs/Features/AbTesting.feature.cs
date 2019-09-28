@@ -215,6 +215,9 @@ this.ScenarioInitialize(scenarioInfo);
 #line 32
  testRunner.Then("the content called \'ExpectedFourth\' should match the content called \'ActualFourth" +
                     "\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 33
+ testRunner.And("getting the ABTest content called \'Group5\' from the content called \'Actual\' shoul" +
+                    "d throw a ContentNotFoundException.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

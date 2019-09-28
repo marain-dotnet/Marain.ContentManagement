@@ -57,14 +57,14 @@ namespace Marain.Cms
         /// </summary>
         /// <param name="abTestId">The AB test group id.</param>
         /// <returns>The <see cref="Content"/> for the given AB test group ID.</returns>
-        public Task<Content> GetContentForAbGroupAsync(string abTestId)
+        public async Task<Content> GetContentForAbGroupAsync(string abTestId)
         {
             if (this.abTestContentMap.TryGetValue(abTestId, out ContentSource content))
             {
-                return this.contentStore.GetContentAsync(content.Id, content.Slug);
+                return await this.contentStore.GetContentAsync(content.Id, content.Slug).ConfigureAwait(false);
             }
 
-            return Task.FromResult<Content>(null);
+            throw new ContentNotFoundException();
         }
 
         /// <inheritdoc/>
