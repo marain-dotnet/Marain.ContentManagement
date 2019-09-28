@@ -20,7 +20,7 @@ namespace Marain.Cms
     {
         private IList<string> tags;
         private IList<string> categoryPaths;
-        private Slug slug;
+        private string slug;
 
         /// <summary>
         /// Gets or sets the unique ID for the content.
@@ -83,7 +83,7 @@ namespace Marain.Cms
 
             set
             {
-                this.slug = new Slug(value);
+                this.slug = new Slug(value).ToString();
             }
         }
 

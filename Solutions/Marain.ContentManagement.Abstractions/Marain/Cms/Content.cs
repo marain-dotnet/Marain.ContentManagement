@@ -30,7 +30,7 @@ namespace Marain.Cms
 
         private IList<string> tags;
         private IList<string> categoryPaths;
-        private Slug slug;
+        private string slug;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Content"/> class.
@@ -105,7 +105,7 @@ namespace Marain.Cms
 
             set
             {
-                this.slug = new Slug(value);
+                this.slug = new Slug(value).ToString();
             }
         }
 

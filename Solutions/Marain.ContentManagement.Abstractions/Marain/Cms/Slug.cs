@@ -12,7 +12,7 @@ namespace Marain.Cms
     /// <summary>
     /// Represents a slash-separated path fragment.
     /// </summary>
-    public class Slug
+    internal readonly struct Slug
     {
         private readonly string slug;
 
@@ -21,35 +21,9 @@ namespace Marain.Cms
         /// </summary>
         /// <param name="slug">The string representation of the slug.</param>
         public Slug(string slug)
+            : this()
         {
             this.slug = ToSlug(slug);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Slug"/> class.
-        /// </summary>
-        /// <param name="segments">The segments of the slug.</param>
-        public Slug(params string[] segments)
-        {
-            this.slug = ToSlug(segments);
-        }
-
-        /// <summary>
-        /// Converts a string to slug.
-        /// </summary>
-        /// <param name="slug">The string to convert.</param>
-        public static implicit operator Slug(string slug)
-        {
-            return new Slug(slug);
-        }
-
-        /// <summary>
-        /// Converts a slug to a string.
-        /// </summary>
-        /// <param name="slug">The slug to convert.</param>
-        public static implicit operator string(Slug slug)
-        {
-            return slug.ToString();
         }
 
         /// <summary>
@@ -59,7 +33,7 @@ namespace Marain.Cms
         /// <returns>A clean slug.</returns>
         public static string Clean(string slug)
         {
-            return slug.TrimStart(new[] { '/' }).TrimEnd(new[] { '/' }).ToLowerInvariant();
+            return slug.Trim(new[] { '/' }).ToLowerInvariant();
         }
 
         /// <summary>
@@ -76,16 +50,6 @@ namespace Marain.Cms
             }
 
             return ToSlug(segments.Take(segments.Length - 1));
-        }
-
-        /// <summary>
-        /// Gets the full tree for a number of slugs.
-        /// </summary>
-        /// <param name="slugs">The slugs for which to get the tree.</param>
-        /// <returns>A single <see cref="IEnumerable{T}"/> containing the distinct roots of the set of slugs.</returns>
-        public static IEnumerable<string> GetTree(IEnumerable<string> slugs)
-        {
-            return slugs.SelectMany(s => Slug.GetTree(s)).Distinct().ToList();
         }
 
         /// <summary>
@@ -128,15 +92,6 @@ namespace Marain.Cms
         public override string ToString()
         {
             return this.slug;
-        }
-
-        /// <summary>
-        /// Returns a cleaned slug.
-        /// </summary>
-        /// <returns>The cleaned slug.</returns>
-        public string Trim()
-        {
-            return string.IsNullOrWhiteSpace(this.slug) ? string.Empty : Clean(this.slug.Trim());
         }
 
         private static string ToSlug(IEnumerable<string> segments)
