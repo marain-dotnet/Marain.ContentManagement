@@ -45,10 +45,9 @@ namespace Marain.Cms
         /// </summary>
         /// <param name="contentStore">The content store for which this is an extension.</param>
         /// <param name="slug">The slug for which to publish the content.</param>
-        /// <param name="contentId">The ID of the content to be published.</param>
         /// <param name="stateChangedBy">The identity that made the change.</param>
         /// <returns>A <see cref="Task"/> which completes when the content is published.</returns>
-        public static Task ArchiveContentAsync(this IContentStore contentStore, string slug, string contentId, CmsIdentity stateChangedBy)
+        public static async Task ArchiveContentAsync(this IContentStore contentStore, string slug, CmsIdentity stateChangedBy)
         {
             if (contentStore is null)
             {
@@ -60,16 +59,39 @@ namespace Marain.Cms
                 throw new ArgumentNullException(nameof(slug));
             }
 
-            if (string.IsNullOrEmpty(contentId))
-            {
-                throw new ArgumentException("message", nameof(contentId));
-            }
+            ContentState contentState = await contentStore.GetContentWorkflowStateAsync(slug, WellKnownWorkflowId.ContentPublication).ConfigureAwait(false);
 
-            return contentStore.SetContentWorkflowStateAsync(slug, contentId, WellKnownWorkflowId.ContentPublication, ContentPublicationContentState.Archived, stateChangedBy);
+            if (contentState.StateName != ContentPublicationContentState.Archived)
+            {
+                await contentStore.SetContentWorkflowStateAsync(slug, contentState.ContentId, WellKnownWorkflowId.ContentPublication, ContentPublicationContentState.Archived, stateChangedBy).ConfigureAwait(false);
+            }
         }
 
         /// <summary>
-        /// Gets the latest content in the <see cref="WellKnownWorkflowId.ContentPublication"/>
+        /// Reverts the content to a draft state in the <see cref="WellKnownWorkflowId.ContentPublication"/> workflow.
+        /// </summary>
+        /// <param name="contentStore">The content store for which this is an extension.</param>
+        /// <param name="slug">The slug for which to publish the content.</param>
+        /// <param name="stateChangedBy">The identity that made the change.</param>
+        /// <returns>A <see cref="Task"/> which completes when the content is published.</returns>
+        public static async Task MakeDraftContentAsync(this IContentStore contentStore, string slug, CmsIdentity stateChangedBy)
+        {
+            if (contentStore is null)
+            {
+                throw new ArgumentNullException(nameof(contentStore));
+            }
+
+            if (slug is null)
+            {
+                throw new ArgumentNullException(nameof(slug));
+            }
+
+            ContentState contentState = await contentStore.GetContentWorkflowStateAsync(slug, WellKnownWorkflowId.ContentPublication).ConfigureAwait(false);
+            await contentStore.SetContentWorkflowStateAsync(slug, contentState.ContentId, WellKnownWorkflowId.ContentPublication, ContentPublicationContentState.Archived, stateChangedBy).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the latest published content in the <see cref="WellKnownWorkflowId.ContentPublication"/>
         /// workflow.
         /// </summary>
         /// <param name="contentStore">The content store for which this is an extension.</param>
@@ -97,6 +119,32 @@ namespace Marain.Cms
             }
 
             return result?.Content ?? throw new ContentNotFoundException();
+        }
+
+        /// <summary>
+        /// Gets the content for the current state in the <see cref="WellKnownWorkflowId.ContentPublication"/>
+        /// workflow, with state information.
+        /// </summary>
+        /// <param name="contentStore">The content store for which this is an extension.</param>
+        /// <param name="slug">The slug for which to retrieve the published content.</param>
+        /// <returns>A <see cref="Task{Content}"/> which, when complete, returns the content.</returns>
+        /// <remarks>
+        /// <para>This will return the relevant content if the ContentPublication workflow for that slug is in the <see cref="ContentPublicationContentState.Published"/> state.</para>
+        /// </remarks>
+        public static async Task<ContentWithState> GetContentWithStateAsync(this IContentStore contentStore, string slug)
+        {
+            if (contentStore is null)
+            {
+                throw new ArgumentNullException(nameof(contentStore));
+            }
+
+            if (slug is null)
+            {
+                throw new ArgumentNullException(nameof(slug));
+            }
+
+            ContentWithState result = await contentStore.GetContentForWorkflowAsync(slug, WellKnownWorkflowId.ContentPublication).ConfigureAwait(false);
+            return result ?? throw new ContentNotFoundException();
         }
 
         /// <summary>

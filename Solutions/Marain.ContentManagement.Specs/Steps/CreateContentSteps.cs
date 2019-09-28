@@ -103,7 +103,6 @@
             IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
             await store.ArchiveContentAsync(
                 ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(slug))),
-                ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(id))),
                 new CmsIdentity("SomeId", "SomeName"));
         }
 
