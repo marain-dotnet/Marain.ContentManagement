@@ -183,7 +183,7 @@ namespace Marain.Cms
         /// If this instance came from a copy- or move-like operation on other content, this gives you a way
         /// of walking the tree back to the original source.
         /// </remarks>
-        public ContentSource OriginalSource { get; set; }
+        public ContentSource? OriginalSource { get; set; }
 
         /// <summary>
         /// Gets the parition key string from a slug.

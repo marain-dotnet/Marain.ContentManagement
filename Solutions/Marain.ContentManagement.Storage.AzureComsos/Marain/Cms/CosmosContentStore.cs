@@ -55,7 +55,7 @@ namespace Marain.Cms
         }
 
         /// <inheritdoc/>
-        public Task SetContentWorkflowStateAsync(string slug, string contentId, string workflowId, string stateName)
+        public Task SetContentWorkflowStateAsync(string slug, string contentId, string workflowId, string stateName, CmsIdentity stateChangedBy)
         {
             if (slug is null)
             {
@@ -77,7 +77,7 @@ namespace Marain.Cms
                 throw new ArgumentException("message", nameof(stateName));
             }
 
-            return this.container.CreateItemAsync(new ContentState { Slug = slug, ContentId = contentId, StateName = stateName, WorkflowId = workflowId }, new PartitionKey(Content.GetPartitionKeyFromSlug(slug)));
+            return this.container.CreateItemAsync(new ContentState { Slug = slug, ContentId = contentId, StateName = stateName, WorkflowId = workflowId, ChangedBy = stateChangedBy }, new PartitionKey(Content.GetPartitionKeyFromSlug(slug)));
         }
 
         /// <inheritdoc/>

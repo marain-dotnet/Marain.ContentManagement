@@ -18,8 +18,9 @@ namespace Marain.Cms
         /// <param name="contentStore">The content store for which this is an extension.</param>
         /// <param name="slug">The slug for which to publish the content.</param>
         /// <param name="contentId">The ID of the content to be published.</param>
+        /// <param name="stateChangedBy">The identity that made the change.</param>
         /// <returns>A <see cref="Task"/> which completes when the content is published.</returns>
-        public static Task PublishContentAsync(this IContentStore contentStore, string slug, string contentId)
+        public static Task PublishContentAsync(this IContentStore contentStore, string slug, string contentId, CmsIdentity stateChangedBy)
         {
             if (contentStore is null)
             {
@@ -36,7 +37,7 @@ namespace Marain.Cms
                 throw new ArgumentException("message", nameof(contentId));
             }
 
-            return contentStore.SetContentWorkflowStateAsync(slug, contentId, WellKnownWorkflowId.ContentPublication, ContentPublicationContentState.Published);
+            return contentStore.SetContentWorkflowStateAsync(slug, contentId, WellKnownWorkflowId.ContentPublication, ContentPublicationContentState.Published, stateChangedBy);
         }
 
         /// <summary>
@@ -45,8 +46,9 @@ namespace Marain.Cms
         /// <param name="contentStore">The content store for which this is an extension.</param>
         /// <param name="slug">The slug for which to publish the content.</param>
         /// <param name="contentId">The ID of the content to be published.</param>
+        /// <param name="stateChangedBy">The identity that made the change.</param>
         /// <returns>A <see cref="Task"/> which completes when the content is published.</returns>
-        public static Task ArchiveContentAsync(this IContentStore contentStore, string slug, string contentId)
+        public static Task ArchiveContentAsync(this IContentStore contentStore, string slug, string contentId, CmsIdentity stateChangedBy)
         {
             if (contentStore is null)
             {
@@ -63,7 +65,7 @@ namespace Marain.Cms
                 throw new ArgumentException("message", nameof(contentId));
             }
 
-            return contentStore.SetContentWorkflowStateAsync(slug, contentId, WellKnownWorkflowId.ContentPublication, ContentPublicationContentState.Archived);
+            return contentStore.SetContentWorkflowStateAsync(slug, contentId, WellKnownWorkflowId.ContentPublication, ContentPublicationContentState.Archived, stateChangedBy);
         }
 
         /// <summary>
@@ -129,8 +131,9 @@ namespace Marain.Cms
         /// <param name="targetSlug">The slug to which to move the content.</param>
         /// <param name="originalContentId">The ID of the content to be moved.</param>
         /// <param name="originalSlug">The slug from which the content is to be moved.</param>
+        /// <param name="stateChangedBy">The identity that made the change.</param>
         /// <returns>A <see cref="Task"/> which completes when the content is published.</returns>
-        public static async Task<Content> MoveContentForPublicationAsync(this IContentStore contentStore, string targetSlug, string originalContentId, string originalSlug)
+        public static async Task<Content> MoveContentForPublicationAsync(this IContentStore contentStore, string targetSlug, string originalContentId, string originalSlug, CmsIdentity stateChangedBy)
         {
             if (contentStore is null)
             {
@@ -161,8 +164,8 @@ namespace Marain.Cms
 
             Content copiedContent = await contentStore.CopyContentAsync(targetSlug, originalContentId, originalSlug).ConfigureAwait(false);
 
-            Task t1 = contentStore.SetContentWorkflowStateAsync(originalSlug, originalContentId, WellKnownWorkflowId.ContentPublication, ContentPublicationContentState.Archived);
-            Task t2 = contentStore.SetContentWorkflowStateAsync(targetSlug, copiedContent.Id, WellKnownWorkflowId.ContentPublication, state.StateName);
+            Task t1 = contentStore.SetContentWorkflowStateAsync(originalSlug, originalContentId, WellKnownWorkflowId.ContentPublication, ContentPublicationContentState.Archived, stateChangedBy);
+            Task t2 = contentStore.SetContentWorkflowStateAsync(targetSlug, copiedContent.Id, WellKnownWorkflowId.ContentPublication, state.StateName, stateChangedBy);
 
             await Task.WhenAll(t1, t2).ConfigureAwait(false);
 
@@ -176,9 +179,10 @@ namespace Marain.Cms
         /// <param name="targetSlug">The slug to which to move the content.</param>
         /// <param name="originalContentId">The ID of the content to be moved.</param>
         /// <param name="originalSlug">The slug from which the content is to be moved.</param>
+        /// <param name="stateChangedBy">The identity that made the change.</param>
         /// <param name="targetState">The target state for the copy; the default is <see cref="ContentPublicationContentState.Draft"/>.</param>
         /// <returns>A <see cref="Task"/> which completes when the content is published.</returns>
-        public static async Task<Content> CopyContentForPublicationAsync(this IContentStore contentStore, string targetSlug, string originalContentId, string originalSlug, string targetState = ContentPublicationContentState.Draft)
+        public static async Task<Content> CopyContentForPublicationAsync(this IContentStore contentStore, string targetSlug, string originalContentId, string originalSlug, CmsIdentity stateChangedBy, string targetState = ContentPublicationContentState.Draft)
         {
             if (contentStore is null)
             {
@@ -202,7 +206,7 @@ namespace Marain.Cms
 
             Content copiedContent = await contentStore.CopyContentAsync(targetSlug, originalContentId, originalSlug).ConfigureAwait(false);
 
-            await contentStore.SetContentWorkflowStateAsync(targetSlug, copiedContent.Id, WellKnownWorkflowId.ContentPublication, targetState);
+            await contentStore.SetContentWorkflowStateAsync(targetSlug, copiedContent.Id, WellKnownWorkflowId.ContentPublication, targetState, stateChangedBy).ConfigureAwait(false);
 
             return copiedContent;
         }
