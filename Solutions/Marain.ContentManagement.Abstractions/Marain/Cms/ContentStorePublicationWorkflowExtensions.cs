@@ -143,8 +143,7 @@ namespace Marain.Cms
                 throw new ArgumentNullException(nameof(slug));
             }
 
-            ContentWithState result = await contentStore.GetContentForWorkflowAsync(slug, WellKnownWorkflowId.ContentPublication).ConfigureAwait(false);
-            return result ?? throw new ContentNotFoundException();
+            return await contentStore.GetContentForWorkflowAsync(slug, WellKnownWorkflowId.ContentPublication).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -168,8 +167,7 @@ namespace Marain.Cms
                 throw new ArgumentNullException(nameof(slug));
             }
 
-            ContentSummariesWithState result = await contentStore.GetContentSummariesForWorkflowAsync(slug, WellKnownWorkflowId.ContentPublication, ContentPublicationContentState.Published, limit, continuationToken).ConfigureAwait(false);
-            return result ?? throw new ContentNotFoundException();
+            return await contentStore.GetContentSummariesForWorkflowAsync(slug, WellKnownWorkflowId.ContentPublication, ContentPublicationContentState.Published, limit, continuationToken).ConfigureAwait(false);
         }
 
         /// <summary>

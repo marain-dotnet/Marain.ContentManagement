@@ -44,6 +44,35 @@ Scenario: Move archived content
 	And the content called 'ActualArchived' should be in the state 'archived'
 	And the content called 'Actual' should be in the state 'archived'
 
+Scenario: Copy published content
+	Given I have created content with a content fragment
+		| Name           | Id        | Slug                     | Tags                  | CategoryPaths                               | Author.Name   | Author.Id | Title             | Description                  | Culture | Fragment                       |
+		| ExpectedFirst  | {newguid} | copypublication/slug/        | First tag; Second tag | /standard/content;/books/hobbit;/books/lotr | Bilbo Baggins | {newguid} | This is the title | A description of the content | fr-FR   | This is the fragment of text 1 |
+	And I publish the content with Slug '{ExpectedFirst.Slug}' and id '{ExpectedFirst.Id}'
+	When I copy the content from Slug '{ExpectedFirst.Slug}' to 'copypublication/anotherslug/' and call it 'Moved'
+	And I get the content for Slug '{ExpectedFirst.Slug}' and call it 'ActualArchived'
+	And I get the content for Slug 'copypublication/anotherslug/' and call it 'Actual'
+	Then the content called 'Moved' should match the content with state called 'Actual'
+	And the content called 'ExpectedFirst' should be copied to the content with state called 'Actual'
+	And the content called 'ActualArchived' should be in the state 'published'
+	And the content called 'Actual' should be in the state 'draft'
+
+Scenario: Copy archived content
+	Given I have created content with a content fragment
+		| Name           | Id        | Slug                     | Tags                  | CategoryPaths                               | Author.Name   | Author.Id | Title             | Description                  | Culture | Fragment                       |
+		| ExpectedFirst  | {newguid} | copyarchived/slug/        | First tag; Second tag | /standard/content;/books/hobbit;/books/lotr | Bilbo Baggins | {newguid} | This is the title | A description of the content | fr-FR   | This is the fragment of text 1 |
+	And I publish the content with Slug '{ExpectedFirst.Slug}' and id '{ExpectedFirst.Id}'
+	And I archive the content with Slug '{ExpectedFirst.Slug}'
+	When I copy the content from Slug '{ExpectedFirst.Slug}' to 'copyarchived/anotherslug/' and call it 'Moved'
+	And I get the content for Slug '{ExpectedFirst.Slug}' and call it 'ActualArchived'
+	And I get the content for Slug 'copyarchived/anotherslug/' and call it 'Actual'
+	Then the content called 'Moved' should match the content with state called 'Actual'
+	And the content called 'ExpectedFirst' should be copied to the content with state called 'Actual' 
+	And the content called 'ExpectedFirst' should match the content with state called 'ActualArchived'
+	And the content called 'ActualArchived' should be in the state 'archived'
+	And the content called 'Actual' should be in the state 'draft'
+
+
 Scenario: Publish then archive content
 	Given I have created content with a content fragment
 		| Name           | Id        | Slug                     | Tags                  | CategoryPaths                               | Author.Name   | Author.Id | Title             | Description                  | Culture | Fragment                       |

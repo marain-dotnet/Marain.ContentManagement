@@ -151,7 +151,7 @@ namespace Marain.Cms
                 }
             }
 
-            return null;
+            throw new ContentNotFoundException();
         }
 
         /// <inheritdoc/>

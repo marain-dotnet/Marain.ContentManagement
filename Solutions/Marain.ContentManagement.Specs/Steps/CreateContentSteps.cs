@@ -163,6 +163,18 @@
             this.scenarioContext.Set(result, copyName);
         }
 
+        [When(@"I copy the content from Slug '(.*)' to '(.*)' and call it '(.*)'")]
+        public async Task WhenICopyTheContentFromSlugToAndCallIt(string sourceSlug, string destinationSlug, string copyName)
+        {
+            IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
+            Content result = await store.CopyContentForPublicationAsync(
+                    ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(destinationSlug)),
+                    ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(sourceSlug)),
+                    new CmsIdentity("SomeId", "SomeName"));
+            this.scenarioContext.Set(result, copyName);
+        }
+
+
         [Then(@"the content called '(.*)' should be copied to the content called '(.*)'")]
         public void ThenTheContentCalledShouldBeACopyOfTheContentCalled(string expectedName, string actualName)
         {
