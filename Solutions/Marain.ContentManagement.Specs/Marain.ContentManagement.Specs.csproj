@@ -30,11 +30,11 @@
     <ProjectReference Include="..\Marain.ContentManagement.Abstractions\Marain.ContentManagement.Abstractions.csproj" />
     <ProjectReference Include="..\Marain.ContentManagement.Storage.AzureComsos\Marain.ContentManagement.Storage.AzureComsos.csproj" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <None Update="specflow.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
+  
 </Project>
