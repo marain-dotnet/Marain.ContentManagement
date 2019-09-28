@@ -7,6 +7,7 @@ namespace Marain.Cms
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Net;
     using System.Text;
     using System.Threading.Tasks;
     using Corvus.Extensions;
@@ -110,7 +111,7 @@ namespace Marain.Cms
                 }
             }
 
-            return null;
+            throw new ContentNotFoundException();
         }
 
         /// <inheritdoc/>
@@ -271,8 +272,15 @@ namespace Marain.Cms
         private async Task<T> GetContentAsync<T>(string contentId, string slug)
             where T : Content
         {
-            ItemResponse<T> response = await this.container.ReadItemAsync<T>(contentId, new PartitionKey(Content.GetPartitionKeyFromSlug(slug))).ConfigureAwait(false);
-            return response.Resource;
+            try
+            {
+                ItemResponse<T> response = await this.container.ReadItemAsync<T>(contentId, new PartitionKey(Content.GetPartitionKeyFromSlug(slug))).ConfigureAwait(false);
+                return response.Resource;
+            }
+            catch (CosmosException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
+            {
+                throw new ContentNotFoundException("Content not found.", ex);
+            }
         }
     }
 }

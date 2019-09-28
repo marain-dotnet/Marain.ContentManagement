@@ -177,11 +177,10 @@ namespace Marain.Cms
         /// </summary>
         /// <param name="contentStore">The content store for which this is an extension.</param>
         /// <param name="targetSlug">The slug to which to move the content.</param>
-        /// <param name="originalContentId">The ID of the content to be moved.</param>
         /// <param name="originalSlug">The slug from which the content is to be moved.</param>
         /// <param name="stateChangedBy">The identity that made the change.</param>
         /// <returns>A <see cref="Task"/> which completes when the content is published.</returns>
-        public static async Task<Content> MoveContentForPublicationAsync(this IContentStore contentStore, string targetSlug, string originalContentId, string originalSlug, CmsIdentity stateChangedBy)
+        public static async Task<Content> MoveContentForPublicationAsync(this IContentStore contentStore, string targetSlug, string originalSlug, CmsIdentity stateChangedBy)
         {
             if (contentStore is null)
             {
@@ -198,21 +197,16 @@ namespace Marain.Cms
                 throw new ArgumentNullException(nameof(originalSlug));
             }
 
-            if (string.IsNullOrEmpty(originalContentId))
-            {
-                throw new ArgumentException("message", nameof(originalContentId));
-            }
-
             ContentState state = await contentStore.GetContentWorkflowStateAsync(originalSlug, WellKnownWorkflowId.ContentPublication).ConfigureAwait(false);
 
-            if (state.StateName == ContentPublicationContentState.Archived)
+            if (state == null)
             {
-                throw new InvalidOperationException("You cannot move archived content.");
+                throw new ContentNotFoundException();
             }
 
-            Content copiedContent = await contentStore.CopyContentAsync(targetSlug, originalContentId, originalSlug).ConfigureAwait(false);
+            Content copiedContent = await contentStore.CopyContentAsync(targetSlug, state.ContentId, originalSlug).ConfigureAwait(false);
 
-            Task t1 = contentStore.SetContentWorkflowStateAsync(originalSlug, originalContentId, WellKnownWorkflowId.ContentPublication, ContentPublicationContentState.Archived, stateChangedBy);
+            Task t1 = contentStore.SetContentWorkflowStateAsync(originalSlug, state.ContentId, WellKnownWorkflowId.ContentPublication, ContentPublicationContentState.Archived, stateChangedBy);
             Task t2 = contentStore.SetContentWorkflowStateAsync(targetSlug, copiedContent.Id, WellKnownWorkflowId.ContentPublication, state.StateName, stateChangedBy);
 
             await Task.WhenAll(t1, t2).ConfigureAwait(false);
@@ -225,12 +219,11 @@ namespace Marain.Cms
         /// </summary>
         /// <param name="contentStore">The content store for which this is an extension.</param>
         /// <param name="targetSlug">The slug to which to move the content.</param>
-        /// <param name="originalContentId">The ID of the content to be moved.</param>
         /// <param name="originalSlug">The slug from which the content is to be moved.</param>
         /// <param name="stateChangedBy">The identity that made the change.</param>
         /// <param name="targetState">The target state for the copy; the default is <see cref="ContentPublicationContentState.Draft"/>.</param>
         /// <returns>A <see cref="Task"/> which completes when the content is published.</returns>
-        public static async Task<Content> CopyContentForPublicationAsync(this IContentStore contentStore, string targetSlug, string originalContentId, string originalSlug, CmsIdentity stateChangedBy, string targetState = ContentPublicationContentState.Draft)
+        public static async Task<Content> CopyContentForPublicationAsync(this IContentStore contentStore, string targetSlug, string originalSlug, CmsIdentity stateChangedBy, string targetState = ContentPublicationContentState.Draft)
         {
             if (contentStore is null)
             {
@@ -247,12 +240,9 @@ namespace Marain.Cms
                 throw new ArgumentNullException(nameof(originalSlug));
             }
 
-            if (string.IsNullOrEmpty(originalContentId))
-            {
-                throw new ArgumentException("message", nameof(originalContentId));
-            }
+            ContentState state = await contentStore.GetContentWorkflowStateAsync(originalSlug, WellKnownWorkflowId.ContentPublication).ConfigureAwait(false);
 
-            Content copiedContent = await contentStore.CopyContentAsync(targetSlug, originalContentId, originalSlug).ConfigureAwait(false);
+            Content copiedContent = await contentStore.CopyContentAsync(targetSlug, state.ContentId, originalSlug).ConfigureAwait(false);
 
             await contentStore.SetContentWorkflowStateAsync(targetSlug, copiedContent.Id, WellKnownWorkflowId.ContentPublication, targetState, stateChangedBy).ConfigureAwait(false);
 

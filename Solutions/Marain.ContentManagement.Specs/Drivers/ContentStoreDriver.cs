@@ -26,7 +26,23 @@
             Assert.AreEqual(expected.Culture, actual.Culture);
             Assert.AreEqual(expected.Description, actual.Description);
             Assert.AreEqual(expected.Title, actual.Title);
+            Assert.AreEqual(expected.OriginalSource, actual.OriginalSource);
             ComparePayloads(expected.ContentPayload, actual.ContentPayload);
+        }
+
+        public static void CompareACopy(Content expected, Content actual)
+        {
+            // The slug and ID are expected to differ.
+            Assert.AreEqual(expected.Author.UserName, actual.Author.UserName);
+            Assert.AreEqual(expected.Author.UserId, actual.Author.UserId);
+            Assert.AreEqual(string.Join(';', expected.CategoryPaths), string.Join(';', actual.CategoryPaths));
+            Assert.AreEqual(string.Join(';', expected.Tags), string.Join(';', actual.Tags));
+            Assert.AreEqual(expected.Culture, actual.Culture);
+            Assert.AreEqual(expected.Description, actual.Description);
+            Assert.AreEqual(expected.Title, actual.Title);
+            ComparePayloads(expected.ContentPayload, actual.ContentPayload);
+            Assert.AreEqual(expected.Id, actual.OriginalSource.Value.Id);
+            Assert.AreEqual(expected.Slug, actual.OriginalSource.Value.Slug);
         }
 
         public static void Compare(Content expected, ContentSummary actual)

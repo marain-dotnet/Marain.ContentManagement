@@ -38,7 +38,7 @@
         public async Task WhenIGetTheContentWithIdAndSlugAndCallIt(string id, string slug, string contentName)
         {
             IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
-            
+
             Content content = await store.GetContentAsync(
                 ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, id),
                 ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, slug));
@@ -76,9 +76,9 @@
         {
             IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
             await store.PublishContentAsync(
-                ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(slug))),
-                ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(id))),
-                new CmsIdentity("SomeId","SomeName"));
+                ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(slug)),
+                ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(id)),
+                new CmsIdentity("SomeId", "SomeName"));
 
         }
 
@@ -91,19 +91,42 @@
                 Content content = await store.GetPublishedContentAsync(ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(slug)));
                 this.scenarioContext.Set(content, contentName);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 this.scenarioContext.Set(ex);
             }
         }
 
-        [Given(@"I archive the content with Slug '(.*)' and id '(.*)'")]
-        public async Task GivenIArchiveTheContentWithSlugAndId(string slug, string id)
+        [Given(@"I archive the content with Slug '(.*)'")]
+        public async Task GivenIArchiveTheContentWithSlugAndId(string slug)
         {
-            IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
-            await store.ArchiveContentAsync(
-                ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(slug))),
-                new CmsIdentity("SomeId", "SomeName"));
+            try
+            {
+                IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
+                await store.ArchiveContentAsync(
+                    ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(slug)),
+                    new CmsIdentity("SomeId", "SomeName"));
+            }
+            catch (Exception ex)
+            {
+                this.scenarioContext.Set(ex);
+            }
+        }
+
+        [Given(@"I draft the content with Slug '(.*)'")]
+        public async Task GivenIDraftTheContentWithSlugAndId(string slug)
+        {
+            try
+            {
+                IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
+                await store.MakeDraftContentAsync(
+                    ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(slug)),
+                    new CmsIdentity("SomeId", "SomeName"));
+            }
+            catch (Exception ex)
+            {
+                this.scenarioContext.Set(ex);
+            }
         }
 
         [Then(@"it should throw a ContentNotFoundException")]
@@ -129,6 +152,64 @@
             ContentStoreDriver.MatchSummariesToContent(expectedContent, expectedStates, summaries);
         }
 
+        [When(@"I move the content from Slug '(.*)' to '(.*)' and call it '(.*)'")]
+        public async Task WhenIMoveTheContentFromSlugToAndCallItAsync(string sourceSlug, string destinationSlug, string copyName)
+        {
+            IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
+            Content result = await store.MoveContentForPublicationAsync(
+                    ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(destinationSlug)),
+                    ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(sourceSlug)),
+                    new CmsIdentity("SomeId", "SomeName"));
+            this.scenarioContext.Set(result, copyName);
+        }
 
+        [Then(@"the content called '(.*)' should be copied to the content called '(.*)'")]
+        public void ThenTheContentCalledShouldBeACopyOfTheContentCalled(string expectedName, string actualName)
+        {
+            Content expected = this.scenarioContext.Get<Content>(expectedName);
+            Content actual = this.scenarioContext.Get<Content>(actualName);
+
+            ContentStoreDriver.CompareACopy(expected, actual);
+        }
+
+        [When(@"I get the content for Slug '(.*)' and call it '(.*)'")]
+        public async Task WhenIGetTheContentForSlugAndCallItAsync(string slug, string contentName)
+        {
+            try
+            {
+                IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
+                ContentWithState content = await store.GetContentWithStateAsync(ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(slug)));
+                this.scenarioContext.Set(content, contentName);
+            }
+            catch (Exception ex)
+            {
+                this.scenarioContext.Set(ex);
+            }
+        }
+
+        [Then(@"the content called '(.*)' should be in the state '(.*)'")]
+        public void ThenTheContentCalledShouldBeInTheState(string contentName, string stateName)
+        {
+            ContentWithState actual = this.scenarioContext.Get<ContentWithState>(contentName);
+            Assert.AreEqual(stateName, actual.StateName);
+        }
+
+        [Then(@"the content called '(.*)' should match the content with state called '(.*)'")]
+        public void ThenTheContentCalledShouldMatchTheContentWithStateCalled(string expectedName, string actualName)
+        {
+            Content expected = this.scenarioContext.Get<Content>(expectedName);
+            ContentWithState actual = this.scenarioContext.Get<ContentWithState>(actualName);
+
+            ContentStoreDriver.Compare(expected, actual.Content);
+        }
+
+        [Then(@"the content called '(.*)' should be copied to the content with state called '(.*)'")]
+        public void ThenTheContentCalledShouldBeCopiedToTheContentWithStateCalled(string expectedName, string actualName)
+        {
+            Content expected = this.scenarioContext.Get<Content>(expectedName);
+            ContentWithState actual = this.scenarioContext.Get<ContentWithState>(actualName);
+
+            ContentStoreDriver.CompareACopy(expected, actual.Content);
+        }
     }
 }
