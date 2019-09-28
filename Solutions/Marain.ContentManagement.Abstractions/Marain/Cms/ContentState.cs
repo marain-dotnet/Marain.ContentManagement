@@ -2,7 +2,7 @@
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
-namespace Marain.Cms.Internal
+namespace Marain.Cms
 {
     using System;
     using Corvus.Extensions;
@@ -38,6 +38,11 @@ namespace Marain.Cms.Internal
         /// Gets or sets the slug for the content.
         /// </summary>
         public string Slug { get; set; }
+
+        /// <summary>
+        /// Gets or sets the identity that changed the state.
+        /// </summary>
+        public CmsIdentity ChangedBy { get; set; }
 
         /// <summary>
         /// Gets the partition key for the content.

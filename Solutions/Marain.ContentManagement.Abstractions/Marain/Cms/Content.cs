@@ -177,6 +177,15 @@ namespace Marain.Cms
         public IContentPayload ContentPayload { get; set; }
 
         /// <summary>
+        /// Gets or sets the details of the content from which this content was originated.
+        /// </summary>
+        /// <remarks>
+        /// If this instance came from a copy- or move-like operation on other content, this gives you a way
+        /// of walking the tree back to the original source.
+        /// </remarks>
+        public ContentSource OriginalSource { get; set; }
+
+        /// <summary>
         /// Gets the parition key string from a slug.
         /// </summary>
         /// <param name="slug">The slug from which to get the partition key.</param>

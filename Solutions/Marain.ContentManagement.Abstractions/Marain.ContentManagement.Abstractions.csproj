@@ -20,5 +20,9 @@
     <PackageReference Include="Corvus.Extensions" Version="0.7.0" />
     <PackageReference Include="Corvus.Extensions.Newtonsoft.Json" Version="0.8.0" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Marain\Cms\Internal\" />
+  </ItemGroup>
 
 </Project>

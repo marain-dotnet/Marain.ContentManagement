@@ -47,6 +47,14 @@ namespace Marain.Cms
         Task SetContentWorkflowStateAsync(string slug, string contentId, string workflowId, string stateName);
 
         /// <summary>
+        /// Gets the state for the content in a particular workflow.
+        /// </summary>
+        /// <param name="slug">The slug for the content.</param>
+        /// <param name="workflowId">The workflow ID in which to set the state.</param>
+        /// <returns>A <see cref="Task"/> which completes when the state has been set.</returns>
+        Task<ContentState> GetContentWorkflowStateAsync(string slug, string workflowId);
+
+        /// <summary>
         /// Store a new content item.
         /// </summary>
         /// <param name="content">The content to store.</param>

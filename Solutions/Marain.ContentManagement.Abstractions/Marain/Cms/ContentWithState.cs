@@ -5,7 +5,6 @@
 namespace Marain.Cms
 {
     using System;
-    using Marain.Cms.Internal;
 
     /// <summary>
     /// A representation of the content in a particular state.

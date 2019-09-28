@@ -10,7 +10,6 @@ namespace Marain.Cms
     using System.Text;
     using System.Threading.Tasks;
     using Corvus.Extensions;
-    using Marain.Cms.Internal;
     using Microsoft.Azure.Cosmos;
 
     /// <summary>
@@ -40,7 +39,7 @@ namespace Marain.Cms
         /// <param name="container">The container for drafts.</param>
         public CosmosContentStore(Container container)
         {
-            this.container = container ?? throw new System.ArgumentNullException(nameof(container));
+            this.container = container ?? throw new ArgumentNullException(nameof(container));
         }
 
         /// <inheritdoc/>
@@ -79,6 +78,39 @@ namespace Marain.Cms
             }
 
             return this.container.CreateItemAsync(new ContentState { Slug = slug, ContentId = contentId, StateName = stateName, WorkflowId = workflowId }, new PartitionKey(Content.GetPartitionKeyFromSlug(slug)));
+        }
+
+        /// <inheritdoc/>
+        public async Task<ContentState> GetContentWorkflowStateAsync(string slug, string workflowId)
+        {
+            if (slug is null)
+            {
+                throw new ArgumentNullException(nameof(slug));
+            }
+
+            if (string.IsNullOrEmpty(workflowId))
+            {
+                throw new ArgumentException("message", nameof(workflowId));
+            }
+
+            QueryDefinition queryDefinition =
+                new QueryDefinition(SingleContentStateQuery)
+                    .WithParameter("@slug", slug)
+                    .WithParameter("@workflowId", workflowId);
+
+            FeedIterator<ContentState> iterator = this.container.GetItemQueryIterator<ContentState>(queryDefinition, null, new QueryRequestOptions { MaxItemCount = 1 });
+
+            if (iterator.HasMoreResults)
+            {
+                FeedResponse<ContentState> results = await iterator.ReadNextAsync().ConfigureAwait(false);
+                ContentState state = results.Resource.FirstOrDefault();
+                if (!(state is null))
+                {
+                    return state;
+                }
+            }
+
+            return null;
         }
 
         /// <inheritdoc/>

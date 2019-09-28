@@ -6,7 +6,6 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     using Corvus.ContentHandling;
     using Marain.Cms;
-    using Marain.Cms.Internal;
 
     /// <summary>
     /// Extensions for the <see cref="ContentFactory"/>.
