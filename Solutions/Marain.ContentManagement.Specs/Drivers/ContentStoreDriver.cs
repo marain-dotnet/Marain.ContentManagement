@@ -87,6 +87,8 @@
 
         public static T GetObjectValue<T>(ScenarioContext scenarioContext, string property)
         {
+            property = SubstituteContent(property);
+
             if (property is null)
             {
                 return default;

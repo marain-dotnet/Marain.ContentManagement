@@ -5,6 +5,9 @@ Feature: CreateContent
 	As a developer
 	I want to be create and retrieve content
 
+Scenario: Get content that does not exist
+	Then getting the content with Id '{newguid}' and Slug '{newguid}/' throws a ContentNotFoundException
+
 Scenario: Create and get content
 	Given I have created content with a content fragment
 		| Name     | Id        | Slug | Tags                  | CategoryPaths                               | Author.Name   | Author.Id | Title             | Description                  | Culture | Fragment                     |

@@ -75,11 +75,26 @@ namespace Marain.ContentManagement.Specs.Features
         }
         
         [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Get content that does not exist")]
+        public virtual void GetContentThatDoesNotExist()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get content that does not exist", null, ((string[])(null)));
+#line 8
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 9
+ testRunner.Then("getting the content with Id \'{newguid}\' and Slug \'{newguid}/\' throws a ContentNot" +
+                    "FoundException", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Create and get content")]
         public virtual void CreateAndGetContent()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create and get content", null, ((string[])(null)));
-#line 8
+#line 11
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -107,12 +122,12 @@ this.ScenarioInitialize(scenarioInfo);
                         "A description of the content",
                         "fr-FR",
                         "This is the fragment of text"});
-#line 9
- testRunner.Given("I have created content with a content fragment", ((string)(null)), table4, "Given ");
 #line 12
+ testRunner.Given("I have created content with a content fragment", ((string)(null)), table4, "Given ");
+#line 15
  testRunner.When("I get the content with Id \'{Expected.Id}\' and Slug \'{Expected.Slug}\' and call it " +
                     "\'Actual\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 13
+#line 16
  testRunner.Then("the content called \'Expected\' should match the content called \'Actual\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -123,7 +138,7 @@ this.ScenarioInitialize(scenarioInfo);
         public virtual void CreateMultipleContentRecordsForTheSameSlug()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create multiple content records for the same slug", null, ((string[])(null)));
-#line 15
+#line 18
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -187,28 +202,28 @@ this.ScenarioInitialize(scenarioInfo);
                         "A description of the content",
                         "fr-FR",
                         "This is the fragment of text 4"});
-#line 16
+#line 19
  testRunner.Given("I have created content with a content fragment", ((string)(null)), table5, "Given ");
-#line 22
+#line 25
  testRunner.When("I get the content with Id \'{ExpectedFirst.Id}\' and Slug \'{ExpectedFirst.Slug}\' an" +
                     "d call it \'ActualFirst\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 23
+#line 26
  testRunner.And("I get the content with Id \'{ExpectedSecond.Id}\' and Slug \'{ExpectedSecond.Slug}\' " +
                     "and call it \'ActualSecond\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 24
+#line 27
  testRunner.And("I get the content with Id \'{ExpectedThird.Id}\' and Slug \'{ExpectedThird.Slug}\' an" +
                     "d call it \'ActualThird\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 25
+#line 28
  testRunner.And("I get the content with Id \'{ExpectedFourth.Id}\' and Slug \'{ExpectedFourth.Slug}\' " +
                     "and call it \'ActualFourth\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 26
+#line 29
  testRunner.Then("the content called \'ExpectedFirst\' should match the content called \'ActualFirst\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 27
+#line 30
  testRunner.And("the content called \'ExpectedSecond\' should match the content called \'ActualSecond" +
                     "\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 28
+#line 31
  testRunner.And("the content called \'ExpectedThird\' should match the content called \'ActualThird\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 29
+#line 32
  testRunner.And("the content called \'ExpectedFourth\' should match the content called \'ActualFourth" +
                     "\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
@@ -220,7 +235,7 @@ this.ScenarioInitialize(scenarioInfo);
         public virtual void GetContentSummariesForAGivenSlug()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get content summaries for a given slug", null, ((string[])(null)));
-#line 31
+#line 34
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -284,9 +299,9 @@ this.ScenarioInitialize(scenarioInfo);
                         "A description of the content",
                         "fr-FR",
                         "This is the fragment of text 4"});
-#line 32
+#line 35
  testRunner.Given("I have created content with a content fragment", ((string)(null)), table6, "Given ");
-#line 38
+#line 41
  testRunner.When("I get the content summaries for Slug \'some/slug/\' with limit \'20\' and continuatio" +
                     "nToken \'{null}\' and call it \'Actual\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
@@ -300,7 +315,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "ExpectedSecond"});
             table7.AddRow(new string[] {
                         "ExpectedFirst"});
-#line 39
+#line 42
  testRunner.Then("the content summaries called \'Actual\' should match", ((string)(null)), table7, "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -311,7 +326,7 @@ this.ScenarioInitialize(scenarioInfo);
         public virtual void GetBatchedContentSummariesForAGivenSlug()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get batched content summaries for a given slug", null, ((string[])(null)));
-#line 46
+#line 49
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -375,12 +390,12 @@ this.ScenarioInitialize(scenarioInfo);
                         "A description of the content",
                         "fr-FR",
                         "This is the fragment of text 4"});
-#line 47
+#line 50
  testRunner.Given("I have created content with a content fragment", ((string)(null)), table8, "Given ");
-#line 53
+#line 56
  testRunner.When("I get the content summaries for Slug \'batch/slug/\' with limit \'2\' and continuatio" +
                     "nToken \'{null}\' and call it \'ActualBatch1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 54
+#line 57
  testRunner.And("I get the content summaries for Slug \'batch/slug/\' with limit \'2\' and continuatio" +
                     "nToken \'{ActualBatch1.ContinuationToken}\' and call it \'ActualBatch2\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
@@ -390,7 +405,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "ExpectedFourth"});
             table9.AddRow(new string[] {
                         "ExpectedThird"});
-#line 55
+#line 58
  testRunner.Then("the content summaries called \'ActualBatch1\' should match", ((string)(null)), table9, "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
@@ -399,7 +414,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "ExpectedSecond"});
             table10.AddRow(new string[] {
                         "ExpectedFirst"});
-#line 59
+#line 62
  testRunner.And("the content summaries called \'ActualBatch2\' should match", ((string)(null)), table10, "And ");
 #line hidden
             this.ScenarioCleanup();

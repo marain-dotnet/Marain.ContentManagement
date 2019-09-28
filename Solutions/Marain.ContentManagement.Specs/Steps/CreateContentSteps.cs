@@ -33,6 +33,27 @@
             }
         }
 
+        [Then(@"getting the content with Id '(.*)' and Slug '(.*)' throws a ContentNotFoundException")]
+        public async Task ThenGettingTheContentWithIdAndSlugThrowsAContentNotFoundException(string contentId, string slug)
+        {
+            try
+            {
+                IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
+                Content content = await store.GetContentAsync(
+                    ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, contentId),
+                    ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, slug));
+                Assert.Fail("ContentNotFoundException should have been thrown.");
+            }
+            catch (ContentNotFoundException)
+            {
+            }
+            catch
+            {
+                Assert.Fail("ContentNotFoundException should have been thrown.");
+            }
+        }
+
+
         [When(@"I get the content with Id '(.*)' and Slug '(.*)' and call it '(.*)'")]
         public async Task WhenIGetTheContentWithIdAndSlugAndCallIt(string id, string slug, string contentName)
         {
@@ -58,7 +79,7 @@
         public async Task WhenIGetTheContentSummariesForSlugWithLimitAndContinuationTokenAndCallIt(string slug, int limit, string continuationToken, string contentSummariesName)
         {
             IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
-            ContentSummaries summaries = await store.GetContentSummariesAsync(ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(slug)), limit, ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(continuationToken)));
+            ContentSummaries summaries = await store.GetContentSummariesAsync(ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, slug), limit, ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, continuationToken));
             this.scenarioContext.Set(summaries, contentSummariesName);
         }
 
@@ -75,8 +96,8 @@
         {
             IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
             await store.PublishContentAsync(
-                ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(slug)),
-                ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(id)),
+                ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, slug),
+                ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, id),
                 new CmsIdentity("SomeId", "SomeName"));
 
         }
@@ -85,7 +106,7 @@
         public async Task WhenIGetThePublishedContentForSlugAndCallIt(string slug, string contentName)
         {
             IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
-            Content content = await store.GetPublishedContentAsync(ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(slug)));
+            Content content = await store.GetPublishedContentAsync(ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, slug));
             this.scenarioContext.Set(content, contentName);
         }
 
@@ -95,7 +116,7 @@
             try
             {
                 IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
-                Content content = await store.GetPublishedContentAsync(ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(slug)));
+                Content content = await store.GetPublishedContentAsync(ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, slug));
                 Assert.Fail("ContentNotFoundException should have been thrown.");
             }
             catch (ContentNotFoundException)
@@ -113,7 +134,7 @@
         {
             IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
             await store.ArchiveContentAsync(
-                ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(slug)),
+                ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, slug),
                 new CmsIdentity("SomeId", "SomeName"));
         }
 
@@ -122,7 +143,7 @@
         {
             IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
             await store.MakeDraftContentAsync(
-                ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(slug)),
+                ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, slug),
                 new CmsIdentity("SomeId", "SomeName"));
         }
 
@@ -130,7 +151,7 @@
         public async Task WhenIGetThePublicationHistoryForSlugAndCallIt(string slug, int limit, string continuationToken, string contentSummariesName)
         {
             IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
-            ContentSummariesWithState summaries = await store.GetPublicationHistory(ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(slug)), limit, ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(continuationToken)));
+            ContentSummariesWithState summaries = await store.GetPublicationHistory(ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, slug), limit, ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, continuationToken));
             this.scenarioContext.Set(summaries, contentSummariesName);
         }
 
@@ -138,7 +159,7 @@
         public async Task WhenIGetThePublishedHistoryForSlugAndCallIt(string slug, int limit, string continuationToken, string contentSummariesName)
         {
             IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
-            ContentSummariesWithState summaries = await store.GetPublishedHistory(ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(slug)), limit, ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(continuationToken)));
+            ContentSummariesWithState summaries = await store.GetPublishedHistory(ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, slug), limit, ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, continuationToken));
             this.scenarioContext.Set(summaries, contentSummariesName);
         }
 
@@ -156,8 +177,8 @@
         {
             IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
             Content result = await store.MoveContentForPublicationAsync(
-                    ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(destinationSlug)),
-                    ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(sourceSlug)),
+                    ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, destinationSlug),
+                    ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, sourceSlug),
                     new CmsIdentity("SomeId", "SomeName"));
             this.scenarioContext.Set(result, copyName);
         }
@@ -167,8 +188,8 @@
         {
             IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
             Content result = await store.CopyContentForPublicationAsync(
-                    ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(destinationSlug)),
-                    ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(sourceSlug)),
+                    ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, destinationSlug),
+                    ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, sourceSlug),
                     new CmsIdentity("SomeId", "SomeName"));
             this.scenarioContext.Set(result, copyName);
         }
@@ -187,7 +208,7 @@
         public async Task WhenIGetTheContentForSlugAndCallItAsync(string slug, string contentName)
         {
             IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
-            ContentWithState content = await store.GetContentWithStateAsync(ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, ContentStoreDriver.SubstituteContent(slug)));
+            ContentWithState content = await store.GetContentWithStateAsync(ContentStoreDriver.GetObjectValue<string>(this.scenarioContext, slug));
             this.scenarioContext.Set(content, contentName);
         }
 
