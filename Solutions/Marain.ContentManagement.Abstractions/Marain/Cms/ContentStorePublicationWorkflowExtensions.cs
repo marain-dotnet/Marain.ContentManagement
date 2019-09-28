@@ -197,11 +197,6 @@ namespace Marain.Cms
 
             ContentState state = await contentStore.GetContentWorkflowStateAsync(originalSlug, WellKnownWorkflowId.ContentPublication).ConfigureAwait(false);
 
-            if (state == null)
-            {
-                throw new ContentNotFoundException();
-            }
-
             Content copiedContent = await contentStore.CopyContentAsync(targetSlug, state.ContentId, originalSlug).ConfigureAwait(false);
 
             Task t1 = contentStore.SetContentWorkflowStateAsync(originalSlug, state.ContentId, WellKnownWorkflowId.ContentPublication, ContentPublicationContentState.Archived, stateChangedBy);
