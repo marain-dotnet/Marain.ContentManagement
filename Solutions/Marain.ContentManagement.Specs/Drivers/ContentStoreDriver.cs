@@ -171,9 +171,9 @@
         internal static void MatchSummariesToContent(List<Content> expectedContent, List<string> expectedStates, ContentSummariesWithState summaries)
         {
             Assert.AreEqual(expectedContent.Count, summaries.Summaries.Count);
-            expectedContent.ForEachAtIndex((expectedContent, i) =>
+            expectedContent.ForEachAtIndex((ec, i) =>
             {
-                Compare(expectedContent, expectedStates[i], summaries.Summaries[i]);
+                Compare(ec, expectedStates[i], summaries.Summaries[i]);
             });
         }
     }
