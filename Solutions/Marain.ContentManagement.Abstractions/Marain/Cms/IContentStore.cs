@@ -20,7 +20,7 @@ namespace Marain.Cms
         Task<Content> GetContentAsync(string contentId, string slug);
 
         /// <summary>
-        /// Gets <see cref="ContentSummaries"/> given a particular content ID and slug.
+        /// Gets <see cref="ContentSummaries"/> given a particular slug.
         /// </summary>
         /// <param name="slug">The slug to which the content belongs.</param>
         /// <param name="limit">The maximum number of summaries to return in a batch. It may return fewer than this, even if more summaries are still available.</param>
