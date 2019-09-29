@@ -12,7 +12,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marain.ContentManagement.Ab
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marain.ContentManagement.Storage.AzureComsos", "Marain.ContentManagement.Storage.AzureComsos\Marain.ContentManagement.Storage.AzureComsos.csproj", "{9C9DCD54-A7FA-4A7E-A392-75120F1CF40F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marain.ContentManagement.Specs", "Marain.ContentManagement.Specs\Marain.ContentManagement.Specs.csproj", "{51B3F3D5-F68E-48C7-A8BF-FB5558CD02CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marain.ContentManagement.Specs", "Marain.ContentManagement.Specs\Marain.ContentManagement.Specs.csproj", "{51B3F3D5-F68E-48C7-A8BF-FB5558CD02CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marain.ContentManagement.OpenApi.Service", "Marain.ContentManagement.OpenApi.Service\Marain.ContentManagement.OpenApi.Service.csproj", "{B3D19394-E72A-4EA0-9391-B2A59DFFFAFE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +34,10 @@ Global
 		{51B3F3D5-F68E-48C7-A8BF-FB5558CD02CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51B3F3D5-F68E-48C7-A8BF-FB5558CD02CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51B3F3D5-F68E-48C7-A8BF-FB5558CD02CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3D19394-E72A-4EA0-9391-B2A59DFFFAFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3D19394-E72A-4EA0-9391-B2A59DFFFAFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3D19394-E72A-4EA0-9391-B2A59DFFFAFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3D19394-E72A-4EA0-9391-B2A59DFFFAFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
