@@ -34,7 +34,7 @@ namespace Marain.Cms
         public string ETag { get; set; }
 
         /// <summary>
-        /// Gets the category paths for the content.
+        /// Gets or sets the category paths for the content.
         /// </summary>
         /// <remarks>
         /// This supports multiple, hierarchical taxonomies for the content.
@@ -47,14 +47,14 @@ namespace Marain.Cms
                 return this.categoryPaths ?? (this.categoryPaths = new List<string>());
             }
 
-            private set
+            set
             {
                 this.categoryPaths = value;
             }
         }
 
         /// <summary>
-        /// Gets the tags for the content.
+        /// Gets or sets the tags for the content.
         /// </summary>
         /// <remarks>This support multiple, unstructured tags for the content.</remarks>
         /// <seealso cref="CategoryPaths"/>
@@ -65,7 +65,7 @@ namespace Marain.Cms
                 return this.tags ?? (this.tags = new List<string>());
             }
 
-            private set
+            set
             {
                 this.tags = value;
             }
@@ -84,20 +84,6 @@ namespace Marain.Cms
             set
             {
                 this.slug = new Slug(value).ToString();
-            }
-        }
-
-        /// <summary>
-        /// Gets an enumerable containing the full hierarchical tree for the slug.
-        /// </summary>
-        /// <remarks>
-        /// <para>For example <c>foo/bar/baz/</c> would produce <c>["foo/", "foo/bar/", "foo/bar/baz/"]</c>.</para>
-        /// </remarks>
-        public IEnumerable<string> SlugTree
-        {
-            get
-            {
-                return Marain.Cms.Slug.GetTree(this.Slug);
             }
         }
 
