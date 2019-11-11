@@ -116,10 +116,10 @@ this.ScenarioInitialize(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Render a markdown to HTML")]
-        public virtual void RenderAMarkdownToHTML()
+        [NUnit.Framework.DescriptionAttribute("Render markdown to HTML")]
+        public virtual void RenderMarkdownToHTML()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Render a markdown to HTML", null, ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Render markdown to HTML", null, ((string[])(null)));
 #line 14
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();

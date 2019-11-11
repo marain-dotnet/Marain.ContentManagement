@@ -22,7 +22,9 @@ namespace Microsoft.Extensions.DependencyInjection
         public static ContentFactory RegisterLiquidRenderer(this ContentFactory factory)
         {
             factory.RegisterTransientContent<LiquidPayload>();
+            factory.RegisterTransientContent<LiquidWithMarkdownPayload>();
             factory.RegisterTransientContent<LiquidRenderer>();
+            factory.RegisterTransientContent<LiquidWithMarkdownRenderer>();
             return factory;
         }
 

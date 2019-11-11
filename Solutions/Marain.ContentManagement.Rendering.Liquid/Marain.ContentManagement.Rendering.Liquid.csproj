@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Marain.ContentManagement.Rendering.Abstractions\Marain.ContentManagement.Rendering.Abstractions.csproj" />
+    <ProjectReference Include="..\Marain.ContentManagement.Rendering.Markdown\Marain.ContentManagement.Rendering.Markdown.csproj" />
   </ItemGroup>
 
 </Project>
