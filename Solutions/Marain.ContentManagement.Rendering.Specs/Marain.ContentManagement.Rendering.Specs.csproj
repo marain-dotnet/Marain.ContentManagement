@@ -27,9 +27,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Marain.ContentManagement.Abstractions\Marain.ContentManagement.Abstractions.csproj" />
+    <ProjectReference Include="..\Marain.ContentManagement.Rendering.Markdown\Marain.ContentManagement.Rendering.Markdown.csproj" />
     <ProjectReference Include="..\Marain.ContentManagement.SpecHelpers\Marain.ContentManagement.SpecHelpers.csproj" />
-    <ProjectReference Include="..\Marain.ContentManagement.Storage.AzureComsos\Marain.ContentManagement.Storage.AzureComsos.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,5 +36,16 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  
+
+  <ItemGroup>
+    <Folder Include="Drivers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <SpecFlowFeatureFiles Update="Features\RenderingContent.feature">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+    </SpecFlowFeatureFiles>
+  </ItemGroup>
+
 </Project>

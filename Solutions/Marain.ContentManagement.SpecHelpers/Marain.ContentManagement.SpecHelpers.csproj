@@ -28,7 +28,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Marain.ContentManagement.Abstractions\Marain.ContentManagement.Abstractions.csproj" />
-    <ProjectReference Include="..\Marain.ContentManagement.SpecHelpers\Marain.ContentManagement.SpecHelpers.csproj" />
     <ProjectReference Include="..\Marain.ContentManagement.Storage.AzureComsos\Marain.ContentManagement.Storage.AzureComsos.csproj" />
   </ItemGroup>
 
@@ -37,5 +36,5 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  
+
 </Project>

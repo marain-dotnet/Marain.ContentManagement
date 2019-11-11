@@ -40,8 +40,8 @@
             IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
             foreach (TableRow row in contentTable.Rows)
             {
-                (Content content, string name) = ContentStoreDriver.GetContentFor(row);
-                ContentStoreDriver.SetAbTestSet(this.scenarioContext, content, row);
+                (Content content, string name) = ContentDriver.GetContentFor(row);
+                ContentDriver.SetAbTestSet(this.scenarioContext, content, row);
                 await store.StoreContentAsync(content);
                 this.scenarioContext.Set(content, name);
             }

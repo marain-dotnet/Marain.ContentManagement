@@ -28,11 +28,11 @@ namespace Microsoft.Extensions.DependencyInjection
         }
 
         /// <summary>
-        /// Add content management content to the container.
+        /// Add content management rendering content to the container.
         /// </summary>
         /// <param name="serviceCollection">The service collection to which to add the content.</param>
         /// <returns>The service collection wth the content added.</returns>
-        public static IServiceCollection AddMarkdownRenderer(this IServiceCollection serviceCollection)
+        public static IServiceCollection AddContentManagementRendering(this IServiceCollection serviceCollection)
         {
             if (serviceCollection.Any(s => s.ServiceType == typeof(IContentRendererFactory)))
             {
