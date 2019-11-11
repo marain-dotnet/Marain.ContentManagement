@@ -43,6 +43,10 @@
                 {
                     ContentDriver.SetContentLiquid(content, row);
                 }
+                else if (row.ContainsKey("Liquid with markdown template"))
+                {
+                    ContentDriver.SetContentLiquidMarkdown(content, row);
+                }
                 this.scenarioContext.Set(content, name);
             }
         }

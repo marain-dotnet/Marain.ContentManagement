@@ -156,6 +156,16 @@
         }
 
         /// <summary>
+        /// Sets a Liquid with markdown payload on a content instance.
+        /// </summary>
+        /// <param name="content">The content instance on which to set the payload.</param>
+        /// <param name="row">The row from which to get the markdown.</param>
+        public static void SetContentLiquidMarkdown(Content content, TableRow row)
+        {
+            content.ContentPayload = new LiquidWithMarkdownPayload { Template = SubstituteContent(row["Liquid with markdown template"]) };
+        }
+
+        /// <summary>
         /// Sets a content fragment payload on a content instance.
         /// </summary>
         /// <param name="scenarioContext">The scenario context.</param>

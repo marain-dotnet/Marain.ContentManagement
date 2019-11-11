@@ -202,6 +202,50 @@ this.ScenarioInitialize(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Render a liquid template with markdown to HTML")]
+        public virtual void RenderALiquidTemplateWithMarkdownToHTML()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Render a liquid template with markdown to HTML", null, ((string[])(null)));
+#line 28
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name",
+                        "Id",
+                        "Slug",
+                        "Tags",
+                        "CategoryPaths",
+                        "Author.Name",
+                        "Author.Id",
+                        "Title",
+                        "Description",
+                        "Culture",
+                        "Liquid with markdown template"});
+            table4.AddRow(new string[] {
+                        "FirstContent",
+                        "{newguid}",
+                        "/",
+                        "First tag; Second tag",
+                        "/standard/content;/books/hobbit;/books/lotr",
+                        "Bilbo Baggins",
+                        "{newguid}",
+                        "This is the title",
+                        "A description of the content",
+                        "fr-FR",
+                        "{% for tag in content.tags %}1. {{tag}}{% endfor %}"});
+#line 29
+ testRunner.Given("I have created content", ((string)(null)), table4, "Given ");
+#line 32
+ testRunner.When("I render the content called \'FirstContent\' to \'FirstRendered\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 33
+ testRunner.Then("the output called \'FirstRendered\' should match \'<ol>\\n<li>First tag1. Second tag<" +
+                    "/li>\\n</ol>\\n\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore
