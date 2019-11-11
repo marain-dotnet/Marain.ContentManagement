@@ -14,7 +14,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marain.ContentManagement.St
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marain.ContentManagement.Specs", "Marain.ContentManagement.Specs\Marain.ContentManagement.Specs.csproj", "{51B3F3D5-F68E-48C7-A8BF-FB5558CD02CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marain.ContentManagement.OpenApi.Service", "Marain.ContentManagement.OpenApi.Service\Marain.ContentManagement.OpenApi.Service.csproj", "{B3D19394-E72A-4EA0-9391-B2A59DFFFAFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marain.ContentManagement.OpenApi.Service", "Marain.ContentManagement.OpenApi.Service\Marain.ContentManagement.OpenApi.Service.csproj", "{B3D19394-E72A-4EA0-9391-B2A59DFFFAFE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marain.ContentManagement.Rendering.Abstractions", "Marain.ContentManagement.Rendering.Abstractions\Marain.ContentManagement.Rendering.Abstractions.csproj", "{E7B06D8B-01BC-4936-86CB-07EEC8CF6645}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marain.ContentManagement.Rendering.Markdown", "Marain.ContentManagement.Rendering.Markdown\Marain.ContentManagement.Rendering.Markdown.csproj", "{D9059742-AE64-426C-916D-BEA7C8274410}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +42,14 @@ Global
 		{B3D19394-E72A-4EA0-9391-B2A59DFFFAFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3D19394-E72A-4EA0-9391-B2A59DFFFAFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3D19394-E72A-4EA0-9391-B2A59DFFFAFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7B06D8B-01BC-4936-86CB-07EEC8CF6645}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7B06D8B-01BC-4936-86CB-07EEC8CF6645}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7B06D8B-01BC-4936-86CB-07EEC8CF6645}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7B06D8B-01BC-4936-86CB-07EEC8CF6645}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9059742-AE64-426C-916D-BEA7C8274410}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9059742-AE64-426C-916D-BEA7C8274410}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9059742-AE64-426C-916D-BEA7C8274410}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9059742-AE64-426C-916D-BEA7C8274410}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

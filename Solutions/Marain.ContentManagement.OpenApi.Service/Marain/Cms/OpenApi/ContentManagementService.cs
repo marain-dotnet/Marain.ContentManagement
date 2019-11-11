@@ -2,11 +2,10 @@
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
-namespace Marain.ContentManagement.OpenApi
+namespace Marain.Cms.OpenApi
 {
     using System;
     using System.Threading.Tasks;
-    using Marain.Cms;
     using Menes;
     using Menes.Hal;
 

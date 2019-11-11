@@ -1,4 +1,4 @@
-﻿// <copyright file="ContentManagementContentFactoryExtensions.cs" company="Endjin Limited">
+﻿// <copyright file="MarkdownRendererContentFactoryExtensions.cs" company="Endjin Limited">
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
@@ -6,24 +6,23 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     using Corvus.ContentHandling;
     using Marain.Cms;
+    using Marain.Cms.Internal;
+    using Markdig;
 
     /// <summary>
     /// Extensions for the <see cref="ContentFactory"/>.
     /// </summary>
-    public static class ContentManagementContentFactoryExtensions
+    public static class MarkdownRendererContentFactoryExtensions
     {
         /// <summary>
         /// Registers the content management content types with the factory.
         /// </summary>
         /// <param name="factory">The factory with which to register the content.</param>
         /// <returns>The factory with the content registered.</returns>
-        public static ContentFactory RegisterContentManagementContent(this ContentFactory factory)
+        public static ContentFactory RegisterMarkdownRenderer(this ContentFactory factory)
         {
-            factory.RegisterTransientContent<Content>();
-            factory.RegisterTransientContent<ContentState>();
-            factory.RegisterTransientContent<ContentFragment>();
-            factory.RegisterTransientContent<AbTestSet>();
-            factory.RegisterTransientContent<CompoundPayload>();
+            factory.RegisterTransientContent<MarkdownPayload>();
+            factory.RegisterTransientContent<MarkdownRenderer>();
             return factory;
         }
 
@@ -32,11 +31,13 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <param name="serviceCollection">The service collection to which to add the content.</param>
         /// <returns>The service collection wth the content added.</returns>
-        public static IServiceCollection AddContentManagementContent(this IServiceCollection serviceCollection)
+        public static IServiceCollection AddMarkdownRenderer(this IServiceCollection serviceCollection)
         {
+            serviceCollection.AddSingleton(new MarkdownPipelineBuilder().UseAdvancedExtensions().Build());
+            serviceCollection.AddContentManagementContent();
             return serviceCollection.AddContent(factory =>
             {
-                factory.RegisterContentManagementContent();
+                factory.RegisterMarkdownRenderer();
             });
         }
     }
