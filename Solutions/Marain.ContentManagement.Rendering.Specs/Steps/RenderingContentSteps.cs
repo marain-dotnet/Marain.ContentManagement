@@ -35,6 +35,10 @@
                 {
                     ContentDriver.SetAbTestSet(this.scenarioContext, content, row);
                 }
+                else if (row.ContainsKey("Markdown"))
+                {
+                    ContentDriver.SetContentMarkdown(content, row);
+                }
                 this.scenarioContext.Set(content, name);
             }
         }

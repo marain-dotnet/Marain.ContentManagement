@@ -4,6 +4,7 @@
 
 namespace Microsoft.Extensions.DependencyInjection
 {
+    using System.Linq;
     using Corvus.ContentHandling;
     using Marain.Cms;
     using Marain.Cms.Internal;
@@ -33,8 +34,13 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <returns>The service collection wth the content added.</returns>
         public static IServiceCollection AddMarkdownRenderer(this IServiceCollection serviceCollection)
         {
-            serviceCollection.AddSingleton(new MarkdownPipelineBuilder().UseAdvancedExtensions().Build());
-            serviceCollection.AddContentManagementContent();
+            if (!serviceCollection.Any(s => s.ServiceType == typeof(MarkdownPipeline)))
+            {
+                serviceCollection.AddSingleton(new MarkdownPipelineBuilder().UseAdvancedExtensions().Build());
+            }
+
+            serviceCollection.AddContentManagementRendering();
+
             return serviceCollection.AddContent(factory =>
             {
                 factory.RegisterMarkdownRenderer();

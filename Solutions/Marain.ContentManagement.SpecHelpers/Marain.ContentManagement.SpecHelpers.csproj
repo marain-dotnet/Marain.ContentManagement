@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Marain.ContentManagement.Abstractions\Marain.ContentManagement.Abstractions.csproj" />
+    <ProjectReference Include="..\Marain.ContentManagement.Rendering.Markdown\Marain.ContentManagement.Rendering.Markdown.csproj" />
     <ProjectReference Include="..\Marain.ContentManagement.Storage.AzureComsos\Marain.ContentManagement.Storage.AzureComsos.csproj" />
   </ItemGroup>
 

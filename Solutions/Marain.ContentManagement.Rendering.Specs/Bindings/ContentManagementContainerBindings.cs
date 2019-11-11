@@ -39,8 +39,7 @@ namespace Marain.ContentManagement.Specs.Bindings
                         .Build();
 
                     serviceCollection.AddSingleton(config);
-
-                    serviceCollection.AddContentManagementRendering();
+                    serviceCollection.AddMarkdownRenderer();
                 });
         }
     }

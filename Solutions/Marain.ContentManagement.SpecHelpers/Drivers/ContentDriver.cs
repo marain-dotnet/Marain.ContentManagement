@@ -136,6 +136,16 @@
         }
 
         /// <summary>
+        /// Sets a markdown payload on a content instance.
+        /// </summary>
+        /// <param name="content">The content instance on which to set the payload.</param>
+        /// <param name="row">The row from which to get the markdown.</param>
+        public static void SetContentMarkdown(Content content, TableRow row)
+        {
+            content.ContentPayload = new MarkdownPayload { Markdown = SubstituteContent(row["Markdown"]) };
+        }
+
+        /// <summary>
         /// Sets a content fragment payload on a content instance.
         /// </summary>
         /// <param name="scenarioContext">The scenario context.</param>
@@ -171,7 +181,7 @@
                 return null;
             }
 
-            return v.Replace("{newguid}", Guid.NewGuid().ToString());
+            return v.Replace("{newguid}", Guid.NewGuid().ToString()).Replace(@"\n", "\n").Replace(@"\r", "\r").Replace(@"\t", "\t");
         }
 
         private static IList<string> SplitAndTrim(string value)
