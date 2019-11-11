@@ -158,6 +158,50 @@ this.ScenarioInitialize(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Render a liquid template to HTML")]
+        public virtual void RenderALiquidTemplateToHTML()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Render a liquid template to HTML", null, ((string[])(null)));
+#line 21
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name",
+                        "Id",
+                        "Slug",
+                        "Tags",
+                        "CategoryPaths",
+                        "Author.Name",
+                        "Author.Id",
+                        "Title",
+                        "Description",
+                        "Culture",
+                        "Liquid template"});
+            table3.AddRow(new string[] {
+                        "FirstContent",
+                        "{newguid}",
+                        "/",
+                        "First tag; Second tag",
+                        "/standard/content;/books/hobbit;/books/lotr",
+                        "Bilbo Baggins",
+                        "{newguid}",
+                        "This is the title",
+                        "A description of the content",
+                        "fr-FR",
+                        "<ul>{% for tag in content.tags %}<li>{{tag}}</li>{% endfor %}</ul>"});
+#line 22
+ testRunner.Given("I have created content", ((string)(null)), table3, "Given ");
+#line 25
+ testRunner.When("I render the content called \'FirstContent\' to \'FirstRendered\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 26
+ testRunner.Then("the output called \'FirstRendered\' should match \'<ul><li>First tag</li><li>Second " +
+                    "tag</li></ul>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore

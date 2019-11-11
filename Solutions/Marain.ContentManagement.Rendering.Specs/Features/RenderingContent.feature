@@ -13,7 +13,14 @@ Scenario: Render a content fragment to HTML
 
 Scenario: Render markdown to HTML
 	Given I have created content
-		| Name         | Id        | Slug | Tags                  | CategoryPaths                               | Author.Name   | Author.Id | Title             | Description                  | Culture | Markdown                       |
+		| Name         | Id        | Slug | Tags                  | CategoryPaths                               | Author.Name   | Author.Id | Title             | Description                  | Culture | Markdown                         |
 		| FirstContent | {newguid} | /    | First tag; Second tag | /standard/content;/books/hobbit;/books/lotr | Bilbo Baggins | {newguid} | This is the title | A description of the content | fr-FR   | This is the *fragment* of text 1 |
 	When I render the content called 'FirstContent' to 'FirstRendered'
 	Then the output called 'FirstRendered' should match '<p>This is the <em>fragment</em> of text 1</p>\n'
+
+Scenario: Render a liquid template to HTML
+	Given I have created content
+		| Name         | Id        | Slug | Tags                  | CategoryPaths                               | Author.Name   | Author.Id | Title             | Description                  | Culture | Liquid template                                                    |
+		| FirstContent | {newguid} | /    | First tag; Second tag | /standard/content;/books/hobbit;/books/lotr | Bilbo Baggins | {newguid} | This is the title | A description of the content | fr-FR   | <ul>{% for tag in content.tags %}<li>{{tag}}</li>{% endfor %}</ul> |
+	When I render the content called 'FirstContent' to 'FirstRendered'
+	Then the output called 'FirstRendered' should match '<ul><li>First tag</li><li>Second tag</li></ul>'

@@ -39,6 +39,10 @@
                 {
                     ContentDriver.SetContentMarkdown(content, row);
                 }
+                else if (row.ContainsKey("Liquid template"))
+                {
+                    ContentDriver.SetContentLiquid(content, row);
+                }
                 this.scenarioContext.Set(content, name);
             }
         }

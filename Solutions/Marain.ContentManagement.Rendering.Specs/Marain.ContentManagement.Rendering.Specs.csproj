@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Marain.ContentManagement.Rendering.Markdown\Marain.ContentManagement.Rendering.Markdown.csproj" />
+    <ProjectReference Include="..\Marain.ContentManagement.Rendering.Liquid\Marain.ContentManagement.Rendering.Liquid.csproj" />
     <ProjectReference Include="..\Marain.ContentManagement.SpecHelpers\Marain.ContentManagement.SpecHelpers.csproj" />
   </ItemGroup>
 
