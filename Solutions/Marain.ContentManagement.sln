@@ -24,6 +24,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marain.ContentManagement.Re
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marain.ContentManagement.SpecHelpers", "Marain.ContentManagement.SpecHelpers\Marain.ContentManagement.SpecHelpers.csproj", "{FC79A467-0616-4481-A8F4-2B92C5FDB0A0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marain.ContentManagement.Rendering.Liquid", "Marain.ContentManagement.Rendering.Liquid\Marain.ContentManagement.Rendering.Liquid.csproj", "{2117E0FE-CE0E-4970-97A1-6B52F60F14D3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,6 +64,10 @@ Global
 		{FC79A467-0616-4481-A8F4-2B92C5FDB0A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC79A467-0616-4481-A8F4-2B92C5FDB0A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC79A467-0616-4481-A8F4-2B92C5FDB0A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2117E0FE-CE0E-4970-97A1-6B52F60F14D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2117E0FE-CE0E-4970-97A1-6B52F60F14D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2117E0FE-CE0E-4970-97A1-6B52F60F14D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2117E0FE-CE0E-4970-97A1-6B52F60F14D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
