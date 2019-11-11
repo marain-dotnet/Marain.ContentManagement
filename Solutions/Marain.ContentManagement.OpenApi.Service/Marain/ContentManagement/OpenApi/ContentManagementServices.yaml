@@ -365,8 +365,6 @@ components:
             $ref: '#/components/schemas/ContentPayload'
           metadata:
             $ref: '#/components/schemas/PropertyBag'
-          originalSource:
-            $ref: '#/components/schemas/ContentSource'
         additionalProperties: true
     ContentWithState:
       allOf:
@@ -412,16 +410,6 @@ components:
             items:
               $ref: '#/components/schemas/ContentSummaryWithState'
         additionalProperties: true
-    ContentSource:
-      type: object
-      properties:
-        contentId:
-          type: string
-        slug:
-          type: string
-      required:
-        - contentId
-        - slug
     CmsIdentity:
       type: object
       properties:
