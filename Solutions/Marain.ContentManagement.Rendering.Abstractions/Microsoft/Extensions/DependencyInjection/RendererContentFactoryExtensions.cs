@@ -23,6 +23,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             factory.RegisterTransientContent<AbTestSetRenderer>();
             factory.RegisterTransientContent<CompoundPayloadRenderer>();
+            factory.RegisterTransientContent<CompoundContentRenderer>();
             factory.RegisterTransientContent<ContentFragmentRenderer>();
             return factory;
         }
