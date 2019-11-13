@@ -16,7 +16,7 @@
   <Import Project="..\Common.NetStandard_2_0.proj" />
 
   <ItemGroup>
-    <PackageReference Include="DotLiquid" Version="2.0.314" />
+    <PackageReference Include="Corvus.DotLiquidAsync" Version="1.7.0" />
   </ItemGroup>
 
   <ItemGroup>

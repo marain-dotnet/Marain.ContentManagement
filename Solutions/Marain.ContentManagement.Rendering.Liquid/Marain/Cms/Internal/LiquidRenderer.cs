@@ -42,7 +42,7 @@ namespace Marain.Cms.Internal
             {
                 using var writer = new StreamWriter(output, this.Encoding, this.BufferSize, true);
                 var template = Template.Parse(liquid.Template);
-                await writer.WriteAsync(template.Render(Hash.FromAnonymousObject(new { content = new ContentDrop(parentContent) }))).ConfigureAwait(false);
+                await writer.WriteAsync(await template.RenderAsync(Hash.FromAnonymousObject(new { content = new ContentDrop(parentContent) })).ConfigureAwait(false)).ConfigureAwait(false);
             }
         }
     }

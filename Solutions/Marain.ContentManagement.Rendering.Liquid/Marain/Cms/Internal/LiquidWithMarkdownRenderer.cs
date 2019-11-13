@@ -48,17 +48,15 @@ namespace Marain.Cms.Internal
         public string ContentType => RegisteredContentType;
 
         /// <inheritdoc/>
-        public Task RenderAsync(Stream output, Content parentContent, IContentPayload currentPayload, PropertyBag context)
+        public async Task RenderAsync(Stream output, Content parentContent, IContentPayload currentPayload, PropertyBag context)
         {
             if (currentPayload is LiquidWithMarkdownPayload liquid)
             {
                 using var writer = new StreamWriter(output, this.Encoding, this.BufferSize, true);
                 var template = Template.Parse(liquid.Template);
-                string markdown = template.Render(Hash.FromAnonymousObject(new { content = new ContentDrop(parentContent) }));
+                string markdown = await template.RenderAsync(Hash.FromAnonymousObject(new { content = new ContentDrop(parentContent) }));
                 Markdown.ToHtml(markdown, writer, this.pipeline);
             }
-
-            return Task.CompletedTask;
         }
     }
 }
