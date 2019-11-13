@@ -36,6 +36,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddLiquidRenderer(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddContentManagementRendering();
+            Template.RegisterTag<LiquidContent>("render");
             return serviceCollection.AddContent(factory =>
             {
                 factory.RegisterLiquidRenderer();
