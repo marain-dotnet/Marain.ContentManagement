@@ -32,27 +32,16 @@ namespace Marain.Cms.Internal
         }
 
         /// <summary>
-        /// Gets or sets the default encoding for the stream.
-        /// </summary>
-        public Encoding Encoding { get; set; } = Encoding.UTF8;
-
-        /// <summary>
-        /// Gets or sets the default buffer size for the stream.
-        /// </summary>
-        public int BufferSize { get; set; } = 1024;
-
-        /// <summary>
         /// Gets the content type for the renderer.
         /// </summary>
         public string ContentType => RegisteredContentType;
 
         /// <inheritdoc/>
-        public Task RenderAsync(Stream output, Content parentContent, IContentPayload currentPayload, PropertyBag context)
+        public Task RenderAsync(TextWriter output, Content parentContent, IContentPayload currentPayload, PropertyBag context)
         {
             if (currentPayload is MarkdownPayload markdown)
             {
-                using var writer = new StreamWriter(output, this.Encoding, this.BufferSize, true);
-                Markdown.ToHtml(markdown.Markdown, writer, this.pipeline);
+                Markdown.ToHtml(markdown.Markdown, output, this.pipeline);
             }
 
             return Task.CompletedTask;

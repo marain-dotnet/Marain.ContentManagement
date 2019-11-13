@@ -41,7 +41,7 @@ namespace Marain.Cms.Internal
         public string ContentType => RegisteredContentType;
 
         /// <inheritdoc/>
-        public async Task RenderAsync(Stream output, Content parentContent, IContentPayload currentPayload, PropertyBag context)
+        public async Task RenderAsync(TextWriter output, Content parentContent, IContentPayload currentPayload, PropertyBag context)
         {
             if (!context.TryGet(AbTestIdContextKey, out string abTestId))
             {

@@ -1,6 +1,7 @@
 ﻿namespace Marain.ContentManagement.Specs.Steps
 {
     using System.IO;
+    using System.Text;
     using System.Threading.Tasks;
     using Corvus.SpecFlow.Extensions;
     using Marain.Cms;
@@ -58,11 +59,12 @@
             IContentRendererFactory rendererFactory = ContainerBindings.GetServiceProvider(this.featureContext).GetService<IContentRendererFactory>();
             IContentRenderer renderer = rendererFactory.GetRendererFor(content.ContentPayload);
             using var stream = new MemoryStream();
-            await renderer.RenderAsync(stream, content, content.ContentPayload, null);
-            stream.Flush();
+            using var writer = new StreamWriter(stream, Encoding.UTF8, 1024, true);
+            await renderer.RenderAsync(writer, content, content.ContentPayload, null);
+            await writer.FlushAsync();
             stream.Position = 0;
-            using var reader = new StreamReader(stream);
-            this.scenarioContext.Set(reader.ReadToEnd(), outputName);
+            using var reader = new StreamReader(stream, Encoding.UTF8, true, 1024, true);
+            this.scenarioContext.Set(await reader.ReadToEndAsync(), outputName);
         }
 
         [Then(@"the output called '(.*)' should match '(.*)'")]
