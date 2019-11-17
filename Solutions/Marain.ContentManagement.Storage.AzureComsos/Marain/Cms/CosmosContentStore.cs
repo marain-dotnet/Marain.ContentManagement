@@ -146,7 +146,7 @@ namespace Marain.Cms
                 ContentState state = results.Resource.FirstOrDefault();
                 if (!(state is null))
                 {
-                    Content content = await this.GetContentAsync<Content>(state.ContentId, state.Slug);
+                    Content content = await this.GetContentAsync<Content>(state.ContentId, state.Slug).ConfigureAwait(false);
                     return new ContentWithState(content, state);
                 }
             }
@@ -199,7 +199,7 @@ namespace Marain.Cms
                            new QueryDefinition(ContentQuery)
                                .WithParameter("@slug", slug);
 
-            return await this.GetContentSummariesAsync(limit, continuationToken, queryDefinition);
+            return await this.GetContentSummariesAsync(limit, continuationToken, queryDefinition).ConfigureAwait(false);
         }
 
         private static QueryDefinition GetWorkflowStateQueryDefinition(string slug, string workflowId, string stateName)
@@ -242,12 +242,9 @@ namespace Marain.Cms
                            new QueryDefinition(queryBuilder.ToString())
                                .WithParameter("@slug", slug);
 
-            contentIds.ForEachAtIndex((s, i) =>
-            {
-                queryDefinition = queryDefinition.WithParameter($"@id{i}", s);
-            });
+            contentIds.ForEachAtIndex((s, i) => queryDefinition = queryDefinition.WithParameter($"@id{i}", s));
 
-            ContentSummaries summaries = await this.GetContentSummariesAsync(states.Count, null, queryDefinition);
+            ContentSummaries summaries = await this.GetContentSummariesAsync(states.Count, null, queryDefinition).ConfigureAwait(false);
             var summaryDictionary = summaries.Summaries.ToDictionary(s => s.Id);
 
             return states.Select(s => new ContentSummaryWithState(summaryDictionary[s.ContentId], s)).ToList();

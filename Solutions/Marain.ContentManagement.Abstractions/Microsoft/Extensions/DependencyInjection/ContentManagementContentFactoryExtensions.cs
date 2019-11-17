@@ -35,10 +35,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <returns>The service collection wth the content added.</returns>
         public static IServiceCollection AddContentManagementContent(this IServiceCollection serviceCollection)
         {
-            return serviceCollection.AddContent(factory =>
-            {
-                factory.RegisterContentManagementContent();
-            });
+            return serviceCollection.AddContent(factory => factory.RegisterContentManagementContent());
         }
     }
 }

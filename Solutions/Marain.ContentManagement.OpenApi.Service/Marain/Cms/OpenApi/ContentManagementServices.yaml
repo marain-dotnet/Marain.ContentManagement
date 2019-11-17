@@ -35,6 +35,12 @@ paths:
           description: Forbidden
         '409':
           description: Conflict - content with the given ID and Slug has already been created.
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
     get:
       tags:
         - Content
@@ -299,41 +305,39 @@ components:
               additionalProperties: false
       additionalProperties: true
     ContentSummary:
-      allOf:
-      - $ref: '#/components/schemas/Resource'
-      - type: object
-        properties:
-          id:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique ID of the tenant. This forms a path with parent tenants. 
+        eTag:
+          type: string
+        contentType:
+          type: string
+          description: The content type of the tenant.
+        categoryPaths:
+          type: array
+          items:
             type: string
-            description: The unique ID of the tenant. This forms a path with parent tenants. 
-          eTag:
+        tags:
+          type: array
+          items:
             type: string
-          contentType:
-            type: string
-            description: The content type of the tenant.
-          categoryPaths:
-            type: array
-            items:
-              type: string
-          tags:
-            type: array
-            items:
-              type: string
-          slug:
-            type: string          
-          author:
-            $ref: '#/components/schemas/CmsIdentity'
-          title:
-            type: string
-          description:
-            type: string
-          culture:
-            type: string
-        required:
-          - id
-          - contentType
-          - slug
-        additionalProperties: true
+        slug:
+          type: string          
+        author:
+          $ref: '#/components/schemas/CmsIdentity'
+        title:
+          type: string
+        description:
+          type: string
+        culture:
+          type: string
+      required:
+        - id
+        - contentType
+        - slug
+      additionalProperties: true
     State:
       allOf:
       - $ref: '#/components/schemas/Resource'
@@ -366,6 +370,10 @@ components:
           metadata:
             $ref: '#/components/schemas/PropertyBag'
         additionalProperties: true
+    ContentResponse:
+      allOf: 
+      - $ref: '#/components/schemas/Resource'
+      - $ref: '#/components/schemas/Content'
     ContentWithState:
       allOf:
       - $ref: '#/components/schemas/Content'
@@ -419,6 +427,35 @@ components:
           type: string
       required:
         - userId
+    ProblemDetails:
+      required:
+        - status
+        - detail
+      properties:
+        status:
+          type: integer
+          format: int32
+        detail:
+          type: string
+        title:
+          type: string
+        instance:
+          type: string
+          format: url
+        type: 
+          type: string
+          format: url
+        validationErrors: 
+          type: array
+          items:
+            oneOf:
+            - type: array
+            - type: boolean
+            - type: integer
+            - type: number
+            - type: object
+            - type: string
+      additionalProperties: true
   parameters:
     tenantId:
       name: tenantId

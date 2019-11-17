@@ -42,10 +42,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             serviceCollection.AddContentManagementContent();
             serviceCollection.AddSingleton<IContentRendererFactory, ContentRendererFactory>();
-            return serviceCollection.AddContent(factory =>
-            {
-                factory.RegisterRenderers();
-            });
+            return serviceCollection.AddContent(factory => factory.RegisterRenderers());
         }
     }
 }

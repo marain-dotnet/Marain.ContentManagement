@@ -21,7 +21,7 @@
             this.scenarioContext = scenarioContext;
         }
 
-        [Given(@"I have created an AbTest set called '(.*)' with the content")]
+        [Given("I have created an AbTest set called '(.*)' with the content")]
         public void GivenIHaveCreatedAnAbTestSetCalledWithTheContent(string testSetName, Table table)
         {
             AbTestSet testSet = ContainerBindings.GetServiceProvider(this.featureContext).GetRequiredService<AbTestSet>();
@@ -34,7 +34,7 @@
             this.scenarioContext.Set(testSet, testSetName);
         }
 
-        [Given(@"I have created content with an AbTest set")]
+        [Given("I have created content with an AbTest set")]
         public async Task GivenIHaveCreatedContentWithAnAbTestSet(Table contentTable)
         {
             IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
@@ -42,17 +42,17 @@
             {
                 (Content content, string name) = ContentDriver.GetContentFor(row);
                 ContentDriver.SetAbTestSet(this.scenarioContext, content, row);
-                await store.StoreContentAsync(content);
+                await store.StoreContentAsync(content).ConfigureAwait(false);
                 this.scenarioContext.Set(content, name);
             }
         }
 
-        [When(@"I get the ABTest content called '(.*)' from the content called '(.*)' and call it '(.*)'")]
+        [When("I get the ABTest content called '(.*)' from the content called '(.*)' and call it '(.*)'")]
         public async Task WhenIGetTheABTestContentCalledFromTheContentCalledAndCallIt(string abTestGroup, string contentName, string actualName)
         {
             Content content = this.scenarioContext.Get<Content>(contentName);
             var testSet = content.ContentPayload as AbTestSet;
-            Content abcontent = await testSet.GetContentForAbGroupAsync(abTestGroup);
+            Content abcontent = await testSet.GetContentForAbGroupAsync(abTestGroup).ConfigureAwait(false);
             this.scenarioContext.Set(abcontent, actualName);
         }
 
@@ -63,7 +63,7 @@
             {
                 Content content = this.scenarioContext.Get<Content>(contentName);
                 var testSet = content.ContentPayload as AbTestSet;
-                Content abcontent = await testSet.GetContentForAbGroupAsync(abTestGroup);
+                Content abcontent = await testSet.GetContentForAbGroupAsync(abTestGroup).ConfigureAwait(false);
                 Assert.Fail("Should have thrown a ContentNotFoundException.");
             }
             catch (ContentNotFoundException)

@@ -22,7 +22,7 @@
             this.scenarioContext = scenarioContext;
         }
 
-        [Given(@"I have created content")]
+        [Given("I have created content")]
         public void GivenIHaveCreatedContent(Table contentTable)
         {
             foreach (TableRow row in contentTable.Rows)
@@ -52,7 +52,7 @@
             }
         }
 
-        [When(@"I render the content called '(.*)' to '(.*)'")]
+        [When("I render the content called '(.*)' to '(.*)'")]
         public async Task WhenIRenderTheContentCalledTo(string contentName, string outputName)
         {
             Content content = this.scenarioContext.Get<Content>(contentName);
@@ -67,7 +67,7 @@
             this.scenarioContext.Set(await reader.ReadToEndAsync(), outputName);
         }
 
-        [Then(@"the output called '(.*)' should match '(.*)'")]
+        [Then("the output called '(.*)' should match '(.*)'")]
         public void ThenTheOutputCalledShouldMatch(string outputName, string outputString)
         {
             Assert.AreEqual(ContentDriver.GetObjectValue<string>(this.scenarioContext, outputString), this.scenarioContext.Get<string>(outputName));

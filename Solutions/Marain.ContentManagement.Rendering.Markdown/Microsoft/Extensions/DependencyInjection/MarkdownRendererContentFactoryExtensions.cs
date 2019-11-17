@@ -41,10 +41,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             serviceCollection.AddContentManagementRendering();
 
-            return serviceCollection.AddContent(factory =>
-            {
-                factory.RegisterMarkdownRenderer();
-            });
+            return serviceCollection.AddContent(factory => factory.RegisterMarkdownRenderer());
         }
     }
 }

@@ -8,7 +8,7 @@
     /// <summary>
     /// Spec Driver for the content store.
     /// </summary>
-    public class ContentStoreDriver
+    public static class ContentStoreDriver
     {
         public static void Compare(Content expected, ContentSummary actual)
         {
@@ -43,19 +43,13 @@
         public static void MatchSummariesToContent(List<Content> expected, ContentSummaries summaries)
         {
             Assert.AreEqual(expected.Count, summaries.Summaries.Count);
-            expected.ForEachAtIndex((expectedContent, i) =>
-            {
-                Compare(expectedContent, summaries.Summaries[i]);
-            });
+            expected.ForEachAtIndex((expectedContent, i) => Compare(expectedContent, summaries.Summaries[i]));
         }
 
         internal static void MatchSummariesToContent(List<Content> expectedContent, List<string> expectedStates, ContentSummariesWithState summaries)
         {
             Assert.AreEqual(expectedContent.Count, summaries.Summaries.Count);
-            expectedContent.ForEachAtIndex((ec, i) =>
-            {
-                Compare(ec, expectedStates[i], summaries.Summaries[i]);
-            });
+            expectedContent.ForEachAtIndex((ec, i) => Compare(ec, expectedStates[i], summaries.Summaries[i]));
         }
     }
 }

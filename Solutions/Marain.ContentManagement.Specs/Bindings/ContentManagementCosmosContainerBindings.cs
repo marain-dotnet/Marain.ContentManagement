@@ -63,7 +63,7 @@ namespace Marain.ContentManagement.Specs.Bindings
 
             Container contentManagementSpecsContainer = await factory.GetContainerForTenantAsync(
                 tenantProvider.Root,
-                new CosmosContainerDefinition("endjinspecssharedthroughput", $"{containerBase}contentmanagementspecs", Content.PartitionKeyPath, databaseThroughput: 400));
+                new CosmosContainerDefinition("endjinspecssharedthroughput", $"{containerBase}contentmanagementspecs", Content.PartitionKeyPath, databaseThroughput: 400)).ConfigureAwait(false);
 
             featureContext.Set(contentManagementSpecsContainer, ContentManagementSpecsContainer);
             featureContext.Set<IContentStore>(new CosmosContentStore(contentManagementSpecsContainer), ContentManagementSpecsContentStore);
@@ -78,10 +78,7 @@ namespace Marain.ContentManagement.Specs.Bindings
         public static Task TeardownCosmosDB(FeatureContext featureContext)
         {
             return featureContext.RunAndStoreExceptionsAsync(
-                async () =>
-                {
-                    await featureContext.Get<Container>(ContentManagementSpecsContainer).DeleteContainerAsync().ConfigureAwait(false);
-                });
+                async () => await featureContext.Get<Container>(ContentManagementSpecsContainer).DeleteContainerAsync().ConfigureAwait(false));
         }
 
         /// <summary>

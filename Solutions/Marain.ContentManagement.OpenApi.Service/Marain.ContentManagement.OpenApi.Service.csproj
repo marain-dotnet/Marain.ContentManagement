@@ -17,9 +17,15 @@
     </PackageReleaseNotes>
   </PropertyGroup>
   <Import Project="..\Common.NetStandard_2_0.proj" />
+  <ItemGroup>
+    <None Remove="Marain\Cms\OpenApi\ContentManagementServices.yaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Marain\Cms\OpenApi\ContentManagementServices.yaml" />
+  </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Menes.Abstractions" Version="0.9.0" />
+    <PackageReference Include="Menes.Abstractions" Version="0.10.0-preview.5" />
     <PackageReference Include="Microsoft.ApplicationInsights" Version="2.10.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.2.0" />
@@ -29,5 +35,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Marain.ContentManagement.Abstractions\Marain.ContentManagement.Abstractions.csproj" />
+    <ProjectReference Include="..\Marain.ContentManagement.Tenancy.Abstractions\Marain.ContentManagement.Tenancy.Abstractions.csproj" />
   </ItemGroup>
 </Project>

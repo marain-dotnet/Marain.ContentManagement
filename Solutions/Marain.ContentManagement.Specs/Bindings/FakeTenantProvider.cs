@@ -4,7 +4,8 @@
     using System.Threading.Tasks;
     using Corvus.Tenancy;
 
-    class FakeTenantProvider : ITenantProvider
+#pragma warning disable RCS1079 // Throwing of new NotImplementedException.
+    internal class FakeTenantProvider : ITenantProvider
     {
         public FakeTenantProvider(RootTenant rootTenant)
         {
@@ -44,3 +45,4 @@
         }
     }
 }
+#pragma warning restore RCS1079 // Throwing of new NotImplementedException.
