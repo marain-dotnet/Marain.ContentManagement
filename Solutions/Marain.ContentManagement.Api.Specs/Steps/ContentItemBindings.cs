@@ -44,7 +44,7 @@
             return this.scenarioContext.SendApiRequestAndStoreResponseAsync(request);
         }
 
-        [When(@"I request the content with slug '(.*)' and Id '(.*)' using a random etag")]
+        [When("I request the content with slug '(.*)' and Id '(.*)' using a random etag")]
         public Task WhenIRequestTheContentWithSlugAndIdUsingARandomEtag(string slug, string id)
         {
             string path = $"/{this.scenarioContext.CurrentTenantId()}/marain/content/{HttpUtility.UrlEncode(slug)}?contentId={HttpUtility.UrlEncode(id)}";

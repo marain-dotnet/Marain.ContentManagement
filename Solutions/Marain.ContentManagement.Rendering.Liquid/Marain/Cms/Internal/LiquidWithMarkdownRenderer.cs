@@ -43,7 +43,7 @@ namespace Marain.Cms.Internal
             if (currentPayload is LiquidWithMarkdownPayload liquid)
             {
                 var template = Template.Parse(liquid.Template);
-                string markdown = await template.RenderAsync(Hash.FromAnonymousObject(new { content = new ContentDrop(parentContent) }));
+                string markdown = await template.RenderAsync(Hash.FromAnonymousObject(new { content = new ContentDrop(parentContent) })).ConfigureAwait(false);
                 Markdown.ToHtml(markdown, output, this.pipeline);
             }
         }

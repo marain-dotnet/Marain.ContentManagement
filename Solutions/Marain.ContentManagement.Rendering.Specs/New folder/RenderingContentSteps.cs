@@ -60,11 +60,11 @@
             IContentRenderer renderer = rendererFactory.GetRendererFor(content.ContentPayload);
             using var stream = new MemoryStream();
             using var writer = new StreamWriter(stream, Encoding.UTF8, 1024, true);
-            await renderer.RenderAsync(writer, content, content.ContentPayload, null);
-            await writer.FlushAsync();
+            await renderer.RenderAsync(writer, content, content.ContentPayload, null).ConfigureAwait(false);
+            await writer.FlushAsync().ConfigureAwait(false);
             stream.Position = 0;
             using var reader = new StreamReader(stream, Encoding.UTF8, true, 1024, true);
-            this.scenarioContext.Set(await reader.ReadToEndAsync(), outputName);
+            this.scenarioContext.Set(await reader.ReadToEndAsync().ConfigureAwait(false), outputName);
         }
 
         [Then("the output called '(.*)' should match '(.*)'")]
