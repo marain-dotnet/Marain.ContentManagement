@@ -10,6 +10,7 @@ namespace Marain.Cms.Api.Services
     using Menes;
     using Menes.Hal;
     using Menes.Links;
+    using Microsoft.Net.Http.Headers;
 
     /// <summary>
     /// Handles requests to create and retrieve content.
@@ -79,16 +80,27 @@ namespace Marain.Cms.Api.Services
         /// <param name="tenantId">The ID of the tenant.</param>
         /// <param name="slug">The slug at which to create the content.</param>
         /// <param name="contentId">The contentId for the content at the slug.</param>
+        /// <param name="ifNoneMatch">The value from the If-None-Match header, if provided.</param>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [OperationId(GetContentOperationId)]
-        public async Task<OpenApiResult> GetContent(string tenantId, string slug, string contentId)
+        public async Task<OpenApiResult> GetContent(string tenantId, string slug, string contentId, string ifNoneMatch)
         {
             IContentStore contentStore = await this.contentStoreFactory.GetContentStoreForTenantAsync(tenantId).ConfigureAwait(false);
 
             Content result = await contentStore.GetContentAsync(contentId, slug).ConfigureAwait(false);
-            HalDocument response = this.halDocumentFactory.CreateHalDocumentFrom(result);
 
-            return this.OkResult(response);
+            // If the etag in the result matches ifNoneMatch then we return 304 Not Modified
+            if (!string.IsNullOrEmpty(ifNoneMatch) && result.ETag == ifNoneMatch)
+            {
+                return this.NotModifiedResult();
+            }
+
+            HalDocument resultDocument = this.halDocumentFactory.CreateHalDocumentFrom(result);
+
+            OpenApiResult response = this.OkResult(resultDocument);
+            response.Results.Add(HeaderNames.ETag, result.ETag);
+
+            return response;
         }
     }
 }

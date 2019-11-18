@@ -27,11 +27,18 @@ namespace Marain.ContentManagement.Specs.Steps
         [Given("a content item has been created")]
         public async Task GivenAContentItemHasBeenCreated(Table table)
         {
-            IEnumerable<Content> data = table.CreateSet<Content>();
+            IEnumerable<Content> data = table.CreateSet(
+                row => new Content
+                {
+                    Author = new CmsIdentity(row["Author Id"], row["Author UserName"])
+                });
+
             ITenantedContentStoreFactory contentStoreFactory = this.scenarioContext.ServiceProvider().GetRequiredService<ITenantedContentStoreFactory>();
             IContentStore store = await contentStoreFactory.GetContentStoreForTenantAsync(this.scenarioContext.CurrentTenantId()).ConfigureAwait(false);
 
-            await Task.WhenAll(data.Select(data => store.StoreContentAsync(data))).ConfigureAwait(false);
+            Content[] storedContentItems = await Task.WhenAll(data.Select(data => store.StoreContentAsync(data))).ConfigureAwait(false);
+
+            this.scenarioContext.Set(storedContentItems);
         }
     }
 }

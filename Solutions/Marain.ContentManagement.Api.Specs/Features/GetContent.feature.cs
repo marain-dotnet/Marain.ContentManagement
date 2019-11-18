@@ -71,10 +71,10 @@ namespace Marain.ContentManagement.Specs.Features
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Requesting item that does not exist returns a 404")]
-        public virtual void RequestingItemThatDoesNotExistReturnsA404()
+        [NUnit.Framework.DescriptionAttribute("Requesting item that does not exist returns a 404 Not Found")]
+        public virtual void RequestingItemThatDoesNotExistReturnsA404NotFound()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting item that does not exist returns a 404", null, ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting item that does not exist returns a 404 Not Found", null, ((string[])(null)));
 #line 6
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
@@ -99,16 +99,18 @@ this.ScenarioInitialize(scenarioInfo);
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                         "Id",
-                        "ETag",
                         "Slug",
                         "Title",
-                        "Description"});
+                        "Description",
+                        "Author Id",
+                        "Author UserName"});
             table1.AddRow(new string[] {
                         "myid",
-                        "",
                         "myslug",
                         "Test content item",
-                        "Lorem ipsum dolor sit amet"});
+                        "Lorem ipsum dolor sit amet",
+                        "tu1",
+                        "Test User 1"});
 #line 12
  testRunner.Given("a content item has been created", ((string)(null)), table1, "Given ");
 #line 15
@@ -117,6 +119,87 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Then("the response should have a status of \'200\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 17
  testRunner.And("the response body should contain the content item", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 18
+ testRunner.And("the ETag header should be set to the content item\'s etag", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Requesting an item by slug and Id with an etag that matches the item returns a 30" +
+            "4 Not Modified")]
+        public virtual void RequestingAnItemBySlugAndIdWithAnEtagThatMatchesTheItemReturnsA304NotModified()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting an item by slug and Id with an etag that matches the item returns a 30" +
+                    "4 Not Modified", null, ((string[])(null)));
+#line 20
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Id",
+                        "Slug",
+                        "Title",
+                        "Description",
+                        "Author Id",
+                        "Author UserName"});
+            table2.AddRow(new string[] {
+                        "myid",
+                        "myslug",
+                        "Test content item",
+                        "Lorem ipsum dolor sit amet",
+                        "tu1",
+                        "Test User 1"});
+#line 21
+ testRunner.Given("a content item has been created", ((string)(null)), table2, "Given ");
+#line 24
+ testRunner.And("I have requested the content with slug \'myslug\' and Id \'myid\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 25
+ testRunner.When("I request the content with slug \'myslug\' and Id \'myid\' using the etag returned by" +
+                    " the previous request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 26
+ testRunner.Then("the response should have a status of \'304\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 27
+ testRunner.And("there should be no response body", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Requesting an item by slug and Id with an etag that does not matches the item ret" +
+            "urns the item")]
+        public virtual void RequestingAnItemBySlugAndIdWithAnEtagThatDoesNotMatchesTheItemReturnsTheItem()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting an item by slug and Id with an etag that does not matches the item ret" +
+                    "urns the item", null, ((string[])(null)));
+#line 29
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Id",
+                        "Slug",
+                        "Title",
+                        "Description",
+                        "Author Id",
+                        "Author UserName"});
+            table3.AddRow(new string[] {
+                        "myid",
+                        "myslug",
+                        "Test content item",
+                        "Lorem ipsum dolor sit amet",
+                        "tu1",
+                        "Test User 1"});
+#line 30
+ testRunner.Given("a content item has been created", ((string)(null)), table3, "Given ");
+#line 33
+ testRunner.When("I request the content with slug \'myslug\' and Id \'myid\' using a random etag", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 34
+ testRunner.Then("the response should have a status of \'200\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 35
+ testRunner.And("the response body should contain the content item", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 36
+ testRunner.And("the ETag header should be set to the content item\'s etag", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
