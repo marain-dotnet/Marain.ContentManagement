@@ -1,4 +1,8 @@
-﻿namespace Marain.ContentManagement.Specs.Steps
+﻿// <copyright file="ContentVerificationSteps.cs" company="Endjin Limited">
+// Copyright (c) Endjin Limited. All rights reserved.
+// </copyright>
+
+namespace Marain.ContentManagement.Specs.Steps
 {
     using System.Linq;
     using System.Net.Http;
@@ -9,6 +13,9 @@
     using Newtonsoft.Json;
     using NUnit.Framework;
     using TechTalk.SpecFlow;
+
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+#pragma warning disable SA1600 // Elements should be documented
 
     [Binding]
     public class ContentVerificationSteps
@@ -51,3 +58,6 @@
         }
     }
 }
+
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+#pragma warning restore SA1600 // Elements should be documented

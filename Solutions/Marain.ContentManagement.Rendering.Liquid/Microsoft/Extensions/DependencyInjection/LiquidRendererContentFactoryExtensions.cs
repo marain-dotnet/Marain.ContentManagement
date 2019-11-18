@@ -5,7 +5,6 @@
 namespace Microsoft.Extensions.DependencyInjection
 {
     using Corvus.ContentHandling;
-    using DotLiquid;
     using Marain.Cms;
     using Marain.Cms.Internal;
 
@@ -36,9 +35,6 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddLiquidRenderer(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddContentManagementRendering();
-
-            // TODO: Can't get the below to compile - MWA to fix
-            //// Template.RegisterTag<LiquidContent>("render");
             return serviceCollection.AddContent(factory => factory.RegisterLiquidRenderer());
         }
     }
