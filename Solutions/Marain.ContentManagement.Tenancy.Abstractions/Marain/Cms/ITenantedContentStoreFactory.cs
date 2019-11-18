@@ -2,11 +2,10 @@
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
-namespace Marain.ContentManagement
+namespace Marain.Cms
 {
     using System.Threading.Tasks;
     using Corvus.Tenancy;
-    using Marain.Cms;
 
     /// <summary>
     /// Interface for a factory that knows how to construct a content factory for

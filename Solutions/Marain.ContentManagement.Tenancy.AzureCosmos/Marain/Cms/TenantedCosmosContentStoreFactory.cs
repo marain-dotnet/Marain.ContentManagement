@@ -7,7 +7,6 @@ namespace Marain.Cms
     using System.Threading.Tasks;
     using Corvus.Azure.Cosmos.Tenancy;
     using Corvus.Tenancy;
-    using Marain.ContentManagement;
     using Microsoft.Azure.Cosmos;
 
     /// <summary>

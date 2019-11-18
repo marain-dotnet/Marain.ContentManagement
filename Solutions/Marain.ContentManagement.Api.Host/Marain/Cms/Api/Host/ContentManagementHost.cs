@@ -2,7 +2,7 @@
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
-namespace Marain.ContentManagement.Functions
+namespace Marain.Cms.Api.Host
 {
     using System.Threading.Tasks;
     using Menes;

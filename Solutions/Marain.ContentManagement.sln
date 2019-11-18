@@ -14,8 +14,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marain.ContentManagement.St
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marain.ContentManagement.Specs", "Marain.ContentManagement.Specs\Marain.ContentManagement.Specs.csproj", "{51B3F3D5-F68E-48C7-A8BF-FB5558CD02CD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marain.ContentManagement.OpenApi.Service", "Marain.ContentManagement.OpenApi.Service\Marain.ContentManagement.OpenApi.Service.csproj", "{B3D19394-E72A-4EA0-9391-B2A59DFFFAFE}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marain.ContentManagement.Rendering.Abstractions", "Marain.ContentManagement.Rendering.Abstractions\Marain.ContentManagement.Rendering.Abstractions.csproj", "{E7B06D8B-01BC-4936-86CB-07EEC8CF6645}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marain.ContentManagement.Rendering.Markdown", "Marain.ContentManagement.Rendering.Markdown\Marain.ContentManagement.Rendering.Markdown.csproj", "{D9059742-AE64-426C-916D-BEA7C8274410}"
@@ -30,13 +28,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marain.ContentManagement.Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marain.ContentManagement.Tenancy.AzureCosmos", "Marain.ContentManagement.Tenancy.AzureCosmos\Marain.ContentManagement.Tenancy.AzureCosmos.csproj", "{DFBCA594-A3D4-4118-854D-02B25DF54E25}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marain.ContentManagement.Host.Functions", "Marain.ContentManagement.Host.Functions\Marain.ContentManagement.Host.Functions.csproj", "{8F62D74B-968E-4974-997D-C88DD6648306}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marain.ContentManagement.Hosting.AspNetCore", "Marain.ContentManagement.Hosting.AspNetCore\Marain.ContentManagement.Hosting.AspNetCore.csproj", "{2081E190-17CB-4832-BE74-AF2F0EA5E309}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{0F03B989-9119-4FAA-A55A-4DC795E4331E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tenancy", "Tenancy", "{30559961-E8F5-4AA8-9CB9-3C880CBE86A5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marain.ContentManagement.Api.Host", "Marain.ContentManagement.Api.Host\Marain.ContentManagement.Api.Host.csproj", "{ECE0386B-7CA8-4714-AB03-2901847A3BAC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marain.ContentManagement.Api.Services", "Marain.ContentManagement.Api.Services\Marain.ContentManagement.Api.Services.csproj", "{A27A5F77-3418-4877-9E84-B60F2EFF2FCD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marain.ContentManagement.Api.Services.AspNetCore", "Marain.ContentManagement.Api.Services.AspNetCore\Marain.ContentManagement.Api.Services.AspNetCore.csproj", "{5BD6B256-F023-4F36-A5F7-05286E1CD689}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marain.ContentManagement.Api.Specs", "Marain.ContentManagement.Api.Specs\Marain.ContentManagement.Api.Specs.csproj", "{AF696F73-2CB1-4D74-AA2F-120A6EB0F9D0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,10 +58,6 @@ Global
 		{51B3F3D5-F68E-48C7-A8BF-FB5558CD02CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51B3F3D5-F68E-48C7-A8BF-FB5558CD02CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51B3F3D5-F68E-48C7-A8BF-FB5558CD02CD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B3D19394-E72A-4EA0-9391-B2A59DFFFAFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B3D19394-E72A-4EA0-9391-B2A59DFFFAFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B3D19394-E72A-4EA0-9391-B2A59DFFFAFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B3D19394-E72A-4EA0-9391-B2A59DFFFAFE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E7B06D8B-01BC-4936-86CB-07EEC8CF6645}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E7B06D8B-01BC-4936-86CB-07EEC8CF6645}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7B06D8B-01BC-4936-86CB-07EEC8CF6645}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -88,24 +86,33 @@ Global
 		{DFBCA594-A3D4-4118-854D-02B25DF54E25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DFBCA594-A3D4-4118-854D-02B25DF54E25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DFBCA594-A3D4-4118-854D-02B25DF54E25}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8F62D74B-968E-4974-997D-C88DD6648306}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8F62D74B-968E-4974-997D-C88DD6648306}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8F62D74B-968E-4974-997D-C88DD6648306}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8F62D74B-968E-4974-997D-C88DD6648306}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2081E190-17CB-4832-BE74-AF2F0EA5E309}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2081E190-17CB-4832-BE74-AF2F0EA5E309}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2081E190-17CB-4832-BE74-AF2F0EA5E309}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2081E190-17CB-4832-BE74-AF2F0EA5E309}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECE0386B-7CA8-4714-AB03-2901847A3BAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECE0386B-7CA8-4714-AB03-2901847A3BAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECE0386B-7CA8-4714-AB03-2901847A3BAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECE0386B-7CA8-4714-AB03-2901847A3BAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A27A5F77-3418-4877-9E84-B60F2EFF2FCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A27A5F77-3418-4877-9E84-B60F2EFF2FCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A27A5F77-3418-4877-9E84-B60F2EFF2FCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A27A5F77-3418-4877-9E84-B60F2EFF2FCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BD6B256-F023-4F36-A5F7-05286E1CD689}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BD6B256-F023-4F36-A5F7-05286E1CD689}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BD6B256-F023-4F36-A5F7-05286E1CD689}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BD6B256-F023-4F36-A5F7-05286E1CD689}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF696F73-2CB1-4D74-AA2F-120A6EB0F9D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF696F73-2CB1-4D74-AA2F-120A6EB0F9D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF696F73-2CB1-4D74-AA2F-120A6EB0F9D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF696F73-2CB1-4D74-AA2F-120A6EB0F9D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{B3D19394-E72A-4EA0-9391-B2A59DFFFAFE} = {0F03B989-9119-4FAA-A55A-4DC795E4331E}
 		{F94D26B2-02F4-4111-B5E4-8AC9870C2250} = {30559961-E8F5-4AA8-9CB9-3C880CBE86A5}
 		{DFBCA594-A3D4-4118-854D-02B25DF54E25} = {30559961-E8F5-4AA8-9CB9-3C880CBE86A5}
-		{8F62D74B-968E-4974-997D-C88DD6648306} = {0F03B989-9119-4FAA-A55A-4DC795E4331E}
-		{2081E190-17CB-4832-BE74-AF2F0EA5E309} = {0F03B989-9119-4FAA-A55A-4DC795E4331E}
+		{ECE0386B-7CA8-4714-AB03-2901847A3BAC} = {0F03B989-9119-4FAA-A55A-4DC795E4331E}
+		{A27A5F77-3418-4877-9E84-B60F2EFF2FCD} = {0F03B989-9119-4FAA-A55A-4DC795E4331E}
+		{5BD6B256-F023-4F36-A5F7-05286E1CD689} = {0F03B989-9119-4FAA-A55A-4DC795E4331E}
+		{AF696F73-2CB1-4D74-AA2F-120A6EB0F9D0} = {0F03B989-9119-4FAA-A55A-4DC795E4331E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1A246536-6802-4A2D-B193-F76922DF1E68}

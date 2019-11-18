@@ -2,17 +2,12 @@
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
-namespace Marain.Cms.OpenApi
+namespace Marain.Cms.Api.Services
 {
-    using System;
     using System.Linq;
     using System.Threading.Tasks;
-    using Corvus.Tenancy;
-    using Corvus.Tenancy.Exceptions;
-    using Marain.Cms.OpenApi.Internal;
-    using Marain.ContentManagement;
+    using Marain.Cms.Api.Services.Internal;
     using Menes;
-    using Menes.Exceptions;
     using Menes.Hal;
     using Menes.Links;
 

@@ -2,9 +2,8 @@
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
-namespace Marain.Cms.OpenApi.Internal
+namespace Marain.Cms.Api.Services.Internal
 {
-    using System;
     using Menes;
     using Menes.Hal;
     using Menes.Links;

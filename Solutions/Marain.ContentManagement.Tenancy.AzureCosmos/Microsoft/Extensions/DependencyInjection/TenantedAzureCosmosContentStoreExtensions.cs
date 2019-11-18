@@ -7,7 +7,6 @@ namespace Microsoft.Extensions.DependencyInjection
     using System.Linq;
     using Corvus.Azure.Cosmos.Tenancy;
     using Marain.Cms;
-    using Marain.ContentManagement;
     using Microsoft.Extensions.Configuration;
 
     /// <summary>

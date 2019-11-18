@@ -192,7 +192,8 @@ namespace Marain.Cms
         /// <returns>The partition key for the slug.</returns>
         public static string GetPartitionKeyFromSlug(string slug)
         {
-            return slug.Base64UrlEncode();
+            string normalisedSlug = new Slug(slug).ToString();
+            return normalisedSlug.Base64UrlEncode();
         }
 
         /// <summary>

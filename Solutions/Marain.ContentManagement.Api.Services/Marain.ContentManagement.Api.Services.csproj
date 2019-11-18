@@ -18,10 +18,10 @@
   </PropertyGroup>
   <Import Project="..\Common.NetStandard_2_0.proj" />
   <ItemGroup>
-    <None Remove="Marain\Cms\OpenApi\ContentManagementServices.yaml" />
+    <None Remove="Marain\Cms\Api\ContentManagementServices.yaml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Marain\Cms\OpenApi\ContentManagementServices.yaml" />
+    <EmbeddedResource Include="Marain\Cms\Api\Services\ContentManagementServices.yaml" />
   </ItemGroup>
 
   <ItemGroup>

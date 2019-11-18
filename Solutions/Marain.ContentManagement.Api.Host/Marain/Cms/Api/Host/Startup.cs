@@ -2,9 +2,9 @@
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
-[assembly: Microsoft.Azure.WebJobs.Hosting.WebJobsStartup(typeof(Marain.ContentManagement.Functions.Startup))]
+[assembly: Microsoft.Azure.WebJobs.Hosting.WebJobsStartup(typeof(Marain.Cms.Api.Host.Startup))]
 
-namespace Marain.ContentManagement.Functions
+namespace Marain.Cms.Api.Host
 {
     using Microsoft.Azure.WebJobs;
     using Microsoft.Azure.WebJobs.Hosting;

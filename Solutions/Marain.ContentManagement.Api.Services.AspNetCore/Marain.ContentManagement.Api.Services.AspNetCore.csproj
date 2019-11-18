@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Marain.ContentManagement.OpenApi.Service\Marain.ContentManagement.OpenApi.Service.csproj" />
+    <ProjectReference Include="..\Marain.ContentManagement.Api.Services\Marain.ContentManagement.Api.Services.csproj" />
     <ProjectReference Include="..\Marain.ContentManagement.Tenancy.AzureCosmos\Marain.ContentManagement.Tenancy.AzureCosmos.csproj" />
   </ItemGroup>
 
