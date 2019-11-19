@@ -44,4 +44,4 @@ jobs:
       - task: CmdLine@2
         displayName: 'Start CosmosDB emulator'
         inputs:
-          script: 'C:\Program Files\Azure Cosmos DB Emulator\Cosmos.Emulator.exe /NoUI'
+          script: '"C:\Program Files\Azure Cosmos DB Emulator\Cosmos.Emulator.exe" /NoUI'
