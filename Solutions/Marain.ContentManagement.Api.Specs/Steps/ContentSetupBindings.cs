@@ -41,7 +41,7 @@ namespace Marain.ContentManagement.Specs.Steps
             foreach (TableRow row in table.Rows)
             {
                 (Content content, string name) = ContentDriver.GetContentFor(row);
-                Content storedContent = await store.StoreContentAsync(content);
+                Content storedContent = await store.StoreContentAsync(content).ConfigureAwait(false);
                 this.scenarioContext.Set(storedContent, name);
             }
         }

@@ -39,7 +39,7 @@ namespace Marain.ContentManagement.Specs.Steps
             ContentDriver.Compare(expected, actual);
         }
 
-        [Then(@"the ETag header should be set to '(.*)'")]
+        [Then("the ETag header should be set to '(.*)'")]
         public void ThenTheETagHeaderShouldBeSetTo(string property)
         {
             HttpResponseMessage response = this.scenarioContext.GetLastApiResponse();
