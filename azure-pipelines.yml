@@ -25,9 +25,6 @@ jobs:
       - powershell: |
           Write-Host "##vso[task.setvariable variable=AzureServicesAuthConnectionString]$Env:ENDJIN_AZURESERVICESAUTHCONNECTIONSTRING"
           Write-Host "##vso[task.setvariable variable=RootTenantBlobStorageConfigurationOptions__AccountName]$Env:ENDJIN_AZURESTORAGECONNECTIONSTRING"
-          Write-Host "##vso[task.setvariable variable=RootTenantCosmosConfigurationOptions__AccountUri]$Env:ENDJIN_COSMOSDBACCOUNTURI"
-          Write-Host "##vso[task.setvariable variable=RootTenantCosmosConfigurationOptions__AccountKeySecretName]$Env:ENDJIN_COSMOSACCOUNTKEYSECRETNAME"
-          Write-Host "##vso[task.setvariable variable=RootTenantCosmosConfigurationOptions__KeyVaultName]$Env:ENDJIN_KEYVAULTNAME"
         displayName: 'Set Custom Environment Variables'
         env:
           ENDJIN_AZURESERVICESAUTHCONNECTIONSTRING: $(Endjin_AzureServicesAuthConnectionString)
@@ -41,7 +38,3 @@ jobs:
           command: custom
           verbose: false
           customCommand: 'install -g azure-functions-core-tools --unsafe-perm true'
-      - task: CmdLine@2
-        displayName: 'Start CosmosDB emulator'
-        inputs:
-          script: '"C:\Program Files\Azure Cosmos DB Emulator\Microsoft.Azure.Cosmos.Emulator.exe" /NoUI'
