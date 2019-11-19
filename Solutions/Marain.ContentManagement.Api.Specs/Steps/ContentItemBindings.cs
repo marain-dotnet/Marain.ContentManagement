@@ -10,6 +10,7 @@ namespace Marain.ContentManagement.Specs.Steps
     using System.Threading.Tasks;
     using System.Web;
     using Marain.ContentManagement.Specs.Bindings;
+    using Marain.ContentManagement.Specs.Drivers;
     using TechTalk.SpecFlow;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
@@ -29,7 +30,10 @@ namespace Marain.ContentManagement.Specs.Steps
         [Given("I have requested the content with slug '(.*)' and Id '(.*)'")]
         public Task WhenIRequestTheContentWithSlug(string slug, string id)
         {
-            string path = $"/{this.scenarioContext.CurrentTenantId()}/marain/content/{HttpUtility.UrlEncode(slug)}?contentId={HttpUtility.UrlEncode(id)}";
+            string resolvedSlug = ContentDriver.GetObjectValue<string>(this.scenarioContext, slug);
+            string resolvedId = ContentDriver.GetObjectValue<string>(this.scenarioContext, id);
+
+            string path = $"/{this.scenarioContext.CurrentTenantId()}/marain/content/{HttpUtility.UrlEncode(resolvedSlug)}?contentId={HttpUtility.UrlEncode(resolvedId)}";
 
             HttpRequestMessage request = this.scenarioContext.CreateApiRequest(path);
             return this.scenarioContext.SendApiRequestAndStoreResponseAsync(request);
@@ -41,7 +45,10 @@ namespace Marain.ContentManagement.Specs.Steps
             HttpResponseMessage lastResponse = this.scenarioContext.GetLastApiResponse();
             EntityTagHeaderValue lastEtag = lastResponse.Headers.ETag;
 
-            string path = $"/{this.scenarioContext.CurrentTenantId()}/marain/content/{HttpUtility.UrlEncode(slug)}?contentId={HttpUtility.UrlEncode(id)}";
+            string resolvedSlug = ContentDriver.GetObjectValue<string>(this.scenarioContext, slug);
+            string resolvedId = ContentDriver.GetObjectValue<string>(this.scenarioContext, id);
+
+            string path = $"/{this.scenarioContext.CurrentTenantId()}/marain/content/{HttpUtility.UrlEncode(resolvedSlug)}?contentId={HttpUtility.UrlEncode(resolvedId)}";
 
             HttpRequestMessage request = this.scenarioContext.CreateApiRequest(path);
             request.Headers.IfNoneMatch.Add(lastEtag);
@@ -52,7 +59,10 @@ namespace Marain.ContentManagement.Specs.Steps
         [When("I request the content with slug '(.*)' and Id '(.*)' using a random etag")]
         public Task WhenIRequestTheContentWithSlugAndIdUsingARandomEtag(string slug, string id)
         {
-            string path = $"/{this.scenarioContext.CurrentTenantId()}/marain/content/{HttpUtility.UrlEncode(slug)}?contentId={HttpUtility.UrlEncode(id)}";
+            string resolvedSlug = ContentDriver.GetObjectValue<string>(this.scenarioContext, slug);
+            string resolvedId = ContentDriver.GetObjectValue<string>(this.scenarioContext, id);
+
+            string path = $"/{this.scenarioContext.CurrentTenantId()}/marain/content/{HttpUtility.UrlEncode(resolvedSlug)}?contentId={HttpUtility.UrlEncode(resolvedId)}";
 
             HttpRequestMessage request = this.scenarioContext.CreateApiRequest(path);
             request.Headers.IfNoneMatch.Add(new EntityTagHeaderValue($"\"{Guid.NewGuid().ToString()}\""));

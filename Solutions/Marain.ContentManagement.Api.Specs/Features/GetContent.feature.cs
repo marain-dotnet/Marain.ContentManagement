@@ -98,29 +98,39 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name",
                         "Id",
                         "Slug",
+                        "Tags",
+                        "CategoryPaths",
+                        "Author.Name",
+                        "Author.Id",
                         "Title",
                         "Description",
-                        "Author Id",
-                        "Author UserName"});
+                        "Culture",
+                        "Fragment"});
             table1.AddRow(new string[] {
+                        "Expected",
                         "myid",
                         "myslug",
-                        "Test content item",
-                        "Lorem ipsum dolor sit amet",
-                        "tu1",
-                        "Test User 1"});
+                        "First tag; Second tag",
+                        "/standard/content;/books/hobbit;/books/lotr",
+                        "Bilbo Baggins",
+                        "{newguid}",
+                        "This is the title",
+                        "A description of the content",
+                        "fr-FR",
+                        "This is the fragment of text"});
 #line 12
  testRunner.Given("a content item has been created", ((string)(null)), table1, "Given ");
 #line 15
- testRunner.When("I request the content with slug \'myslug\' and Id \'myid\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I request the content with slug \'{Expected.Slug}\' and Id \'{Expected.Id}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 16
  testRunner.Then("the response should have a status of \'200\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 17
- testRunner.And("the response body should contain the content item", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("the response body should contain the content item \'Expected\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 18
- testRunner.And("the ETag header should be set to the content item\'s etag", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("the ETag header should be set to \'{Expected.ETag}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -137,26 +147,36 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name",
                         "Id",
                         "Slug",
+                        "Tags",
+                        "CategoryPaths",
+                        "Author.Name",
+                        "Author.Id",
                         "Title",
                         "Description",
-                        "Author Id",
-                        "Author UserName"});
+                        "Culture",
+                        "Fragment"});
             table2.AddRow(new string[] {
+                        "Expected",
                         "myid",
                         "myslug",
-                        "Test content item",
-                        "Lorem ipsum dolor sit amet",
-                        "tu1",
-                        "Test User 1"});
+                        "First tag; Second tag",
+                        "/standard/content;/books/hobbit;/books/lotr",
+                        "Bilbo Baggins",
+                        "{newguid}",
+                        "This is the title",
+                        "A description of the content",
+                        "fr-FR",
+                        "This is the fragment of text"});
 #line 21
  testRunner.Given("a content item has been created", ((string)(null)), table2, "Given ");
 #line 24
- testRunner.And("I have requested the content with slug \'myslug\' and Id \'myid\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I have requested the content with slug \'{Expected.Slug}\' and Id \'{Expected.Id}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 25
- testRunner.When("I request the content with slug \'myslug\' and Id \'myid\' using the etag returned by" +
-                    " the previous request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I request the content with slug \'{Expected.Slug}\' and Id \'{Expected.Id}\' using th" +
+                    "e etag returned by the previous request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 26
  testRunner.Then("the response should have a status of \'304\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 27
@@ -177,29 +197,40 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
             TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name",
                         "Id",
                         "Slug",
+                        "Tags",
+                        "CategoryPaths",
+                        "Author.Name",
+                        "Author.Id",
                         "Title",
                         "Description",
-                        "Author Id",
-                        "Author UserName"});
+                        "Culture",
+                        "Fragment"});
             table3.AddRow(new string[] {
+                        "Expected",
                         "myid",
                         "myslug",
-                        "Test content item",
-                        "Lorem ipsum dolor sit amet",
-                        "tu1",
-                        "Test User 1"});
+                        "First tag; Second tag",
+                        "/standard/content;/books/hobbit;/books/lotr",
+                        "Bilbo Baggins",
+                        "{newguid}",
+                        "This is the title",
+                        "A description of the content",
+                        "fr-FR",
+                        "This is the fragment of text"});
 #line 30
  testRunner.Given("a content item has been created", ((string)(null)), table3, "Given ");
 #line 33
- testRunner.When("I request the content with slug \'myslug\' and Id \'myid\' using a random etag", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I request the content with slug \'{Expected.Slug}\' and Id \'{Expected.Id}\' using a " +
+                    "random etag", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 34
  testRunner.Then("the response should have a status of \'200\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 35
- testRunner.And("the response body should contain the content item", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("the response body should contain the content item \'Expected\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 36
- testRunner.And("the ETag header should be set to the content item\'s etag", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("the ETag header should be set to \'{Expected.ETag}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

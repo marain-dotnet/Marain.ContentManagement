@@ -10,6 +10,7 @@ namespace Marain.ContentManagement.Specs.Steps
     using System.Threading.Tasks;
     using Marain.Cms;
     using Marain.ContentManagement.Specs.Bindings;
+    using Marain.ContentManagement.Specs.Drivers;
     using Newtonsoft.Json;
     using NUnit.Framework;
     using TechTalk.SpecFlow;
@@ -27,23 +28,19 @@ namespace Marain.ContentManagement.Specs.Steps
             this.scenarioContext = scenarioContext;
         }
 
-        [Then("the response body should contain the content item")]
-        public async Task ThenTheResponseBodyShouldContainTheContentItem()
+        [Then("the response body should contain the content item '(.*)'")]
+        public async Task ThenTheResponseBodyShouldContainTheContentItem(string itemName)
         {
             Content actual = await this.scenarioContext.GetLastApiResponseBodyAsync<Content>().ConfigureAwait(false);
             Assert.IsNotNull(actual);
 
-            Content expected = this.scenarioContext.Get<Content[]>().First();
+            Content expected = this.scenarioContext.Get<Content>(itemName);
 
-            // Verify the two items are the same by serializing to JSON and comparing the results.
-            string actualJson = JsonConvert.SerializeObject(actual);
-            string expectedJson = JsonConvert.SerializeObject(expected);
-
-            Assert.AreEqual(expectedJson, actualJson);
+            ContentDriver.Compare(expected, actual);
         }
 
-        [Then("the ETag header should be set to the content item's etag")]
-        public void ThenTheETagHeaderShouldBeSetToTheContentItemEtag()
+        [Then(@"the ETag header should be set to '(.*)'")]
+        public void ThenTheETagHeaderShouldBeSetTo(string property)
         {
             HttpResponseMessage response = this.scenarioContext.GetLastApiResponse();
             EntityTagHeaderValue etagHeader = response.Headers.ETag;
@@ -53,8 +50,8 @@ namespace Marain.ContentManagement.Specs.Steps
             Assert.IsNotNull(etagHeader.Tag);
             Assert.IsNotEmpty(etagHeader.Tag);
 
-            Content expected = this.scenarioContext.Get<Content[]>().First();
-            Assert.AreEqual(expected.ETag, etagHeader.Tag);
+            string expected = ContentDriver.GetObjectValue<string>(this.scenarioContext, property);
+            Assert.AreEqual(expected, etagHeader.Tag);
         }
     }
 }

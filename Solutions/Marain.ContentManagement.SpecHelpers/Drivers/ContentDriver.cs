@@ -56,6 +56,16 @@
 
         private static void ComparePayloads(IContentPayload expected, IContentPayload actual)
         {
+            // If they are both null, no checking is required.
+            if (expected == null && actual == null)
+            {
+                return;
+            }
+
+            // Otherwise they must both be not null
+            Assert.IsNotNull(expected);
+            Assert.IsNotNull(actual);
+
             Assert.AreEqual(expected.GetType(), actual.GetType());
 
             if (expected is ContentFragment expectedFragment)
