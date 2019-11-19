@@ -41,3 +41,7 @@ jobs:
           command: custom
           verbose: false
           customCommand: 'install -g azure-functions-core-tools --unsafe-perm true'
+      - task: CmdLine@2
+        displayName: 'Start CosmosDB emulator'
+        inputs:
+          script: 'C:\Program Files\Azure Cosmos DB Emulator\Cosmos.Emulator.exe /NoUI'
