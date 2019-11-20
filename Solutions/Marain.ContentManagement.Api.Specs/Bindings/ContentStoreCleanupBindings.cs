@@ -7,6 +7,7 @@ namespace Marain.ContentManagement.Specs.Bindings
     using System;
     using System.Threading.Tasks;
     using Corvus.Azure.Cosmos.Tenancy;
+    using Corvus.SpecFlow.Extensions;
     using Corvus.Tenancy;
     using Microsoft.Azure.Cosmos;
     using Microsoft.Extensions.DependencyInjection;
@@ -26,9 +27,9 @@ namespace Marain.ContentManagement.Specs.Bindings
         /// <param name="context">The current <see cref="ScenarioContext"/>.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [AfterScenario]
-        public static async Task ClearDownTransientTenantContentStore(ScenarioContext context)
+        public static Task ClearDownTransientTenantContentStore(ScenarioContext context)
         {
-            try
+            return context.RunAndStoreExceptionsAsync(async () =>
             {
                 ITenant currentTenant = context.CurrentTenant();
 
@@ -37,12 +38,7 @@ namespace Marain.ContentManagement.Specs.Bindings
                 CosmosContainerDefinition containerDefinition = serviceProvider.GetRequiredService<CosmosContainerDefinition>();
                 Container container = await containerFactory.GetContainerForTenantAsync(currentTenant, containerDefinition).ConfigureAwait(false);
                 await container.DeleteContainerAsync().ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                // TODO: Wire up to our Corvus exception handling
-                Console.WriteLine(ex);
-            }
+            });
         }
     }
 }

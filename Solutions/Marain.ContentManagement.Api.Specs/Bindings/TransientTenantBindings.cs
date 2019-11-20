@@ -7,6 +7,7 @@ namespace Marain.ContentManagement.Specs.Bindings
     using System;
     using System.Threading.Tasks;
     using Corvus.Azure.Cosmos.Tenancy;
+    using Corvus.SpecFlow.Extensions;
     using Corvus.Tenancy;
     using Microsoft.Extensions.DependencyInjection;
     using TechTalk.SpecFlow;
@@ -59,11 +60,14 @@ namespace Marain.ContentManagement.Specs.Bindings
         [AfterScenario]
         public static Task TearDownTransientTenant(ScenarioContext context)
         {
-            IServiceProvider provider = context.ServiceProvider();
-            ITenantProvider tenantProvider = provider.GetRequiredService<ITenantProvider>();
+            return context.RunAndStoreExceptionsAsync(() =>
+            {
+                IServiceProvider provider = context.ServiceProvider();
+                ITenantProvider tenantProvider = provider.GetRequiredService<ITenantProvider>();
 
-            ITenant tenant = context.Get<ITenant>();
-            return tenantProvider.DeleteTenantAsync(tenant.Id);
+                ITenant tenant = context.Get<ITenant>();
+                return tenantProvider.DeleteTenantAsync(tenant.Id);
+            });
         }
 
         /// <summary>

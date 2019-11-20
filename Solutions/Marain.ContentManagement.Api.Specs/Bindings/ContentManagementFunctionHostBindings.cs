@@ -9,6 +9,7 @@ namespace Marain.ContentManagement.Specs.Bindings
     using System.Net.Http.Headers;
     using System.Text;
     using System.Threading.Tasks;
+    using Corvus.SpecFlow.Extensions;
     using Marain.Cms.Api.Host;
     using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;
@@ -72,14 +73,17 @@ namespace Marain.ContentManagement.Specs.Bindings
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         /// <remarks>This tears down the service provider too, so needs to happen last.</remarks>
         [AfterScenario(Order = int.MaxValue)]
-        public static async Task StopContentManagementFunction(ScenarioContext context)
+        public static Task StopContentManagementFunction(ScenarioContext context)
         {
-            IWebHost host = context.Get<IWebHost>();
-            await host.StopAsync().ConfigureAwait(false);
-            host.Dispose();
+            return context.RunAndStoreExceptionsAsync(async () =>
+            {
+                IWebHost host = context.Get<IWebHost>();
+                await host.StopAsync().ConfigureAwait(false);
+                host.Dispose();
 
-            HttpClient httpClient = context.Get<HttpClient>();
-            httpClient.Dispose();
+                HttpClient httpClient = context.Get<HttpClient>();
+                httpClient.Dispose();
+            });
         }
 
         /// <summary>
