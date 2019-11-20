@@ -1,7 +1,4 @@
 ﻿Feature: GetContent
-	In order to avoid silly mistakes
-	As a math idiot
-	I want to be told the sum of two numbers
 
 Scenario: Requesting item that does not exist returns a 404 Not Found
 	Given there is no content available
@@ -17,7 +14,6 @@ Scenario: Requesting an item by slug and Id returns the item
 	And the response body should contain the content item 'Expected'
 	And the ETag header should be set to '{Expected.ETag}'
 	And the Cache header should be set to 'max-age=31536000'
-
 	
 Scenario: Requesting an item by slug and Id with an etag that matches the item returns a 304 Not Modified
 	Given a content item has been created
@@ -37,5 +33,3 @@ Scenario: Requesting an item by slug and Id with an etag that does not matches t
 	And the response body should contain the content item 'Expected'
 	And the ETag header should be set to '{Expected.ETag}'
 	And the Cache header should be set to 'max-age=31536000'
-
-
