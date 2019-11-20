@@ -34,6 +34,10 @@ namespace Marain.ContentManagement.Specs.Bindings
             IServiceProvider provider = context.ServiceProvider();
             ITenantProvider tenantProvider = provider.GetRequiredService<ITenantProvider>();
 
+            // In order to ensure the Cosmos aspects of the Tenancy setup are fully configured, we need to resolve
+            // the ITenantCosmosContainerFactory, which triggers setting default config to the root tenant.
+            provider.GetRequiredService<ITenantCosmosContainerFactory>();
+
             ITenant rootTenant = tenantProvider.Root;
             ITenant transientTenant = await tenantProvider.CreateChildTenantAsync(rootTenant.Id).ConfigureAwait(false);
 

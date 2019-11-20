@@ -60,6 +60,10 @@ paths:
               description: The etag for the content
               schema:
                 type: string
+            Cache-Control:
+              description: The caching instruction for the Content
+              schema:
+                type: string
           content:
             application/json:
               schema:

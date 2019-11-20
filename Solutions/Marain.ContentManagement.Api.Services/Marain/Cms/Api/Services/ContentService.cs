@@ -4,6 +4,7 @@
 
 namespace Marain.Cms.Api.Services
 {
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
     using Marain.Cms.Api.Services.Internal;
@@ -99,6 +100,7 @@ namespace Marain.Cms.Api.Services
 
             OpenApiResult response = this.OkResult(resultDocument);
             response.Results.Add(HeaderNames.ETag, result.ETag);
+            response.Results.Add(HeaderNames.CacheControl, "max-age=31536000");
 
             return response;
         }

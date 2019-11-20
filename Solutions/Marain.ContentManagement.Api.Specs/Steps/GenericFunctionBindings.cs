@@ -6,6 +6,7 @@ namespace Marain.ContentManagement.Specs.Steps
 {
     using System.Net;
     using System.Net.Http;
+    using System.Net.Http.Headers;
     using System.Threading.Tasks;
     using Marain.ContentManagement.Specs.Bindings;
     using NUnit.Framework;
@@ -29,6 +30,15 @@ namespace Marain.ContentManagement.Specs.Steps
         {
             HttpResponseMessage response = this.scenarioContext.GetLastApiResponse();
             Assert.AreEqual((HttpStatusCode)expectedStatusCode, response.StatusCode);
+        }
+
+        [Then("the Cache header should be set to '(.*)'")]
+        public void ThenTheCacheHeaderShouldBeSetTo(string expectedValue)
+        {
+            HttpResponseMessage response = this.scenarioContext.GetLastApiResponse();
+            CacheControlHeaderValue cacheHeader = response.Headers.CacheControl;
+            Assert.IsNotNull(cacheHeader);
+            Assert.AreEqual(expectedValue, cacheHeader.ToString());
         }
 
         [Then("there should be no response body")]
