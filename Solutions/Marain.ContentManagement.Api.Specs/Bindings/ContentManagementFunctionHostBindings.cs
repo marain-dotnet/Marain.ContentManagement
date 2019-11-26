@@ -14,6 +14,7 @@ namespace Marain.ContentManagement.Specs.Bindings
     using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
     using NUnit.Framework;
     using TechTalk.SpecFlow;
 
@@ -33,6 +34,8 @@ namespace Marain.ContentManagement.Specs.Bindings
         public const string BaseUrl = "http://localhost:8765";
 
         private const string LastApiResponseBodyKey = "LastApiResponseBody";
+
+        private const string LastApiResponseBodyAsJObjectKey = "LastApiResponseBodyAsJObject";
 
         /// <summary>
         /// Sets up and runs the function, using the <see cref="Startup"/> class to initialise the service provider.
@@ -198,6 +201,32 @@ namespace Marain.ContentManagement.Specs.Bindings
             T deserializedResponse = JsonConvert.DeserializeObject<T>(result);
 
             context.Set(deserializedResponse, LastApiResponseBodyKey);
+
+            return deserializedResponse;
+        }
+
+        /// <summary>
+        /// Gets the body from the response to the last call to
+        /// <see cref="SendApiRequestAndStoreResponseAsync(ScenarioContext, HttpRequestMessage)"/>.
+        /// </summary>
+        /// <param name="context">The current <see cref="ScenarioContext"/>.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        public static async Task<JObject> GetLastApiResponseBodyAsJObjectAsync(this ScenarioContext context)
+        {
+            if (context.TryGetValue(LastApiResponseBodyAsJObjectKey, out JObject previouslyDeserializedResponse))
+            {
+                return previouslyDeserializedResponse;
+            }
+
+            HttpResponseMessage response = context.GetLastApiResponse();
+
+            Assert.AreEqual("application/json", response.Content.Headers.ContentType.MediaType, "Response does not have a content type of 'application/json' so cannot deserialize it.");
+
+            string result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+            var deserializedResponse = JObject.Parse(result);
+
+            context.Set(deserializedResponse, LastApiResponseBodyAsJObjectKey);
 
             return deserializedResponse;
         }

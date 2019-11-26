@@ -4,15 +4,12 @@
 
 namespace Marain.ContentManagement.Specs.Steps
 {
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
     using Marain.Cms;
     using Marain.ContentManagement.Specs.Bindings;
     using Marain.ContentManagement.Specs.Drivers;
     using Microsoft.Extensions.DependencyInjection;
     using TechTalk.SpecFlow;
-    using TechTalk.SpecFlow.Assist;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 #pragma warning disable SA1600 // Elements should be documented
@@ -33,6 +30,7 @@ namespace Marain.ContentManagement.Specs.Steps
         }
 
         [Given("a content item has been created")]
+        [Given("content items have been created")]
         public async Task GivenAContentItemHasBeenCreated(Table table)
         {
             ITenantedContentStoreFactory contentStoreFactory = this.scenarioContext.ServiceProvider().GetRequiredService<ITenantedContentStoreFactory>();

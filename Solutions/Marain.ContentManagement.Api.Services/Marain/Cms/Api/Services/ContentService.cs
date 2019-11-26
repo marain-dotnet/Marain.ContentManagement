@@ -35,22 +35,18 @@ namespace Marain.Cms.Api.Services
         public const string ContentManagementResourceTemplate = "{tenantId}/marain/content/";
 
         private readonly ITenantedContentStoreFactory contentStoreFactory;
-        private readonly IHalDocumentFactory halDocumentFactory;
         private readonly ContentMapper contentMapper;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContentService"/> class.
         /// </summary>
         /// <param name="contentStoreFactory">The content store for the service.</param>
-        /// <param name="halDocumentFactory">The HAL document factory for the service.</param>
         /// <param name="contentMapper">The mapper for <see cref="Content"/> responses.</param>
         public ContentService(
             ITenantedContentStoreFactory contentStoreFactory,
-            IHalDocumentFactory halDocumentFactory,
             ContentMapper contentMapper)
         {
             this.contentStoreFactory = contentStoreFactory;
-            this.halDocumentFactory = halDocumentFactory;
             this.contentMapper = contentMapper;
         }
 
@@ -78,28 +74,30 @@ namespace Marain.Cms.Api.Services
         /// <summary>
         /// Get the content at the slug with the given ID.
         /// </summary>
-        /// <param name="tenantId">The ID of the tenant.</param>
+        /// <param name="context">The context for the request.</param>
         /// <param name="slug">The slug at which to create the content.</param>
         /// <param name="contentId">The contentId for the content at the slug.</param>
         /// <param name="ifNoneMatch">The value from the If-None-Match header, if provided.</param>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [OperationId(GetContentOperationId)]
-        public async Task<OpenApiResult> GetContent(string tenantId, string slug, string contentId, string ifNoneMatch)
+        public async Task<OpenApiResult> GetContent(IOpenApiContext context, string slug, string contentId, string ifNoneMatch)
         {
-            IContentStore contentStore = await this.contentStoreFactory.GetContentStoreForTenantAsync(tenantId).ConfigureAwait(false);
+            IContentStore contentStore = await this.contentStoreFactory.GetContentStoreForTenantAsync(context.CurrentTenantId).ConfigureAwait(false);
 
             Content result = await contentStore.GetContentAsync(contentId, slug).ConfigureAwait(false);
 
+            string etag = EtagHelper.BuildEtag(nameof(Content), result.ETag);
+
             // If the etag in the result matches ifNoneMatch then we return 304 Not Modified
-            if (!string.IsNullOrEmpty(ifNoneMatch) && result.ETag == ifNoneMatch)
+            if (EtagHelper.IsMatch(ifNoneMatch, etag))
             {
                 return this.NotModifiedResult();
             }
 
-            HalDocument resultDocument = this.halDocumentFactory.CreateHalDocumentFrom(result);
+            HalDocument resultDocument = this.contentMapper.Map(result, context);
 
             OpenApiResult response = this.OkResult(resultDocument);
-            response.Results.Add(HeaderNames.ETag, result.ETag);
+            response.Results.Add(HeaderNames.ETag, etag);
             response.Results.Add(HeaderNames.CacheControl, "max-age=31536000");
 
             return response;

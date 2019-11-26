@@ -35,12 +35,6 @@ paths:
           description: Forbidden
         '409':
           description: Conflict - content with the given ID and Slug has already been created.
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
     get:
       tags:
         - Content
@@ -61,13 +55,13 @@ paths:
               schema:
                 type: string
             Cache-Control:
-              description: The caching instruction for the Content
+              description: The etag for the content
               schema:
                 type: string
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Content'
+                $ref: '#/components/schemas/ContentResponse'
         '304':
           description: Not modified
         '400':
@@ -272,6 +266,10 @@ components:
             the language of the result of dereferencing the link should be.  Note
             that this is only a hint; for example, it does not override the Content-Language
             header of a HTTP response obtained by actually following the link.
+    LinkArray:
+      type: array
+      items:
+        $ref: '#/components/schemas/Link'
     PropertyBag:
       type: object
       additionalProperties:
@@ -282,32 +280,42 @@ components:
           - type: number
           - type: object
           - type: string
+    ResourceLink:
+      type: none
+      title: Resource link
+      anyOf:
+        - $ref: '#/components/schemas/LinkArray'
+        - $ref: '#/components/schemas/Link'
+    ResourceLinks:
+      type: object
+      title: Resource links
+      description: Represents a hyperlink from the containing resource to a URI.
+      additionalProperties:
+        $ref: '#/components/schemas/ResourceLink'
+    ResourceEmbeddedResource:
+      type: none
+      title: Embedded resource
+      anyOf:
+        - $ref: '#/components/schemas/ResourceArray'
+        - $ref: '#/components/schemas/Resource'
+    ResourceEmbeddedResources:
+      type: object
+      title: Embedded resources
+      additionalProperties:
+        $ref: '#/components/schemas/ResourceEmbeddedResource'
     Resource:
       type: object
       properties:
         _links:
-          type: object
-          title: Hyperlink
-          description: Represents a hyperlink from the cotntaining resource to a URI.
-          additionalProperties:
-            oneOf:
-            - $ref: '#/components/schemas/Link'
-            - type: array
-              items:
-                $ref: '#/components/schemas/Link'
-              uniqueItems: true
-              additionalProperties: false
+          $ref: "#/components/schemas/ResourceLinks"
         _embedded:
-          type: object
-          additionalProperties:
-            oneOf:
-            - $ref: '#/components/schemas/Resource'
-            - type: array
-              items:
-                $ref: '#/components/schemas/Resource'
-              uniqueItems: true
-              additionalProperties: false
+          $ref: "#/components/schemas/ResourceEmbeddedResources"
       additionalProperties: true
+    ResourceArray:
+      type: array
+      items:
+        $ref: '#/components/schemas/Resource'
+      uniqueItems: true
     ContentSummary:
       type: object
       properties:
@@ -316,9 +324,6 @@ components:
           description: The unique ID of the tenant. This forms a path with parent tenants. 
         eTag:
           type: string
-        contentType:
-          type: string
-          description: The content type of the tenant.
         categoryPaths:
           type: array
           items:
@@ -339,7 +344,6 @@ components:
           type: string
       required:
         - id
-        - contentType
         - slug
       additionalProperties: true
     State:
@@ -374,6 +378,10 @@ components:
           metadata:
             $ref: '#/components/schemas/PropertyBag'
         additionalProperties: true
+    ContentSummaryResponse:
+      allOf: 
+      - $ref: '#/components/schemas/Resource'
+      - $ref: '#/components/schemas/ContentSummary'
     ContentResponse:
       allOf: 
       - $ref: '#/components/schemas/Resource'
@@ -410,7 +418,7 @@ components:
           summaries:
             type: array
             items:
-              $ref: '#/components/schemas/ContentSummary'
+              $ref: '#/components/schemas/ContentSummaryResponse'
         additionalProperties: true
     ContentSummariesWithState:
       allOf:
@@ -431,35 +439,6 @@ components:
           type: string
       required:
         - userId
-    ProblemDetails:
-      required:
-        - status
-        - detail
-      properties:
-        status:
-          type: integer
-          format: int32
-        detail:
-          type: string
-        title:
-          type: string
-        instance:
-          type: string
-          format: url
-        type: 
-          type: string
-          format: url
-        validationErrors: 
-          type: array
-          items:
-            oneOf:
-            - type: array
-            - type: boolean
-            - type: integer
-            - type: number
-            - type: object
-            - type: string
-      additionalProperties: true
   parameters:
     tenantId:
       name: tenantId

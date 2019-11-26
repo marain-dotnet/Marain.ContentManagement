@@ -12,7 +12,7 @@ Scenario: Requesting an item by slug and Id returns the item
 	When I request the content with slug '{Expected.Slug}' and Id '{Expected.Id}'
 	Then the response should have a status of '200'
 	And the response body should contain the content item 'Expected'
-	And the ETag header should be set to '{Expected.ETag}'
+	And the ETag header should be set
 	And the Cache header should be set to 'max-age=31536000'
 	
 Scenario: Requesting an item by slug and Id with an etag that matches the item returns a 304 Not Modified
@@ -31,5 +31,5 @@ Scenario: Requesting an item by slug and Id with an etag that does not matches t
 	When I request the content with slug '{Expected.Slug}' and Id '{Expected.Id}' using a random etag
 	Then the response should have a status of '200'
 	And the response body should contain the content item 'Expected'
-	And the ETag header should be set to '{Expected.ETag}'
+	And the ETag header should be set
 	And the Cache header should be set to 'max-age=31536000'

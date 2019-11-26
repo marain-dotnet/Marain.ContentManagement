@@ -4,6 +4,7 @@
 
 namespace Marain.ContentManagement.Specs.Bindings
 {
+    using System;
     using Menes;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -13,6 +14,7 @@ namespace Marain.ContentManagement.Specs.Bindings
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Azure.WebJobs.Hosting;
     using Microsoft.Extensions.DependencyInjection;
+    using NUnit.Framework;
 
     /// <summary>
     /// Startup class used with <see cref="IWebHostBuilder"/> to initialise a webhost using an <see cref="IWebJobsStartup"/>
@@ -50,10 +52,17 @@ namespace Marain.ContentManagement.Specs.Bindings
             var openApiRouteHandler = new RouteHandler(
                 async context =>
                 {
-                    IOpenApiHost<HttpRequest, IActionResult> handler = context.RequestServices.GetRequiredService<IOpenApiHost<HttpRequest, IActionResult>>();
-                    IActionResult result = await handler.HandleRequestAsync(context.Request, context).ConfigureAwait(false);
-                    var actionContext = new ActionContext(context, context.GetRouteData(), new ActionDescriptor());
-                    await result.ExecuteResultAsync(actionContext).ConfigureAwait(false);
+                    try
+                    {
+                        IOpenApiHost<HttpRequest, IActionResult> handler = context.RequestServices.GetRequiredService<IOpenApiHost<HttpRequest, IActionResult>>();
+                        IActionResult result = await handler.HandleRequestAsync(context.Request, context).ConfigureAwait(false);
+                        var actionContext = new ActionContext(context, context.GetRouteData(), new ActionDescriptor());
+                        await result.ExecuteResultAsync(actionContext).ConfigureAwait(false);
+                    }
+                    catch (Exception ex)
+                    {
+                        Assert.Fail(ex.ToString());
+                    }
                 });
 
             var routeBuilder = new RouteBuilder(app, openApiRouteHandler);

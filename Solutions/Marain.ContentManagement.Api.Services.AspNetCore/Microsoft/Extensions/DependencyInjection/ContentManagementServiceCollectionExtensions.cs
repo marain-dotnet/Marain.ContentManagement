@@ -71,12 +71,17 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services.AddSingleton<ContentService>();
             services.AddSingleton<IOpenApiService, ContentService>(s => s.GetRequiredService<ContentService>());
+
+            services.AddSingleton<ContentHistoryService>();
+            services.AddSingleton<IOpenApiService, ContentHistoryService>(s => s.GetRequiredService<ContentHistoryService>());
             return services;
         }
 
         private static IServiceCollection AddContentManagementHalDocumentMappers(this IServiceCollection services)
         {
             services.AddHalDocumentMapper<Content, IOpenApiContext, ContentMapper>();
+            services.AddHalDocumentMapper<ContentSummaries, ContentHistoryMappingContext, ContentHistoryMapper>();
+            services.AddHalDocumentMapper<ContentSummary, ResponseMappingContext, ContentSummaryMapper>();
             return services;
         }
 
