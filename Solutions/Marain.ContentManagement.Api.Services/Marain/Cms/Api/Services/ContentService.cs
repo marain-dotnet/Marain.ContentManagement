@@ -63,12 +63,19 @@ namespace Marain.Cms.Api.Services
             IContentStore contentStore = await this.contentStoreFactory.GetContentStoreForTenantAsync(context.CurrentTenantId).ConfigureAwait(false);
 
             body.Slug = slug;
+
             Content result = await contentStore.StoreContentAsync(body).ConfigureAwait(false);
 
-            HalDocument response = this.contentMapper.Map(result, context);
+            string etag = EtagHelper.BuildEtag(nameof(Content), result.ETag);
 
-            WebLink location = response.GetLinksForRelation("self").First();
-            return this.CreatedResult(location.Href, response);
+            HalDocument resultDocument = this.contentMapper.Map(result, context);
+
+            WebLink location = resultDocument.GetLinksForRelation("self").First();
+
+            OpenApiResult response = this.CreatedResult(location.Href, resultDocument);
+            response.Results.Add(HeaderNames.ETag, etag);
+
+            return response;
         }
 
         /// <summary>

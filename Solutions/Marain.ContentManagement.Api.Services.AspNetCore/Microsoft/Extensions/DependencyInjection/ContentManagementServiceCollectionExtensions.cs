@@ -102,6 +102,7 @@ namespace Microsoft.Extensions.DependencyInjection
         private static void MapContentManagementExceptions(this IOpenApiHostConfiguration config)
         {
             config.Exceptions.Map<ContentNotFoundException>(404);
+            config.Exceptions.Map<ContentConflictException>(409);
         }
     }
 }

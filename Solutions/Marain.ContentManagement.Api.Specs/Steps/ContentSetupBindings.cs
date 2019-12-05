@@ -43,6 +43,16 @@ namespace Marain.ContentManagement.Specs.Steps
                 this.scenarioContext.Set(storedContent, name);
             }
         }
+
+        [Given("I have a new content item")]
+        public void GivenIHaveANewContentItem(Table table)
+        {
+            foreach (TableRow row in table.Rows)
+            {
+                (Content content, string name) = ContentDriver.GetContentFor(row);
+                this.scenarioContext.Set(content, name);
+            }
+        }
     }
 }
 

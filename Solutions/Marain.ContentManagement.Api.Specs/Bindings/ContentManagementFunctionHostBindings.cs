@@ -9,10 +9,12 @@ namespace Marain.ContentManagement.Specs.Bindings
     using System.Net.Http.Headers;
     using System.Text;
     using System.Threading.Tasks;
+    using Corvus.Extensions.Json;
     using Corvus.SpecFlow.Extensions;
     using Marain.Cms.Api.Host;
     using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.DependencyInjection;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using NUnit.Framework;
@@ -144,7 +146,9 @@ namespace Marain.ContentManagement.Specs.Bindings
         {
             HttpRequestMessage request = context.CreateApiRequest(uriPath, method);
 
-            string json = JsonConvert.SerializeObject(data);
+            IJsonSerializerSettingsProvider serializationSettingsProvider = context.ServiceProvider().GetRequiredService<IJsonSerializerSettingsProvider>();
+
+            string json = JsonConvert.SerializeObject(data, serializationSettingsProvider.Instance);
             request.Content = new StringContent(json, Encoding.UTF8, "application/json");
 
             return request;
@@ -194,11 +198,12 @@ namespace Marain.ContentManagement.Specs.Bindings
 
             HttpResponseMessage response = context.GetLastApiResponse();
 
-            Assert.AreEqual("application/json", response.Content.Headers.ContentType.MediaType, "Response does not have a content type of 'application/json' so cannot deserialize it.");
+            Assert.AreEqual("application/json", response.Content?.Headers?.ContentType?.MediaType, "Response does not have a content type of 'application/json' so cannot deserialize it.");
 
             string result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-            T deserializedResponse = JsonConvert.DeserializeObject<T>(result);
+            IJsonSerializerSettingsProvider serializationSettingsProvider = context.ServiceProvider().GetRequiredService<IJsonSerializerSettingsProvider>();
+            T deserializedResponse = JsonConvert.DeserializeObject<T>(result, serializationSettingsProvider.Instance);
 
             context.Set(deserializedResponse, LastApiResponseBodyKey);
 

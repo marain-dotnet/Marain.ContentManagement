@@ -51,8 +51,15 @@ namespace Marain.Cms
                 throw new ArgumentNullException(nameof(content));
             }
 
-            ItemResponse<Content> response = await this.container.CreateItemAsync(content, new PartitionKey(content.PartitionKey)).ConfigureAwait(false);
-            return response.Resource;
+            try
+            {
+                ItemResponse<Content> response = await this.container.CreateItemAsync(content, new PartitionKey(content.PartitionKey)).ConfigureAwait(false);
+                return response.Resource;
+            }
+            catch (CosmosException ex) when (ex.StatusCode == HttpStatusCode.Conflict)
+            {
+                throw new ContentConflictException(content.Id, content.Slug, ex);
+            }
         }
 
         /// <inheritdoc/>

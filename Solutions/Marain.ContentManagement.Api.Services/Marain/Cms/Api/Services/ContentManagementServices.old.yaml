@@ -20,7 +20,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateContentRequest'
+              $ref: '#/components/schemas/Content'
       responses:
         '201':
           description: Successful operation
@@ -29,14 +29,6 @@ paths:
               description: The location of the created content
               schema:
                 type: string
-            ETag:
-              description: The etag for the content
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ContentResponse'
         '400':
           description: Bad request
           content:
@@ -115,11 +107,119 @@ paths:
           description: Forbidden
         '404':
           description: Not found    
+  /{tenantId}/marain/content/workflow/{workflowId}/content/{slug}:
+    get:
+      tags:
+        - Content Workflow
+      summary: Get the current content for the workflow at the slug
+      description: Gets the content associated with the given workflowId in the current state. The response includes the content and the state information.
+      operationId: getWorkflowContent
+      parameters:
+        - $ref: '#/components/parameters/tenantId'
+        - $ref: '#/components/parameters/contentId'
+        - $ref: '#/components/parameters/slug'
+        - $ref: '#/components/parameters/workflowId'
+      responses:
+        '200':
+          description: Successful operation        
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentWithState'
+        '304':
+          description: Not modified
+        '400':
+          description: Bad request
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+  /{tenantId}/marain/content/workflow/{workflowId}/state/{slug}:
+    get:
+      tags:
+        - Content Workflow
+      summary: Get the current state for the workflow at the slug
+      description: Gets state information associated with the given workflowId for the current state at that slug. The response includes a link to the content associated with that state.
+      operationId: getWorkflowState
+      parameters:
+        - $ref: '#/components/parameters/tenantId'
+        - $ref: '#/components/parameters/contentId'
+        - $ref: '#/components/parameters/slug'
+        - $ref: '#/components/parameters/workflowId'
+      responses:
+        '200':
+          description: Successful operation        
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/State'
+        '304':
+          description: Not modified
+        '400':
+          description: Bad request
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+  /{tenantId}/marain/content/workflow/{workflowId}/history/{slug}:
+    get:
+      tags:
+        - Content Workflow
+      summary: Get the state history for the given workflow at the slug with the given ID
+      description: Gets the state history for the given workflow at the slug. The history includes links to the content associated with those states.
+      operationId: getWorkflowHistory
+      parameters:
+        - $ref: '#/components/parameters/tenantId'
+        - $ref: '#/components/parameters/workflowId'
+        - $ref: '#/components/parameters/slug'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/continuationToken'
+      responses:
+        '200':
+          description: Successful operation        
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentSummariesWithState'
+        '304':
+          description: Not modified
+        '400':
+          description: Bad request
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+  /{tenantId}/marain/content/workflow/{workflowId}/{stateName}/history/{slug}:
+    get:
+      tags:
+        - Content Workflow
+      summary: Get the state history for the content at the given slug
+      description: Gets the state history for the content at the given slug in the given workflow, including only those items in the specified state.
+      operationId: getWorkflowStateHistory
+      parameters:
+        - $ref: '#/components/parameters/tenantId'
+        - $ref: '#/components/parameters/workflowId'
+        - $ref: '#/components/parameters/stateName'
+        - $ref: '#/components/parameters/slug'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/continuationToken'
+      responses:
+        '200':
+          description: Successful operation        
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentSummariesWithState'
+        '304':
+          description: Not modified
+        '400':
+          description: Bad request
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
 components:
   schemas:
-    ############################################################################
-    # Schemas for responses that follow the HAL specification
-    ############################################################################
     Link:
       type: object
       required:
@@ -220,10 +320,6 @@ components:
       items:
         $ref: '#/components/schemas/Resource'
       uniqueItems: true
-
-    ############################################################################
-    # Internal data types      
-    ############################################################################
     ContentSummary:
       type: object
       properties:
@@ -254,6 +350,22 @@ components:
         - id
         - slug
       additionalProperties: true
+    State:
+      allOf:
+      - $ref: '#/components/schemas/Resource'
+      - type: object
+        properties:
+          stateName:
+            type: string
+          workflowId:
+            type: string
+          slug:
+            type: string
+          changedBy:
+            $ref: '#/components/schemas/CmsIdentity'
+          timestamp:
+            type: integer
+        additionalProperties: true
     ContentPayload:
       type: object
       properties:
@@ -270,52 +382,6 @@ components:
           metadata:
             $ref: '#/components/schemas/PropertyBag'
         additionalProperties: true
-    CmsIdentity:
-      type: object
-      properties:
-        userId:
-          type: string
-        userName:
-          type: string
-      required:
-        - userId
-
-    ############################################################################
-    # Request documents: generally these are slightly cut down versions of
-    # internal data types, reflecting the fact that some properties of these
-    # resources are not set by the client when they are created.
-    ############################################################################
-    CreateContentRequest:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The unique ID of the tenant. This forms a path with parent tenants. 
-        eTag:
-          type: string
-        categoryPaths:
-          type: array
-          items:
-            type: string
-        tags:
-          type: array
-          items:
-            type: string
-        author:
-          $ref: '#/components/schemas/CmsIdentity'
-        title:
-          type: string
-        description:
-          type: string
-        culture:
-          type: string
-      required:
-        - id
-
-    ############################################################################
-    # Response documents: generally these are internal data types returned as a
-    # Resource
-    ############################################################################
     ContentSummaryResponse:
       allOf: 
       - $ref: '#/components/schemas/Resource'
@@ -324,6 +390,30 @@ components:
       allOf: 
       - $ref: '#/components/schemas/Resource'
       - $ref: '#/components/schemas/Content'
+    ContentWithState:
+      allOf:
+      - $ref: '#/components/schemas/Content'
+      - type: object
+        properties:
+          stateName:
+            type: string
+          timestamp:
+            type: integer
+          worfklowId:
+            type: string
+        additionalProperties: true
+    ContentSummaryWithState:
+      allOf:
+      - $ref: '#/components/schemas/ContentSummary'
+      - type: object
+        properties:
+          stateName:
+            type: string
+          timestamp:
+            type: integer
+          worfklowId:
+            type: string
+        additionalProperties: true
     ContentSummaries:
       allOf:
       - $ref: '#/components/schemas/Resource'
@@ -334,11 +424,25 @@ components:
             items:
               $ref: '#/components/schemas/ContentSummaryResponse'
         additionalProperties: true
-
-    ############################################################################
-    # RFC 7807 Problem Details response definition
-    # https://tools.ietf.org/html/rfc7807
-    ############################################################################
+    ContentSummariesWithState:
+      allOf:
+      - $ref: '#/components/schemas/Resource'
+      - type: object
+        properties:
+          summaries:
+            type: array
+            items:
+              $ref: '#/components/schemas/ContentSummaryWithState'
+        additionalProperties: true
+    CmsIdentity:
+      type: object
+      properties:
+        userId:
+          type: string
+        userName:
+          type: string
+      required:
+        - userId
     ProblemDetails:
       required:
         - status

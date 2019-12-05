@@ -9,6 +9,7 @@ namespace Marain.ContentManagement.Specs.Steps
     using System.Net.Http.Headers;
     using System.Threading.Tasks;
     using System.Web;
+    using Marain.Cms;
     using Marain.ContentManagement.Specs.Bindings;
     using Marain.ContentManagement.Specs.Drivers;
     using TechTalk.SpecFlow;
@@ -66,6 +67,20 @@ namespace Marain.ContentManagement.Specs.Steps
 
             HttpRequestMessage request = this.scenarioContext.CreateApiRequest(path);
             request.Headers.IfNoneMatch.Add(new EntityTagHeaderValue($"\"{Guid.NewGuid().ToString()}\""));
+
+            return this.scenarioContext.SendApiRequestAndStoreResponseAsync(request);
+        }
+
+        [Given("I have requested that the content '(.*)' is created")]
+        [When("I request that the content '(.*)' is created")]
+        [When("I issue a second request that the content '(.*)' is created")]
+        public Task WhenIRequestThatTheContentIsCreated(string contentItem)
+        {
+            Content item = this.scenarioContext.Get<Content>(contentItem);
+
+            string path = $"/{this.scenarioContext.CurrentTenantId()}/marain/content/{HttpUtility.UrlEncode(item.Slug)}";
+
+            HttpRequestMessage request = this.scenarioContext.CreateApiRequestWithJson(path, HttpMethod.Post, item);
 
             return this.scenarioContext.SendApiRequestAndStoreResponseAsync(request);
         }
