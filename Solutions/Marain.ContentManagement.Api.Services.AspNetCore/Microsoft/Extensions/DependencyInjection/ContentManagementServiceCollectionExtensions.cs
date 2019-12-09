@@ -72,6 +72,9 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<ContentService>();
             services.AddSingleton<IOpenApiService, ContentService>(s => s.GetRequiredService<ContentService>());
 
+            services.AddSingleton<ContentSummaryService>();
+            services.AddSingleton<IOpenApiService, ContentSummaryService>(s => s.GetRequiredService<ContentSummaryService>());
+
             services.AddSingleton<ContentHistoryService>();
             services.AddSingleton<IOpenApiService, ContentHistoryService>(s => s.GetRequiredService<ContentHistoryService>());
             return services;

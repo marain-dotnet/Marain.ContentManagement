@@ -4,7 +4,9 @@
 
 namespace Marain.ContentManagement.Specs.Steps
 {
+    using System;
     using System.Net.Http;
+    using System.Net.Http.Headers;
     using System.Threading.Tasks;
     using System.Web;
     using Marain.ContentManagement.Specs.Bindings;
@@ -32,6 +34,50 @@ namespace Marain.ContentManagement.Specs.Steps
             string path = $"/{this.scenarioContext.CurrentTenantId()}/marain/content/history/{HttpUtility.UrlEncode(resolvedSlug)}";
 
             HttpRequestMessage request = this.scenarioContext.CreateApiRequest(path);
+            return this.scenarioContext.SendApiRequestAndStoreResponseAsync(request);
+        }
+
+        [When("I request the content summary with slug '(.*)' and Id '(.*)'")]
+        [Given("I have requested the content summary with slug '(.*)' and Id '(.*)'")]
+        public Task WhenIRequestTheContentSummaryWithSlugAndId(string slug, string id)
+        {
+            string resolvedSlug = ContentDriver.GetObjectValue<string>(this.scenarioContext, slug);
+            string resolvedId = ContentDriver.GetObjectValue<string>(this.scenarioContext, id);
+
+            string path = $"/{this.scenarioContext.CurrentTenantId()}/marain/content/summary/{HttpUtility.UrlEncode(resolvedSlug)}?contentId={HttpUtility.UrlEncode(resolvedId)}";
+
+            HttpRequestMessage request = this.scenarioContext.CreateApiRequest(path);
+            return this.scenarioContext.SendApiRequestAndStoreResponseAsync(request);
+        }
+
+        [When("I request the content summary with slug '(.*)' and Id '(.*)' using the etag returned by the previous request")]
+        public Task WhenIRequestTheContentWithSlugAndIdUsingTheEtagReturnedByThePreviousRequest(string slug, string id)
+        {
+            HttpResponseMessage lastResponse = this.scenarioContext.GetLastApiResponse();
+            EntityTagHeaderValue lastEtag = lastResponse.Headers.ETag;
+
+            string resolvedSlug = ContentDriver.GetObjectValue<string>(this.scenarioContext, slug);
+            string resolvedId = ContentDriver.GetObjectValue<string>(this.scenarioContext, id);
+
+            string path = $"/{this.scenarioContext.CurrentTenantId()}/marain/content/summary/{HttpUtility.UrlEncode(resolvedSlug)}?contentId={HttpUtility.UrlEncode(resolvedId)}";
+
+            HttpRequestMessage request = this.scenarioContext.CreateApiRequest(path);
+            request.Headers.IfNoneMatch.Add(lastEtag);
+
+            return this.scenarioContext.SendApiRequestAndStoreResponseAsync(request);
+        }
+
+        [When("I request the content summary with slug '(.*)' and Id '(.*)' using a random etag")]
+        public Task WhenIRequestTheContentWithSlugAndIdUsingARandomEtag(string slug, string id)
+        {
+            string resolvedSlug = ContentDriver.GetObjectValue<string>(this.scenarioContext, slug);
+            string resolvedId = ContentDriver.GetObjectValue<string>(this.scenarioContext, id);
+
+            string path = $"/{this.scenarioContext.CurrentTenantId()}/marain/content/summary/{HttpUtility.UrlEncode(resolvedSlug)}?contentId={HttpUtility.UrlEncode(resolvedId)}";
+
+            HttpRequestMessage request = this.scenarioContext.CreateApiRequest(path);
+            request.Headers.IfNoneMatch.Add(new EntityTagHeaderValue($"\"{Guid.NewGuid().ToString()}\""));
+
             return this.scenarioContext.SendApiRequestAndStoreResponseAsync(request);
         }
     }

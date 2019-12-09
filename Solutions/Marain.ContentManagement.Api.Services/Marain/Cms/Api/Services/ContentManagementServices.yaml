@@ -82,6 +82,42 @@ paths:
           description: Forbidden
         '404':
           description: Not found    
+  /{tenantId}/marain/content/summary/{slug}:
+    get:
+      tags:
+        - Content
+      summary: Get the content at the slug with the given ID
+      description: Gets a new content instance for the slug
+      operationId: getContentSummary
+      parameters:
+        - $ref: '#/components/parameters/tenantId'
+        - $ref: '#/components/parameters/slug'
+        - $ref: '#/components/parameters/contentId'
+        - $ref: '#/components/parameters/ifNoneMatch'
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            ETag:
+              description: The etag for the content
+              schema:
+                type: string
+            Cache-Control:
+              description: The etag for the content
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentSummaryResponse'
+        '304':
+          description: Not modified
+        '400':
+          description: Bad request
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found    
   /{tenantId}/marain/content/history/{slug}:
     get:
       tags:

@@ -30,6 +30,7 @@ namespace Marain.Cms.Api.Services.Internal
         /// <inheritdoc/>
         public void ConfigureLinkMap(IOpenApiLinkOperationMap links)
         {
+            links.Map<ContentSummary>(Constants.LinkRelations.Self, ContentSummaryService.GetContentSummaryOperationId);
             links.Map<ContentSummary>("content", ContentService.GetContentOperationId);
         }
 
@@ -37,6 +38,15 @@ namespace Marain.Cms.Api.Services.Internal
         public HalDocument Map(ContentSummary resource, ResponseMappingContext context)
         {
             HalDocument response = this.halDocumentFactory.CreateHalDocumentFrom(resource);
+
+            response.ResolveAndAdd(
+                this.linkResolver,
+                resource,
+                Constants.LinkRelations.Self,
+                (Constants.ParameterNames.TenantId, context.TenantId),
+                (Constants.ParameterNames.Slug, resource.Slug),
+                (Constants.ParameterNames.ContentId, resource.Id));
+
             response.ResolveAndAdd(
                 this.linkResolver,
                 resource,

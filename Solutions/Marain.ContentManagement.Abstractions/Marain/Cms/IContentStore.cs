@@ -20,6 +20,14 @@ namespace Marain.Cms
         Task<Content> GetContentAsync(string contentId, string slug);
 
         /// <summary>
+        /// Gets a <see cref="ContentSummary"/> given a particular content ID and slug.
+        /// </summary>
+        /// <param name="contentId">The content ID.</param>
+        /// <param name="slug">The slug to which the content belongs.</param>
+        /// <returns>The <see cref="ContentSummary"/> corresponding to the given slug.</returns>
+        Task<ContentSummary> GetContentSummaryAsync(string contentId, string slug);
+
+        /// <summary>
         /// Gets <see cref="ContentSummaries"/> given a particular slug.
         /// </summary>
         /// <param name="slug">The slug to which the content belongs.</param>

@@ -128,6 +128,20 @@ namespace Marain.Cms
         }
 
         /// <inheritdoc/>
+        public async Task<ContentSummary> GetContentSummaryAsync(string contentId, string slug)
+        {
+            try
+            {
+                ItemResponse<ContentSummary> response = await this.container.ReadItemAsync<ContentSummary>(contentId, new PartitionKey(Content.GetPartitionKeyFromSlug(slug))).ConfigureAwait(false);
+                return response.Resource;
+            }
+            catch (CosmosException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
+            {
+                throw new ContentNotFoundException("Content not found.", ex);
+            }
+        }
+
+        /// <inheritdoc/>
         public async Task<ContentWithState> GetContentForWorkflowAsync(string slug, string workflowId)
         {
             if (slug is null)
