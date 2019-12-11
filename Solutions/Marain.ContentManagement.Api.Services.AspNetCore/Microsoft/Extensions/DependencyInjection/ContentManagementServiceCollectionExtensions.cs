@@ -90,6 +90,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddHalDocumentMapper<ContentSummaries, ContentHistoryMappingContext, ContentHistoryMapper>();
             services.AddHalDocumentMapper<ContentSummary, ResponseMappingContext, ContentSummaryMapper>();
             services.AddHalDocumentMapper<ContentWithState, IOpenApiContext, ContentWithStateMapper>();
+            services.AddHalDocumentMapper<ContentState, IOpenApiContext, ContentStateMapper>();
 
             return services;
         }

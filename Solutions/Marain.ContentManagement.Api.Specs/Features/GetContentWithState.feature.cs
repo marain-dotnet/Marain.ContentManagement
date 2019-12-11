@@ -78,7 +78,7 @@ namespace Marain.ContentManagement.Specs.Features
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table18 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table21 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name",
                         "Id",
                         "Slug",
@@ -90,7 +90,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "Description",
                         "Culture",
                         "Fragment"});
-            table18.AddRow(new string[] {
+            table21.AddRow(new string[] {
                         "Expected",
                         "myid",
                         "myslug",
@@ -103,9 +103,9 @@ this.ScenarioInitialize(scenarioInfo);
                         "fr-FR",
                         "This is the fragment of text"});
 #line 4
- testRunner.Given("a content item has been created", ((string)(null)), table18, "Given ");
+ testRunner.Given("a content item has been created", ((string)(null)), table21, "Given ");
 #line hidden
-            TechTalk.SpecFlow.Table table19 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table22 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name",
                         "Id",
                         "ContentId",
@@ -114,7 +114,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "StateName",
                         "ChangedBy.Name",
                         "ChangedBy.Id"});
-            table19.AddRow(new string[] {
+            table22.AddRow(new string[] {
                         "Expected-State",
                         "{newguid}",
                         "myid",
@@ -124,7 +124,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "Frodo Baggins",
                         "{newguid}"});
 #line 7
- testRunner.And("a workflow state has been set for the content item", ((string)(null)), table19, "And ");
+ testRunner.And("a workflow state has been set for the content item", ((string)(null)), table22, "And ");
 #line 10
  testRunner.When("I request the content with its state for slug \'{Expected.Slug}\' and workflow Id \'" +
                     "{Expected-State.WorkflowId}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -167,119 +167,6 @@ this.ScenarioInitialize(scenarioInfo);
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table20 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Name",
-                        "Id",
-                        "Slug",
-                        "Tags",
-                        "CategoryPaths",
-                        "Author.Name",
-                        "Author.Id",
-                        "Title",
-                        "Description",
-                        "Culture",
-                        "Fragment"});
-            table20.AddRow(new string[] {
-                        "Expected",
-                        "myid",
-                        "myslug",
-                        "First tag; Second tag",
-                        "/standard/content;/books/hobbit;/books/lotr",
-                        "Bilbo Baggins",
-                        "{newguid}",
-                        "This is the title",
-                        "A description of the content",
-                        "fr-FR",
-                        "This is the fragment of text"});
-#line 20
- testRunner.Given("a content item has been created", ((string)(null)), table20, "Given ");
-#line 23
- testRunner.When("I request the content with its state for slug \'{Expected.Slug}\' and workflow Id \'" +
-                    "{newguid}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 24
- testRunner.Then("the response should have a status of \'404\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            this.ScenarioCleanup();
-        }
-        
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Requesting an item with a valid slug but invalid workflow Id returns a 404 Not Fo" +
-            "und")]
-        public virtual void RequestingAnItemWithAValidSlugButInvalidWorkflowIdReturnsA404NotFound()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting an item with a valid slug but invalid workflow Id returns a 404 Not Fo" +
-                    "und", null, ((string[])(null)));
-#line 26
-this.ScenarioInitialize(scenarioInfo);
-            this.ScenarioStart();
-#line hidden
-            TechTalk.SpecFlow.Table table21 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Name",
-                        "Id",
-                        "Slug",
-                        "Tags",
-                        "CategoryPaths",
-                        "Author.Name",
-                        "Author.Id",
-                        "Title",
-                        "Description",
-                        "Culture",
-                        "Fragment"});
-            table21.AddRow(new string[] {
-                        "Expected",
-                        "myid",
-                        "myslug",
-                        "First tag; Second tag",
-                        "/standard/content;/books/hobbit;/books/lotr",
-                        "Bilbo Baggins",
-                        "{newguid}",
-                        "This is the title",
-                        "A description of the content",
-                        "fr-FR",
-                        "This is the fragment of text"});
-#line 27
- testRunner.Given("a content item has been created", ((string)(null)), table21, "Given ");
-#line hidden
-            TechTalk.SpecFlow.Table table22 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Name",
-                        "Id",
-                        "ContentId",
-                        "Slug",
-                        "WorkflowId",
-                        "StateName",
-                        "ChangedBy.Name",
-                        "ChangedBy.Id"});
-            table22.AddRow(new string[] {
-                        "Expected-State",
-                        "{newguid}",
-                        "myid",
-                        "myslug",
-                        "{newguid}",
-                        "retired",
-                        "Frodo Baggins",
-                        "{newguid}"});
-#line 30
- testRunner.And("a workflow state has been set for the content item", ((string)(null)), table22, "And ");
-#line 33
- testRunner.When("I request the content with its state for slug \'{Expected.Slug}\' and workflow Id \'" +
-                    "{newguid}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 34
- testRunner.Then("the response should have a status of \'404\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            this.ScenarioCleanup();
-        }
-        
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Requesting an item with an invalid slug and a valid workflow Id returns a 404 Not" +
-            " Found")]
-        public virtual void RequestingAnItemWithAnInvalidSlugAndAValidWorkflowIdReturnsA404NotFound()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting an item with an invalid slug and a valid workflow Id returns a 404 Not" +
-                    " Found", null, ((string[])(null)));
-#line 36
-this.ScenarioInitialize(scenarioInfo);
-            this.ScenarioStart();
-#line hidden
             TechTalk.SpecFlow.Table table23 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name",
                         "Id",
@@ -304,10 +191,56 @@ this.ScenarioInitialize(scenarioInfo);
                         "A description of the content",
                         "fr-FR",
                         "This is the fragment of text"});
-#line 37
+#line 20
  testRunner.Given("a content item has been created", ((string)(null)), table23, "Given ");
+#line 23
+ testRunner.When("I request the content with its state for slug \'{Expected.Slug}\' and workflow Id \'" +
+                    "{newguid}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 24
+ testRunner.Then("the response should have a status of \'404\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Requesting an item with a valid slug but invalid workflow Id returns a 404 Not Fo" +
+            "und")]
+        public virtual void RequestingAnItemWithAValidSlugButInvalidWorkflowIdReturnsA404NotFound()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting an item with a valid slug but invalid workflow Id returns a 404 Not Fo" +
+                    "und", null, ((string[])(null)));
+#line 26
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
 #line hidden
             TechTalk.SpecFlow.Table table24 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name",
+                        "Id",
+                        "Slug",
+                        "Tags",
+                        "CategoryPaths",
+                        "Author.Name",
+                        "Author.Id",
+                        "Title",
+                        "Description",
+                        "Culture",
+                        "Fragment"});
+            table24.AddRow(new string[] {
+                        "Expected",
+                        "myid",
+                        "myslug",
+                        "First tag; Second tag",
+                        "/standard/content;/books/hobbit;/books/lotr",
+                        "Bilbo Baggins",
+                        "{newguid}",
+                        "This is the title",
+                        "A description of the content",
+                        "fr-FR",
+                        "This is the fragment of text"});
+#line 27
+ testRunner.Given("a content item has been created", ((string)(null)), table24, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table25 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name",
                         "Id",
                         "ContentId",
@@ -316,7 +249,74 @@ this.ScenarioInitialize(scenarioInfo);
                         "StateName",
                         "ChangedBy.Name",
                         "ChangedBy.Id"});
-            table24.AddRow(new string[] {
+            table25.AddRow(new string[] {
+                        "Expected-State",
+                        "{newguid}",
+                        "myid",
+                        "myslug",
+                        "{newguid}",
+                        "retired",
+                        "Frodo Baggins",
+                        "{newguid}"});
+#line 30
+ testRunner.And("a workflow state has been set for the content item", ((string)(null)), table25, "And ");
+#line 33
+ testRunner.When("I request the content with its state for slug \'{Expected.Slug}\' and workflow Id \'" +
+                    "{newguid}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 34
+ testRunner.Then("the response should have a status of \'404\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Requesting an item with an invalid slug and a valid workflow Id returns a 404 Not" +
+            " Found")]
+        public virtual void RequestingAnItemWithAnInvalidSlugAndAValidWorkflowIdReturnsA404NotFound()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting an item with an invalid slug and a valid workflow Id returns a 404 Not" +
+                    " Found", null, ((string[])(null)));
+#line 36
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table26 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name",
+                        "Id",
+                        "Slug",
+                        "Tags",
+                        "CategoryPaths",
+                        "Author.Name",
+                        "Author.Id",
+                        "Title",
+                        "Description",
+                        "Culture",
+                        "Fragment"});
+            table26.AddRow(new string[] {
+                        "Expected",
+                        "myid",
+                        "myslug",
+                        "First tag; Second tag",
+                        "/standard/content;/books/hobbit;/books/lotr",
+                        "Bilbo Baggins",
+                        "{newguid}",
+                        "This is the title",
+                        "A description of the content",
+                        "fr-FR",
+                        "This is the fragment of text"});
+#line 37
+ testRunner.Given("a content item has been created", ((string)(null)), table26, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table27 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name",
+                        "Id",
+                        "ContentId",
+                        "Slug",
+                        "WorkflowId",
+                        "StateName",
+                        "ChangedBy.Name",
+                        "ChangedBy.Id"});
+            table27.AddRow(new string[] {
                         "Expected-State",
                         "{newguid}",
                         "myid",
@@ -326,7 +326,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "Frodo Baggins",
                         "{newguid}"});
 #line 40
- testRunner.And("a workflow state has been set for the content item", ((string)(null)), table24, "And ");
+ testRunner.And("a workflow state has been set for the content item", ((string)(null)), table27, "And ");
 #line 43
  testRunner.When("I request the content with its state for slug \'myotherslug\' and workflow Id \'{Exp" +
                     "ected-State.WorkflowId}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");

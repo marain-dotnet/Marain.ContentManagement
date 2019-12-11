@@ -177,6 +177,32 @@ paths:
           description: Forbidden
         '404':
           description: Not found
+  /{tenantId}/marain/content/workflow/{workflowId}/state/{slug}:
+    get:
+      tags:
+        - Content Workflow
+      summary: Get the current state for the workflow at the slug
+      description: Gets state information associated with the given workflowId for the current state at that slug. The response includes a link to the content associated with that state.
+      operationId: getWorkflowState
+      parameters:
+        - $ref: '#/components/parameters/tenantId'
+        - $ref: '#/components/parameters/slug'
+        - $ref: '#/components/parameters/workflowId'
+      responses:
+        '200':
+          description: Successful operation        
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentStateResponse'
+        '304':
+          description: Not modified
+        '400':
+          description: Bad request
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
 components:
   schemas:
     ############################################################################
@@ -345,6 +371,20 @@ components:
           metadata:
             $ref: '#/components/schemas/PropertyBag'
         additionalProperties: true
+    ContentState:
+      type: object
+      properties:
+        stateName:
+          type: string
+        workflowId:
+          type: string
+        slug:
+          type: string
+        changedBy:
+          $ref: '#/components/schemas/CmsIdentity'
+        timestamp:
+          type:
+            $ref: '#/components/schemas/DateTimeOffset'
     ContentWithState:
       type: object
       properties:
@@ -414,6 +454,10 @@ components:
       allOf: 
       - $ref: '#/components/schemas/Resource'
       - $ref: '#/components/schemas/ContentWithState'
+    ContentStateResponse:
+      allOf:
+      - $ref: '#/components/schemas/Resource'
+      - $ref: '#/components/schemas/ContentState'
     ContentSummaries:
       allOf:
       - $ref: '#/components/schemas/Resource'

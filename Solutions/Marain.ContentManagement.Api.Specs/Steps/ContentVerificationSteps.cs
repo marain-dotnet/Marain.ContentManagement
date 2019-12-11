@@ -47,6 +47,17 @@ namespace Marain.ContentManagement.Specs.Steps
             ContentDriver.Compare(expectedContent, actual.Content);
             ContentDriver.Compare(expectedState, actual);
         }
+
+        [Then("the response body should content state matching '(.*)'")]
+        public async Task ThenTheResponseBodyShouldContentStateMatching(string stateName)
+        {
+            ContentState actual = await this.scenarioContext.GetLastApiResponseBodyAsync<ContentState>().ConfigureAwait(false);
+            Assert.IsNotNull(actual);
+
+            ContentState expectedState = this.scenarioContext.Get<ContentState>(stateName);
+
+            ContentDriver.Compare(expectedState, actual);
+        }
     }
 }
 

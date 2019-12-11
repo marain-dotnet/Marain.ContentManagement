@@ -60,6 +60,16 @@
             Assert.AreEqual(expected.StateName, actual.StateName);
         }
 
+        public static void Compare(ContentState expected, ContentState actual)
+        {
+            Assert.AreEqual(expected.Id, actual.Id);
+            Assert.AreEqual(expected.WorkflowId, actual.WorkflowId);
+            Assert.AreEqual(expected.StateName, actual.StateName);
+            Assert.AreEqual(expected.ContentId, actual.ContentId);
+            Assert.AreEqual(expected.Slug, actual.Slug);
+            Assert.AreEqual(expected.ChangedBy, actual.ChangedBy);
+        }
+
         private static void ComparePayloads(IContentPayload expected, IContentPayload actual)
         {
             // If they are both null, no checking is required.
