@@ -54,6 +54,12 @@
             Assert.AreEqual(expected.Title, actual.Title);
         }
 
+        public static void Compare(ContentState expected, ContentWithState actual)
+        {
+            Assert.AreEqual(expected.WorkflowId, actual.WorkflowId);
+            Assert.AreEqual(expected.StateName, actual.StateName);
+        }
+
         private static void ComparePayloads(IContentPayload expected, IContentPayload actual)
         {
             // If they are both null, no checking is required.
@@ -199,6 +205,21 @@
             content.Tags.AddRange(SplitAndTrim(SubstituteContent(row["Tags"])));
 
             return (content, row["Name"]);
+        }
+
+        public static (ContentState, string) GetContentStateFor(TableRow row)
+        {
+            var contentState = new ContentState
+            {
+                Id = SubstituteContent(row["Id"]),
+                ChangedBy = new CmsIdentity(SubstituteContent(row["ChangedBy.Id"]), SubstituteContent(row["ChangedBy.Name"])),
+                ContentId = SubstituteContent(row["ContentId"]),
+                Slug = SubstituteContent(row["Slug"]),
+                WorkflowId = SubstituteContent(row["WorkflowId"]),
+                StateName = SubstituteContent(row["StateName"])
+            };
+
+            return (contentState, row["Name"]);
         }
 
         public static string SubstituteContent(string v)

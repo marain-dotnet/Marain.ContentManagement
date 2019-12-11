@@ -63,7 +63,12 @@ namespace Marain.Cms
         }
 
         /// <inheritdoc/>
-        public Task SetContentWorkflowStateAsync(string slug, string contentId, string workflowId, string stateName, CmsIdentity stateChangedBy)
+        public async Task<ContentState> SetContentWorkflowStateAsync(
+            string slug,
+            string contentId,
+            string workflowId,
+            string stateName,
+            CmsIdentity stateChangedBy)
         {
             if (slug is null)
             {
@@ -85,7 +90,11 @@ namespace Marain.Cms
                 throw new ArgumentException("message", nameof(stateName));
             }
 
-            return this.container.CreateItemAsync(new ContentState { Slug = slug, ContentId = contentId, StateName = stateName, WorkflowId = workflowId, ChangedBy = stateChangedBy }, new PartitionKey(Content.GetPartitionKeyFromSlug(slug)));
+            ItemResponse<ContentState> response = await this.container.CreateItemAsync(
+                new ContentState { Slug = slug, ContentId = contentId, StateName = stateName, WorkflowId = workflowId, ChangedBy = stateChangedBy },
+                new PartitionKey(PartitionKeyHelper.GetPartitionKeyFromSlug(slug))).ConfigureAwait(false);
+
+            return response.Resource;
         }
 
         /// <inheritdoc/>
@@ -132,7 +141,10 @@ namespace Marain.Cms
         {
             try
             {
-                ItemResponse<ContentSummary> response = await this.container.ReadItemAsync<ContentSummary>(contentId, new PartitionKey(Content.GetPartitionKeyFromSlug(slug))).ConfigureAwait(false);
+                ItemResponse<ContentSummary> response = await this.container.ReadItemAsync<ContentSummary>(
+                    contentId,
+                    new PartitionKey(PartitionKeyHelper.GetPartitionKeyFromSlug(slug))).ConfigureAwait(false);
+
                 return response.Resource;
             }
             catch (CosmosException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
@@ -292,7 +304,10 @@ namespace Marain.Cms
         {
             try
             {
-                ItemResponse<T> response = await this.container.ReadItemAsync<T>(contentId, new PartitionKey(Content.GetPartitionKeyFromSlug(slug))).ConfigureAwait(false);
+                ItemResponse<T> response = await this.container.ReadItemAsync<T>(
+                    contentId,
+                    new PartitionKey(PartitionKeyHelper.GetPartitionKeyFromSlug(slug))).ConfigureAwait(false);
+
                 return response.Resource;
             }
             catch (CosmosException ex) when (ex.StatusCode == HttpStatusCode.NotFound)

@@ -53,7 +53,7 @@ namespace Marain.Cms
         /// <param name="stateName">The new state name.</param>
         /// <param name="stateChangedBy">The identity that made the change.</param>
         /// <returns>A <see cref="Task"/> which completes when the state has been set.</returns>
-        Task SetContentWorkflowStateAsync(string slug, string contentId, string workflowId, string stateName, CmsIdentity stateChangedBy);
+        Task<ContentState> SetContentWorkflowStateAsync(string slug, string contentId, string workflowId, string stateName, CmsIdentity stateChangedBy);
 
         /// <summary>
         /// Gets the state for the content in a particular workflow.

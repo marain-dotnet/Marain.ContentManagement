@@ -12,6 +12,11 @@ namespace Marain.Cms
     public class ContentWithState
     {
         /// <summary>
+        /// The registered content type of the content for the <see cref="Corvus.ContentHandling.ContentFactory"/> pattern.
+        /// </summary>
+        public const string RegisteredContentType = "application/vnd.marain.content.contentwithstate";
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ContentWithState"/> class.
         /// </summary>
         /// <param name="content">The content from which to construct this instance.</param>
@@ -48,5 +53,10 @@ namespace Marain.Cms
         /// Gets or sets the ID of the content workflow to which this belongs.
         /// </summary>
         public string WorkflowId { get; set; }
+
+        /// <summary>
+        /// Gets the content type of the state for the <see cref="Corvus.ContentHandling.ContentFactory"/> pattern.
+        /// </summary>
+        public string ContentType => RegisteredContentType;
     }
 }

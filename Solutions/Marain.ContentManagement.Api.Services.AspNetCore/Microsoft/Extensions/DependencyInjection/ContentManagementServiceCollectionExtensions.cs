@@ -77,6 +77,10 @@ namespace Microsoft.Extensions.DependencyInjection
 
             services.AddSingleton<ContentHistoryService>();
             services.AddSingleton<IOpenApiService, ContentHistoryService>(s => s.GetRequiredService<ContentHistoryService>());
+
+            services.AddSingleton<WorkflowContentService>();
+            services.AddSingleton<IOpenApiService, WorkflowContentService>(s => s.GetRequiredService<WorkflowContentService>());
+
             return services;
         }
 
@@ -85,6 +89,8 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddHalDocumentMapper<Content, IOpenApiContext, ContentMapper>();
             services.AddHalDocumentMapper<ContentSummaries, ContentHistoryMappingContext, ContentHistoryMapper>();
             services.AddHalDocumentMapper<ContentSummary, ResponseMappingContext, ContentSummaryMapper>();
+            services.AddHalDocumentMapper<ContentWithState, IOpenApiContext, ContentWithStateMapper>();
+
             return services;
         }
 

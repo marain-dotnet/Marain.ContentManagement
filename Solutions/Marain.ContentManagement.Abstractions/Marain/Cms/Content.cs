@@ -112,7 +112,7 @@ namespace Marain.Cms
         /// <summary>
         /// Gets the partition key for the content.
         /// </summary>
-        public string PartitionKey => GetPartitionKeyFromSlug(this.Slug);
+        public string PartitionKey => PartitionKeyHelper.GetPartitionKeyFromSlug(this.Slug);
 
         /// <summary>
         /// Gets an enumerable containing the full hierarchical tree for the slug.
@@ -184,17 +184,6 @@ namespace Marain.Cms
         /// of walking the tree back to the original source.
         /// </remarks>
         public ContentSource? OriginalSource { get; set; }
-
-        /// <summary>
-        /// Gets the parition key string from a slug.
-        /// </summary>
-        /// <param name="slug">The slug from which to get the partition key.</param>
-        /// <returns>The partition key for the slug.</returns>
-        public static string GetPartitionKeyFromSlug(string slug)
-        {
-            string normalisedSlug = new Slug(slug).ToString();
-            return normalisedSlug.Base64UrlEncode();
-        }
 
         /// <summary>
         /// Gets the full-text-search representation of the content.

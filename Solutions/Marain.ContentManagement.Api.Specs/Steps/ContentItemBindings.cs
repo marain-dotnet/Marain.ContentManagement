@@ -40,6 +40,18 @@ namespace Marain.ContentManagement.Specs.Steps
             return this.scenarioContext.SendApiRequestAndStoreResponseAsync(request);
         }
 
+        [When("I request the content with its state for slug '(.*)' and workflow Id '(.*)'")]
+        public Task WhenIRequestTheContentWithItsStateForSlugAndWorkflowId(string slug, string workflowId)
+        {
+            string resolvedSlug = ContentDriver.GetObjectValue<string>(this.scenarioContext, slug);
+            string resolvedWorkflowId = ContentDriver.GetObjectValue<string>(this.scenarioContext, workflowId);
+
+            string path = $"/{this.scenarioContext.CurrentTenantId()}/marain/content/workflow/{HttpUtility.UrlEncode(resolvedWorkflowId)}/content/{HttpUtility.UrlEncode(resolvedSlug)}";
+
+            HttpRequestMessage request = this.scenarioContext.CreateApiRequest(path);
+            return this.scenarioContext.SendApiRequestAndStoreResponseAsync(request);
+        }
+
         [When("I request the content with slug '(.*)' and Id '(.*)' using the etag returned by the previous request")]
         public Task WhenIRequestTheContentWithSlugAndIdUsingTheEtagReturnedByThePreviousRequest(string slug, string id)
         {

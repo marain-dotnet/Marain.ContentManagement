@@ -151,6 +151,32 @@ paths:
           description: Forbidden
         '404':
           description: Not found    
+  /{tenantId}/marain/content/workflow/{workflowId}/content/{slug}:
+    get:
+      tags:
+        - Content Workflow
+      summary: Get the current content for the workflow at the slug
+      description: Gets the content associated with the given workflowId in the current state. The response includes the content and the state information.
+      operationId: getWorkflowContent
+      parameters:
+        - $ref: '#/components/parameters/tenantId'
+        - $ref: '#/components/parameters/slug'
+        - $ref: '#/components/parameters/workflowId'
+      responses:
+        '200':
+          description: Successful operation        
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentWithStateResponse'
+        '304':
+          description: Not modified
+        '400':
+          description: Bad request
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
 components:
   schemas:
     ############################################################################
@@ -258,7 +284,20 @@ components:
       uniqueItems: true
 
     ############################################################################
-    # Internal data types      
+    # Other internal data types
+    ############################################################################
+    DateTimeOffset:
+      nullable: true
+      properties:
+        dateTimeOffset:
+          type: string
+        unixTime:
+          type: number
+      required: ["dateTimeOffset", "unixTime"]
+
+
+    ############################################################################
+    # Domain data types      
     ############################################################################
     ContentSummary:
       type: object
@@ -306,6 +345,17 @@ components:
           metadata:
             $ref: '#/components/schemas/PropertyBag'
         additionalProperties: true
+    ContentWithState:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/Content'
+        stateName:
+          type: string
+        timestamp:
+          $ref: '#/components/schemas/DateTimeOffset'
+        worfklowId:
+          type: string
     CmsIdentity:
       type: object
       properties:
@@ -360,6 +410,10 @@ components:
       allOf: 
       - $ref: '#/components/schemas/Resource'
       - $ref: '#/components/schemas/Content'
+    ContentWithStateResponse:
+      allOf: 
+      - $ref: '#/components/schemas/Resource'
+      - $ref: '#/components/schemas/ContentWithState'
     ContentSummaries:
       allOf:
       - $ref: '#/components/schemas/Resource'
