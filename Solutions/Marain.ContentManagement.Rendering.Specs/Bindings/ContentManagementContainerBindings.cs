@@ -6,6 +6,7 @@ namespace Marain.ContentManagement.Specs.Bindings
 {
     using System.Collections.Generic;
     using Corvus.SpecFlow.Extensions;
+    using Marain.Cms;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using TechTalk.SpecFlow;
@@ -38,6 +39,9 @@ namespace Marain.ContentManagement.Specs.Bindings
                         .AddJsonFile("local.settings.json", true, true)
                         .Build();
 
+                    // Register the fake content store as the content store
+                    serviceCollection.AddSingleton<FakeContentStore>();
+                    serviceCollection.AddSingleton<IContentStore>(s => s.GetService<FakeContentStore>());
                     serviceCollection.AddSingleton(config);
                     serviceCollection.AddLiquidRenderer();
                     serviceCollection.AddMarkdownRenderer();

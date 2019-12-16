@@ -246,6 +246,225 @@ this.ScenarioInitialize(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Render published workflow content with the published state")]
+        public virtual void RenderPublishedWorkflowContentWithThePublishedState()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Render published workflow content with the published state", null, ((string[])(null)));
+#line 35
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name",
+                        "Id",
+                        "Slug",
+                        "Tags",
+                        "CategoryPaths",
+                        "Author.Name",
+                        "Author.Id",
+                        "Title",
+                        "Description",
+                        "Culture",
+                        "Fragment"});
+            table5.AddRow(new string[] {
+                        "FirstContent",
+                        "{newguid}",
+                        "/",
+                        "First tag; Second tag",
+                        "/standard/content;/books/hobbit;/books/lotr",
+                        "Bilbo Baggins",
+                        "{newguid}",
+                        "This is the title",
+                        "A description of the content",
+                        "fr-FR",
+                        "This is the fragment of text 1"});
+#line 36
+ testRunner.Given("I have created content", ((string)(null)), table5, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name",
+                        "Id",
+                        "Slug",
+                        "Tags",
+                        "CategoryPaths",
+                        "Author.Name",
+                        "Author.Id",
+                        "Title",
+                        "Description",
+                        "Culture",
+                        "ContentSlug"});
+            table6.AddRow(new string[] {
+                        "WorkflowContent",
+                        "{newguid}",
+                        "/wf",
+                        "First tag; Second tag",
+                        "/standard/content;/books/hobbit;/books/lotr",
+                        "Bilbo Baggins",
+                        "{newguid}",
+                        "This is the title",
+                        "A description of the content",
+                        "fr-FR",
+                        "/"});
+#line 39
+ testRunner.And("I have created content", ((string)(null)), table6, "And ");
+#line 42
+ testRunner.And("I publish the content called \'FirstContent\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 43
+ testRunner.When("I render the content called \'WorkflowContent\' to \'FirstRendered\' with the context" +
+                    " {\"PublicationStateToRender\": \"publishedOnly\"}", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 44
+ testRunner.Then("the output called \'FirstRendered\' should match \'This is the fragment of text 1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Render draft workflow content with the published state")]
+        public virtual void RenderDraftWorkflowContentWithThePublishedState()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Render draft workflow content with the published state", null, ((string[])(null)));
+#line 46
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name",
+                        "Id",
+                        "Slug",
+                        "Tags",
+                        "CategoryPaths",
+                        "Author.Name",
+                        "Author.Id",
+                        "Title",
+                        "Description",
+                        "Culture",
+                        "Fragment"});
+            table7.AddRow(new string[] {
+                        "FirstContent",
+                        "{newguid}",
+                        "/",
+                        "First tag; Second tag",
+                        "/standard/content;/books/hobbit;/books/lotr",
+                        "Bilbo Baggins",
+                        "{newguid}",
+                        "This is the title",
+                        "A description of the content",
+                        "fr-FR",
+                        "This is the fragment of text 1"});
+#line 47
+ testRunner.Given("I have created content", ((string)(null)), table7, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name",
+                        "Id",
+                        "Slug",
+                        "Tags",
+                        "CategoryPaths",
+                        "Author.Name",
+                        "Author.Id",
+                        "Title",
+                        "Description",
+                        "Culture",
+                        "ContentSlug"});
+            table8.AddRow(new string[] {
+                        "WorkflowContent",
+                        "{newguid}",
+                        "/wf",
+                        "First tag; Second tag",
+                        "/standard/content;/books/hobbit;/books/lotr",
+                        "Bilbo Baggins",
+                        "{newguid}",
+                        "This is the title",
+                        "A description of the content",
+                        "fr-FR",
+                        "/"});
+#line 50
+ testRunner.And("I have created content", ((string)(null)), table8, "And ");
+#line 53
+ testRunner.And("I draft the content called \'FirstContent\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 54
+ testRunner.When("I render the content called \'WorkflowContent\' to \'FirstRendered\' with the context" +
+                    " {\"PublicationStateToRender\": \"publishedOnly\"}", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 55
+ testRunner.Then("the output called \'FirstRendered\' should match \'\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Render draft workflow content with the published or draft state")]
+        public virtual void RenderDraftWorkflowContentWithThePublishedOrDraftState()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Render draft workflow content with the published or draft state", null, ((string[])(null)));
+#line 57
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name",
+                        "Id",
+                        "Slug",
+                        "Tags",
+                        "CategoryPaths",
+                        "Author.Name",
+                        "Author.Id",
+                        "Title",
+                        "Description",
+                        "Culture",
+                        "Fragment"});
+            table9.AddRow(new string[] {
+                        "FirstContent",
+                        "{newguid}",
+                        "/",
+                        "First tag; Second tag",
+                        "/standard/content;/books/hobbit;/books/lotr",
+                        "Bilbo Baggins",
+                        "{newguid}",
+                        "This is the title",
+                        "A description of the content",
+                        "fr-FR",
+                        "This is the fragment of text 1"});
+#line 58
+ testRunner.Given("I have created content", ((string)(null)), table9, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name",
+                        "Id",
+                        "Slug",
+                        "Tags",
+                        "CategoryPaths",
+                        "Author.Name",
+                        "Author.Id",
+                        "Title",
+                        "Description",
+                        "Culture",
+                        "ContentSlug"});
+            table10.AddRow(new string[] {
+                        "WorkflowContent",
+                        "{newguid}",
+                        "/wf",
+                        "First tag; Second tag",
+                        "/standard/content;/books/hobbit;/books/lotr",
+                        "Bilbo Baggins",
+                        "{newguid}",
+                        "This is the title",
+                        "A description of the content",
+                        "fr-FR",
+                        "/"});
+#line 61
+ testRunner.And("I have created content", ((string)(null)), table10, "And ");
+#line 64
+ testRunner.And("I draft the content called \'FirstContent\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 65
+ testRunner.When("I render the content called \'WorkflowContent\' to \'FirstRendered\' with the context" +
+                    " {\"PublicationStateToRender\": \"publishedOrDraft\"}", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 66
+ testRunner.Then("the output called \'FirstRendered\' should match \'This is the fragment of text 1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore

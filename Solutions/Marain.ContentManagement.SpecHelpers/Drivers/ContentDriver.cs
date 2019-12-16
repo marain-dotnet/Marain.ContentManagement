@@ -159,6 +159,16 @@
         }
 
         /// <summary>
+        /// Sets a content workflow payload on a content instance.
+        /// </summary>
+        /// <param name="content">The content instance on which to set the payload.</param>
+        /// <param name="row">The row from which to get the slug for the workflow content.</param>
+        public static void SetContentWorkflow(Content content, TableRow row)
+        {
+            content.ContentPayload = new PublicationWorkflowContentPayload { Slug = SubstituteContent(row["ContentSlug"]) };
+        }
+
+        /// <summary>
         /// Sets a markdown payload on a content instance.
         /// </summary>
         /// <param name="content">The content instance on which to set the payload.</param>

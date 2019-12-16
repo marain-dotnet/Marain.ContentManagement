@@ -20,6 +20,21 @@ namespace Marain.Cms
         /// Initializes a new instance of the <see cref="ContentWithState"/> class.
         /// </summary>
         /// <param name="content">The content from which to construct this instance.</param>
+        /// <param name="stateName">The name of the new state.</param>
+        /// <param name="timestamp">The timestamp for the change.</param>
+        /// <param name="workflowId">The workflow ID in which the change is being made.</param>
+        public ContentWithState(Content content, string stateName, DateTimeOffset timestamp, string workflowId)
+        {
+            this.Content = content ?? throw new ArgumentNullException(nameof(content));
+            this.StateName = stateName ?? throw new ArgumentNullException(nameof(content));
+            this.Timestamp = timestamp;
+            this.WorkflowId = workflowId ?? throw new ArgumentNullException(nameof(content));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContentWithState"/> class.
+        /// </summary>
+        /// <param name="content">The content from which to construct this instance.</param>
         /// <param name="state">The state with which to construct this instance.</param>
         public ContentWithState(Content content, ContentState state)
         {
@@ -29,9 +44,9 @@ namespace Marain.Cms
             }
 
             this.Content = content ?? throw new ArgumentNullException(nameof(content));
-            this.StateName = state.StateName;
+            this.StateName = state.StateName ?? throw new ArgumentNullException(nameof(content));
             this.Timestamp = state.Timestamp;
-            this.WorkflowId = state.WorkflowId;
+            this.WorkflowId = state.WorkflowId ?? throw new ArgumentNullException(nameof(content));
         }
 
         /// <summary>

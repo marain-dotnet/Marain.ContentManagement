@@ -3,10 +3,13 @@
     using System.IO;
     using System.Text;
     using System.Threading.Tasks;
+    using Corvus.Extensions.Json;
     using Corvus.SpecFlow.Extensions;
     using Marain.Cms;
+    using Marain.ContentManagement.Specs.Bindings;
     using Marain.ContentManagement.Specs.Drivers;
     using Microsoft.Extensions.DependencyInjection;
+    using Newtonsoft.Json.Linq;
     using NUnit.Framework;
     using TechTalk.SpecFlow;
 
@@ -28,7 +31,11 @@
             foreach (TableRow row in contentTable.Rows)
             {
                 (Content content, string name) = ContentDriver.GetContentFor(row);
-                if (row.ContainsKey("Fragment"))
+                if (row.ContainsKey("ContentSlug"))
+                {
+                    ContentDriver.SetContentWorkflow(content, row);
+                }
+                else if (row.ContainsKey("Fragment"))
                 {
                     ContentDriver.SetContentFragment(content, row);
                 }
@@ -52,19 +59,41 @@
             }
         }
 
-        [When("I render the content called '(.*)' to '(.*)'")]
-        public async Task WhenIRenderTheContentCalledTo(string contentName, string outputName)
+        [Given(@"I publish the content called '(.*)'")]
+        public void GivenIPublishTheContentCalled(string contentName)
+        {
+            Content content = this.scenarioContext.Get<Content>(contentName);
+            FakeContentStore fakeContentStore = ContainerBindings.GetServiceProvider(this.featureContext).GetService<FakeContentStore>();
+            fakeContentStore.SetContentState(content, ContentPublicationContentState.Published);
+        }
+
+        [Given(@"I draft the content called '(.*)'")]
+        public void GivenIDraftTheContentCalled(string contentName)
+        {
+            Content content = this.scenarioContext.Get<Content>(contentName);
+            FakeContentStore fakeContentStore = ContainerBindings.GetServiceProvider(this.featureContext).GetService<FakeContentStore>();
+            fakeContentStore.SetContentState(content, ContentPublicationContentState.Draft);
+        }
+
+        [When(@"I render the content called '(.*)' to '(.*)' with the context \{(.*)}")]
+        public async Task WhenIRenderTheContentCalledToWithTheContext(string contentName, string outputName, string contextJson)
         {
             Content content = this.scenarioContext.Get<Content>(contentName);
             IContentRendererFactory rendererFactory = ContainerBindings.GetServiceProvider(this.featureContext).GetService<IContentRendererFactory>();
             IContentRenderer renderer = rendererFactory.GetRendererFor(content.ContentPayload);
             using var stream = new MemoryStream();
             using var writer = new StreamWriter(stream, Encoding.UTF8, 1024, true);
-            await renderer.RenderAsync(writer, content, content.ContentPayload, null).ConfigureAwait(false);
+            await renderer.RenderAsync(writer, content, content.ContentPayload, new PropertyBag(JObject.Parse("{" + contextJson + "}"))).ConfigureAwait(false);
             await writer.FlushAsync().ConfigureAwait(false);
             stream.Position = 0;
             using var reader = new StreamReader(stream, Encoding.UTF8, true, 1024, true);
             this.scenarioContext.Set(await reader.ReadToEndAsync().ConfigureAwait(false), outputName);
+        }
+
+        [When("I render the content called '(.*)' to '(.*)'")]
+        public Task WhenIRenderTheContentCalledTo(string contentName, string outputName)
+        {
+            return WhenIRenderTheContentCalledToWithTheContext(contentName, outputName, string.Empty);
         }
 
         [Then("the output called '(.*)' should match '(.*)'")]

@@ -26,6 +26,7 @@ namespace Microsoft.Extensions.DependencyInjection
             factory.RegisterTransientContent<AbTestSetPayload>();
             factory.RegisterTransientContent<CompoundPayload>();
             factory.RegisterTransientContent<CompoundContentReferencePayload>();
+            factory.RegisterTransientContent<PublicationWorkflowContentPayload>();
             return factory;
         }
 

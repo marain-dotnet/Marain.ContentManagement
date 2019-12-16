@@ -25,6 +25,7 @@ namespace Microsoft.Extensions.DependencyInjection
             factory.RegisterTransientContent<CompoundPayloadRenderer>();
             factory.RegisterTransientContent<CompoundContentReferenceRenderer>();
             factory.RegisterTransientContent<ContentFragmentRenderer>();
+            factory.RegisterTransientContent<PublicationWorkflowContentRenderer>();
             return factory;
         }
 
