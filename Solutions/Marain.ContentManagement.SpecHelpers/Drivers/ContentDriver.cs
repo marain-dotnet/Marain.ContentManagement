@@ -84,16 +84,16 @@
 
             Assert.AreEqual(expected.GetType(), actual.GetType());
 
-            if (expected is ContentFragment expectedFragment)
+            if (expected is ContentFragmentPayload expectedFragment)
             {
-                CompareContentFragments(expectedFragment, actual as ContentFragment);
+                CompareContentFragments(expectedFragment, actual as ContentFragmentPayload);
                 return;
             }
 
             throw new InvalidOperationException($"Unexpected content payload type: {expected.GetType().Name}");
         }
 
-        private static void CompareContentFragments(ContentFragment expected, ContentFragment actual)
+        private static void CompareContentFragments(ContentFragmentPayload expected, ContentFragmentPayload actual)
         {
             Assert.AreEqual(expected.Fragment, actual.Fragment);
         }
@@ -155,7 +155,7 @@
         /// <param name="row">The row from which to get the content fragment.</param>
         public static void SetContentFragment(Content content, TableRow row)
         {
-            content.ContentPayload = new ContentFragment { Fragment = SubstituteContent(row["Fragment"]) };
+            content.ContentPayload = new ContentFragmentPayload { Fragment = SubstituteContent(row["Fragment"]) };
         }
 
         /// <summary>
@@ -196,7 +196,7 @@
         /// <param name="row">The row from which to get the content fragment.</param>
         public static void SetAbTestSet(ScenarioContext scenarioContext, Content content, TableRow row)
         {
-            content.ContentPayload = scenarioContext.Get<AbTestSet>(row["AbTestSetName"]);
+            content.ContentPayload = scenarioContext.Get<AbTestSetPayload>(row["AbTestSetName"]);
         }
 
         public static (Content, string) GetContentFor(TableRow row)

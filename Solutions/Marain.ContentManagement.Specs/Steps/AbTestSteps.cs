@@ -24,7 +24,7 @@
         [Given("I have created an AbTest set called '(.*)' with the content")]
         public void GivenIHaveCreatedAnAbTestSetCalledWithTheContent(string testSetName, Table table)
         {
-            AbTestSet testSet = ContainerBindings.GetServiceProvider(this.featureContext).GetRequiredService<AbTestSet>();
+            AbTestSetPayload testSet = ContainerBindings.GetServiceProvider(this.featureContext).GetRequiredService<AbTestSetPayload>();
             foreach (TableRow row in table.Rows)
             {
                 Content content = this.scenarioContext.Get<Content>(row["ContentName"]);
@@ -51,7 +51,7 @@
         public async Task WhenIGetTheABTestContentCalledFromTheContentCalledAndCallIt(string abTestGroup, string contentName, string actualName)
         {
             Content content = this.scenarioContext.Get<Content>(contentName);
-            var testSet = content.ContentPayload as AbTestSet;
+            var testSet = content.ContentPayload as AbTestSetPayload;
             Content abcontent = await testSet.GetContentForAbGroupAsync(abTestGroup).ConfigureAwait(false);
             this.scenarioContext.Set(abcontent, actualName);
         }
@@ -62,7 +62,7 @@
             try
             {
                 Content content = this.scenarioContext.Get<Content>(contentName);
-                var testSet = content.ContentPayload as AbTestSet;
+                var testSet = content.ContentPayload as AbTestSetPayload;
                 Content abcontent = await testSet.GetContentForAbGroupAsync(abTestGroup).ConfigureAwait(false);
                 Assert.Fail("Should have thrown a ContentNotFoundException.");
             }

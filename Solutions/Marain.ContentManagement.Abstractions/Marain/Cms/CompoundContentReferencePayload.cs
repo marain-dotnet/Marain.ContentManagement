@@ -1,4 +1,4 @@
-﻿// <copyright file="CompoundContent.cs" company="Endjin Limited">
+﻿// <copyright file="CompoundContentReferencePayload.cs" company="Endjin Limited">
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
@@ -7,14 +7,14 @@ namespace Marain.Cms
     using System.Collections.Generic;
 
     /// <summary>
-    /// A <see cref="IContentPayload"/> representing content composed from a set of other content, without any particular layout of its own.
+    /// A <see cref="IContentPayload"/> representing content composed from an ordered set of specific content instances.
     /// </summary>
-    public class CompoundContent : IContentPayload
+    public class CompoundContentReferencePayload : IContentPayload
     {
         /// <summary>
         /// The registered content type for the content payload.
         /// </summary>
-        public const string RegisteredContentType = "application/vnd.marain.cms.contentpayload.compoundcontent";
+        public const string RegisteredContentType = "application/vnd.marain.cms.contentpayload.compoundcontentreference";
         private List<ContentReference> children;
 
         /// <inheritdoc/>
@@ -38,7 +38,7 @@ namespace Marain.Cms
         /// <inheritdoc/>
         public IContentPayload Copy(bool replaceId)
         {
-            return new CompoundContent() { Children = new List<ContentReference>(this.Children) };
+            return new CompoundContentReferencePayload() { Children = new List<ContentReference>(this.Children) };
         }
 
         /// <inheritdoc/>

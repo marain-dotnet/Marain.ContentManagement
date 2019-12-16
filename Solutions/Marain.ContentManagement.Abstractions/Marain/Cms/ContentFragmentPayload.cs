@@ -1,4 +1,4 @@
-﻿// <copyright file="ContentFragment.cs" company="Endjin Limited">
+﻿// <copyright file="ContentFragmentPayload.cs" company="Endjin Limited">
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
@@ -7,7 +7,7 @@ namespace Marain.Cms
     /// <summary>
     /// A <see cref="IContentPayload"/> representing a simple string fragment of content.
     /// </summary>
-    public class ContentFragment : IContentPayload
+    public class ContentFragmentPayload : IContentPayload
     {
         /// <summary>
         /// The registered content type for the content payload.
@@ -31,7 +31,7 @@ namespace Marain.Cms
         /// <inheritdoc/>
         public IContentPayload Copy(bool replaceId)
         {
-            return new ContentFragment { Fragment = this.Fragment };
+            return new ContentFragmentPayload { Fragment = this.Fragment };
         }
 
         /// <inheritdoc/>

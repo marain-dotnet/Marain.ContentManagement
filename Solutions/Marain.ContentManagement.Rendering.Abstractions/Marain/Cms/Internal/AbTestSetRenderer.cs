@@ -22,7 +22,7 @@ namespace Marain.Cms.Internal
         /// <summary>
         /// Gets the registered content type for the renderer.
         /// </summary>
-        public const string RegisteredContentType = AbTestSet.RegisteredContentType + ContentRendererFactory.RendererSuffix;
+        public const string RegisteredContentType = AbTestSetPayload.RegisteredContentType + ContentRendererFactory.RendererSuffix;
 
         private readonly IContentRendererFactory contentRendererFactory;
 
@@ -48,7 +48,7 @@ namespace Marain.Cms.Internal
                 throw new InvalidOperationException($"The context must contain the '{AbTestIdContextKey}' property");
             }
 
-            if (currentPayload is AbTestSet testSet)
+            if (currentPayload is AbTestSetPayload testSet)
             {
                 Content content = await testSet.GetContentForAbGroupAsync(abTestId).ConfigureAwait(false);
                 IContentRenderer renderer = this.contentRendererFactory.GetRendererFor(content.ContentPayload);

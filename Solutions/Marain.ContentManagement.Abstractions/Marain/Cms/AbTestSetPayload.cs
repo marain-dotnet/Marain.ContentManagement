@@ -1,4 +1,4 @@
-﻿// <copyright file="AbTestSet.cs" company="Endjin Limited">
+﻿// <copyright file="AbTestSetPayload.cs" company="Endjin Limited">
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
@@ -10,7 +10,7 @@ namespace Marain.Cms
     /// <summary>
     /// A <see cref="IContentPayload"/> representing an AB test set of content.
     /// </summary>
-    public class AbTestSet : IContentPayload
+    public class AbTestSetPayload : IContentPayload
     {
         /// <summary>
         /// The registered content type for the content payload.
@@ -20,10 +20,10 @@ namespace Marain.Cms
         private Dictionary<string, ContentReference> abTestContentMap;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AbTestSet"/> class.
+        /// Initializes a new instance of the <see cref="AbTestSetPayload"/> class.
         /// </summary>
         /// <param name="contentStore">The content store.</param>
-        public AbTestSet(IContentStore contentStore)
+        public AbTestSetPayload(IContentStore contentStore)
         {
             this.contentStore = contentStore ?? throw new System.ArgumentNullException(nameof(contentStore));
         }
@@ -49,7 +49,7 @@ namespace Marain.Cms
         /// <inheritdoc/>
         public IContentPayload Copy(bool replaceId)
         {
-            return new AbTestSet(this.contentStore) { AbTestContentMap = new Dictionary<string, ContentReference>(this.AbTestContentMap) };
+            return new AbTestSetPayload(this.contentStore) { AbTestContentMap = new Dictionary<string, ContentReference>(this.AbTestContentMap) };
         }
 
         /// <summary>

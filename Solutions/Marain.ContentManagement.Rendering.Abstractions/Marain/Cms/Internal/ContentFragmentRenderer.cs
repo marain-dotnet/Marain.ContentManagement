@@ -16,7 +16,7 @@ namespace Marain.Cms.Internal
         /// <summary>
         /// Gets the registered content type for the renderer.
         /// </summary>
-        public const string RegisteredContentType = ContentFragment.RegisteredContentType + ContentRendererFactory.RendererSuffix;
+        public const string RegisteredContentType = ContentFragmentPayload.RegisteredContentType + ContentRendererFactory.RendererSuffix;
 
         /// <summary>
         /// Gets the content type for the renderer.
@@ -26,7 +26,7 @@ namespace Marain.Cms.Internal
         /// <inheritdoc/>
         public async Task RenderAsync(TextWriter output, Content parentContent, IContentPayload currentPayload, PropertyBag context)
         {
-            if (currentPayload is ContentFragment fragment)
+            if (currentPayload is ContentFragmentPayload fragment)
             {
                 await output.WriteAsync(fragment.Fragment).ConfigureAwait(false);
             }
