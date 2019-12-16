@@ -17,7 +17,7 @@ namespace Marain.Cms
         /// </summary>
         public const string RegisteredContentType = "application/vnd.marain.cms.contentpayload.abtestset";
         private readonly IContentStore contentStore;
-        private Dictionary<string, ContentSource> abTestContentMap;
+        private Dictionary<string, ContentReference> abTestContentMap;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbTestSet"/> class.
@@ -40,16 +40,16 @@ namespace Marain.Cms
         /// <summary>
         /// Gets or sets the map of ABTest group ID to <see cref="Content.Id"/>.
         /// </summary>
-        public Dictionary<string, ContentSource> AbTestContentMap
+        public Dictionary<string, ContentReference> AbTestContentMap
         {
-            get { return this.abTestContentMap ?? (this.abTestContentMap = new Dictionary<string, ContentSource>()); }
+            get { return this.abTestContentMap ?? (this.abTestContentMap = new Dictionary<string, ContentReference>()); }
             set { this.abTestContentMap = value; }
         }
 
         /// <inheritdoc/>
         public IContentPayload Copy(bool replaceId)
         {
-            return new AbTestSet(this.contentStore) { AbTestContentMap = new Dictionary<string, ContentSource>(this.AbTestContentMap) };
+            return new AbTestSet(this.contentStore) { AbTestContentMap = new Dictionary<string, ContentReference>(this.AbTestContentMap) };
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Marain.Cms
         /// <returns>The <see cref="Content"/> for the given AB test group ID.</returns>
         public async Task<Content> GetContentForAbGroupAsync(string abTestId)
         {
-            if (this.abTestContentMap.TryGetValue(abTestId, out ContentSource content))
+            if (this.abTestContentMap.TryGetValue(abTestId, out ContentReference content))
             {
                 return await this.contentStore.GetContentAsync(content.Id, content.Slug).ConfigureAwait(false);
             }

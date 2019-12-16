@@ -42,7 +42,7 @@ namespace Marain.Cms.Internal
         {
             if (currentPayload is CompoundContent compoundPayload)
             {
-                foreach (ContentSource child in compoundPayload.Children)
+                foreach (ContentReference child in compoundPayload.Children)
                 {
                     Content content = await this.contentStore.GetContentAsync(child.Id, child.Slug).ConfigureAwait(false);
                     IContentRenderer renderer = this.contentRendererFactory.GetRendererFor(content.ContentPayload);

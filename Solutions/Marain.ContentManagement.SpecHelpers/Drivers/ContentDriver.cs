@@ -39,7 +39,7 @@
             Assert.AreEqual(expected.Description, actual.Description);
             Assert.AreEqual(expected.Title, actual.Title);
             ComparePayloads(expected.ContentPayload, actual.ContentPayload);
-            Assert.AreEqual(new ContentSource(expected.Slug, expected.Id), actual.OriginalSource.Value);
+            Assert.AreEqual(new ContentReference(expected.Slug, expected.Id), actual.OriginalSource.Value);
         }
 
         public static void Compare(Content expected, ContentSummary actual)

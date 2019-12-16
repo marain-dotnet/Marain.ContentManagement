@@ -28,7 +28,7 @@
             foreach (TableRow row in table.Rows)
             {
                 Content content = this.scenarioContext.Get<Content>(row["ContentName"]);
-                testSet.AbTestContentMap.Add(row["Key"], new ContentSource(content.Slug, content.Id));
+                testSet.AbTestContentMap.Add(row["Key"], new ContentReference(content.Slug, content.Id));
             }
 
             this.scenarioContext.Set(testSet, testSetName);

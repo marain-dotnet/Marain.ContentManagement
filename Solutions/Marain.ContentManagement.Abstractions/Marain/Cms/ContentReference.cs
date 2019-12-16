@@ -1,4 +1,4 @@
-﻿// <copyright file="ContentSource.cs" company="Endjin Limited">
+﻿// <copyright file="ContentReference.cs" company="Endjin Limited">
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
@@ -8,16 +8,16 @@ namespace Marain.Cms
     using System.Collections.Generic;
 
     /// <summary>
-    /// Represents the source content of some other content in the system.
+    /// Represents a reference to a particular instance of some content in the system.
     /// </summary>
-    public struct ContentSource : IEquatable<ContentSource>
+    public struct ContentReference : IEquatable<ContentReference>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ContentSource"/> struct.
+        /// Initializes a new instance of the <see cref="ContentReference"/> struct.
         /// </summary>
-        /// <param name="sourceSlug">The original slug of the source.</param>
-        /// <param name="contentId">The original content ID of the source.</param>
-        public ContentSource(string sourceSlug, string contentId)
+        /// <param name="slug">The slug of the referenced content.</param>
+        /// <param name="contentId">The content ID of the referenced content.</param>
+        public ContentReference(string slug, string contentId)
             : this()
         {
             if (string.IsNullOrEmpty(contentId))
@@ -25,7 +25,7 @@ namespace Marain.Cms
                 throw new ArgumentException("message", nameof(contentId));
             }
 
-            this.Slug = sourceSlug ?? throw new ArgumentNullException(nameof(sourceSlug));
+            this.Slug = slug ?? throw new ArgumentNullException(nameof(slug));
             this.Id = contentId;
         }
 
@@ -45,7 +45,7 @@ namespace Marain.Cms
         /// <param name="left">The left hand side of the comparison.</param>
         /// <param name="right">The right hand side of the comparison.</param>
         /// <returns>True if they are equal.</returns>
-        public static bool operator ==(ContentSource left, ContentSource right)
+        public static bool operator ==(ContentReference left, ContentReference right)
         {
             return left.Equals(right);
         }
@@ -56,7 +56,7 @@ namespace Marain.Cms
         /// <param name="left">The left hand side of the comparison.</param>
         /// <param name="right">The right hand side of the comparison.</param>
         /// <returns>True if they are not equal.</returns>
-        public static bool operator !=(ContentSource left, ContentSource right)
+        public static bool operator !=(ContentReference left, ContentReference right)
         {
             return !(left == right);
         }
@@ -64,11 +64,11 @@ namespace Marain.Cms
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            return obj is ContentSource source && this.Equals(source);
+            return obj is ContentReference reference && this.Equals(reference);
         }
 
         /// <inheritdoc/>
-        public bool Equals(ContentSource other)
+        public bool Equals(ContentReference other)
         {
             return this.Id == other.Id &&
                    this.Slug == other.Slug;

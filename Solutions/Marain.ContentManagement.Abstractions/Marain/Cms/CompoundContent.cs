@@ -15,7 +15,7 @@ namespace Marain.Cms
         /// The registered content type for the content payload.
         /// </summary>
         public const string RegisteredContentType = "application/vnd.marain.cms.contentpayload.compoundcontent";
-        private List<ContentSource> children;
+        private List<ContentReference> children;
 
         /// <inheritdoc/>
         public string ContentType
@@ -29,16 +29,16 @@ namespace Marain.Cms
         /// <summary>
         /// Gets or sets the map of ABTest group ID to <see cref="Content.Id"/>.
         /// </summary>
-        public List<ContentSource> Children
+        public List<ContentReference> Children
         {
-            get { return this.children ?? (this.children = new List<ContentSource>()); }
+            get { return this.children ?? (this.children = new List<ContentReference>()); }
             set { this.children = value; }
         }
 
         /// <inheritdoc/>
         public IContentPayload Copy(bool replaceId)
         {
-            return new CompoundContent() { Children = new List<ContentSource>(this.Children) };
+            return new CompoundContent() { Children = new List<ContentReference>(this.Children) };
         }
 
         /// <inheritdoc/>
