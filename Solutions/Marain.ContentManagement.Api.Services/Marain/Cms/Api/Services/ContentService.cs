@@ -7,6 +7,7 @@ namespace Marain.Cms.Api.Services
     using System;
     using System.Linq;
     using System.Threading.Tasks;
+    using Marain.Cms.Api.Services.Dtos;
     using Marain.Cms.Api.Services.Internal;
     using Menes;
     using Menes.Hal;
@@ -58,13 +59,13 @@ namespace Marain.Cms.Api.Services
         /// <param name="body">The content.</param>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [OperationId(CreateContentOperationId)]
-        public async Task<OpenApiResult> CreateContent(IOpenApiContext context, string slug, Content body)
+        public async Task<OpenApiResult> CreateContent(IOpenApiContext context, string slug, CreateContentRequest body)
         {
             IContentStore contentStore = await this.contentStoreFactory.GetContentStoreForTenantAsync(context.CurrentTenantId).ConfigureAwait(false);
 
-            body.Slug = slug;
+            Content request = body.AsContent(slug);
 
-            Content result = await contentStore.StoreContentAsync(body).ConfigureAwait(false);
+            Content result = await contentStore.StoreContentAsync(request).ConfigureAwait(false);
 
             string etag = EtagHelper.BuildEtag(nameof(Content), result.ETag);
 

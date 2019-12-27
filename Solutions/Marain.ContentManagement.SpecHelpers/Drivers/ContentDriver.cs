@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Globalization;
     using System.Linq;
     using System.Reflection;
@@ -68,6 +69,19 @@
             Assert.AreEqual(expected.Title, actual.Title);
         }
 
+        public static void Compare(Cms.Content expected, Cms.Api.Client.ContentSummaryResponse actual)
+        {
+            Assert.AreEqual(expected.Id, actual.Id);
+            Assert.AreEqual(expected.Slug, actual.Slug);
+            Assert.AreEqual(expected.Author.UserId, actual.Author.UserId);
+            Assert.AreEqual(expected.Author.UserName, actual.Author.UserName);
+            Assert.AreEqual(string.Join(';', expected.CategoryPaths), string.Join(';', actual.CategoryPaths));
+            Assert.AreEqual(string.Join(';', expected.Tags), string.Join(';', actual.Tags));
+            Assert.AreEqual(expected.Culture.Name, actual.Culture);
+            Assert.AreEqual(expected.Description, actual.Description);
+            Assert.AreEqual(expected.Title, actual.Title);
+        }
+
         public static void Compare(Cms.ContentState expected, Cms.ContentWithState actual)
         {
             Assert.AreEqual(expected.WorkflowId, actual.WorkflowId);
@@ -80,14 +94,13 @@
             Assert.AreEqual(expected.StateName, actual.StateName);
         }
 
-        public static void Compare(Cms.ContentState expected, Cms.ContentState actual)
+        public static void Compare(Cms.ContentState expected, Cms.Api.Client.ContentStateResponse actual)
         {
-            Assert.AreEqual(expected.Id, actual.Id);
             Assert.AreEqual(expected.WorkflowId, actual.WorkflowId);
             Assert.AreEqual(expected.StateName, actual.StateName);
-            Assert.AreEqual(expected.ContentId, actual.ContentId);
             Assert.AreEqual(expected.Slug, actual.Slug);
-            Assert.AreEqual(expected.ChangedBy, actual.ChangedBy);
+            Assert.AreEqual(expected.ChangedBy.UserId, actual.ChangedBy.UserId);
+            Assert.AreEqual(expected.ChangedBy.UserName, actual.ChangedBy.UserName);
         }
 
         private static void ComparePayloads(IContentPayload expected, IContentPayload actual)
@@ -155,6 +168,33 @@
             }
 
             return CastTo<T>.From(propertyInfo.GetValue(contextValue));
+        }
+
+        public static CreateContentRequest ContentAsCreateContentRequest(Cms.Content item)
+        {
+            return new CreateContentRequest
+            {
+                Author = new Cms.Api.Client.CmsIdentity
+                {
+                    UserId = item.Author.UserId,
+                    UserName = item.Author.UserName,
+                },
+                CategoryPaths = new ObservableCollection<string>(item.CategoryPaths),
+                Culture = item.Culture?.Name,
+                Description = item.Description,
+                Id = item.Id,
+                Tags = new ObservableCollection<string>(item.Tags),
+                Title = item.Title,
+                ContentPayload = ContentPayloadAsCreateContentRequestPayload(item.ContentPayload),
+            };
+        }
+
+        public static ContentPayload ContentPayloadAsCreateContentRequestPayload(IContentPayload payload)
+        {
+            return new ContentPayload
+            {
+                ContentType = payload.ContentType,
+            };
         }
 
         /// <summary>

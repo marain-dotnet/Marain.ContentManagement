@@ -9,6 +9,7 @@ namespace Marain.ContentManagement.Specs.Steps
 
     using System.Threading.Tasks;
     using Marain.Cms;
+    using Marain.Cms.Api.Client;
     using Marain.ContentManagement.Specs.Bindings;
     using Marain.ContentManagement.Specs.Drivers;
     using NUnit.Framework;
@@ -25,14 +26,14 @@ namespace Marain.ContentManagement.Specs.Steps
         }
 
         [Then("the response body should contain a summary of the content item '(.*)'")]
-        public async Task ThenTheResponseBodyShouldContainTheContentItem(string itemName)
+        public void ThenTheResponseBodyShouldContainTheContentItem(string itemName)
         {
-            ContentSummary actual = await this.scenarioContext.GetLastApiResponseBodyAsync<ContentSummary>().ConfigureAwait(false);
+            SwaggerResponse<ContentSummaryResponse> actual = this.scenarioContext.GetLastApiResponse<ContentSummaryResponse>();
             Assert.IsNotNull(actual);
 
-            Content expected = this.scenarioContext.Get<Content>(itemName);
+            Cms.Content expected = this.scenarioContext.Get<Cms.Content>(itemName);
 
-            ContentDriver.Compare(expected, actual);
+            ContentDriver.Compare(expected, actual.Result);
         }
     }
 }

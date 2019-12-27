@@ -15,13 +15,13 @@ namespace Marain.Cms.Api.Client
     using System = global::System;
     
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.2.0.0 (NJsonSchema v10.1.2.0 (Newtonsoft.Json v11.0.0.0))")]
-    public partial class Client 
+    public partial class ContentClient 
     {
         private string _baseUrl = "https://content.marain.io";
         private System.Net.Http.HttpClient _httpClient;
         private System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _settings;
     
-        public Client(System.Net.Http.HttpClient httpClient)
+        public ContentClient(System.Net.Http.HttpClient httpClient)
         {
             _httpClient = httpClient; 
             _settings = new System.Lazy<Newtonsoft.Json.JsonSerializerSettings>(() => 
@@ -2031,6 +2031,8 @@ namespace Marain.Cms.Api.Client
         private string _title;
         private string _description;
         private string _culture;
+        private ContentPayload _contentPayload;
+        private PropertyBag _metadata;
     
         /// <summary>The unique ID of the tenant. This forms a path with parent tenants.</summary>
         [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.Always)]
@@ -2141,6 +2143,34 @@ namespace Marain.Cms.Api.Client
                 if (_culture != value)
                 {
                     _culture = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("contentPayload", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public ContentPayload ContentPayload
+        {
+            get { return _contentPayload; }
+            set 
+            {
+                if (_contentPayload != value)
+                {
+                    _contentPayload = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("metadata", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public PropertyBag Metadata
+        {
+            get { return _metadata; }
+            set 
+            {
+                if (_metadata != value)
+                {
+                    _metadata = value; 
                     RaisePropertyChanged();
                 }
             }

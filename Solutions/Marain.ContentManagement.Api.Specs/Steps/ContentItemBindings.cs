@@ -5,11 +5,13 @@
 namespace Marain.ContentManagement.Specs.Steps
 {
     using System;
+    using System.Linq;
     using System.Net.Http;
     using System.Net.Http.Headers;
     using System.Threading.Tasks;
     using System.Web;
     using Marain.Cms;
+    using Marain.Cms.Api.Client;
     using Marain.ContentManagement.Specs.Bindings;
     using Marain.ContentManagement.Specs.Drivers;
     using TechTalk.SpecFlow;
@@ -29,84 +31,148 @@ namespace Marain.ContentManagement.Specs.Steps
 
         [When("I request the content with slug '(.*)' and Id '(.*)'")]
         [Given("I have requested the content with slug '(.*)' and Id '(.*)'")]
-        public Task WhenIRequestTheContentWithSlug(string slug, string id)
+        public async Task WhenIRequestTheContentWithSlug(string slug, string id)
         {
             string resolvedSlug = ContentDriver.GetObjectValue<string>(this.scenarioContext, slug);
             string resolvedId = ContentDriver.GetObjectValue<string>(this.scenarioContext, id);
 
-            string path = $"/{this.scenarioContext.CurrentTenantId()}/marain/content/{HttpUtility.UrlEncode(resolvedSlug)}?contentId={HttpUtility.UrlEncode(resolvedId)}";
+            ContentClient client = this.scenarioContext.Get<ContentClient>();
 
-            HttpRequestMessage request = this.scenarioContext.CreateApiRequest(path);
-            return this.scenarioContext.SendApiRequestAndStoreResponseAsync(request);
+            try
+            {
+                SwaggerResponse<ContentResponse> response = await client.GetContentAsync(
+                    this.scenarioContext.CurrentTenantId(),
+                    resolvedSlug,
+                    resolvedId,
+                    null).ConfigureAwait(false);
+
+                this.scenarioContext.StoreLastApiResponse(response);
+            }
+            catch (SwaggerException ex)
+            {
+                this.scenarioContext.StoreLastApiException(ex);
+            }
         }
 
         [When("I request the content with its state for slug '(.*)' and workflow Id '(.*)'")]
-        public Task WhenIRequestTheContentWithItsStateForSlugAndWorkflowId(string slug, string workflowId)
+        public async Task WhenIRequestTheContentWithItsStateForSlugAndWorkflowId(string slug, string workflowId)
         {
             string resolvedSlug = ContentDriver.GetObjectValue<string>(this.scenarioContext, slug);
             string resolvedWorkflowId = ContentDriver.GetObjectValue<string>(this.scenarioContext, workflowId);
 
-            string path = $"/{this.scenarioContext.CurrentTenantId()}/marain/content/workflow/{HttpUtility.UrlEncode(resolvedWorkflowId)}/content/{HttpUtility.UrlEncode(resolvedSlug)}";
+            try
+            {
+                ContentClient client = this.scenarioContext.Get<ContentClient>();
+                SwaggerResponse<ContentWithStateResponse> response = await client.GetWorkflowContentAsync(
+                    this.scenarioContext.CurrentTenantId(),
+                    resolvedSlug,
+                    resolvedWorkflowId).ConfigureAwait(false);
 
-            HttpRequestMessage request = this.scenarioContext.CreateApiRequest(path);
-            return this.scenarioContext.SendApiRequestAndStoreResponseAsync(request);
+                this.scenarioContext.StoreLastApiResponse(response);
+            }
+            catch (SwaggerException ex)
+            {
+                this.scenarioContext.StoreLastApiException(ex);
+            }
         }
 
         [When("I request the content state for slug '(.*)' and workflow Id '(.*)'")]
-        public Task WhenIRequestTheContentStateForSlugAndWorkflowId(string slug, string workflowId)
+        public async Task WhenIRequestTheContentStateForSlugAndWorkflowId(string slug, string workflowId)
         {
             string resolvedSlug = ContentDriver.GetObjectValue<string>(this.scenarioContext, slug);
             string resolvedWorkflowId = ContentDriver.GetObjectValue<string>(this.scenarioContext, workflowId);
 
-            string path = $"/{this.scenarioContext.CurrentTenantId()}/marain/content/workflow/{HttpUtility.UrlEncode(resolvedWorkflowId)}/state/{HttpUtility.UrlEncode(resolvedSlug)}";
+            try
+            {
+                ContentClient client = this.scenarioContext.Get<ContentClient>();
+                SwaggerResponse<ContentStateResponse> response = await client.GetWorkflowStateAsync(
+                    this.scenarioContext.CurrentTenantId(),
+                    resolvedSlug,
+                    resolvedWorkflowId).ConfigureAwait(false);
 
-            HttpRequestMessage request = this.scenarioContext.CreateApiRequest(path);
-            return this.scenarioContext.SendApiRequestAndStoreResponseAsync(request);
+                this.scenarioContext.StoreLastApiResponse(response);
+            }
+            catch (SwaggerException ex)
+            {
+                this.scenarioContext.StoreLastApiException(ex);
+            }
         }
 
         [When("I request the content with slug '(.*)' and Id '(.*)' using the etag returned by the previous request")]
-        public Task WhenIRequestTheContentWithSlugAndIdUsingTheEtagReturnedByThePreviousRequest(string slug, string id)
+        public async Task WhenIRequestTheContentWithSlugAndIdUsingTheEtagReturnedByThePreviousRequest(string slug, string id)
         {
-            HttpResponseMessage lastResponse = this.scenarioContext.GetLastApiResponse();
-            EntityTagHeaderValue lastEtag = lastResponse.Headers.ETag;
+            SwaggerResponse<ContentResponse> lastResponse = this.scenarioContext.GetLastApiResponse<ContentResponse>();
+            string lastEtag = lastResponse.Headers["ETag"].First();
+            this.scenarioContext.ClearLastApiResponse();
 
             string resolvedSlug = ContentDriver.GetObjectValue<string>(this.scenarioContext, slug);
             string resolvedId = ContentDriver.GetObjectValue<string>(this.scenarioContext, id);
 
-            string path = $"/{this.scenarioContext.CurrentTenantId()}/marain/content/{HttpUtility.UrlEncode(resolvedSlug)}?contentId={HttpUtility.UrlEncode(resolvedId)}";
+            ContentClient client = this.scenarioContext.Get<ContentClient>();
 
-            HttpRequestMessage request = this.scenarioContext.CreateApiRequest(path);
-            request.Headers.IfNoneMatch.Add(lastEtag);
+            try
+            {
+                SwaggerResponse<ContentResponse> response = await client.GetContentAsync(
+                    this.scenarioContext.CurrentTenantId(),
+                    resolvedSlug,
+                    resolvedId,
+                    lastEtag).ConfigureAwait(false);
 
-            return this.scenarioContext.SendApiRequestAndStoreResponseAsync(request);
+                this.scenarioContext.StoreLastApiResponse(response);
+            }
+            catch (SwaggerException ex)
+            {
+                this.scenarioContext.StoreLastApiException(ex);
+            }
         }
 
         [When("I request the content with slug '(.*)' and Id '(.*)' using a random etag")]
-        public Task WhenIRequestTheContentWithSlugAndIdUsingARandomEtag(string slug, string id)
+        public async Task WhenIRequestTheContentWithSlugAndIdUsingARandomEtag(string slug, string id)
         {
             string resolvedSlug = ContentDriver.GetObjectValue<string>(this.scenarioContext, slug);
             string resolvedId = ContentDriver.GetObjectValue<string>(this.scenarioContext, id);
 
-            string path = $"/{this.scenarioContext.CurrentTenantId()}/marain/content/{HttpUtility.UrlEncode(resolvedSlug)}?contentId={HttpUtility.UrlEncode(resolvedId)}";
+            ContentClient client = this.scenarioContext.Get<ContentClient>();
 
-            HttpRequestMessage request = this.scenarioContext.CreateApiRequest(path);
-            request.Headers.IfNoneMatch.Add(new EntityTagHeaderValue($"\"{Guid.NewGuid().ToString()}\""));
+            try
+            {
+                SwaggerResponse<ContentResponse> response = await client.GetContentAsync(
+                    this.scenarioContext.CurrentTenantId(),
+                    resolvedSlug,
+                    resolvedId,
+                    Guid.NewGuid().ToString()).ConfigureAwait(false);
 
-            return this.scenarioContext.SendApiRequestAndStoreResponseAsync(request);
+                this.scenarioContext.StoreLastApiResponse(response);
+            }
+            catch (SwaggerException ex)
+            {
+                this.scenarioContext.StoreLastApiException(ex);
+            }
         }
 
         [Given("I have requested that the content '(.*)' is created")]
         [When("I request that the content '(.*)' is created")]
         [When("I issue a second request that the content '(.*)' is created")]
-        public Task WhenIRequestThatTheContentIsCreated(string contentItem)
+        public async Task WhenIRequestThatTheContentIsCreated(string contentItem)
         {
-            Content item = this.scenarioContext.Get<Content>(contentItem);
+            Cms.Content item = this.scenarioContext.Get<Cms.Content>(contentItem);
+            CreateContentRequest createContentRequest = ContentDriver.ContentAsCreateContentRequest(item);
 
-            string path = $"/{this.scenarioContext.CurrentTenantId()}/marain/content/{HttpUtility.UrlEncode(item.Slug)}";
+            ContentClient client = this.scenarioContext.Get<ContentClient>();
 
-            HttpRequestMessage request = this.scenarioContext.CreateApiRequestWithJson(path, HttpMethod.Post, item);
+            try
+            {
+                SwaggerResponse<ContentResponse> response = await client.CreateContentAsync(
+                    this.scenarioContext.CurrentTenantId(),
+                    item.Slug,
+                    createContentRequest).ConfigureAwait(false);
 
-            return this.scenarioContext.SendApiRequestAndStoreResponseAsync(request);
+                this.scenarioContext.StoreLastApiResponse(response);
+            }
+            catch (SwaggerException ex)
+            {
+                this.scenarioContext.StoreLastApiException(ex);
+            }
         }
     }
 }

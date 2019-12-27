@@ -6,18 +6,12 @@ namespace Marain.ContentManagement.Specs.Bindings
 {
     using System;
     using System.Net.Http;
-    using System.Net.Http.Headers;
-    using System.Text;
     using System.Threading.Tasks;
-    using Corvus.Extensions.Json;
     using Corvus.SpecFlow.Extensions;
+    using Marain.Cms.Api.Client;
     using Marain.Cms.Api.Host;
     using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.Extensions.DependencyInjection;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Linq;
-    using NUnit.Framework;
     using TechTalk.SpecFlow;
 
     /// <summary>
@@ -35,9 +29,9 @@ namespace Marain.ContentManagement.Specs.Bindings
         /// </summary>
         public const string BaseUrl = "http://localhost:8765";
 
-        private const string LastApiResponseBodyKey = "LastApiResponseBody";
+        private const string LastApiResponseKey = "LastApiResponse";
 
-        private const string LastApiResponseBodyAsJObjectKey = "LastApiResponseBodyAsJObject";
+        private const string LastApiExceptionKey = "LastApiException";
 
         /// <summary>
         /// Sets up and runs the function, using the <see cref="Startup"/> class to initialise the service provider.
@@ -63,11 +57,13 @@ namespace Marain.ContentManagement.Specs.Bindings
             context.Set(host);
 
             // Create a client for the test
-            var client = new HttpClient
+            var httpClient = new HttpClient();
+            var client = new ContentClient(httpClient)
             {
-                BaseAddress = new Uri(BaseUrl),
+                BaseUrl = BaseUrl,
             };
 
+            context.Set(httpClient);
             context.Set(client);
         }
 
@@ -107,133 +103,69 @@ namespace Marain.ContentManagement.Specs.Bindings
         /// </summary>
         /// <param name="context">The current <see cref="ScenarioContext"/>.</param>
         /// <returns>The current <see cref="HttpClient"/>.</returns>
-        public static HttpClient HttpClient(this ScenarioContext context)
+        public static ContentClient ContentClient(this ScenarioContext context)
         {
-            return context.Get<HttpClient>();
+            return context.Get<ContentClient>();
         }
 
         /// <summary>
-        /// Creates a new <see cref="HttpRequestMessage"/> to access the specified path using the given method.
+        /// Stores the last API response in the specified scenario context.
         /// </summary>
-        /// <param name="_">The current <see cref="ScenarioContext"/>.</param>
-        /// <param name="uriPath">The relative path to the endpoint being requested.</param>
-        /// <param name="method">The <see cref="HttpMethod"/> to use to access the endpoint.</param>
-        /// <returns>The newly created <see cref="HttpRequestMessage"/>.</returns>
-#pragma warning disable SA1313 // Parameter names should begin with lower-case letter
-        public static HttpRequestMessage CreateApiRequest(this ScenarioContext _, string uriPath, HttpMethod method = null)
-#pragma warning restore SA1313 // Parameter names should begin with lower-case letter
+        /// <param name="context">The context to store data in.</param>
+        /// <param name="response">The response to store.</param>
+        public static void StoreLastApiResponse(this ScenarioContext context, SwaggerResponse response)
         {
-            var request = new HttpRequestMessage
-            {
-                RequestUri = new Uri(uriPath, UriKind.Relative),
-            };
-
-            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            request.Method = method ?? HttpMethod.Get;
-            return request;
+            context.Set(response, LastApiResponseKey);
         }
 
         /// <summary>
-        /// Creates a new <see cref="HttpRequestMessage"/> to access the specified path using the given method, with the
-        /// request body containing the value supplied, serialized as JSON.
+        /// Removes any stored API response from the scenario context.
         /// </summary>
-        /// <param name="context">The current <see cref="ScenarioContext"/>.</param>
-        /// <param name="uriPath">The relative path to the endpoint being requested.</param>
-        /// <param name="method">The <see cref="HttpMethod"/> to use to access the endpoint.</param>
-        /// <param name="data">The data to send in the request body.</param>
-        /// <returns>The newly created <see cref="HttpRequestMessage"/>.</returns>
-        public static HttpRequestMessage CreateApiRequestWithJson(this ScenarioContext context, string uriPath, HttpMethod method, object data)
+        /// <param name="context">The context.</param>
+        public static void ClearLastApiResponse(this ScenarioContext context)
         {
-            HttpRequestMessage request = context.CreateApiRequest(uriPath, method);
-
-            IJsonSerializerSettingsProvider serializationSettingsProvider = context.ServiceProvider().GetRequiredService<IJsonSerializerSettingsProvider>();
-
-            string json = JsonConvert.SerializeObject(data, serializationSettingsProvider.Instance);
-            request.Content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            return request;
+            context.Remove(LastApiResponseKey);
         }
 
         /// <summary>
-        /// Sends the supplied <see cref="HttpRequestMessage"/> using the current <see cref="HttpClient"/>, and stores the
-        /// resultant <see cref="HttpResponseMessage"/> in the <see cref="ScenarioContext"/> from where it can be accessed
-        /// for use in test assertions.
+        /// Retrieves the most recent API response stored in the scenario context.
         /// </summary>
-        /// <param name="context">The current <see cref="ScenarioContext"/>.</param>
-        /// <param name="request">The <see cref="HttpRequestMessage"/> to send.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        public static async Task SendApiRequestAndStoreResponseAsync(this ScenarioContext context, HttpRequestMessage request)
+        /// <param name="context">The context.</param>
+        /// <returns>The most recently stored <c>SwaggerResponse</c>.</returns>
+        public static SwaggerResponse GetLastApiResponse(this ScenarioContext context)
         {
-            HttpResponseMessage response = await context.HttpClient().SendAsync(request).ConfigureAwait(false);
-            context.Set(response);
+            return context.Get<SwaggerResponse>(LastApiResponseKey);
         }
 
         /// <summary>
-        /// Gets the <see cref="HttpResponseMessage"/> from the last call to
-        /// <see cref="SendApiRequestAndStoreResponseAsync(ScenarioContext, HttpRequestMessage)"/>.
+        /// Retrieves the most recent API response stored in the scenario context.
         /// </summary>
-        /// <param name="context">The current <see cref="ScenarioContext"/>.</param>
-        /// <returns>
-        /// The <see cref="HttpResponseMessage"/> from the last call to
-        /// <see cref="SendApiRequestAndStoreResponseAsync(ScenarioContext, HttpRequestMessage)"/>.
-        /// </returns>
-        public static HttpResponseMessage GetLastApiResponse(this ScenarioContext context)
+        /// <typeparam name="T">The type of the response content.</typeparam>
+        /// <param name="context">The context.</param>
+        /// <returns>The most recently stored <c>SwaggerResponse</c>.</returns>
+        public static SwaggerResponse<T> GetLastApiResponse<T>(this ScenarioContext context)
         {
-            return context.Get<HttpResponseMessage>();
+            return context.Get<SwaggerResponse<T>>(LastApiResponseKey);
         }
 
         /// <summary>
-        /// Gets the body from the response to the last call to
-        /// <see cref="SendApiRequestAndStoreResponseAsync(ScenarioContext, HttpRequestMessage)"/>.
+        /// Stores the given exception in the context.
         /// </summary>
-        /// <typeparam name="T">The type to deserialize the response body to.</typeparam>
-        /// <param name="context">The current <see cref="ScenarioContext"/>.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        public static async Task<T> GetLastApiResponseBodyAsync<T>(this ScenarioContext context)
+        /// <param name="context">The context.</param>
+        /// <param name="ex">The exception to store.</param>
+        public static void StoreLastApiException(this ScenarioContext context, SwaggerException ex)
         {
-            if (context.TryGetValue(LastApiResponseBodyKey, out T previouslyDeserializedResponse))
-            {
-                return previouslyDeserializedResponse;
-            }
-
-            HttpResponseMessage response = context.GetLastApiResponse();
-
-            Assert.AreEqual("application/json", response.Content?.Headers?.ContentType?.MediaType, "Response does not have a content type of 'application/json' so cannot deserialize it.");
-
-            string result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-            IJsonSerializerSettingsProvider serializationSettingsProvider = context.ServiceProvider().GetRequiredService<IJsonSerializerSettingsProvider>();
-            T deserializedResponse = JsonConvert.DeserializeObject<T>(result, serializationSettingsProvider.Instance);
-
-            context.Set(deserializedResponse, LastApiResponseBodyKey);
-
-            return deserializedResponse;
+            context.Set(ex, LastApiExceptionKey);
         }
 
         /// <summary>
-        /// Gets the body from the response to the last call to
-        /// <see cref="SendApiRequestAndStoreResponseAsync(ScenarioContext, HttpRequestMessage)"/>.
+        /// Retrieves the most recent API response stored in the scenario context.
         /// </summary>
-        /// <param name="context">The current <see cref="ScenarioContext"/>.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        public static async Task<JObject> GetLastApiResponseBodyAsJObjectAsync(this ScenarioContext context)
+        /// <param name="context">The context.</param>
+        /// <returns>The API response.</returns>
+        public static SwaggerException GetLastApiException(this ScenarioContext context)
         {
-            if (context.TryGetValue(LastApiResponseBodyAsJObjectKey, out JObject previouslyDeserializedResponse))
-            {
-                return previouslyDeserializedResponse;
-            }
-
-            HttpResponseMessage response = context.GetLastApiResponse();
-
-            Assert.AreEqual("application/json", response.Content.Headers.ContentType.MediaType, "Response does not have a content type of 'application/json' so cannot deserialize it.");
-
-            string result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-            var deserializedResponse = JObject.Parse(result);
-
-            context.Set(deserializedResponse, LastApiResponseBodyAsJObjectKey);
-
-            return deserializedResponse;
+            return context.Get<SwaggerException>(LastApiExceptionKey);
         }
     }
 }

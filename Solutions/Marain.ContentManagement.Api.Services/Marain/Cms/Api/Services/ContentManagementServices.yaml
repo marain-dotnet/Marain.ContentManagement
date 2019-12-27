@@ -468,6 +468,10 @@ components:
           type: string
         culture:
           type: string
+        contentPayload:
+          $ref: '#/components/schemas/ContentPayload'
+        metadata:
+          $ref: '#/components/schemas/PropertyBag'
       required:
         - id
 

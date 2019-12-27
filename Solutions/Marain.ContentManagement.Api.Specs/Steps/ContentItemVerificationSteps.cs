@@ -4,10 +4,9 @@
 
 namespace Marain.ContentManagement.Specs.Steps
 {
-    using System.Linq;
-    using System.Threading.Tasks;
+    using System.Collections.ObjectModel;
+    using Marain.Cms.Api.Client;
     using Marain.ContentManagement.Specs.Bindings;
-    using Newtonsoft.Json.Linq;
     using NUnit.Framework;
     using TechTalk.SpecFlow;
 
@@ -25,33 +24,29 @@ namespace Marain.ContentManagement.Specs.Steps
         }
 
         [Then("the response should contain (.*) embedded content summaries")]
-        public async Task ThenTheResponseShouldContainContentSummaries(int expectedCount)
+        public void ThenTheResponseShouldContainContentSummaries(int expectedCount)
         {
-            JObject response = await this.scenarioContext.GetLastApiResponseBodyAsJObjectAsync().ConfigureAwait(false);
+            SwaggerResponse<ContentSummaries> response = this.scenarioContext.GetLastApiResponse<Cms.Api.Client.ContentSummaries>();
 
-            JToken summaries = response["summaries"];
+            ObservableCollection<ContentSummaryResponse> summaries = response.Result.Summaries;
 
             Assert.IsNotNull(summaries);
-            Assert.AreEqual(JTokenType.Array, summaries.Type);
+            Assert.IsNotEmpty(summaries);
 
-            var summariesArray = summaries as JArray;
-
-            Assert.AreEqual(expectedCount, summariesArray.Children().Count());
+            Assert.AreEqual(expectedCount, summaries.Count);
         }
 
         [Then("the response should contain (.*) embedded content summaries with state")]
-        public async Task ThenTheResponseShouldContainEmbeddedContentSummariesWithState(int expectedCount)
+        public void ThenTheResponseShouldContainEmbeddedContentSummariesWithState(int expectedCount)
         {
-            JObject response = await this.scenarioContext.GetLastApiResponseBodyAsJObjectAsync().ConfigureAwait(false);
+            SwaggerResponse<ContentSummariesWithStateResponse> response = this.scenarioContext.GetLastApiResponse<ContentSummariesWithStateResponse>();
 
-            JToken summaries = response["summaries"];
+            ObservableCollection<ContentSummaryWithStateResponse> summaries = response.Result.Summaries;
 
             Assert.IsNotNull(summaries);
-            Assert.AreEqual(JTokenType.Array, summaries.Type);
+            Assert.IsNotEmpty(summaries);
 
-            var summariesArray = summaries as JArray;
-
-            Assert.AreEqual(expectedCount, summariesArray.Children().Count());
+            Assert.AreEqual(expectedCount, summaries.Count);
         }
     }
 }
