@@ -40,6 +40,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marain.ContentManagement.Ap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marain.ContentManagement.Api.Specs", "Marain.ContentManagement.Api.Specs\Marain.ContentManagement.Api.Specs.csproj", "{AF696F73-2CB1-4D74-AA2F-120A6EB0F9D0}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marain.ContentManagement.Api.Client", "Marain.ContentManagement.Api.Client\Marain.ContentManagement.Api.Client.csproj", "{8B26A2F7-5587-4D95-8719-41D833E112C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -102,6 +104,10 @@ Global
 		{AF696F73-2CB1-4D74-AA2F-120A6EB0F9D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF696F73-2CB1-4D74-AA2F-120A6EB0F9D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF696F73-2CB1-4D74-AA2F-120A6EB0F9D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B26A2F7-5587-4D95-8719-41D833E112C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B26A2F7-5587-4D95-8719-41D833E112C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B26A2F7-5587-4D95-8719-41D833E112C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B26A2F7-5587-4D95-8719-41D833E112C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -113,6 +119,7 @@ Global
 		{A27A5F77-3418-4877-9E84-B60F2EFF2FCD} = {0F03B989-9119-4FAA-A55A-4DC795E4331E}
 		{5BD6B256-F023-4F36-A5F7-05286E1CD689} = {0F03B989-9119-4FAA-A55A-4DC795E4331E}
 		{AF696F73-2CB1-4D74-AA2F-120A6EB0F9D0} = {0F03B989-9119-4FAA-A55A-4DC795E4331E}
+		{8B26A2F7-5587-4D95-8719-41D833E112C3} = {0F03B989-9119-4FAA-A55A-4DC795E4331E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1A246536-6802-4A2D-B193-F76922DF1E68}

@@ -1,4 +1,4 @@
-﻿// <copyright file="ContentHistoryMappingContext.cs" company="Endjin Limited">
+﻿// <copyright file="ContentSummariesWithStateMappingContext.cs" company="Endjin Limited">
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
@@ -8,9 +8,9 @@ namespace Marain.Cms.Api.Services.Internal
 
     /// <summary>
     /// Additional information needed to map a content summaries result to a <see cref="HalDocument"/> using
-    /// this <see cref="ContentHistoryMapper"/>.
+    /// this <see cref="ContentSummariesMapper"/>.
     /// </summary>
-    public class ContentHistoryMappingContext : ResponseMappingContext
+    public class ContentSummariesWithStateMappingContext : ResponseMappingContext
     {
         /// <summary>
         /// Gets or sets the slug for which history was being requested.
@@ -26,5 +26,15 @@ namespace Marain.Cms.Api.Services.Internal
         /// Gets or sets the continuation token for the current request.
         /// </summary>
         public string ContinuationToken { get; set; }
+
+        /// <summary>
+        /// Gets or sets the workflow Id for the current request.
+        /// </summary>
+        public string WorkflowId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the state name for the current request.
+        /// </summary>
+        public string StateName { get; set; }
     }
 }

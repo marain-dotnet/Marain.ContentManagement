@@ -1,4 +1,4 @@
-﻿// <copyright file="ContentHistoryMapper.cs" company="Endjin Limited">
+﻿// <copyright file="ContentSummariesMapper.cs" company="Endjin Limited">
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
@@ -13,7 +13,7 @@ namespace Marain.Cms.Api.Services.Internal
     /// <summary>
     /// Maps <see cref="Content"/> to and from a <see cref="HalDocument"/>.
     /// </summary>
-    public class ContentHistoryMapper : IHalDocumentMapper<ContentSummaries, ContentHistoryMappingContext>
+    public class ContentSummariesMapper : IHalDocumentMapper<ContentSummaries, ContentSummariesMappingContext>
     {
         private readonly IHalDocumentFactory halDocumentFactory;
         private readonly IOpenApiWebLinkResolver linkResolver;
@@ -25,7 +25,7 @@ namespace Marain.Cms.Api.Services.Internal
         /// <param name="halDocumentFactory">The factory with which to create <see cref="HalDocument"/> instances.</param>
         /// <param name="linkResolver">The link resolver to build the links collection.</param>
         /// <param name="contentSummaryMapper">The mapper for individual <see cref="ContentSummary"/> items.</param>
-        public ContentHistoryMapper(
+        public ContentSummariesMapper(
             IHalDocumentFactory halDocumentFactory,
             IOpenApiWebLinkResolver linkResolver,
             ContentSummaryMapper contentSummaryMapper)
@@ -43,7 +43,7 @@ namespace Marain.Cms.Api.Services.Internal
         }
 
         /// <inheritdoc/>
-        public HalDocument Map(ContentSummaries resource, ContentHistoryMappingContext context)
+        public HalDocument Map(ContentSummaries resource, ContentSummariesMappingContext context)
         {
             IEnumerable<HalDocument> mappedSummaries = resource.Summaries.Select(x => this.contentSummaryMapper.Map(x, context));
             HalDocument response = this.halDocumentFactory.CreateHalDocumentFrom(new { Summaries = mappedSummaries.ToArray() });

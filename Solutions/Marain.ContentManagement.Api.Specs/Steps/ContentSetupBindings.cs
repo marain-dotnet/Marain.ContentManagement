@@ -55,6 +55,7 @@ namespace Marain.ContentManagement.Specs.Steps
         }
 
         [Given("a workflow state has been set for the content item")]
+        [Given("workflow states have been set for the content items")]
         public async Task GivenAWorkflowStateHasBeenSetForTheContentItem(Table table)
         {
             ITenantedContentStoreFactory contentStoreFactory = this.scenarioContext.ServiceProvider().GetRequiredService<ITenantedContentStoreFactory>();
@@ -63,6 +64,9 @@ namespace Marain.ContentManagement.Specs.Steps
             foreach (TableRow row in table.Rows)
             {
                 (ContentState state, string name) = ContentDriver.GetContentStateFor(row);
+
+                // TODO: See if we can/should push this down into ContentDriver.GetContentStateFor
+                state.ContentId = ContentDriver.GetObjectValue<string>(this.scenarioContext, state.ContentId);
                 ContentState storedContentState = await store.SetContentWorkflowStateAsync(state.Slug, state.ContentId, state.WorkflowId, state.StateName, state.ChangedBy).ConfigureAwait(false);
                 this.scenarioContext.Set(storedContentState, name);
             }

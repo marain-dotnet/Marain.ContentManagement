@@ -44,9 +44,9 @@ namespace Marain.Cms
             }
 
             this.Content = content ?? throw new ArgumentNullException(nameof(content));
-            this.StateName = state.StateName ?? throw new ArgumentNullException(nameof(content));
+            this.StateName = state.StateName ?? throw new ArgumentNullException(nameof(state));
             this.Timestamp = state.Timestamp;
-            this.WorkflowId = state.WorkflowId ?? throw new ArgumentNullException(nameof(content));
+            this.WorkflowId = state.WorkflowId ?? throw new ArgumentNullException(nameof(state));
         }
 
         /// <summary>

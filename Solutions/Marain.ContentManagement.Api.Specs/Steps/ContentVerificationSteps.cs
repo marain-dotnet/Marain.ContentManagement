@@ -9,6 +9,7 @@ namespace Marain.ContentManagement.Specs.Steps
 
     using System.Threading.Tasks;
     using Marain.Cms;
+    using Marain.Cms.Api.Client;
     using Marain.ContentManagement.Specs.Bindings;
     using Marain.ContentManagement.Specs.Drivers;
     using NUnit.Framework;
@@ -27,10 +28,10 @@ namespace Marain.ContentManagement.Specs.Steps
         [Then("the response body should contain the content item '(.*)'")]
         public async Task ThenTheResponseBodyShouldContainTheContentItem(string itemName)
         {
-            Content actual = await this.scenarioContext.GetLastApiResponseBodyAsync<Content>().ConfigureAwait(false);
+            Cms.Content actual = await this.scenarioContext.GetLastApiResponseBodyAsync<Cms.Content>().ConfigureAwait(false);
             Assert.IsNotNull(actual);
 
-            Content expected = this.scenarioContext.Get<Content>(itemName);
+            Cms.Content expected = this.scenarioContext.Get<Cms.Content>(itemName);
 
             ContentDriver.Compare(expected, actual);
         }
@@ -38,11 +39,11 @@ namespace Marain.ContentManagement.Specs.Steps
         [Then("the response body should contain content and state matching content '(.*)' and state '(.*)'")]
         public async Task ThenTheResponseBodyShouldContainTheContentItemWithState(string itemName, string stateName)
         {
-            ContentWithState actual = await this.scenarioContext.GetLastApiResponseBodyAsync<ContentWithState>().ConfigureAwait(false);
+            ContentWithStateResponse actual = await this.scenarioContext.GetLastApiResponseBodyAsync<ContentWithStateResponse>().ConfigureAwait(false);
             Assert.IsNotNull(actual);
 
-            Content expectedContent = this.scenarioContext.Get<Content>(itemName);
-            ContentState expectedState = this.scenarioContext.Get<ContentState>(stateName);
+            Cms.Content expectedContent = this.scenarioContext.Get<Cms.Content>(itemName);
+            Cms.ContentState expectedState = this.scenarioContext.Get<Cms.ContentState>(stateName);
 
             ContentDriver.Compare(expectedContent, actual.Content);
             ContentDriver.Compare(expectedState, actual);
@@ -51,10 +52,10 @@ namespace Marain.ContentManagement.Specs.Steps
         [Then("the response body should content state matching '(.*)'")]
         public async Task ThenTheResponseBodyShouldContentStateMatching(string stateName)
         {
-            ContentState actual = await this.scenarioContext.GetLastApiResponseBodyAsync<ContentState>().ConfigureAwait(false);
+            Cms.ContentState actual = await this.scenarioContext.GetLastApiResponseBodyAsync<Cms.ContentState>().ConfigureAwait(false);
             Assert.IsNotNull(actual);
 
-            ContentState expectedState = this.scenarioContext.Get<ContentState>(stateName);
+            Cms.ContentState expectedState = this.scenarioContext.Get<Cms.ContentState>(stateName);
 
             ContentDriver.Compare(expectedState, actual);
         }

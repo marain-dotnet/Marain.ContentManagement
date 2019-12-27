@@ -7,6 +7,7 @@
     using System.Reflection;
     using Corvus.Extensions;
     using Marain.Cms;
+    using Marain.Cms.Api.Client;
     using NUnit.Framework;
     using TechTalk.SpecFlow;
 
@@ -15,7 +16,7 @@
     /// </summary>
     public static class ContentDriver
     {
-        public static void Compare(Content expected, Content actual)
+        public static void Compare(Cms.Content expected, Cms.Content actual)
         {
             Assert.AreEqual(expected.Id, actual.Id);
             Assert.AreEqual(expected.Slug, actual.Slug);
@@ -29,7 +30,20 @@
             ComparePayloads(expected.ContentPayload, actual.ContentPayload);
         }
 
-        public static void CompareACopy(Content expected, Content actual)
+        public static void Compare(Cms.Content expected, Cms.Api.Client.Content actual)
+        {
+            Assert.AreEqual(expected.Id, actual.Id);
+            Assert.AreEqual(expected.Slug, actual.Slug);
+            Assert.AreEqual(expected.Author.UserId, actual.Author.UserId);
+            Assert.AreEqual(expected.Author.UserName, actual.Author.UserName);
+            Assert.AreEqual(string.Join(';', expected.CategoryPaths), string.Join(';', actual.CategoryPaths));
+            Assert.AreEqual(string.Join(';', expected.Tags), string.Join(';', actual.Tags));
+            Assert.AreEqual(expected.Culture.Name, actual.Culture);
+            Assert.AreEqual(expected.Description, actual.Description);
+            Assert.AreEqual(expected.Title, actual.Title);
+        }
+
+        public static void CompareACopy(Cms.Content expected, Cms.Content actual)
         {
             // The slug and ID are expected to differ.
             Assert.AreEqual(expected.Author, actual.Author);
@@ -42,7 +56,7 @@
             Assert.AreEqual(new ContentReference(expected.Slug, expected.Id), actual.OriginalSource.Value);
         }
 
-        public static void Compare(Content expected, ContentSummary actual)
+        public static void Compare(Cms.Content expected, Cms.ContentSummary actual)
         {
             Assert.AreEqual(expected.Id, actual.Id);
             Assert.AreEqual(expected.Slug, actual.Slug);
@@ -54,13 +68,19 @@
             Assert.AreEqual(expected.Title, actual.Title);
         }
 
-        public static void Compare(ContentState expected, ContentWithState actual)
+        public static void Compare(Cms.ContentState expected, Cms.ContentWithState actual)
         {
             Assert.AreEqual(expected.WorkflowId, actual.WorkflowId);
             Assert.AreEqual(expected.StateName, actual.StateName);
         }
 
-        public static void Compare(ContentState expected, ContentState actual)
+        public static void Compare(Cms.ContentState expected, Cms.Api.Client.ContentWithStateResponse actual)
+        {
+            Assert.AreEqual(expected.WorkflowId, actual.WorkflowId);
+            Assert.AreEqual(expected.StateName, actual.StateName);
+        }
+
+        public static void Compare(Cms.ContentState expected, Cms.ContentState actual)
         {
             Assert.AreEqual(expected.Id, actual.Id);
             Assert.AreEqual(expected.WorkflowId, actual.WorkflowId);
@@ -142,7 +162,7 @@
         /// </summary>
         /// <param name="expected"></param>
         /// <param name="summaries"></param>
-        public static void MatchSummariesToContent(List<Content> expected, ContentSummaries summaries)
+        public static void MatchSummariesToContent(List<Cms.Content> expected, Cms.ContentSummaries summaries)
         {
             Assert.AreEqual(expected.Count, summaries.Summaries.Count);
             expected.ForEachAtIndex((expectedContent, i) => Compare(expectedContent, summaries.Summaries[i]));
@@ -153,7 +173,7 @@
         /// </summary>
         /// <param name="content">The content instance on which to set the payload.</param>
         /// <param name="row">The row from which to get the content fragment.</param>
-        public static void SetContentFragment(Content content, TableRow row)
+        public static void SetContentFragment(Cms.Content content, TableRow row)
         {
             content.ContentPayload = new ContentFragmentPayload { Fragment = SubstituteContent(row["Fragment"]) };
         }
@@ -163,7 +183,7 @@
         /// </summary>
         /// <param name="content">The content instance on which to set the payload.</param>
         /// <param name="row">The row from which to get the slug for the workflow content.</param>
-        public static void SetContentWorkflow(Content content, TableRow row)
+        public static void SetContentWorkflow(Cms.Content content, TableRow row)
         {
             content.ContentPayload = new PublicationWorkflowContentPayload { Slug = SubstituteContent(row["ContentSlug"]) };
         }
@@ -173,7 +193,7 @@
         /// </summary>
         /// <param name="content">The content instance on which to set the payload.</param>
         /// <param name="row">The row from which to get the markdown.</param>
-        public static void SetContentMarkdown(Content content, TableRow row)
+        public static void SetContentMarkdown(Cms.Content content, TableRow row)
         {
             content.ContentPayload = new MarkdownPayload { Markdown = SubstituteContent(row["Markdown"]) };
         }
@@ -183,7 +203,7 @@
         /// </summary>
         /// <param name="content">The content instance on which to set the payload.</param>
         /// <param name="row">The row from which to get the markdown.</param>
-        public static void SetContentLiquid(Content content, TableRow row)
+        public static void SetContentLiquid(Cms.Content content, TableRow row)
         {
             content.ContentPayload = new LiquidPayload { Template = SubstituteContent(row["Liquid template"]) };
         }
@@ -193,7 +213,7 @@
         /// </summary>
         /// <param name="content">The content instance on which to set the payload.</param>
         /// <param name="row">The row from which to get the markdown.</param>
-        public static void SetContentLiquidMarkdown(Content content, TableRow row)
+        public static void SetContentLiquidMarkdown(Cms.Content content, TableRow row)
         {
             content.ContentPayload = new LiquidWithMarkdownPayload { Template = SubstituteContent(row["Liquid with markdown template"]) };
         }
@@ -204,17 +224,17 @@
         /// <param name="scenarioContext">The scenario context.</param>
         /// <param name="content">The content instance on which to set the payload.</param>
         /// <param name="row">The row from which to get the content fragment.</param>
-        public static void SetAbTestSet(ScenarioContext scenarioContext, Content content, TableRow row)
+        public static void SetAbTestSet(ScenarioContext scenarioContext, Cms.Content content, TableRow row)
         {
             content.ContentPayload = scenarioContext.Get<AbTestSetPayload>(row["AbTestSetName"]);
         }
 
-        public static (Content, string) GetContentFor(TableRow row)
+        public static (Cms.Content, string) GetContentFor(TableRow row)
         {
-            var content = new Content
+            var content = new Cms.Content
             {
                 Id = SubstituteContent(row["Id"]),
-                Author = new CmsIdentity(SubstituteContent(row["Author.Id"]), SubstituteContent(row["Author.Name"])),
+                Author = new Cms.CmsIdentity(SubstituteContent(row["Author.Id"]), SubstituteContent(row["Author.Name"])),
                 Culture = CultureInfo.GetCultureInfo(SubstituteContent(row["Culture"])),
                 Description = SubstituteContent(row["Description"]),
                 Slug = SubstituteContent(row["Slug"]),
@@ -227,12 +247,12 @@
             return (content, row["Name"]);
         }
 
-        public static (ContentState, string) GetContentStateFor(TableRow row)
+        public static (Cms.ContentState, string) GetContentStateFor(TableRow row)
         {
-            var contentState = new ContentState
+            var contentState = new Cms.ContentState
             {
                 Id = SubstituteContent(row["Id"]),
-                ChangedBy = new CmsIdentity(SubstituteContent(row["ChangedBy.Id"]), SubstituteContent(row["ChangedBy.Name"])),
+                ChangedBy = new Cms.CmsIdentity(SubstituteContent(row["ChangedBy.Id"]), SubstituteContent(row["ChangedBy.Name"])),
                 ContentId = SubstituteContent(row["ContentId"]),
                 Slug = SubstituteContent(row["Slug"]),
                 WorkflowId = SubstituteContent(row["WorkflowId"]),

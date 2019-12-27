@@ -203,6 +203,35 @@ paths:
           description: Forbidden
         '404':
           description: Not found
+  /{tenantId}/marain/content/workflow/{workflowId}/{stateName}/history/{slug}:
+    get:
+      tags:
+        - Content Workflow
+      summary: Get the state history for the content at the given slug
+      description: Gets the state history for the content at the given slug in the given workflow, including only those items in the specified state.
+      operationId: getWorkflowStateHistory
+      parameters:
+        - $ref: '#/components/parameters/tenantId'
+        - $ref: '#/components/parameters/workflowId'
+        - $ref: '#/components/parameters/stateName'
+        - $ref: '#/components/parameters/slug'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/continuationToken'
+      responses:
+        '200':
+          description: Successful operation        
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentSummariesWithStateResponse'
+        '304':
+          description: Not modified
+        '400':
+          description: Bad request
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
 components:
   schemas:
     ############################################################################
@@ -273,7 +302,6 @@ components:
           - type: object
           - type: string
     ResourceLink:
-      type: none
       title: Resource link
       anyOf:
         - $ref: '#/components/schemas/LinkArray'
@@ -285,7 +313,6 @@ components:
       additionalProperties:
         $ref: '#/components/schemas/ResourceLink'
     ResourceEmbeddedResource:
-      type: none
       title: Embedded resource
       anyOf:
         - $ref: '#/components/schemas/ResourceArray'
@@ -355,6 +382,13 @@ components:
         - id
         - slug
       additionalProperties: true
+    ContentSummaryWithState:
+      allOf:
+      - $ref: '#/components/schemas/ContentState'
+      - type: object
+        properties:
+          contentSummary:
+            $ref: '#/components/schemas/ContentSummary'
     ContentPayload:
       type: object
       properties:
@@ -383,8 +417,7 @@ components:
         changedBy:
           $ref: '#/components/schemas/CmsIdentity'
         timestamp:
-          type:
-            $ref: '#/components/schemas/DateTimeOffset'
+          $ref: '#/components/schemas/DateTimeOffset'
     ContentWithState:
       type: object
       properties:
@@ -394,7 +427,7 @@ components:
           type: string
         timestamp:
           $ref: '#/components/schemas/DateTimeOffset'
-        worfklowId:
+        workflowId:
           type: string
     CmsIdentity:
       type: object
@@ -454,6 +487,10 @@ components:
       allOf: 
       - $ref: '#/components/schemas/Resource'
       - $ref: '#/components/schemas/ContentWithState'
+    ContentSummaryWithStateResponse:
+      allOf: 
+      - $ref: '#/components/schemas/Resource'
+      - $ref: '#/components/schemas/ContentSummaryWithState'
     ContentStateResponse:
       allOf:
       - $ref: '#/components/schemas/Resource'
@@ -467,6 +504,16 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/ContentSummaryResponse'
+        additionalProperties: true
+    ContentSummariesWithStateResponse:
+      allOf:
+      - $ref: '#/components/schemas/Resource'
+      - type: object
+        properties:
+          summaries:
+            type: array
+            items:
+              $ref: '#/components/schemas/ContentSummaryWithStateResponse'
         additionalProperties: true
 
     ############################################################################

@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Marain.ContentManagement.Api.Client\Marain.ContentManagement.Api.Client.csproj" />
     <ProjectReference Include="..\Marain.ContentManagement.Rendering.Liquid\Marain.ContentManagement.Rendering.Liquid.csproj" />
     <ProjectReference Include="..\Marain.ContentManagement.Storage.AzureComsos\Marain.ContentManagement.Storage.AzureComsos.csproj" />
   </ItemGroup>

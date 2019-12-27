@@ -37,6 +37,18 @@ namespace Marain.ContentManagement.Specs.Steps
             return this.scenarioContext.SendApiRequestAndStoreResponseAsync(request);
         }
 
+        [When("I request content history with state for slug '(.*)', workflow Id '(.*)' and state name '(.*)'")]
+        public Task WhenIRequestContentHistoryWithStateForSlugWorkflowIdAndState(string slug, string workflowId, string stateName)
+        {
+            string resolvedSlug = ContentDriver.GetObjectValue<string>(this.scenarioContext, slug);
+            string resolvedWorkflowId = ContentDriver.GetObjectValue<string>(this.scenarioContext, workflowId);
+            string resolvedStateName = ContentDriver.GetObjectValue<string>(this.scenarioContext, stateName);
+            string path = $"/{this.scenarioContext.CurrentTenantId()}/marain/content/workflow/{resolvedWorkflowId}/{resolvedStateName}/history/{HttpUtility.UrlEncode(resolvedSlug)}";
+
+            HttpRequestMessage request = this.scenarioContext.CreateApiRequest(path);
+            return this.scenarioContext.SendApiRequestAndStoreResponseAsync(request);
+        }
+
         [When("I request the content summary with slug '(.*)' and Id '(.*)'")]
         [Given("I have requested the content summary with slug '(.*)' and Id '(.*)'")]
         public Task WhenIRequestTheContentSummaryWithSlugAndId(string slug, string id)

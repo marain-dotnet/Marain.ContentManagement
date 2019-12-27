@@ -60,35 +60,7 @@ paths:
           description: Forbidden
         '404':
           description: Not found
-  /{tenantId}/marain/content/workflow/{workflowId}/{stateName}/history/{slug}:
-    get:
-      tags:
-        - Content Workflow
-      summary: Get the state history for the content at the given slug
-      description: Gets the state history for the content at the given slug in the given workflow, including only those items in the specified state.
-      operationId: getWorkflowStateHistory
-      parameters:
-        - $ref: '#/components/parameters/tenantId'
-        - $ref: '#/components/parameters/workflowId'
-        - $ref: '#/components/parameters/stateName'
-        - $ref: '#/components/parameters/slug'
-        - $ref: '#/components/parameters/limit'
-        - $ref: '#/components/parameters/continuationToken'
-      responses:
-        '200':
-          description: Successful operation        
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ContentSummariesWithState'
-        '304':
-          description: Not modified
-        '400':
-          description: Bad request
-        '403':
-          description: Forbidden
-        '404':
-          description: Not found
+
 components:
   schemas:
     Link:
@@ -270,7 +242,7 @@ components:
             type: string
           timestamp:
             type: integer
-          worfklowId:
+          workflowId:
             type: string
         additionalProperties: true
     ContentSummaryWithState:
@@ -282,7 +254,7 @@ components:
             type: string
           timestamp:
             type: integer
-          worfklowId:
+          workflowId:
             type: string
         additionalProperties: true
     ContentSummaries:

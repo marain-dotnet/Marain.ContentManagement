@@ -42,3 +42,8 @@ Scenario: Basic history retrieval without specifying a limit or continuation tok
 	And the response should contain a 'self' link
 	And the response should contain a 'next' link
 
+Scenario: History retrieval specifying a continuation token
+
+Scenario: History retrieval specifying a limit
+
+Scenario: History retrieval with fewer items than the limit doesn't include a continuation token

@@ -38,6 +38,21 @@ namespace Marain.ContentManagement.Specs.Steps
 
             Assert.AreEqual(expectedCount, summariesArray.Children().Count());
         }
+
+        [Then("the response should contain (.*) embedded content summaries with state")]
+        public async Task ThenTheResponseShouldContainEmbeddedContentSummariesWithState(int expectedCount)
+        {
+            JObject response = await this.scenarioContext.GetLastApiResponseBodyAsJObjectAsync().ConfigureAwait(false);
+
+            JToken summaries = response["summaries"];
+
+            Assert.IsNotNull(summaries);
+            Assert.AreEqual(JTokenType.Array, summaries.Type);
+
+            var summariesArray = summaries as JArray;
+
+            Assert.AreEqual(expectedCount, summariesArray.Children().Count());
+        }
     }
 }
 

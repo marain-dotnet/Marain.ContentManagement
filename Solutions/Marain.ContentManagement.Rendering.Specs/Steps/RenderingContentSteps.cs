@@ -59,7 +59,7 @@
             }
         }
 
-        [Given(@"I publish the content called '(.*)'")]
+        [Given("I publish the content called '(.*)'")]
         public void GivenIPublishTheContentCalled(string contentName)
         {
             Content content = this.scenarioContext.Get<Content>(contentName);
@@ -67,7 +67,7 @@
             fakeContentStore.SetContentState(content, ContentPublicationContentState.Published);
         }
 
-        [Given(@"I draft the content called '(.*)'")]
+        [Given("I draft the content called '(.*)'")]
         public void GivenIDraftTheContentCalled(string contentName)
         {
             Content content = this.scenarioContext.Get<Content>(contentName);
@@ -93,7 +93,7 @@
         [When("I render the content called '(.*)' to '(.*)'")]
         public Task WhenIRenderTheContentCalledTo(string contentName, string outputName)
         {
-            return WhenIRenderTheContentCalledToWithTheContext(contentName, outputName, string.Empty);
+            return this.WhenIRenderTheContentCalledToWithTheContext(contentName, outputName, string.Empty);
         }
 
         [Then("the output called '(.*)' should match '(.*)'")]
