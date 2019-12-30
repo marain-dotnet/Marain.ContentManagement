@@ -758,6 +758,85 @@ this.FeatureBackground();
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("History retrieval specifying a continuation token")]
+        public virtual void HistoryRetrievalSpecifyingAContinuationToken()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("History retrieval specifying a continuation token", null, ((string[])(null)));
+#line 76
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 3
+this.FeatureBackground();
+#line 77
+ testRunner.Given("I have requested content history with state for slug \'{Content0.Slug}\', workflow " +
+                    "Id \'workflow1Id\' and state name \'published\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 78
+ testRunner.When("I request content history with state for slug \'{Content0.Slug}\', workflow Id \'wor" +
+                    "kflow1Id\' and state name \'published\' with the contination token from the previou" +
+                    "s response", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 79
+ testRunner.Then("the response should have a status of \'200\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 80
+ testRunner.And("the response should contain another 5 embedded content summaries with state", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 81
+ testRunner.And("the response should contain a \'self\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("History retrieval specifying a limit")]
+        public virtual void HistoryRetrievalSpecifyingALimit()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("History retrieval specifying a limit", null, ((string[])(null)));
+#line 83
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 3
+this.FeatureBackground();
+#line 84
+ testRunner.When("I request content history with state for slug \'{Content0.Slug}\', workflow Id \'wor" +
+                    "kflow1Id\' and state name \'published\' with a limit of 5 items", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 85
+ testRunner.Then("the response should have a status of \'200\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 86
+ testRunner.And("the response should contain 5 embedded content summaries with state", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 87
+ testRunner.And("the response should contain a \'self\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 88
+ testRunner.And("the response should contain a \'next\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("History retrieval with fewer items than the limit doesn\'t include a continuation " +
+            "token")]
+        public virtual void HistoryRetrievalWithFewerItemsThanTheLimitDoesntIncludeAContinuationToken()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("History retrieval with fewer items than the limit doesn\'t include a continuation " +
+                    "token", null, ((string[])(null)));
+#line 90
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 3
+this.FeatureBackground();
+#line 91
+ testRunner.When("I request content history with state for slug \'{Content0.Slug}\', workflow Id \'wor" +
+                    "kflow1Id\' and state name \'published\' with a limit of 50 items", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 92
+ testRunner.Then("the response should have a status of \'200\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 93
+ testRunner.And("the response should contain 25 embedded content summaries with state", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 94
+ testRunner.And("the response should contain a \'self\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 95
+ testRunner.And("the response should not contain a \'next\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore

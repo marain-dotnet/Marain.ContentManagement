@@ -70,6 +70,27 @@ namespace Marain.ContentManagement.Specs.Steps
 
             Assert.AreEqual(expectedCount, summaries.Count);
         }
+
+        [Then("the response should contain another (.*) embedded content summaries with state")]
+        public void ThenTheResponseShouldContainAnotherEmbeddedContentSummariesWithState(int expectedCount)
+        {
+            SwaggerResponse<ContentSummariesWithStateResponse> response = this.scenarioContext.GetLastApiResponse<ContentSummariesWithStateResponse>();
+
+            ObservableCollection<ContentSummaryWithStateResponse> summaries = response.Result.Summaries;
+
+            Assert.IsNotNull(summaries);
+            Assert.IsNotEmpty(summaries);
+
+            Assert.AreEqual(expectedCount, summaries.Count);
+
+            // Compare against previous set, which have been stored in the scenario context.
+            ContentSummaryWithStateResponse[] previousSummaries = this.scenarioContext.Get<ContentSummaryWithStateResponse[]>();
+
+            foreach (ContentSummaryWithStateResponse current in summaries)
+            {
+                Assert.IsFalse(previousSummaries.Any(x => x.ContentSummary.Id == current.ContentSummary.Id));
+            }
+        }
     }
 }
 
