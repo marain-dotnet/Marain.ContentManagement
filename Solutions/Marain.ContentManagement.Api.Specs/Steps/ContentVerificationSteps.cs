@@ -33,8 +33,7 @@ namespace Marain.ContentManagement.Specs.Steps
 
             Cms.Content expected = this.scenarioContext.Get<Cms.Content>(itemName);
 
-            // TODO: What's wrong with this?
-            ////ContentDriver.Compare(expected, actual.Result);
+            ContentDriver.Compare(expected, actual.Result);
         }
 
         [Then("the response body should contain content and state matching content '(.*)' and state '(.*)'")]

@@ -57,14 +57,17 @@ namespace Marain.Cms.Api.Services.Internal
                 (Constants.ParameterNames.Limit, context.Limit),
                 (Constants.ParameterNames.ContinuationToken, context.ContinuationToken));
 
-            response.ResolveAndAdd(
-                this.linkResolver,
-                resource,
-                Constants.LinkRelations.Next,
-                (Constants.ParameterNames.TenantId, context.TenantId),
-                (Constants.ParameterNames.Slug, context.Slug),
-                (Constants.ParameterNames.Limit, context.Limit),
-                (Constants.ParameterNames.ContinuationToken, resource.ContinuationToken));
+            if (!string.IsNullOrEmpty(resource.ContinuationToken))
+            {
+                response.ResolveAndAdd(
+                    this.linkResolver,
+                    resource,
+                    Constants.LinkRelations.Next,
+                    (Constants.ParameterNames.TenantId, context.TenantId),
+                    (Constants.ParameterNames.Slug, context.Slug),
+                    (Constants.ParameterNames.Limit, context.Limit),
+                    (Constants.ParameterNames.ContinuationToken, resource.ContinuationToken));
+            }
 
             return response;
         }

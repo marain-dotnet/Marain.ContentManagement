@@ -8,9 +8,11 @@ namespace Marain.ContentManagement.Specs.Steps
 #pragma warning disable SA1600 // Elements should be documented
 
     using System.Linq;
+    using System.Reflection;
     using Marain.Cms.Api.Client;
     using Marain.ContentManagement.Specs.Bindings;
     using Marain.ContentManagement.Specs.Drivers;
+    using Marain.ContentManagement.Specs.Helpers;
     using NUnit.Framework;
     using TechTalk.SpecFlow;
 
@@ -51,24 +53,34 @@ namespace Marain.ContentManagement.Specs.Steps
         [Then("there should be no response body")]
         public void ThenThereShouldBeNoResponseBody()
         {
-            // TODO: How?
-            ////HttpResponseMessage response = this.scenarioContext.GetLastApiResponse();
-            ////byte[] responseBytes = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
-
-            ////Assert.IsEmpty(responseBytes);
+            // This is a bit of an odd one.
+            // For any 200 response code, we can do this by looking for the last API response.
+            // For anything else, the client will have thrown a SwaggerException. In this case we have to assume there is no
+            // response body.
+            if (this.scenarioContext.TryGetLastApiResponse(out SwaggerResponse response))
+            {
+                Assert.AreEqual(response.GetType(), typeof(SwaggerResponse));
+            }
         }
 
         [Then("the response should contain a '(.*)' link")]
         public void ThenTheResponseShouldContainALink(string linkRel)
         {
-            // TODO: How?
-            ////JObject response = await this.scenarioContext.GetLastApiResponseBodyAsJObjectAsync().ConfigureAwait(false);
+            SwaggerResponse response = this.scenarioContext.GetLastApiResponse();
+            Resource resource = response.ResultAs<Resource>();
 
-            ////JToken link = response["_links"]?[linkRel];
-            ////Assert.IsNotNull(link);
+            resource._links.TryGetValue(linkRel, out ResourceLink link);
 
-            ////string url = link["href"].Value<string>();
-            ////Assert.IsFalse(string.IsNullOrEmpty(url));
+            Assert.IsNotNull(link);
+        }
+
+        [Then("the response should not contain a '(.*)' link")]
+        public void ThenTheResponseShouldNotContainALink(string linkRel)
+        {
+            SwaggerResponse response = this.scenarioContext.GetLastApiResponse();
+            Resource resource = response.ResultAs<Resource>();
+
+            Assert.IsFalse(resource._links.TryGetValue(linkRel, out _));
         }
 
         [Then("the ETag header should be set")]
@@ -113,16 +125,13 @@ namespace Marain.ContentManagement.Specs.Steps
             SwaggerResponse response = this.scenarioContext.GetLastApiResponse();
             string locationHeader = response.Headers["Location"]?.First();
 
-            // TODO: How?
-            ////JObject responseBody = await this.scenarioContext.GetLastApiResponseBodyAsJObjectAsync().ConfigureAwait(false);
+            Resource resource = response.ResultAs<Resource>();
+            ResourceLink link = resource._links[linkRel];
+            Assert.IsNotNull(link);
 
-            ////JToken link = responseBody["_links"]?[linkRel];
-            ////Assert.IsNotNull(link);
+            string selfLinkUrl = (string)link.AdditionalProperties["href"];
 
-            ////string selfLinkUrl = link["href"].Value<string>();
-            ////var selfLinkUri = new Uri(selfLinkUrl, UriKind.RelativeOrAbsolute);
-
-            ////Assert.AreEqual(locationHeader, selfLinkUri);
+            Assert.AreEqual(locationHeader, selfLinkUrl);
         }
     }
 }

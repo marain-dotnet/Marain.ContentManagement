@@ -28,6 +28,7 @@ namespace Marain.ContentManagement.Specs.Steps
             this.scenarioContext = scenarioContext;
         }
 
+        [Given("I have requested content history for slug '(.*)'")]
         [When("I request content history for slug '(.*)'")]
         public async Task WhenIRequestContentHistoryForSlug(string slug)
         {
@@ -38,6 +39,51 @@ namespace Marain.ContentManagement.Specs.Steps
                 this.scenarioContext.CurrentTenantId(),
                 resolvedSlug,
                 null,
+                null,
+                null).ConfigureAwait(false);
+
+            this.scenarioContext.StoreLastApiResponse(response);
+        }
+
+        [When("I request content history for slug '(.*)' with the contination token from the previous response")]
+        public async Task WhenIRequestContentHistoryForSlugWithTheContinationTokenFromThePreviousResponse(string slug)
+        {
+            SwaggerResponse<ContentSummaries> previousResponse = this.scenarioContext.GetLastApiResponse<ContentSummaries>();
+
+            // Extract the continuation token from the response... it's in the "next" header
+            string nextUri = (string)previousResponse.Result._links["next"].AdditionalProperties["href"];
+            int startIndex = nextUri.IndexOf("continuationToken") + 18;
+            int endIndex = nextUri.IndexOf("&", startIndex);
+            int length = endIndex == -1 ? nextUri.Length - startIndex : endIndex - startIndex;
+            string continuationToken = HttpUtility.UrlDecode(nextUri.Substring(startIndex, length));
+
+            // Now stash the summaries themselves so we can verify that the ones we get back when we call using the
+            // continuation token aren't the same.
+            this.scenarioContext.Set(previousResponse.Result.Summaries.ToArray());
+
+            string resolvedSlug = ContentDriver.GetObjectValue<string>(this.scenarioContext, slug);
+
+            ContentClient client = this.scenarioContext.Get<ContentClient>();
+            SwaggerResponse<ContentSummaries> response = await client.GetContentHistoryAsync(
+                this.scenarioContext.CurrentTenantId(),
+                resolvedSlug,
+                null,
+                continuationToken,
+                null).ConfigureAwait(false);
+
+            this.scenarioContext.StoreLastApiResponse(response);
+        }
+
+        [When("I request content history for slug '(.*)' with a limit of (.*) items")]
+        public async Task WhenIRequestContentHistoryForSlugWithALimitOfItems(string slug, int limit)
+        {
+            string resolvedSlug = ContentDriver.GetObjectValue<string>(this.scenarioContext, slug);
+
+            ContentClient client = this.scenarioContext.Get<ContentClient>();
+            SwaggerResponse<ContentSummaries> response = await client.GetContentHistoryAsync(
+                this.scenarioContext.CurrentTenantId(),
+                resolvedSlug,
+                limit,
                 null,
                 null).ConfigureAwait(false);
 
@@ -92,13 +138,15 @@ namespace Marain.ContentManagement.Specs.Steps
         {
             SwaggerResponse<ContentSummaryResponse> lastResponse = this.scenarioContext.GetLastApiResponse<ContentSummaryResponse>();
             string lastEtag = lastResponse.Headers["ETag"].First();
+            this.scenarioContext.ClearLastApiResponse();
 
             string resolvedSlug = ContentDriver.GetObjectValue<string>(this.scenarioContext, slug);
             string resolvedId = ContentDriver.GetObjectValue<string>(this.scenarioContext, id);
 
+            ContentClient client = this.scenarioContext.Get<ContentClient>();
+
             try
             {
-                ContentClient client = this.scenarioContext.Get<ContentClient>();
                 SwaggerResponse<ContentSummaryResponse> response = await client.GetContentSummaryAsync(
                     this.scenarioContext.CurrentTenantId(),
                     resolvedSlug,

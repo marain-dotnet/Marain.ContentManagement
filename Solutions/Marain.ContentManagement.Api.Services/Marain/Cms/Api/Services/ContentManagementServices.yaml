@@ -383,12 +383,16 @@ components:
         - slug
       additionalProperties: true
     ContentSummaryWithState:
-      allOf:
-      - $ref: '#/components/schemas/ContentState'
-      - type: object
-        properties:
-          contentSummary:
-            $ref: '#/components/schemas/ContentSummary'
+      type: object
+      properties:
+        contentSummary:
+          $ref: '#/components/schemas/ContentSummary'
+        stateName:
+          type: string
+        timestamp:
+          $ref: '#/components/schemas/DateTimeOffset'
+        workflowId:
+          type: string
     ContentPayload:
       type: object
       properties:
@@ -396,15 +400,36 @@ components:
           type: string
       additionalProperties: true
     Content:
-      allOf:
-      - $ref: '#/components/schemas/ContentSummary'
-      - type: object
-        properties:
-          contentPayload:
-            $ref: '#/components/schemas/ContentPayload'
-          metadata:
-            $ref: '#/components/schemas/PropertyBag'
-        additionalProperties: true
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique ID of the tenant. This forms a path with parent tenants. 
+        eTag:
+          type: string
+        categoryPaths:
+          type: array
+          items:
+            type: string
+        tags:
+          type: array
+          items:
+            type: string
+        slug:
+          type: string          
+        author:
+          $ref: '#/components/schemas/CmsIdentity'
+        title:
+          type: string
+        description:
+          type: string
+        culture:
+          type: string
+        contentPayload:
+          $ref: '#/components/schemas/ContentPayload'
+        metadata:
+          $ref: '#/components/schemas/PropertyBag'
+      additionalProperties: true
     ContentState:
       type: object
       properties:
@@ -601,7 +626,8 @@ components:
       description: The maximum number of items to return in the batch
       required: false
       schema:
-        type: number
+        type: integer
+        format: int32
         minimum: 1
     continuationToken:
       name: continuationToken

@@ -44,6 +44,19 @@
             Assert.AreEqual(expected.Title, actual.Title);
         }
 
+        public static void Compare(Cms.Content expected, ContentResponse actual)
+        {
+            Assert.AreEqual(expected.Id, actual.Id);
+            Assert.AreEqual(expected.Slug, actual.Slug);
+            Assert.AreEqual(expected.Author.UserId, actual.Author.UserId);
+            Assert.AreEqual(expected.Author.UserName, actual.Author.UserName);
+            Assert.AreEqual(string.Join(';', expected.CategoryPaths), string.Join(';', actual.CategoryPaths));
+            Assert.AreEqual(string.Join(';', expected.Tags), string.Join(';', actual.Tags));
+            Assert.AreEqual(expected.Culture.Name, actual.Culture);
+            Assert.AreEqual(expected.Description, actual.Description);
+            Assert.AreEqual(expected.Title, actual.Title);
+        }
+
         public static void CompareACopy(Cms.Content expected, Cms.Content actual)
         {
             // The slug and ID are expected to differ.
@@ -69,7 +82,7 @@
             Assert.AreEqual(expected.Title, actual.Title);
         }
 
-        public static void Compare(Cms.Content expected, Cms.Api.Client.ContentSummaryResponse actual)
+        public static void Compare(Cms.Content expected, ContentSummaryResponse actual)
         {
             Assert.AreEqual(expected.Id, actual.Id);
             Assert.AreEqual(expected.Slug, actual.Slug);
@@ -88,13 +101,13 @@
             Assert.AreEqual(expected.StateName, actual.StateName);
         }
 
-        public static void Compare(Cms.ContentState expected, Cms.Api.Client.ContentWithStateResponse actual)
+        public static void Compare(Cms.ContentState expected, ContentWithStateResponse actual)
         {
             Assert.AreEqual(expected.WorkflowId, actual.WorkflowId);
             Assert.AreEqual(expected.StateName, actual.StateName);
         }
 
-        public static void Compare(Cms.ContentState expected, Cms.Api.Client.ContentStateResponse actual)
+        public static void Compare(Cms.ContentState expected, ContentStateResponse actual)
         {
             Assert.AreEqual(expected.WorkflowId, actual.WorkflowId);
             Assert.AreEqual(expected.StateName, actual.StateName);
@@ -191,9 +204,14 @@
 
         public static ContentPayload ContentPayloadAsCreateContentRequestPayload(IContentPayload payload)
         {
+            if (payload == null)
+            {
+                return null;
+            }
+
             return new ContentPayload
             {
-                ContentType = payload.ContentType,
+                ContentType = payload?.ContentType,
             };
         }
 

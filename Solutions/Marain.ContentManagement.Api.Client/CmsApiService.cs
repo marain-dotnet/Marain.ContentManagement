@@ -1591,9 +1591,12 @@ namespace Marain.Cms.Api.Client
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.2.0 (Newtonsoft.Json v11.0.0.0)")]
-    public partial class ContentSummaryWithState : ContentState, System.ComponentModel.INotifyPropertyChanged
+    public partial class ContentSummaryWithState : System.ComponentModel.INotifyPropertyChanged
     {
         private ContentSummary _contentSummary;
+        private string _stateName;
+        private DateTimeOffset _timestamp;
+        private string _workflowId;
     
         [Newtonsoft.Json.JsonProperty("contentSummary", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public ContentSummary ContentSummary
@@ -1604,6 +1607,48 @@ namespace Marain.Cms.Api.Client
                 if (_contentSummary != value)
                 {
                     _contentSummary = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("stateName", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string StateName
+        {
+            get { return _stateName; }
+            set 
+            {
+                if (_stateName != value)
+                {
+                    _stateName = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("timestamp", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public DateTimeOffset Timestamp
+        {
+            get { return _timestamp; }
+            set 
+            {
+                if (_timestamp != value)
+                {
+                    _timestamp = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("workflowId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string WorkflowId
+        {
+            get { return _workflowId; }
+            set 
+            {
+                if (_workflowId != value)
+                {
+                    _workflowId = value; 
                     RaisePropertyChanged();
                 }
             }
@@ -1689,10 +1734,146 @@ namespace Marain.Cms.Api.Client
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.2.0 (Newtonsoft.Json v11.0.0.0)")]
-    public partial class Content : ContentSummary, System.ComponentModel.INotifyPropertyChanged
+    public partial class Content : System.ComponentModel.INotifyPropertyChanged
     {
+        private string _id;
+        private string _eTag;
+        private System.Collections.ObjectModel.ObservableCollection<string> _categoryPaths;
+        private System.Collections.ObjectModel.ObservableCollection<string> _tags;
+        private string _slug;
+        private CmsIdentity _author;
+        private string _title;
+        private string _description;
+        private string _culture;
         private ContentPayload _contentPayload;
         private PropertyBag _metadata;
+    
+        /// <summary>The unique ID of the tenant. This forms a path with parent tenants.</summary>
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Id
+        {
+            get { return _id; }
+            set 
+            {
+                if (_id != value)
+                {
+                    _id = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("eTag", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ETag
+        {
+            get { return _eTag; }
+            set 
+            {
+                if (_eTag != value)
+                {
+                    _eTag = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("categoryPaths", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.ObjectModel.ObservableCollection<string> CategoryPaths
+        {
+            get { return _categoryPaths; }
+            set 
+            {
+                if (_categoryPaths != value)
+                {
+                    _categoryPaths = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("tags", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.ObjectModel.ObservableCollection<string> Tags
+        {
+            get { return _tags; }
+            set 
+            {
+                if (_tags != value)
+                {
+                    _tags = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("slug", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Slug
+        {
+            get { return _slug; }
+            set 
+            {
+                if (_slug != value)
+                {
+                    _slug = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("author", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public CmsIdentity Author
+        {
+            get { return _author; }
+            set 
+            {
+                if (_author != value)
+                {
+                    _author = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("title", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Title
+        {
+            get { return _title; }
+            set 
+            {
+                if (_title != value)
+                {
+                    _title = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("description", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Description
+        {
+            get { return _description; }
+            set 
+            {
+                if (_description != value)
+                {
+                    _description = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("culture", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Culture
+        {
+            get { return _culture; }
+            set 
+            {
+                if (_culture != value)
+                {
+                    _culture = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
     
         [Newtonsoft.Json.JsonProperty("contentPayload", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public ContentPayload ContentPayload
@@ -2381,8 +2562,144 @@ namespace Marain.Cms.Api.Client
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.2.0 (Newtonsoft.Json v11.0.0.0)")]
     public partial class ContentResponse : Resource, System.ComponentModel.INotifyPropertyChanged
     {
+        private string _id;
+        private string _eTag;
+        private System.Collections.ObjectModel.ObservableCollection<string> _categoryPaths;
+        private System.Collections.ObjectModel.ObservableCollection<string> _tags;
+        private string _slug;
+        private CmsIdentity _author;
+        private string _title;
+        private string _description;
+        private string _culture;
         private ContentPayload _contentPayload;
         private PropertyBag _metadata;
+    
+        /// <summary>The unique ID of the tenant. This forms a path with parent tenants.</summary>
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Id
+        {
+            get { return _id; }
+            set 
+            {
+                if (_id != value)
+                {
+                    _id = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("eTag", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ETag
+        {
+            get { return _eTag; }
+            set 
+            {
+                if (_eTag != value)
+                {
+                    _eTag = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("categoryPaths", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.ObjectModel.ObservableCollection<string> CategoryPaths
+        {
+            get { return _categoryPaths; }
+            set 
+            {
+                if (_categoryPaths != value)
+                {
+                    _categoryPaths = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("tags", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.ObjectModel.ObservableCollection<string> Tags
+        {
+            get { return _tags; }
+            set 
+            {
+                if (_tags != value)
+                {
+                    _tags = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("slug", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Slug
+        {
+            get { return _slug; }
+            set 
+            {
+                if (_slug != value)
+                {
+                    _slug = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("author", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public CmsIdentity Author
+        {
+            get { return _author; }
+            set 
+            {
+                if (_author != value)
+                {
+                    _author = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("title", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Title
+        {
+            get { return _title; }
+            set 
+            {
+                if (_title != value)
+                {
+                    _title = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("description", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Description
+        {
+            get { return _description; }
+            set 
+            {
+                if (_description != value)
+                {
+                    _description = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("culture", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Culture
+        {
+            get { return _culture; }
+            set 
+            {
+                if (_culture != value)
+                {
+                    _culture = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
     
         [Newtonsoft.Json.JsonProperty("contentPayload", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public ContentPayload ContentPayload
@@ -2540,6 +2857,9 @@ namespace Marain.Cms.Api.Client
     public partial class ContentSummaryWithStateResponse : Resource, System.ComponentModel.INotifyPropertyChanged
     {
         private ContentSummary _contentSummary;
+        private string _stateName;
+        private DateTimeOffset _timestamp;
+        private string _workflowId;
     
         [Newtonsoft.Json.JsonProperty("contentSummary", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public ContentSummary ContentSummary
@@ -2550,6 +2870,48 @@ namespace Marain.Cms.Api.Client
                 if (_contentSummary != value)
                 {
                     _contentSummary = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("stateName", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string StateName
+        {
+            get { return _stateName; }
+            set 
+            {
+                if (_stateName != value)
+                {
+                    _stateName = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("timestamp", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public DateTimeOffset Timestamp
+        {
+            get { return _timestamp; }
+            set 
+            {
+                if (_timestamp != value)
+                {
+                    _timestamp = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("workflowId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string WorkflowId
+        {
+            get { return _workflowId; }
+            set 
+            {
+                if (_workflowId != value)
+                {
+                    _workflowId = value; 
                     RaisePropertyChanged();
                 }
             }

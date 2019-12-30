@@ -125,6 +125,7 @@ namespace Marain.ContentManagement.Specs.Bindings
         public static void ClearLastApiResponse(this ScenarioContext context)
         {
             context.Remove(LastApiResponseKey);
+            context.Remove(LastApiExceptionKey);
         }
 
         /// <summary>
@@ -135,6 +136,17 @@ namespace Marain.ContentManagement.Specs.Bindings
         public static SwaggerResponse GetLastApiResponse(this ScenarioContext context)
         {
             return context.Get<SwaggerResponse>(LastApiResponseKey);
+        }
+
+        /// <summary>
+        /// Attempts to retrieve the most recent API response stored in the scenario context.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="response">The response.</param>
+        /// <returns>True if there is a response to return, false otherwise.</returns>
+        public static bool TryGetLastApiResponse(this ScenarioContext context, out SwaggerResponse response)
+        {
+            return context.TryGetValue(LastApiResponseKey, out response);
         }
 
         /// <summary>
