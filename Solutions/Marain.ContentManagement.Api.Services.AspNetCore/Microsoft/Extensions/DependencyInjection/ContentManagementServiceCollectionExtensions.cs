@@ -89,15 +89,15 @@ namespace Microsoft.Extensions.DependencyInjection
 
         private static IServiceCollection AddContentManagementHalDocumentMappers(this IServiceCollection services)
         {
-            services.AddHalDocumentMapper<Content, IOpenApiContext, ContentMapper>();
-            services.AddHalDocumentMapper<ContentSummaries, ContentSummariesMappingContext, ContentSummariesMapper>();
-            services.AddHalDocumentMapper<ContentSummary, ResponseMappingContext, ContentSummaryMapper>();
+            services.AddHalDocumentMapper<Content, IOpenApiContext, ContentResponseMapper>();
+            services.AddHalDocumentMapper<ContentSummaries, ContentSummariesResponseMappingContext, ContentSummariesResponseMapper>();
+            services.AddHalDocumentMapper<ContentSummary, ResponseMappingContext, ContentSummaryResponseMapper>();
 
-            services.AddHalDocumentMapper<ContentWithState, IOpenApiContext, ContentWithStateMapper>();
-            services.AddHalDocumentMapper<ContentSummariesWithState, ContentSummariesWithStateMappingContext, ContentSummariesWithStateMapper>();
-            services.AddHalDocumentMapper<ContentSummaryWithState, ResponseMappingContext, ContentSummaryWithStateMapper>();
+            services.AddHalDocumentMapper<ContentWithState, IOpenApiContext, ContentWithStateResponseMapper>();
+            services.AddHalDocumentMapper<ContentSummariesWithState, ContentSummariesWithStateResponseMappingContext, ContentSummariesWithStateResponseMapper>();
+            services.AddHalDocumentMapper<ContentSummaryWithState, ResponseMappingContext, ContentSummaryWithStateResponseMapper>();
 
-            services.AddHalDocumentMapper<ContentState, IOpenApiContext, ContentStateMapper>();
+            services.AddHalDocumentMapper<ContentState, IOpenApiContext, ContentStateResponseMapper>();
 
             return services;
         }

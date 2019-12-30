@@ -1,4 +1,4 @@
-﻿// <copyright file="ContentSummariesWithStateMappingContext.cs" company="Endjin Limited">
+﻿// <copyright file="ContentSummariesWithStateResponseMappingContext.cs" company="Endjin Limited">
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
@@ -8,9 +8,9 @@ namespace Marain.Cms.Api.Services.Internal
 
     /// <summary>
     /// Additional information needed to map a content summaries result to a <see cref="HalDocument"/> using
-    /// this <see cref="ContentSummariesMapper"/>.
+    /// this <see cref="ContentSummariesResponseMapper"/>.
     /// </summary>
-    public class ContentSummariesWithStateMappingContext : ResponseMappingContext
+    public class ContentSummariesWithStateResponseMappingContext : ResponseMappingContext
     {
         /// <summary>
         /// Gets or sets the operation that self/next links should refer to.

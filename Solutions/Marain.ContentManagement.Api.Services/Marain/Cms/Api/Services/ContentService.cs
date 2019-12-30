@@ -36,7 +36,7 @@ namespace Marain.Cms.Api.Services
         public const string ContentManagementResourceTemplate = "{tenantId}/marain/content/";
 
         private readonly ITenantedContentStoreFactory contentStoreFactory;
-        private readonly ContentMapper contentMapper;
+        private readonly ContentResponseMapper contentMapper;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContentService"/> class.
@@ -45,7 +45,7 @@ namespace Marain.Cms.Api.Services
         /// <param name="contentMapper">The mapper for <see cref="Content"/> responses.</param>
         public ContentService(
             ITenantedContentStoreFactory contentStoreFactory,
-            ContentMapper contentMapper)
+            ContentResponseMapper contentMapper)
         {
             this.contentStoreFactory = contentStoreFactory;
             this.contentMapper = contentMapper;

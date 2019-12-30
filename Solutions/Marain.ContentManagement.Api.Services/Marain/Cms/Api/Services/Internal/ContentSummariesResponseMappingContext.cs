@@ -1,4 +1,4 @@
-﻿// <copyright file="ContentSummariesMappingContext.cs" company="Endjin Limited">
+﻿// <copyright file="ContentSummariesResponseMappingContext.cs" company="Endjin Limited">
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
@@ -8,9 +8,9 @@ namespace Marain.Cms.Api.Services.Internal
 
     /// <summary>
     /// Additional information needed to map a content summaries result to a <see cref="HalDocument"/> using
-    /// this <see cref="ContentSummariesMapper"/>.
+    /// this <see cref="ContentSummariesResponseMapper"/>.
     /// </summary>
-    public class ContentSummariesMappingContext : ResponseMappingContext
+    public class ContentSummariesResponseMappingContext : ResponseMappingContext
     {
         /// <summary>
         /// Gets or sets the slug for which history was being requested.

@@ -1,4 +1,4 @@
-﻿// <copyright file="ContentWithStateMapper.cs" company="Endjin Limited">
+﻿// <copyright file="ContentResponseMapper.cs" company="Endjin Limited">
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
@@ -9,19 +9,19 @@ namespace Marain.Cms.Api.Services.Internal
     using Menes.Links;
 
     /// <summary>
-    /// Maps <see cref="ContentWithState"/> to and from a <see cref="HalDocument"/>.
+    /// Maps <see cref="Content"/> to and from a <see cref="HalDocument"/>.
     /// </summary>
-    public class ContentWithStateMapper : IHalDocumentMapper<ContentWithState, IOpenApiContext>
+    public class ContentResponseMapper : IHalDocumentMapper<Content, IOpenApiContext>
     {
         private readonly IHalDocumentFactory halDocumentFactory;
         private readonly IOpenApiWebLinkResolver linkResolver;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ContentWithState"/> class.
+        /// Initializes a new instance of the <see cref="ContentResponseMapper"/> class.
         /// </summary>
         /// <param name="halDocumentFactory">The factory with which to create <see cref="HalDocument"/> instances.</param>
         /// <param name="linkResolver">The link resolver to build the links collection.</param>
-        public ContentWithStateMapper(IHalDocumentFactory halDocumentFactory, IOpenApiWebLinkResolver linkResolver)
+        public ContentResponseMapper(IHalDocumentFactory halDocumentFactory, IOpenApiWebLinkResolver linkResolver)
         {
             this.halDocumentFactory = halDocumentFactory;
             this.linkResolver = linkResolver;
@@ -30,11 +30,11 @@ namespace Marain.Cms.Api.Services.Internal
         /// <inheritdoc/>
         public void ConfigureLinkMap(IOpenApiLinkOperationMap links)
         {
-            links.MapByContentTypeAndRelationTypeAndOperationId<ContentWithState>("self", WorkflowContentService.GetWorkflowContentOperationId);
+            links.MapByContentTypeAndRelationTypeAndOperationId<Content>("self", ContentService.GetContentOperationId);
         }
 
         /// <inheritdoc/>
-        public HalDocument Map(ContentWithState resource, IOpenApiContext context)
+        public HalDocument Map(Content resource, IOpenApiContext context)
         {
             HalDocument response = this.halDocumentFactory.CreateHalDocumentFrom(resource);
             response.ResolveAndAddByOwnerAndRelationType(
@@ -42,8 +42,8 @@ namespace Marain.Cms.Api.Services.Internal
                 resource,
                 "self",
                 ("tenantId", context.CurrentTenantId),
-                ("slug", resource.Content.Slug),
-                ("workflowId", resource.WorkflowId));
+                ("slug", resource.Slug),
+                ("contentId", resource.Id));
 
             return response;
         }

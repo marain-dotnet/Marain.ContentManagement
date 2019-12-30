@@ -1,4 +1,4 @@
-﻿// <copyright file="ContentStateMapper.cs" company="Endjin Limited">
+﻿// <copyright file="ContentSummaryResponseMapper.cs" company="Endjin Limited">
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
@@ -9,19 +9,19 @@ namespace Marain.Cms.Api.Services.Internal
     using Menes.Links;
 
     /// <summary>
-    /// Maps <see cref="ContentState"/> to and from a <see cref="HalDocument"/>.
+    /// Maps <see cref="ContentSummary"/> to and from a <see cref="HalDocument"/>.
     /// </summary>
-    public class ContentStateMapper : IHalDocumentMapper<ContentState, IOpenApiContext>
+    public class ContentSummaryResponseMapper : IHalDocumentMapper<ContentSummary, ResponseMappingContext>
     {
         private readonly IHalDocumentFactory halDocumentFactory;
         private readonly IOpenApiWebLinkResolver linkResolver;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ContentStateMapper"/> class.
+        /// Initializes a new instance of the <see cref="ContentSummaryResponseMapper"/> class.
         /// </summary>
         /// <param name="halDocumentFactory">The factory with which to create <see cref="HalDocument"/> instances.</param>
         /// <param name="linkResolver">The link resolver to build the links collection.</param>
-        public ContentStateMapper(IHalDocumentFactory halDocumentFactory, IOpenApiWebLinkResolver linkResolver)
+        public ContentSummaryResponseMapper(IHalDocumentFactory halDocumentFactory, IOpenApiWebLinkResolver linkResolver)
         {
             this.halDocumentFactory = halDocumentFactory;
             this.linkResolver = linkResolver;
@@ -30,13 +30,12 @@ namespace Marain.Cms.Api.Services.Internal
         /// <inheritdoc/>
         public void ConfigureLinkMap(IOpenApiLinkOperationMap links)
         {
-            links.MapByContentTypeAndRelationTypeAndOperationId<ContentState>(Constants.LinkRelations.Self, WorkflowContentService.GetWorkflowContentOperationId);
-            links.MapByContentTypeAndRelationTypeAndOperationId<ContentState>("content", ContentService.GetContentOperationId);
-            links.MapByContentTypeAndRelationTypeAndOperationId<ContentState>("content-with-state", WorkflowContentService.GetWorkflowContentOperationId);
+            links.MapByContentTypeAndRelationTypeAndOperationId<ContentSummary>(Constants.LinkRelations.Self, ContentSummaryService.GetContentSummaryOperationId);
+            links.MapByContentTypeAndRelationTypeAndOperationId<ContentSummary>("content", ContentService.GetContentOperationId);
         }
 
         /// <inheritdoc/>
-        public HalDocument Map(ContentState resource, IOpenApiContext context)
+        public HalDocument Map(ContentSummary resource, ResponseMappingContext context)
         {
             HalDocument response = this.halDocumentFactory.CreateHalDocumentFrom(resource);
 
@@ -44,7 +43,7 @@ namespace Marain.Cms.Api.Services.Internal
                 this.linkResolver,
                 resource,
                 Constants.LinkRelations.Self,
-                (Constants.ParameterNames.TenantId, context.CurrentTenantId),
+                (Constants.ParameterNames.TenantId, context.TenantId),
                 (Constants.ParameterNames.Slug, resource.Slug),
                 (Constants.ParameterNames.ContentId, resource.Id));
 
@@ -52,15 +51,7 @@ namespace Marain.Cms.Api.Services.Internal
                 this.linkResolver,
                 resource,
                 "content",
-                (Constants.ParameterNames.TenantId, context.CurrentTenantId),
-                (Constants.ParameterNames.Slug, resource.Slug),
-                (Constants.ParameterNames.ContentId, resource.Id));
-
-            response.ResolveAndAddByOwnerAndRelationType(
-                this.linkResolver,
-                resource,
-                "content-with-state",
-                (Constants.ParameterNames.TenantId, context.CurrentTenantId),
+                (Constants.ParameterNames.TenantId, context.TenantId),
                 (Constants.ParameterNames.Slug, resource.Slug),
                 (Constants.ParameterNames.ContentId, resource.Id));
 

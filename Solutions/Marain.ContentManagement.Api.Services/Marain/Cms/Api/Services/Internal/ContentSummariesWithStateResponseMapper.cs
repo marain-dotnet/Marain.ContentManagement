@@ -1,4 +1,4 @@
-﻿// <copyright file="ContentSummariesWithStateMapper.cs" company="Endjin Limited">
+﻿// <copyright file="ContentSummariesWithStateResponseMapper.cs" company="Endjin Limited">
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
@@ -13,22 +13,22 @@ namespace Marain.Cms.Api.Services.Internal
     /// <summary>
     /// Maps <see cref="Content"/> to and from a <see cref="HalDocument"/>.
     /// </summary>
-    public class ContentSummariesWithStateMapper : IHalDocumentMapper<ContentSummariesWithState, ContentSummariesWithStateMappingContext>
+    public class ContentSummariesWithStateResponseMapper : IHalDocumentMapper<ContentSummariesWithState, ContentSummariesWithStateResponseMappingContext>
     {
         private readonly IHalDocumentFactory halDocumentFactory;
         private readonly IOpenApiWebLinkResolver linkResolver;
-        private readonly ContentSummaryWithStateMapper contentSummaryWithStateMapper;
+        private readonly ContentSummaryWithStateResponseMapper contentSummaryWithStateMapper;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ContentMapper"/> class.
+        /// Initializes a new instance of the <see cref="ContentResponseMapper"/> class.
         /// </summary>
         /// <param name="halDocumentFactory">The factory with which to create <see cref="HalDocument"/> instances.</param>
         /// <param name="linkResolver">The link resolver to build the links collection.</param>
         /// <param name="contentSummaryWithStateMapper">The mapper for individual <see cref="ContentSummaryWithState"/> items.</param>
-        public ContentSummariesWithStateMapper(
+        public ContentSummariesWithStateResponseMapper(
             IHalDocumentFactory halDocumentFactory,
             IOpenApiWebLinkResolver linkResolver,
-            ContentSummaryWithStateMapper contentSummaryWithStateMapper)
+            ContentSummaryWithStateResponseMapper contentSummaryWithStateMapper)
         {
             this.halDocumentFactory = halDocumentFactory;
             this.linkResolver = linkResolver;
@@ -46,7 +46,7 @@ namespace Marain.Cms.Api.Services.Internal
         }
 
         /// <inheritdoc/>
-        public HalDocument Map(ContentSummariesWithState resource, ContentSummariesWithStateMappingContext context)
+        public HalDocument Map(ContentSummariesWithState resource, ContentSummariesWithStateResponseMappingContext context)
         {
             IEnumerable<HalDocument> mappedSummaries = resource.Summaries.Select(x => this.contentSummaryWithStateMapper.Map(x, context));
             HalDocument response = this.halDocumentFactory.CreateHalDocumentFrom(new { Summaries = mappedSummaries.ToArray() });

@@ -25,8 +25,8 @@ namespace Marain.Cms.Api.Services
         public const string GetWorkflowStateOperationId = "getWorkflowState";
 
         private readonly ITenantedContentStoreFactory contentStoreFactory;
-        private readonly ContentWithStateMapper contentWithStateMapper;
-        private readonly ContentStateMapper contentStateMapper;
+        private readonly ContentWithStateResponseMapper contentWithStateMapper;
+        private readonly ContentStateResponseMapper contentStateMapper;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WorkflowContentService"/> class.
@@ -36,8 +36,8 @@ namespace Marain.Cms.Api.Services
         /// <param name="contentStateMapper">The mapper for <see cref="ContentState"/> results.</param>
         public WorkflowContentService(
             ITenantedContentStoreFactory contentStoreFactory,
-            ContentWithStateMapper contentWithStateMapper,
-            ContentStateMapper contentStateMapper)
+            ContentWithStateResponseMapper contentWithStateMapper,
+            ContentStateResponseMapper contentStateMapper)
         {
             this.contentStoreFactory = contentStoreFactory;
             this.contentWithStateMapper = contentWithStateMapper;

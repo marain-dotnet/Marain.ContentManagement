@@ -25,7 +25,7 @@ namespace Marain.Cms.Api.Services
         public const string GetWorkflowStateHistoryOperationId = "getWorkflowStateHistory";
 
         private readonly ITenantedContentStoreFactory contentStoreFactory;
-        private readonly ContentSummariesWithStateMapper contentSummariesWithStateMapper;
+        private readonly ContentSummariesWithStateResponseMapper contentSummariesWithStateMapper;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WorkflowContentHistoryService"/> class.
@@ -34,7 +34,7 @@ namespace Marain.Cms.Api.Services
         /// <param name="contentSummariesWithStateMapper">The mapper for <see cref="ContentSummariesWithState"/> results.</param>
         public WorkflowContentHistoryService(
             ITenantedContentStoreFactory contentStoreFactory,
-            ContentSummariesWithStateMapper contentSummariesWithStateMapper)
+            ContentSummariesWithStateResponseMapper contentSummariesWithStateMapper)
         {
             this.contentStoreFactory = contentStoreFactory;
             this.contentSummariesWithStateMapper = contentSummariesWithStateMapper;
@@ -56,7 +56,7 @@ namespace Marain.Cms.Api.Services
 
             ContentSummariesWithState result = await contentStore.GetContentSummariesForWorkflowAsync(slug, workflowId, null, limit ?? 20, continuationToken).ConfigureAwait(false);
 
-            var mappingContext = new ContentSummariesWithStateMappingContext
+            var mappingContext = new ContentSummariesWithStateResponseMappingContext
             {
                 TargetOperationId = GetWorkflowHistoryOperationId,
                 ContinuationToken = continuationToken,
@@ -88,7 +88,7 @@ namespace Marain.Cms.Api.Services
 
             ContentSummariesWithState result = await contentStore.GetContentSummariesForWorkflowAsync(slug, workflowId, stateName, limit ?? 20, continuationToken).ConfigureAwait(false);
 
-            var mappingContext = new ContentSummariesWithStateMappingContext
+            var mappingContext = new ContentSummariesWithStateResponseMappingContext
             {
                 TargetOperationId = GetWorkflowStateHistoryOperationId,
                 ContinuationToken = continuationToken,

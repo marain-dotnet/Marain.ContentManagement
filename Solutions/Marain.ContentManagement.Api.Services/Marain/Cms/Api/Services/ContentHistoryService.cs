@@ -25,7 +25,7 @@ namespace Marain.Cms.Api.Services
         public const string GetContentHistoryOperationId = "getContentHistory";
 
         private readonly ITenantedContentStoreFactory contentStoreFactory;
-        private readonly ContentSummariesMapper contentSummariesMapper;
+        private readonly ContentSummariesResponseMapper contentSummariesMapper;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContentService"/> class.
@@ -34,7 +34,7 @@ namespace Marain.Cms.Api.Services
         /// <param name="contentSummariesMapper">The mapper for <see cref="ContentSummaries"/> responses.</param>
         public ContentHistoryService(
             ITenantedContentStoreFactory contentStoreFactory,
-            ContentSummariesMapper contentSummariesMapper)
+            ContentSummariesResponseMapper contentSummariesMapper)
         {
             this.contentStoreFactory = contentStoreFactory;
             this.contentSummariesMapper = contentSummariesMapper;
@@ -64,7 +64,7 @@ namespace Marain.Cms.Api.Services
                 return this.NotModifiedResult();
             }
 
-            var mappingContext = new ContentSummariesMappingContext
+            var mappingContext = new ContentSummariesResponseMappingContext
             {
                 ContinuationToken = continuationToken,
                 Limit = limit,

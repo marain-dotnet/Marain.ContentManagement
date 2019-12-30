@@ -21,7 +21,7 @@ namespace Marain.Cms.Api.Services
         public const string GetContentSummaryOperationId = "getContentSummary";
 
         private readonly ITenantedContentStoreFactory contentStoreFactory;
-        private readonly ContentSummaryMapper contentSummaryMapper;
+        private readonly ContentSummaryResponseMapper contentSummaryMapper;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContentService"/> class.
@@ -30,7 +30,7 @@ namespace Marain.Cms.Api.Services
         /// <param name="contentSummaryMapper">The mapper for <see cref="ContentSummary"/> responses.</param>
         public ContentSummaryService(
             ITenantedContentStoreFactory contentStoreFactory,
-            ContentSummaryMapper contentSummaryMapper)
+            ContentSummaryResponseMapper contentSummaryMapper)
         {
             this.contentStoreFactory = contentStoreFactory;
             this.contentSummaryMapper = contentSummaryMapper;
