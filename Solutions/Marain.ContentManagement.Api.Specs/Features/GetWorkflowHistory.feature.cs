@@ -18,20 +18,20 @@ namespace Marain.ContentManagement.Specs.Features
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.0.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("GetContentWithStateHistory")]
-    public partial class GetContentWithStateHistoryFeature
+    [NUnit.Framework.DescriptionAttribute("Get workflow history")]
+    public partial class GetWorkflowHistoryFeature
     {
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "GetContentWithStateHistory.feature"
+#line 1 "GetWorkflowHistory.feature"
 #line hidden
         
         [NUnit.Framework.OneTimeSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "GetContentWithStateHistory", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Get workflow history", null, ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -745,8 +745,8 @@ this.ScenarioInitialize(scenarioInfo);
 #line 3
 this.FeatureBackground();
 #line 70
- testRunner.When("I request content history with state for slug \'{Content0.Slug}\', workflow Id \'wor" +
-                    "kflow1Id\' and state name \'published\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I request content history with state for slug \'{Content0.Slug}\' and workflow Id \'" +
+                    "workflow1Id\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 71
  testRunner.Then("the response should have a status of \'200\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 72
@@ -770,12 +770,11 @@ this.ScenarioInitialize(scenarioInfo);
 #line 3
 this.FeatureBackground();
 #line 77
- testRunner.Given("I have requested content history with state for slug \'{Content0.Slug}\', workflow " +
-                    "Id \'workflow1Id\' and state name \'published\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I have requested content history with state for slug \'{Content0.Slug}\' and workfl" +
+                    "ow Id \'workflow1Id\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 78
- testRunner.When("I request content history with state for slug \'{Content0.Slug}\', workflow Id \'wor" +
-                    "kflow1Id\' and state name \'published\' with the contination token from the previou" +
-                    "s response", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I request content history with state for slug \'{Content0.Slug}\' and workflow Id \'" +
+                    "workflow1Id\' with the contination token from the previous response", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 79
  testRunner.Then("the response should have a status of \'200\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 80
@@ -797,8 +796,8 @@ this.ScenarioInitialize(scenarioInfo);
 #line 3
 this.FeatureBackground();
 #line 84
- testRunner.When("I request content history with state for slug \'{Content0.Slug}\', workflow Id \'wor" +
-                    "kflow1Id\' and state name \'published\' with a limit of 5 items", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I request content history with state for slug \'{Content0.Slug}\' and workflow Id \'" +
+                    "workflow1Id\' with a limit of 5 items", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 85
  testRunner.Then("the response should have a status of \'200\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 86
@@ -824,8 +823,8 @@ this.ScenarioInitialize(scenarioInfo);
 #line 3
 this.FeatureBackground();
 #line 91
- testRunner.When("I request content history with state for slug \'{Content0.Slug}\', workflow Id \'wor" +
-                    "kflow1Id\' and state name \'published\' with a limit of 50 items", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I request content history with state for slug \'{Content0.Slug}\' and workflow Id \'" +
+                    "workflow1Id\' with a limit of 50 items", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 92
  testRunner.Then("the response should have a status of \'200\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 93

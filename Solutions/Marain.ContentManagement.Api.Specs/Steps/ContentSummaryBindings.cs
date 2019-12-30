@@ -106,6 +106,24 @@ namespace Marain.ContentManagement.Specs.Steps
             this.scenarioContext.StoreLastApiResponse(response);
         }
 
+        [Given("I have requested content history with state for slug '(.*)' and workflow Id '(.*)'")]
+        [When("I request content history with state for slug '(.*)' and workflow Id '(.*)'")]
+        public async Task WhenIRequestContentHistoryWithStateForSlugAndWorkflowId(string slug, string workflowId)
+        {
+            string resolvedSlug = ContentDriver.GetObjectValue<string>(this.scenarioContext, slug);
+            string resolvedWorkflowId = ContentDriver.GetObjectValue<string>(this.scenarioContext, workflowId);
+
+            ContentClient client = this.scenarioContext.Get<ContentClient>();
+            SwaggerResponse<ContentSummariesWithStateResponse> response = await client.GetWorkflowHistoryAsync(
+                this.scenarioContext.CurrentTenantId(),
+                resolvedWorkflowId,
+                resolvedSlug,
+                null,
+                null).ConfigureAwait(false);
+
+            this.scenarioContext.StoreLastApiResponse(response);
+        }
+
         [When("I request content history with state for slug '(.*)', workflow Id '(.*)' and state name '(.*)' with the contination token from the previous response")]
         public async Task WhenIRequestContentHistoryWithStateForSlugWorkflowIdAndStateNameWithTheContinationTokenFromThePreviousResponse(string slug, string workflowId, string stateName)
         {
@@ -133,6 +151,31 @@ namespace Marain.ContentManagement.Specs.Steps
             this.scenarioContext.StoreLastApiResponse(response);
         }
 
+        [When("I request content history with state for slug '(.*)' and workflow Id '(.*)' with the contination token from the previous response")]
+        public async Task WhenIRequestContentHistoryWithStateForSlugAndWorkflowIdWithTheContinationTokenFromThePreviousResponse(string slug, string workflowId)
+        {
+            SwaggerResponse<ContentSummariesWithStateResponse> previousResponse = this.scenarioContext.GetLastApiResponse<ContentSummariesWithStateResponse>();
+
+            string continuationToken = previousResponse.Result.ExtractContinuationToken();
+
+            // Now stash the summaries themselves so we can verify that the ones we get back when we call using the
+            // continuation token aren't the same.
+            this.scenarioContext.Set(previousResponse.Result.Summaries.ToArray());
+
+            string resolvedSlug = ContentDriver.GetObjectValue<string>(this.scenarioContext, slug);
+            string resolvedWorkflowId = ContentDriver.GetObjectValue<string>(this.scenarioContext, workflowId);
+
+            ContentClient client = this.scenarioContext.Get<ContentClient>();
+            SwaggerResponse<ContentSummariesWithStateResponse> response = await client.GetWorkflowHistoryAsync(
+                this.scenarioContext.CurrentTenantId(),
+                resolvedWorkflowId,
+                resolvedSlug,
+                null,
+                continuationToken).ConfigureAwait(false);
+
+            this.scenarioContext.StoreLastApiResponse(response);
+        }
+
         [When("I request content history with state for slug '(.*)', workflow Id '(.*)' and state name '(.*)' with a limit of (.*) items")]
         public async Task WhenIRequestContentHistoryWithStateForSlugWorkflowIdAndStateNameWithALimitOfItems(string slug, string workflowId, string stateName, int limit)
         {
@@ -145,6 +188,23 @@ namespace Marain.ContentManagement.Specs.Steps
                 this.scenarioContext.CurrentTenantId(),
                 resolvedWorkflowId,
                 resolvedStateName,
+                resolvedSlug,
+                limit,
+                null).ConfigureAwait(false);
+
+            this.scenarioContext.StoreLastApiResponse(response);
+        }
+
+        [When("I request content history with state for slug '(.*)' and workflow Id '(.*)' with a limit of (.*) items")]
+        public async Task WhenIRequestContentHistoryWithStateForSlugAndWorkflowIdWithALimitOfItems(string slug, string workflowId, int limit)
+        {
+            string resolvedSlug = ContentDriver.GetObjectValue<string>(this.scenarioContext, slug);
+            string resolvedWorkflowId = ContentDriver.GetObjectValue<string>(this.scenarioContext, workflowId);
+
+            ContentClient client = this.scenarioContext.Get<ContentClient>();
+            SwaggerResponse<ContentSummariesWithStateResponse> response = await client.GetWorkflowHistoryAsync(
+                this.scenarioContext.CurrentTenantId(),
+                resolvedWorkflowId,
                 resolvedSlug,
                 limit,
                 null).ConfigureAwait(false);

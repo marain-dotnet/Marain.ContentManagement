@@ -1,4 +1,4 @@
-﻿Feature: GetContentWithStateHistory
+﻿Feature: Get workflow history
 
 Background:
 	Given content items have been created
@@ -67,30 +67,29 @@ Background:
 	| Content29-State | {newguid} | {Content29.Id} | slug1 | workflow1Id | archived  | Frodo Baggins  | {newguid}    |
 
 Scenario: Basic history with state retrieval by state name, without specifying a limit or continuation token
-	When I request content history with state for slug '{Content0.Slug}', workflow Id 'workflow1Id' and state name 'published'
+	When I request content history with state for slug '{Content0.Slug}' and workflow Id 'workflow1Id'
 	Then the response should have a status of '200'
 	And the response should contain 20 embedded content summaries with state
 	And the response should contain a 'self' link
 	And the response should contain a 'next' link
 
 Scenario: History retrieval specifying a continuation token
-	Given I have requested content history with state for slug '{Content0.Slug}', workflow Id 'workflow1Id' and state name 'published'
-	When I request content history with state for slug '{Content0.Slug}', workflow Id 'workflow1Id' and state name 'published' with the contination token from the previous response
+	Given I have requested content history with state for slug '{Content0.Slug}' and workflow Id 'workflow1Id'
+	When I request content history with state for slug '{Content0.Slug}' and workflow Id 'workflow1Id' with the contination token from the previous response
 	Then the response should have a status of '200'
 	And the response should contain another 5 embedded content summaries with state
 	And the response should contain a 'self' link
 
 Scenario: History retrieval specifying a limit
-	When I request content history with state for slug '{Content0.Slug}', workflow Id 'workflow1Id' and state name 'published' with a limit of 5 items
+	When I request content history with state for slug '{Content0.Slug}' and workflow Id 'workflow1Id' with a limit of 5 items
 	Then the response should have a status of '200'
 	And the response should contain 5 embedded content summaries with state
 	And the response should contain a 'self' link
 	And the response should contain a 'next' link
 
 Scenario: History retrieval with fewer items than the limit doesn't include a continuation token
-	When I request content history with state for slug '{Content0.Slug}', workflow Id 'workflow1Id' and state name 'published' with a limit of 50 items
+	When I request content history with state for slug '{Content0.Slug}' and workflow Id 'workflow1Id' with a limit of 50 items
 	Then the response should have a status of '200'
 	And the response should contain 25 embedded content summaries with state
 	And the response should contain a 'self' link
 	And the response should not contain a 'next' link
-

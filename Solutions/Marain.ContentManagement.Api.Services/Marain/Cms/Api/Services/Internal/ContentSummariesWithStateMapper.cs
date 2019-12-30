@@ -38,8 +38,11 @@ namespace Marain.Cms.Api.Services.Internal
         /// <inheritdoc/>
         public void ConfigureLinkMap(IOpenApiLinkOperationMap links)
         {
-            links.Map<ContentSummariesWithState>(Constants.LinkRelations.Self, WorkflowContentHistoryService.GetWorkflowStateHistoryOperationId);
-            links.Map<ContentSummariesWithState>(Constants.LinkRelations.Next, WorkflowContentHistoryService.GetWorkflowStateHistoryOperationId);
+            links.Map<ContentSummariesWithState>(Constants.LinkRelations.Self, WorkflowContentHistoryService.GetWorkflowStateHistoryOperationId, WorkflowContentHistoryService.GetWorkflowStateHistoryOperationId);
+            links.Map<ContentSummariesWithState>(Constants.LinkRelations.Next, WorkflowContentHistoryService.GetWorkflowStateHistoryOperationId, WorkflowContentHistoryService.GetWorkflowStateHistoryOperationId);
+
+            links.Map<ContentSummariesWithState>(Constants.LinkRelations.Self, WorkflowContentHistoryService.GetWorkflowHistoryOperationId, WorkflowContentHistoryService.GetWorkflowHistoryOperationId);
+            links.Map<ContentSummariesWithState>(Constants.LinkRelations.Next, WorkflowContentHistoryService.GetWorkflowHistoryOperationId, WorkflowContentHistoryService.GetWorkflowHistoryOperationId);
         }
 
         /// <inheritdoc/>
@@ -51,9 +54,12 @@ namespace Marain.Cms.Api.Services.Internal
             response.ResolveAndAdd(
                 this.linkResolver,
                 resource,
+                context.TargetOperationId,
                 Constants.LinkRelations.Self,
                 (Constants.ParameterNames.TenantId, context.TenantId),
                 (Constants.ParameterNames.Slug, context.Slug),
+                (Constants.ParameterNames.WorkflowId, context.WorkflowId),
+                (Constants.ParameterNames.StateName, context.StateName),
                 (Constants.ParameterNames.Limit, context.Limit),
                 (Constants.ParameterNames.ContinuationToken, context.ContinuationToken));
 
@@ -62,9 +68,12 @@ namespace Marain.Cms.Api.Services.Internal
                 response.ResolveAndAdd(
                     this.linkResolver,
                     resource,
+                    context.TargetOperationId,
                     Constants.LinkRelations.Next,
                     (Constants.ParameterNames.TenantId, context.TenantId),
                     (Constants.ParameterNames.Slug, context.Slug),
+                    (Constants.ParameterNames.WorkflowId, context.WorkflowId),
+                    (Constants.ParameterNames.StateName, context.StateName),
                     (Constants.ParameterNames.Limit, context.Limit),
                     (Constants.ParameterNames.ContinuationToken, resource.ContinuationToken));
             }

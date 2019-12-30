@@ -203,6 +203,34 @@ paths:
           description: Forbidden
         '404':
           description: Not found
+  /{tenantId}/marain/content/workflow/{workflowId}/history/{slug}:
+    get:
+      tags:
+        - Content Workflow
+      summary: Get the state history for the given workflow at the slug with the given ID
+      description: Gets the state history for the given workflow at the slug. The history includes links to the content associated with those states.
+      operationId: getWorkflowHistory
+      parameters:
+        - $ref: '#/components/parameters/tenantId'
+        - $ref: '#/components/parameters/workflowId'
+        - $ref: '#/components/parameters/slug'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/continuationToken'
+      responses:
+        '200':
+          description: Successful operation        
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentSummariesWithStateResponse'
+        '304':
+          description: Not modified
+        '400':
+          description: Bad request
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
   /{tenantId}/marain/content/workflow/{workflowId}/{stateName}/history/{slug}:
     get:
       tags:

@@ -19,10 +19,8 @@
   <Import Project="..\Common.NetStandard_2_0.proj" />
   <ItemGroup>
     <None Remove="Marain\Cms\Api\ContentManagementServices.yaml" />
-    <None Remove="Marain\Cms\Api\Services\ContentManagementServices.old.yaml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Marain\Cms\Api\Services\ContentManagementServices.old.yaml" />
     <EmbeddedResource Include="Marain\Cms\Api\Services\ContentManagementServices.yaml" />
   </ItemGroup>
 

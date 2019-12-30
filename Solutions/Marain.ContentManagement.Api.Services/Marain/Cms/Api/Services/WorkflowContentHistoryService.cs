@@ -15,7 +15,12 @@ namespace Marain.Cms.Api.Services
     public class WorkflowContentHistoryService : IOpenApiService
     {
         /// <summary>
-        /// The ID for the getWorkflowStateHistory operation.
+        /// The Id for the getWorkflowHistory operation.
+        /// </summary>
+        public const string GetWorkflowHistoryOperationId = "getWorkflowHistory";
+
+        /// <summary>
+        /// The Id for the getWorkflowStateHistory operation.
         /// </summary>
         public const string GetWorkflowStateHistoryOperationId = "getWorkflowStateHistory";
 
@@ -41,6 +46,37 @@ namespace Marain.Cms.Api.Services
         /// <param name="tenantId">The ID of the tenant.</param>
         /// <param name="slug">The slug for the content.</param>
         /// <param name="workflowId">The Id of the workflow the content is part of.</param>
+        /// <param name="limit">The maximum number of items to return in the batch.</param>
+        /// <param name="continuationToken">The continuation token for the next batch.</param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        [OperationId(GetWorkflowHistoryOperationId)]
+        public async Task<OpenApiResult> GetWorkflowHistory(string tenantId, string slug, string workflowId, int? limit, string continuationToken)
+        {
+            IContentStore contentStore = await this.contentStoreFactory.GetContentStoreForTenantAsync(tenantId).ConfigureAwait(false);
+
+            ContentSummariesWithState result = await contentStore.GetContentSummariesForWorkflowAsync(slug, workflowId, null, limit ?? 20, continuationToken).ConfigureAwait(false);
+
+            var mappingContext = new ContentSummariesWithStateMappingContext
+            {
+                TargetOperationId = GetWorkflowHistoryOperationId,
+                ContinuationToken = continuationToken,
+                Limit = limit,
+                Slug = slug,
+                TenantId = tenantId,
+                WorkflowId = workflowId,
+            };
+
+            HalDocument resultDocument = this.contentSummariesWithStateMapper.Map(result, mappingContext);
+
+            return this.OkResult(resultDocument);
+        }
+
+        /// <summary>
+        /// Get the content at the slug with the given ID.
+        /// </summary>
+        /// <param name="tenantId">The ID of the tenant.</param>
+        /// <param name="slug">The slug for the content.</param>
+        /// <param name="workflowId">The Id of the workflow the content is part of.</param>
         /// <param name="stateName">The workflow state to limit the results to.</param>
         /// <param name="limit">The maximum number of items to return in the batch.</param>
         /// <param name="continuationToken">The continuation token for the next batch.</param>
@@ -54,6 +90,7 @@ namespace Marain.Cms.Api.Services
 
             var mappingContext = new ContentSummariesWithStateMappingContext
             {
+                TargetOperationId = GetWorkflowStateHistoryOperationId,
                 ContinuationToken = continuationToken,
                 Limit = limit,
                 Slug = slug,

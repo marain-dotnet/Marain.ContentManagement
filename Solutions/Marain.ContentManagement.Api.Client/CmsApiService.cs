@@ -387,7 +387,7 @@ namespace Marain.Cms.Api.Client
         /// <param name="if_None_Match">The ETag of the last known version.</param>
         /// <returns>Successful operation</returns>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<SwaggerResponse<ContentSummaries>> GetContentHistoryAsync(string tenantId, string slug, double? limit, string continuationToken, string if_None_Match)
+        public System.Threading.Tasks.Task<SwaggerResponse<ContentSummaries>> GetContentHistoryAsync(string tenantId, string slug, int? limit, string continuationToken, string if_None_Match)
         {
             return GetContentHistoryAsync(tenantId, slug, limit, continuationToken, if_None_Match, System.Threading.CancellationToken.None);
         }
@@ -401,7 +401,7 @@ namespace Marain.Cms.Api.Client
         /// <param name="if_None_Match">The ETag of the last known version.</param>
         /// <returns>Successful operation</returns>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<SwaggerResponse<ContentSummaries>> GetContentHistoryAsync(string tenantId, string slug, double? limit, string continuationToken, string if_None_Match, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<SwaggerResponse<ContentSummaries>> GetContentHistoryAsync(string tenantId, string slug, int? limit, string continuationToken, string if_None_Match, System.Threading.CancellationToken cancellationToken)
         {
             if (tenantId == null)
                 throw new System.ArgumentNullException("tenantId");
@@ -723,6 +723,130 @@ namespace Marain.Cms.Api.Client
             }
         }
     
+        /// <summary>Get the state history for the given workflow at the slug with the given ID</summary>
+        /// <param name="tenantId">The tenant within which the request should operate</param>
+        /// <param name="workflowId">The id of the workflow relating to the request</param>
+        /// <param name="slug">The slug for the content</param>
+        /// <param name="limit">The maximum number of items to return in the batch</param>
+        /// <param name="continuationToken">The continuation token for the next batch</param>
+        /// <returns>Successful operation</returns>
+        /// <exception cref="SwaggerException">A server side error occurred.</exception>
+        public System.Threading.Tasks.Task<SwaggerResponse<ContentSummariesWithStateResponse>> GetWorkflowHistoryAsync(string tenantId, string workflowId, string slug, int? limit, string continuationToken)
+        {
+            return GetWorkflowHistoryAsync(tenantId, workflowId, slug, limit, continuationToken, System.Threading.CancellationToken.None);
+        }
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>Get the state history for the given workflow at the slug with the given ID</summary>
+        /// <param name="tenantId">The tenant within which the request should operate</param>
+        /// <param name="workflowId">The id of the workflow relating to the request</param>
+        /// <param name="slug">The slug for the content</param>
+        /// <param name="limit">The maximum number of items to return in the batch</param>
+        /// <param name="continuationToken">The continuation token for the next batch</param>
+        /// <returns>Successful operation</returns>
+        /// <exception cref="SwaggerException">A server side error occurred.</exception>
+        public async System.Threading.Tasks.Task<SwaggerResponse<ContentSummariesWithStateResponse>> GetWorkflowHistoryAsync(string tenantId, string workflowId, string slug, int? limit, string continuationToken, System.Threading.CancellationToken cancellationToken)
+        {
+            if (tenantId == null)
+                throw new System.ArgumentNullException("tenantId");
+    
+            if (workflowId == null)
+                throw new System.ArgumentNullException("workflowId");
+    
+            if (slug == null)
+                throw new System.ArgumentNullException("slug");
+    
+            var urlBuilder_ = new System.Text.StringBuilder();
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/{tenantId}/marain/content/workflow/{workflowId}/history/{slug}?");
+            urlBuilder_.Replace("{tenantId}", System.Uri.EscapeDataString(ConvertToString(tenantId, System.Globalization.CultureInfo.InvariantCulture)));
+            urlBuilder_.Replace("{workflowId}", System.Uri.EscapeDataString(ConvertToString(workflowId, System.Globalization.CultureInfo.InvariantCulture)));
+            urlBuilder_.Replace("{slug}", System.Uri.EscapeDataString(ConvertToString(slug, System.Globalization.CultureInfo.InvariantCulture)));
+            if (limit != null) 
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("limit") + "=").Append(System.Uri.EscapeDataString(ConvertToString(limit, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (continuationToken != null) 
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("continuationToken") + "=").Append(System.Uri.EscapeDataString(ConvertToString(continuationToken, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            urlBuilder_.Length--;
+    
+            var client_ = _httpClient;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+    
+                    PrepareRequest(client_, request_, urlBuilder_);
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    PrepareRequest(client_, request_, url_);
+    
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    try
+                    {
+                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+    
+                        ProcessResponse(client_, response_);
+    
+                        var status_ = ((int)response_.StatusCode).ToString();
+                        if (status_ == "200") 
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ContentSummariesWithStateResponse>(response_, headers_).ConfigureAwait(false);
+                            return new SwaggerResponse<ContentSummariesWithStateResponse>((int)response_.StatusCode, headers_, objectResponse_.Object);
+                        }
+                        else
+                        if (status_ == "304") 
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new SwaggerException("Not modified", (int)response_.StatusCode, responseText_, headers_, null);
+                        }
+                        else
+                        if (status_ == "400") 
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new SwaggerException("Bad request", (int)response_.StatusCode, responseText_, headers_, null);
+                        }
+                        else
+                        if (status_ == "403") 
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new SwaggerException("Forbidden", (int)response_.StatusCode, responseText_, headers_, null);
+                        }
+                        else
+                        if (status_ == "404") 
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new SwaggerException("Not found", (int)response_.StatusCode, responseText_, headers_, null);
+                        }
+                        else
+                        if (status_ != "200" && status_ != "204")
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false); 
+                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
+                        }
+            
+                        return new SwaggerResponse<ContentSummariesWithStateResponse>((int)response_.StatusCode, headers_, default(ContentSummariesWithStateResponse)); 
+                    }
+                    finally
+                    {
+                        if (response_ != null)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+            }
+        }
+    
         /// <summary>Get the state history for the content at the given slug</summary>
         /// <param name="tenantId">The tenant within which the request should operate</param>
         /// <param name="workflowId">The id of the workflow relating to the request</param>
@@ -732,7 +856,7 @@ namespace Marain.Cms.Api.Client
         /// <param name="continuationToken">The continuation token for the next batch</param>
         /// <returns>Successful operation</returns>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<SwaggerResponse<ContentSummariesWithStateResponse>> GetWorkflowStateHistoryAsync(string tenantId, string workflowId, string stateName, string slug, double? limit, string continuationToken)
+        public System.Threading.Tasks.Task<SwaggerResponse<ContentSummariesWithStateResponse>> GetWorkflowStateHistoryAsync(string tenantId, string workflowId, string stateName, string slug, int? limit, string continuationToken)
         {
             return GetWorkflowStateHistoryAsync(tenantId, workflowId, stateName, slug, limit, continuationToken, System.Threading.CancellationToken.None);
         }
@@ -747,7 +871,7 @@ namespace Marain.Cms.Api.Client
         /// <param name="continuationToken">The continuation token for the next batch</param>
         /// <returns>Successful operation</returns>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<SwaggerResponse<ContentSummariesWithStateResponse>> GetWorkflowStateHistoryAsync(string tenantId, string workflowId, string stateName, string slug, double? limit, string continuationToken, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<SwaggerResponse<ContentSummariesWithStateResponse>> GetWorkflowStateHistoryAsync(string tenantId, string workflowId, string stateName, string slug, int? limit, string continuationToken, System.Threading.CancellationToken cancellationToken)
         {
             if (tenantId == null)
                 throw new System.ArgumentNullException("tenantId");

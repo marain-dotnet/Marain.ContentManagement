@@ -46,6 +46,16 @@ namespace Marain.Cms.Api.Services
             public const string Slug = "slug";
 
             /// <summary>
+            /// Current workflow Id.
+            /// </summary>
+            public const string WorkflowId = "workflowId";
+
+            /// <summary>
+            /// Current state name.
+            /// </summary>
+            public const string StateName = "stateName";
+
+            /// <summary>
             /// The requested content Id.
             /// </summary>
             public const string ContentId = "contentId";

@@ -13,6 +13,11 @@ namespace Marain.Cms.Api.Services.Internal
     public class ContentSummariesWithStateMappingContext : ResponseMappingContext
     {
         /// <summary>
+        /// Gets or sets the operation that self/next links should refer to.
+        /// </summary>
+        public string TargetOperationId { get; set; }
+
+        /// <summary>
         /// Gets or sets the slug for which history was being requested.
         /// </summary>
         public string Slug { get; set; }
