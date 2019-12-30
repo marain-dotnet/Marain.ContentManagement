@@ -39,7 +39,7 @@ namespace Marain.Cms.Api.Host
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "put", "delete", Route = "{*path}")]HttpRequest req,
             ExecutionContext executionContext)
         {
-            return this.host.HandleRequestAsync(req, new { ExecutionContext = executionContext });
+            return this.host.HandleRequestAsync(req.Path, req.Method, req, new { ExecutionContext = executionContext });
         }
     }
 }

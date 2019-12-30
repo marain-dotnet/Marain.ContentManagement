@@ -55,7 +55,7 @@ namespace Marain.ContentManagement.Specs.Bindings
                     try
                     {
                         IOpenApiHost<HttpRequest, IActionResult> handler = context.RequestServices.GetRequiredService<IOpenApiHost<HttpRequest, IActionResult>>();
-                        IActionResult result = await handler.HandleRequestAsync(context.Request, context).ConfigureAwait(false);
+                        IActionResult result = await handler.HandleRequestAsync(context.Request.Path, context.Request.Method, context.Request, context).ConfigureAwait(false);
                         var actionContext = new ActionContext(context, context.GetRouteData(), new ActionDescriptor());
                         await result.ExecuteResultAsync(actionContext).ConfigureAwait(false);
                     }

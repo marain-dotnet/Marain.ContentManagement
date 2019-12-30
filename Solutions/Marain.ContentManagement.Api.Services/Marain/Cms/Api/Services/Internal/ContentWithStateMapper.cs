@@ -30,14 +30,14 @@ namespace Marain.Cms.Api.Services.Internal
         /// <inheritdoc/>
         public void ConfigureLinkMap(IOpenApiLinkOperationMap links)
         {
-            links.Map<ContentWithState>("self", WorkflowContentService.GetWorkflowContentOperationId);
+            links.MapByContentTypeAndRelationTypeAndOperationId<ContentWithState>("self", WorkflowContentService.GetWorkflowContentOperationId);
         }
 
         /// <inheritdoc/>
         public HalDocument Map(ContentWithState resource, IOpenApiContext context)
         {
             HalDocument response = this.halDocumentFactory.CreateHalDocumentFrom(resource);
-            response.ResolveAndAdd(
+            response.ResolveAndAddByOwnerAndRelationType(
                 this.linkResolver,
                 resource,
                 "self",

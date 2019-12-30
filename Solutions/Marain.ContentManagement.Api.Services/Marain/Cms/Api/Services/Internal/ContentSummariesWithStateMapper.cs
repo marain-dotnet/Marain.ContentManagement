@@ -38,11 +38,11 @@ namespace Marain.Cms.Api.Services.Internal
         /// <inheritdoc/>
         public void ConfigureLinkMap(IOpenApiLinkOperationMap links)
         {
-            links.Map<ContentSummariesWithState>(Constants.LinkRelations.Self, WorkflowContentHistoryService.GetWorkflowStateHistoryOperationId, WorkflowContentHistoryService.GetWorkflowStateHistoryOperationId);
-            links.Map<ContentSummariesWithState>(Constants.LinkRelations.Next, WorkflowContentHistoryService.GetWorkflowStateHistoryOperationId, WorkflowContentHistoryService.GetWorkflowStateHistoryOperationId);
+            links.MapByContentTypeAndRelationTypeAndContextAndOperationId<ContentSummariesWithState>(Constants.LinkRelations.Self, WorkflowContentHistoryService.GetWorkflowStateHistoryOperationId, WorkflowContentHistoryService.GetWorkflowStateHistoryOperationId);
+            links.MapByContentTypeAndRelationTypeAndContextAndOperationId<ContentSummariesWithState>(Constants.LinkRelations.Next, WorkflowContentHistoryService.GetWorkflowStateHistoryOperationId, WorkflowContentHistoryService.GetWorkflowStateHistoryOperationId);
 
-            links.Map<ContentSummariesWithState>(Constants.LinkRelations.Self, WorkflowContentHistoryService.GetWorkflowHistoryOperationId, WorkflowContentHistoryService.GetWorkflowHistoryOperationId);
-            links.Map<ContentSummariesWithState>(Constants.LinkRelations.Next, WorkflowContentHistoryService.GetWorkflowHistoryOperationId, WorkflowContentHistoryService.GetWorkflowHistoryOperationId);
+            links.MapByContentTypeAndRelationTypeAndContextAndOperationId<ContentSummariesWithState>(Constants.LinkRelations.Self, WorkflowContentHistoryService.GetWorkflowHistoryOperationId, WorkflowContentHistoryService.GetWorkflowHistoryOperationId);
+            links.MapByContentTypeAndRelationTypeAndContextAndOperationId<ContentSummariesWithState>(Constants.LinkRelations.Next, WorkflowContentHistoryService.GetWorkflowHistoryOperationId, WorkflowContentHistoryService.GetWorkflowHistoryOperationId);
         }
 
         /// <inheritdoc/>
@@ -51,11 +51,11 @@ namespace Marain.Cms.Api.Services.Internal
             IEnumerable<HalDocument> mappedSummaries = resource.Summaries.Select(x => this.contentSummaryWithStateMapper.Map(x, context));
             HalDocument response = this.halDocumentFactory.CreateHalDocumentFrom(new { Summaries = mappedSummaries.ToArray() });
 
-            response.ResolveAndAdd(
+            response.ResolveAndAddByOwnerAndRelationTypeAndContext(
                 this.linkResolver,
                 resource,
-                context.TargetOperationId,
                 Constants.LinkRelations.Self,
+                context.TargetOperationId,
                 (Constants.ParameterNames.TenantId, context.TenantId),
                 (Constants.ParameterNames.Slug, context.Slug),
                 (Constants.ParameterNames.WorkflowId, context.WorkflowId),
@@ -65,11 +65,11 @@ namespace Marain.Cms.Api.Services.Internal
 
             if (!string.IsNullOrEmpty(resource.ContinuationToken))
             {
-                response.ResolveAndAdd(
+                response.ResolveAndAddByOwnerAndRelationTypeAndContext(
                     this.linkResolver,
                     resource,
-                    context.TargetOperationId,
                     Constants.LinkRelations.Next,
+                    context.TargetOperationId,
                     (Constants.ParameterNames.TenantId, context.TenantId),
                     (Constants.ParameterNames.Slug, context.Slug),
                     (Constants.ParameterNames.WorkflowId, context.WorkflowId),

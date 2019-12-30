@@ -30,7 +30,7 @@ namespace Marain.Cms.Api.Services.Internal
         /// <inheritdoc/>
         public void ConfigureLinkMap(IOpenApiLinkOperationMap links)
         {
-            links.Map<ContentSummaryWithState>("content", ContentService.GetContentOperationId);
+            links.MapByContentTypeAndRelationTypeAndOperationId<ContentSummaryWithState>("content", ContentService.GetContentOperationId);
         }
 
         /// <inheritdoc/>
@@ -46,7 +46,7 @@ namespace Marain.Cms.Api.Services.Internal
             ////    (Constants.ParameterNames.Slug, resource.Slug),
             ////    (Constants.ParameterNames.ContentId, resource.Id));
 
-            response.ResolveAndAdd(
+            response.ResolveAndAddByOwnerAndRelationType(
                 this.linkResolver,
                 resource,
                 "content",

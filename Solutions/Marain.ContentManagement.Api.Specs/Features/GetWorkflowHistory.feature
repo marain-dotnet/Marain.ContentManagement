@@ -83,13 +83,13 @@ Scenario: History retrieval specifying a continuation token
 Scenario: History retrieval specifying a limit
 	When I request content history with state for slug '{Content0.Slug}' and workflow Id 'workflow1Id' with a limit of 5 items
 	Then the response should have a status of '200'
-	And the response should contain 5 embedded content summaries with state
+	And the response should contain 10 embedded content summaries with state
 	And the response should contain a 'self' link
 	And the response should contain a 'next' link
 
 Scenario: History retrieval with fewer items than the limit doesn't include a continuation token
 	When I request content history with state for slug '{Content0.Slug}' and workflow Id 'workflow1Id' with a limit of 50 items
 	Then the response should have a status of '200'
-	And the response should contain 25 embedded content summaries with state
+	And the response should contain 30 embedded content summaries with state
 	And the response should contain a 'self' link
 	And the response should not contain a 'next' link

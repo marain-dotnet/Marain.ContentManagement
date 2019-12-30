@@ -30,8 +30,8 @@ namespace Marain.Cms.Api.Services.Internal
         /// <inheritdoc/>
         public void ConfigureLinkMap(IOpenApiLinkOperationMap links)
         {
-            links.Map<ContentSummary>(Constants.LinkRelations.Self, ContentSummaryService.GetContentSummaryOperationId);
-            links.Map<ContentSummary>("content", ContentService.GetContentOperationId);
+            links.MapByContentTypeAndRelationTypeAndOperationId<ContentSummary>(Constants.LinkRelations.Self, ContentSummaryService.GetContentSummaryOperationId);
+            links.MapByContentTypeAndRelationTypeAndOperationId<ContentSummary>("content", ContentService.GetContentOperationId);
         }
 
         /// <inheritdoc/>
@@ -39,7 +39,7 @@ namespace Marain.Cms.Api.Services.Internal
         {
             HalDocument response = this.halDocumentFactory.CreateHalDocumentFrom(resource);
 
-            response.ResolveAndAdd(
+            response.ResolveAndAddByOwnerAndRelationType(
                 this.linkResolver,
                 resource,
                 Constants.LinkRelations.Self,
@@ -47,7 +47,7 @@ namespace Marain.Cms.Api.Services.Internal
                 (Constants.ParameterNames.Slug, resource.Slug),
                 (Constants.ParameterNames.ContentId, resource.Id));
 
-            response.ResolveAndAdd(
+            response.ResolveAndAddByOwnerAndRelationType(
                 this.linkResolver,
                 resource,
                 "content",

@@ -30,9 +30,9 @@ namespace Marain.Cms.Api.Services.Internal
         /// <inheritdoc/>
         public void ConfigureLinkMap(IOpenApiLinkOperationMap links)
         {
-            links.Map<ContentState>(Constants.LinkRelations.Self, WorkflowContentService.GetWorkflowContentOperationId);
-            links.Map<ContentState>("content", ContentService.GetContentOperationId);
-            links.Map<ContentState>("content-with-state", WorkflowContentService.GetWorkflowContentOperationId);
+            links.MapByContentTypeAndRelationTypeAndOperationId<ContentState>(Constants.LinkRelations.Self, WorkflowContentService.GetWorkflowContentOperationId);
+            links.MapByContentTypeAndRelationTypeAndOperationId<ContentState>("content", ContentService.GetContentOperationId);
+            links.MapByContentTypeAndRelationTypeAndOperationId<ContentState>("content-with-state", WorkflowContentService.GetWorkflowContentOperationId);
         }
 
         /// <inheritdoc/>
@@ -40,7 +40,7 @@ namespace Marain.Cms.Api.Services.Internal
         {
             HalDocument response = this.halDocumentFactory.CreateHalDocumentFrom(resource);
 
-            response.ResolveAndAdd(
+            response.ResolveAndAddByOwnerAndRelationType(
                 this.linkResolver,
                 resource,
                 Constants.LinkRelations.Self,
@@ -48,7 +48,7 @@ namespace Marain.Cms.Api.Services.Internal
                 (Constants.ParameterNames.Slug, resource.Slug),
                 (Constants.ParameterNames.ContentId, resource.Id));
 
-            response.ResolveAndAdd(
+            response.ResolveAndAddByOwnerAndRelationType(
                 this.linkResolver,
                 resource,
                 "content",
@@ -56,7 +56,7 @@ namespace Marain.Cms.Api.Services.Internal
                 (Constants.ParameterNames.Slug, resource.Slug),
                 (Constants.ParameterNames.ContentId, resource.Id));
 
-            response.ResolveAndAdd(
+            response.ResolveAndAddByOwnerAndRelationType(
                 this.linkResolver,
                 resource,
                 "content-with-state",
