@@ -46,7 +46,7 @@ namespace Marain.ContentManagement.Specs.Bindings
         {
             IWebHostBuilder builder = WebHost.CreateDefaultBuilder();
             builder.UseUrls(BaseUrl);
-            builder.UseStartup<FunctionStartup<Startup>>();
+            builder.UseStartup<SelfHostedOpenApiFunctionStartup<Startup>>();
             IWebHost host = builder.Build();
 
             await host.StartAsync().ConfigureAwait(false);

@@ -1,4 +1,4 @@
-﻿// <copyright file="FunctionStartup.cs" company="Endjin Limited">
+﻿// <copyright file="SelfHostedOpenApiFunctionStartup.cs" company="Endjin Limited">
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
@@ -23,7 +23,7 @@ namespace Marain.ContentManagement.Specs.Bindings
     /// <typeparam name="TWebJobStartup">
     /// The type of the Startup class to use to configure the <see cref="IServiceCollection"/>.
     /// </typeparam>
-    public class FunctionStartup<TWebJobStartup>
+    public class SelfHostedOpenApiFunctionStartup<TWebJobStartup>
         where TWebJobStartup : IWebJobsStartup, new()
     {
         /// <summary>
