@@ -28,12 +28,6 @@ namespace Marain.Cms.Api.Services
         /// </summary>
         public const string GetContentOperationId = "getContent";
 
-        /// <summary>
-        /// Uri template passed to <c>OpenApiClaimsServiceCollectionExtensions.AddRoleBasedOpenApiAccessControlWithPreemptiveExemptions</c>
-        /// to distinguish between rules defining access control policy for the ContentManagement service vs those for other services.
-        /// </summary>
-        public const string ContentManagementResourceTemplate = "{tenantId}/marain/content/";
-
         private readonly ITenantedContentStoreFactory contentStoreFactory;
         private readonly ContentResponseMapper contentMapper;
 
