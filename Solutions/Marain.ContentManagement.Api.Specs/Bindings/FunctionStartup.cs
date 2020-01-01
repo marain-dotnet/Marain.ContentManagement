@@ -44,10 +44,7 @@ namespace Marain.ContentManagement.Specs.Bindings
         /// Configures the function host, adding a catch-all route that then hands off to Menes to process the request.
         /// </summary>
         /// <param name="app">The <see cref="IApplicationBuilder"/> to configure.</param>
-        /// <param name="_">The <see cref="IHostingEnvironment"/> being configured (unused).</param>
-#pragma warning disable SA1313 // Parameter names should begin with lower-case letter
-        public void Configure(IApplicationBuilder app, IHostingEnvironment _)
-#pragma warning restore SA1313 // Parameter names should begin with lower-case letter
+        public void Configure(IApplicationBuilder app)
         {
             var openApiRouteHandler = new RouteHandler(
                 async context =>
