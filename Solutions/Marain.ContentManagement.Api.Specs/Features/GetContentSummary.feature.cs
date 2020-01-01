@@ -122,7 +122,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "{newguid}",
                         "This is the title",
                         "A description of the content",
-                        "fr-FR",
+                        "en-GB",
                         "This is the fragment of text"});
 #line 11
  testRunner.Given("a content item has been created", ((string)(null)), table18, "Given ");
@@ -173,7 +173,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "{newguid}",
                         "This is the title",
                         "A description of the content",
-                        "fr-FR",
+                        "en-GB",
                         "This is the fragment of text"});
 #line 21
  testRunner.Given("a content item has been created", ((string)(null)), table19, "Given ");
@@ -224,7 +224,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "{newguid}",
                         "This is the title",
                         "A description of the content",
-                        "fr-FR",
+                        "en-GB",
                         "This is the fragment of text"});
 #line 30
  testRunner.Given("a content item has been created", ((string)(null)), table20, "Given ");

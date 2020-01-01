@@ -99,7 +99,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "{newguid}",
                         "This is the title",
                         "A description of the content",
-                        "fr-FR",
+                        "en-GB",
                         "This is the fragment of text"});
             table28.AddRow(new string[] {
                         "Content1",
@@ -111,7 +111,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "{newguid}",
                         "This is the title",
                         "A description of the content",
-                        "fr-FR",
+                        "en-GB",
                         "This is the fragment of text"});
             table28.AddRow(new string[] {
                         "Content2",
@@ -123,7 +123,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "{newguid}",
                         "This is the title",
                         "A description of the content",
-                        "fr-FR",
+                        "en-GB",
                         "This is the fragment of text"});
             table28.AddRow(new string[] {
                         "Content3",
@@ -135,7 +135,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "{newguid}",
                         "This is the title",
                         "A description of the content",
-                        "fr-FR",
+                        "en-GB",
                         "This is the fragment of text"});
             table28.AddRow(new string[] {
                         "Content4",
@@ -147,7 +147,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "{newguid}",
                         "This is the title",
                         "A description of the content",
-                        "fr-FR",
+                        "en-GB",
                         "This is the fragment of text"});
             table28.AddRow(new string[] {
                         "Content5",
@@ -159,7 +159,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "{newguid}",
                         "This is the title",
                         "A description of the content",
-                        "fr-FR",
+                        "en-GB",
                         "This is the fragment of text"});
             table28.AddRow(new string[] {
                         "Content6",
@@ -171,7 +171,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "{newguid}",
                         "This is the title",
                         "A description of the content",
-                        "fr-FR",
+                        "en-GB",
                         "This is the fragment of text"});
             table28.AddRow(new string[] {
                         "Content7",
@@ -183,7 +183,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "{newguid}",
                         "This is the title",
                         "A description of the content",
-                        "fr-FR",
+                        "en-GB",
                         "This is the fragment of text"});
             table28.AddRow(new string[] {
                         "Content8",
@@ -195,7 +195,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "{newguid}",
                         "This is the title",
                         "A description of the content",
-                        "fr-FR",
+                        "en-GB",
                         "This is the fragment of text"});
             table28.AddRow(new string[] {
                         "Content9",
@@ -207,7 +207,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "{newguid}",
                         "This is the title",
                         "A description of the content",
-                        "fr-FR",
+                        "en-GB",
                         "This is the fragment of text"});
             table28.AddRow(new string[] {
                         "Content10",
@@ -219,7 +219,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "{newguid}",
                         "This is the title",
                         "A description of the content",
-                        "fr-FR",
+                        "en-GB",
                         "This is the fragment of text"});
             table28.AddRow(new string[] {
                         "Content11",
@@ -231,7 +231,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "{newguid}",
                         "This is the title",
                         "A description of the content",
-                        "fr-FR",
+                        "en-GB",
                         "This is the fragment of text"});
             table28.AddRow(new string[] {
                         "Content12",
@@ -243,7 +243,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "{newguid}",
                         "This is the title",
                         "A description of the content",
-                        "fr-FR",
+                        "en-GB",
                         "This is the fragment of text"});
             table28.AddRow(new string[] {
                         "Content13",
@@ -255,7 +255,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "{newguid}",
                         "This is the title",
                         "A description of the content",
-                        "fr-FR",
+                        "en-GB",
                         "This is the fragment of text"});
             table28.AddRow(new string[] {
                         "Content14",
@@ -267,7 +267,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "{newguid}",
                         "This is the title",
                         "A description of the content",
-                        "fr-FR",
+                        "en-GB",
                         "This is the fragment of text"});
             table28.AddRow(new string[] {
                         "Content15",
@@ -279,7 +279,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "{newguid}",
                         "This is the title",
                         "A description of the content",
-                        "fr-FR",
+                        "en-GB",
                         "This is the fragment of text"});
             table28.AddRow(new string[] {
                         "Content16",
@@ -291,7 +291,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "{newguid}",
                         "This is the title",
                         "A description of the content",
-                        "fr-FR",
+                        "en-GB",
                         "This is the fragment of text"});
             table28.AddRow(new string[] {
                         "Content17",
@@ -303,7 +303,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "{newguid}",
                         "This is the title",
                         "A description of the content",
-                        "fr-FR",
+                        "en-GB",
                         "This is the fragment of text"});
             table28.AddRow(new string[] {
                         "Content18",
@@ -315,7 +315,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "{newguid}",
                         "This is the title",
                         "A description of the content",
-                        "fr-FR",
+                        "en-GB",
                         "This is the fragment of text"});
             table28.AddRow(new string[] {
                         "Content19",
@@ -327,7 +327,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "{newguid}",
                         "This is the title",
                         "A description of the content",
-                        "fr-FR",
+                        "en-GB",
                         "This is the fragment of text"});
             table28.AddRow(new string[] {
                         "Content20",
@@ -339,7 +339,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "{newguid}",
                         "This is the title",
                         "A description of the content",
-                        "fr-FR",
+                        "en-GB",
                         "This is the fragment of text"});
             table28.AddRow(new string[] {
                         "Content21",
@@ -351,7 +351,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "{newguid}",
                         "This is the title",
                         "A description of the content",
-                        "fr-FR",
+                        "en-GB",
                         "This is the fragment of text"});
             table28.AddRow(new string[] {
                         "Content22",
@@ -363,7 +363,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "{newguid}",
                         "This is the title",
                         "A description of the content",
-                        "fr-FR",
+                        "en-GB",
                         "This is the fragment of text"});
             table28.AddRow(new string[] {
                         "Content23",
@@ -375,7 +375,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "{newguid}",
                         "This is the title",
                         "A description of the content",
-                        "fr-FR",
+                        "en-GB",
                         "This is the fragment of text"});
             table28.AddRow(new string[] {
                         "Content24",
@@ -387,7 +387,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "{newguid}",
                         "This is the title",
                         "A description of the content",
-                        "fr-FR",
+                        "en-GB",
                         "This is the fragment of text"});
             table28.AddRow(new string[] {
                         "Content25",
@@ -399,7 +399,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "{newguid}",
                         "This is the title",
                         "A description of the content",
-                        "fr-FR",
+                        "en-GB",
                         "This is the fragment of text"});
             table28.AddRow(new string[] {
                         "Content26",
@@ -411,7 +411,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "{newguid}",
                         "This is the title",
                         "A description of the content",
-                        "fr-FR",
+                        "en-GB",
                         "This is the fragment of text"});
             table28.AddRow(new string[] {
                         "Content27",
@@ -423,7 +423,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "{newguid}",
                         "This is the title",
                         "A description of the content",
-                        "fr-FR",
+                        "en-GB",
                         "This is the fragment of text"});
             table28.AddRow(new string[] {
                         "Content28",
@@ -435,7 +435,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "{newguid}",
                         "This is the title",
                         "A description of the content",
-                        "fr-FR",
+                        "en-GB",
                         "This is the fragment of text"});
             table28.AddRow(new string[] {
                         "Content29",
@@ -447,7 +447,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "{newguid}",
                         "This is the title",
                         "A description of the content",
-                        "fr-FR",
+                        "en-GB",
                         "This is the fragment of text"});
 #line 6
  testRunner.Given("content items have been created", ((string)(null)), table28, "Given ");
