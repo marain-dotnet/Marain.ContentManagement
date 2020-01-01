@@ -4,15 +4,13 @@
 
 namespace Marain.ContentManagement.Specs.Bindings
 {
-    using System;
     using System.Net.Http;
     using System.Threading.Tasks;
     using Corvus.SpecFlow.Extensions;
     using Marain.Cms.Api.Client;
     using Marain.Cms.Api.Host;
+    using Marain.ContentManagement.Specs.Bindings.SelfHostedOpenApiFunctionManagement;
     using Marain.ContentManagement.Specs.Helpers;
-    using Microsoft.AspNetCore;
-    using Microsoft.AspNetCore.Hosting;
     using TechTalk.SpecFlow;
 
     /// <summary>
@@ -36,22 +34,13 @@ namespace Marain.ContentManagement.Specs.Bindings
         /// <param name="context">The current <see cref="ScenarioContext"/>.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         /// <remarks>
-        /// This method is set to run first so that subsequent <see cref="BeforeScenarioAttribute"/> methods are able to
-        /// access the <see cref="ServiceProvider"/> created as a result.
         /// As part of the initialisation, an <see cref="HttpClient"/> will be created and stored in
         /// the <see cref="ScenarioContext"/>.
         /// </remarks>
-        [BeforeScenario("useContentManagementApi", Order = 0)]
+        [BeforeScenario("useContentManagementApi", Order = ContainerBeforeScenarioOrder.ServiceProviderAvailable)]
         public static async Task StartContentManagementFunction(ScenarioContext context)
         {
-            IWebHostBuilder builder = WebHost.CreateDefaultBuilder();
-            builder.UseUrls(BaseUrl);
-            builder.UseStartup<SelfHostedOpenApiFunctionStartup<Startup>>();
-            IWebHost host = builder.Build();
-
-            await host.StartAsync().ConfigureAwait(false);
-
-            context.Set(host);
+            await OpenApiWebHostManager.GetInstance(context).StartFunctionAsync<Startup>(BaseUrl).ConfigureAwait(false);
 
             // Create a client for the test
             var httpClient = new HttpClient();
@@ -69,15 +58,12 @@ namespace Marain.ContentManagement.Specs.Bindings
         /// </summary>
         /// <param name="context">The current <see cref="ScenarioContext"/>.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        /// <remarks>This tears down the service provider too, so needs to happen last.</remarks>
-        [AfterScenario("useContentManagementApi", Order = int.MaxValue)]
+        [AfterScenario("useContentManagementApi")]
         public static Task StopContentManagementFunction(ScenarioContext context)
         {
             return context.RunAndStoreExceptionsAsync(async () =>
             {
-                IWebHost host = context.Get<IWebHost>();
-                await host.StopAsync().ConfigureAwait(false);
-                host.Dispose();
+                await OpenApiWebHostManager.GetInstance(context).StopAllFunctionsAsync().ConfigureAwait(false);
 
                 HttpClient httpClient = context.Get<HttpClient>();
                 httpClient.Dispose();
@@ -85,25 +71,15 @@ namespace Marain.ContentManagement.Specs.Bindings
         }
 
         /// <summary>
-        /// Helper method to access the current <see cref="ServiceProvider"/>.
+        /// Helper method to access the current <see cref="GetContentClient"/>.
         /// </summary>
         /// <param name="context">The current <see cref="ScenarioContext"/>.</param>
-        /// <returns>The current configured <see cref="IServiceProvider"/>.</returns>
-        public static IServiceProvider ServiceProvider(this ScenarioContext context)
-        {
-            return context.Get<IWebHost>().Services;
-        }
-
-        /// <summary>
-        /// Helper method to access the current <see cref="ContentClient"/>.
-        /// </summary>
-        /// <param name="context">The current <see cref="ScenarioContext"/>.</param>
-        /// <returns>The current <see cref="ContentClient"/>.</returns>
+        /// <returns>The current <see cref="GetContentClient"/>.</returns>
         /// <remarks>
         /// There are further extension methods for <c>ScenarioContext</c> in the <see cref="ScenarioContextApiCallExtensions"/>
         /// class that make it simpler to work with API responses.
         /// </remarks>
-        public static ContentClient ContentClient(this ScenarioContext context)
+        public static ContentClient GetContentClient(this ScenarioContext context)
         {
             return context.Get<ContentClient>();
         }

@@ -5,6 +5,7 @@
 namespace Marain.ContentManagement.Specs.Steps
 {
     using System.Threading.Tasks;
+    using Corvus.SpecFlow.Extensions;
     using Marain.Cms;
     using Marain.ContentManagement.Specs.Bindings;
     using Marain.ContentManagement.Specs.Drivers;
@@ -33,7 +34,7 @@ namespace Marain.ContentManagement.Specs.Steps
         [Given("content items have been created")]
         public async Task GivenAContentItemHasBeenCreated(Table table)
         {
-            ITenantedContentStoreFactory contentStoreFactory = this.scenarioContext.ServiceProvider().GetRequiredService<ITenantedContentStoreFactory>();
+            ITenantedContentStoreFactory contentStoreFactory = ContainerBindings.GetServiceProvider(this.scenarioContext).GetRequiredService<ITenantedContentStoreFactory>();
             IContentStore store = await contentStoreFactory.GetContentStoreForTenantAsync(this.scenarioContext.GetCurrentTenantId()).ConfigureAwait(false);
 
             foreach (TableRow row in table.Rows)
@@ -58,7 +59,7 @@ namespace Marain.ContentManagement.Specs.Steps
         [Given("workflow states have been set for the content items")]
         public async Task GivenAWorkflowStateHasBeenSetForTheContentItem(Table table)
         {
-            ITenantedContentStoreFactory contentStoreFactory = this.scenarioContext.ServiceProvider().GetRequiredService<ITenantedContentStoreFactory>();
+            ITenantedContentStoreFactory contentStoreFactory = ContainerBindings.GetServiceProvider(this.scenarioContext).GetRequiredService<ITenantedContentStoreFactory>();
             IContentStore store = await contentStoreFactory.GetContentStoreForTenantAsync(this.scenarioContext.GetCurrentTenantId()).ConfigureAwait(false);
 
             foreach (TableRow row in table.Rows)

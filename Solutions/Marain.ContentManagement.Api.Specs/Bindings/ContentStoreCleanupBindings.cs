@@ -40,7 +40,7 @@ namespace Marain.ContentManagement.Specs.Bindings
 
                 if (currentTenant != null)
                 {
-                    IServiceProvider serviceProvider = context.ServiceProvider();
+                    IServiceProvider serviceProvider = ContainerBindings.GetServiceProvider(context);
                     ITenantCosmosContainerFactory containerFactory = serviceProvider.GetRequiredService<ITenantCosmosContainerFactory>();
                     CosmosContainerDefinition containerDefinition = serviceProvider.GetRequiredService<CosmosContainerDefinition>();
                     Container container = await containerFactory.GetContainerForTenantAsync(currentTenant, containerDefinition).ConfigureAwait(false);

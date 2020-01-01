@@ -19,6 +19,7 @@ namespace Marain.ContentManagement.Specs.Features
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
     [NUnit.Framework.DescriptionAttribute("GetContentWithState")]
+    [NUnit.Framework.CategoryAttribute("perScenarioContainer")]
     [NUnit.Framework.CategoryAttribute("useTransientTenant")]
     [NUnit.Framework.CategoryAttribute("useContentManagementApi")]
     public partial class GetContentWithStateFeature
@@ -34,6 +35,7 @@ namespace Marain.ContentManagement.Specs.Features
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
             TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "GetContentWithState", null, ProgrammingLanguage.CSharp, new string[] {
+                        "perScenarioContainer",
                         "useTransientTenant",
                         "useContentManagementApi"});
             testRunner.OnFeatureStart(featureInfo);
@@ -78,7 +80,7 @@ namespace Marain.ContentManagement.Specs.Features
         public virtual void RequestingAnItemBySlugAndWorkflowIdReturnsTheItem()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting an item by slug and workflow Id returns the item", null, ((string[])(null)));
-#line 5
+#line 6
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -106,7 +108,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-#line 6
+#line 7
  testRunner.Given("a content item has been created", ((string)(null)), table21, "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table22 = new TechTalk.SpecFlow.Table(new string[] {
@@ -127,14 +129,14 @@ this.ScenarioInitialize(scenarioInfo);
                         "retired",
                         "Frodo Baggins",
                         "{newguid}"});
-#line 9
+#line 10
  testRunner.And("a workflow state has been set for the content item", ((string)(null)), table22, "And ");
-#line 12
+#line 13
  testRunner.When("I request the content with its state for slug \'{Expected.Slug}\' and workflow Id \'" +
                     "{Expected-State.WorkflowId}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 13
- testRunner.Then("the response should have a status of \'200\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 14
+ testRunner.Then("the response should have a status of \'200\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 15
  testRunner.And("the response body should contain content and state matching content \'Expected\' an" +
                     "d state \'Expected-State\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
@@ -146,15 +148,15 @@ this.ScenarioInitialize(scenarioInfo);
         public virtual void RequestingAnItemWhenTheContentItemDoesNotExistReturnsA404NotFound()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting an item when the content item does not exist returns a 404 Not Found", null, ((string[])(null)));
-#line 16
+#line 17
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 17
- testRunner.Given("there is no content available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 18
+ testRunner.Given("there is no content available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 19
  testRunner.When("I request the content with its state for slug \'myslug/\' and workflow Id \'myworkfl" +
                     "owid\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 19
+#line 20
  testRunner.Then("the response should have a status of \'404\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -167,7 +169,7 @@ this.ScenarioInitialize(scenarioInfo);
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting an item when the content item exists but there is no corresponding con" +
                     "tent state returns a 404 Not Found", null, ((string[])(null)));
-#line 21
+#line 22
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -195,12 +197,12 @@ this.ScenarioInitialize(scenarioInfo);
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-#line 22
+#line 23
  testRunner.Given("a content item has been created", ((string)(null)), table23, "Given ");
-#line 25
+#line 26
  testRunner.When("I request the content with its state for slug \'{Expected.Slug}\' and workflow Id \'" +
                     "{newguid}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 26
+#line 27
  testRunner.Then("the response should have a status of \'404\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -213,7 +215,7 @@ this.ScenarioInitialize(scenarioInfo);
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting an item with a valid slug but invalid workflow Id returns a 404 Not Fo" +
                     "und", null, ((string[])(null)));
-#line 28
+#line 29
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -241,7 +243,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-#line 29
+#line 30
  testRunner.Given("a content item has been created", ((string)(null)), table24, "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table25 = new TechTalk.SpecFlow.Table(new string[] {
@@ -262,12 +264,12 @@ this.ScenarioInitialize(scenarioInfo);
                         "retired",
                         "Frodo Baggins",
                         "{newguid}"});
-#line 32
+#line 33
  testRunner.And("a workflow state has been set for the content item", ((string)(null)), table25, "And ");
-#line 35
+#line 36
  testRunner.When("I request the content with its state for slug \'{Expected.Slug}\' and workflow Id \'" +
                     "{newguid}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 36
+#line 37
  testRunner.Then("the response should have a status of \'404\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -280,7 +282,7 @@ this.ScenarioInitialize(scenarioInfo);
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting an item with an invalid slug and a valid workflow Id returns a 404 Not" +
                     " Found", null, ((string[])(null)));
-#line 38
+#line 39
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -308,7 +310,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-#line 39
+#line 40
  testRunner.Given("a content item has been created", ((string)(null)), table26, "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table27 = new TechTalk.SpecFlow.Table(new string[] {
@@ -329,12 +331,12 @@ this.ScenarioInitialize(scenarioInfo);
                         "retired",
                         "Frodo Baggins",
                         "{newguid}"});
-#line 42
+#line 43
  testRunner.And("a workflow state has been set for the content item", ((string)(null)), table27, "And ");
-#line 45
+#line 46
  testRunner.When("I request the content with its state for slug \'myotherslug\' and workflow Id \'{Exp" +
                     "ected-State.WorkflowId}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 46
+#line 47
  testRunner.Then("the response should have a status of \'404\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

@@ -1,4 +1,5 @@
-﻿@useTransientTenant
+﻿@perScenarioContainer
+@useTransientTenant
 @useContentManagementApi
 Feature: GetContentWithState
 

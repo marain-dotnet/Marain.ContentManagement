@@ -9,7 +9,6 @@ namespace Marain.ContentManagement.Specs.Steps
 
     using System.Linq;
     using Marain.Cms.Api.Client;
-    using Marain.ContentManagement.Specs.Bindings;
     using Marain.ContentManagement.Specs.Drivers;
     using Marain.ContentManagement.Specs.Helpers;
     using NUnit.Framework;

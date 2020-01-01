@@ -2,7 +2,7 @@
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
-namespace Marain.ContentManagement.Specs.Bindings
+namespace Marain.ContentManagement.Specs.Bindings.SelfHostedOpenApiFunctionManagement
 {
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Azure.WebJobs;
@@ -14,7 +14,7 @@ namespace Marain.ContentManagement.Specs.Bindings
     /// the <see cref="IWebHostBuilder"/> startup class to be passed through to the <see cref="IWebJobsStartup"/> for the
     /// function being hosted.
     /// </summary>
-    public class WebJobBuilder : IWebJobsBuilder
+    internal class WebJobBuilder : IWebJobsBuilder
     {
         /// <summary>
         /// Creates a new instance of the <see cref="WebJobBuilder"/> class.

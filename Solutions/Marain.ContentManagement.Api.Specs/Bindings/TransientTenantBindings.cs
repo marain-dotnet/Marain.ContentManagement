@@ -28,11 +28,11 @@ namespace Marain.ContentManagement.Specs.Bindings
         /// The newly created tenant is added to the <see cref="ScenarioContext"/>. Access it via the helper methods
         /// <see cref="GetTransientTenant(ScenarioContext)"/> or <see cref="GetCurrentTenantId(ScenarioContext)"/>.
         /// </remarks>
-        [BeforeScenario("useTransientTenant", Order = 10)]
+        [BeforeScenario("useTransientTenant", Order = ContainerBeforeScenarioOrder.ServiceProviderAvailable)]
         public static async Task SetupTransientTenant(ScenarioContext context)
         {
             // This needs to run after the ServiceProvider has been constructed
-            IServiceProvider provider = context.ServiceProvider();
+            IServiceProvider provider = ContainerBindings.GetServiceProvider(context);
             ITenantProvider tenantProvider = provider.GetRequiredService<ITenantProvider>();
 
             // In order to ensure the Cosmos aspects of the Tenancy setup are fully configured, we need to resolve
@@ -63,7 +63,7 @@ namespace Marain.ContentManagement.Specs.Bindings
         {
             return context.RunAndStoreExceptionsAsync(() =>
             {
-                IServiceProvider provider = context.ServiceProvider();
+                IServiceProvider provider = ContainerBindings.GetServiceProvider(context);
                 ITenantProvider tenantProvider = provider.GetRequiredService<ITenantProvider>();
 
                 ITenant tenant = context.Get<ITenant>();
