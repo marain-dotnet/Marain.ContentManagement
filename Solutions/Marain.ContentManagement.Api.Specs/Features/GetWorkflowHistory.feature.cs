@@ -79,7 +79,7 @@ namespace Marain.ContentManagement.Specs.Features
         {
 #line 6
 #line hidden
-            TechTalk.SpecFlow.Table table28 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table33 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name",
                         "Id",
                         "Slug",
@@ -91,7 +91,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "Description",
                         "Culture",
                         "Fragment"});
-            table28.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "Content0",
                         "{newguid}",
                         "slug1",
@@ -103,7 +103,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-            table28.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "Content1",
                         "{newguid}",
                         "slug1",
@@ -115,7 +115,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-            table28.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "Content2",
                         "{newguid}",
                         "slug1",
@@ -127,7 +127,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-            table28.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "Content3",
                         "{newguid}",
                         "slug1",
@@ -139,7 +139,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-            table28.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "Content4",
                         "{newguid}",
                         "slug1",
@@ -151,7 +151,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-            table28.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "Content5",
                         "{newguid}",
                         "slug1",
@@ -163,7 +163,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-            table28.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "Content6",
                         "{newguid}",
                         "slug1",
@@ -175,7 +175,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-            table28.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "Content7",
                         "{newguid}",
                         "slug1",
@@ -187,7 +187,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-            table28.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "Content8",
                         "{newguid}",
                         "slug1",
@@ -199,7 +199,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-            table28.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "Content9",
                         "{newguid}",
                         "slug1",
@@ -211,7 +211,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-            table28.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "Content10",
                         "{newguid}",
                         "slug1",
@@ -223,7 +223,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-            table28.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "Content11",
                         "{newguid}",
                         "slug1",
@@ -235,7 +235,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-            table28.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "Content12",
                         "{newguid}",
                         "slug1",
@@ -247,7 +247,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-            table28.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "Content13",
                         "{newguid}",
                         "slug1",
@@ -259,7 +259,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-            table28.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "Content14",
                         "{newguid}",
                         "slug1",
@@ -271,7 +271,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-            table28.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "Content15",
                         "{newguid}",
                         "slug1",
@@ -283,7 +283,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-            table28.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "Content16",
                         "{newguid}",
                         "slug1",
@@ -295,7 +295,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-            table28.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "Content17",
                         "{newguid}",
                         "slug1",
@@ -307,7 +307,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-            table28.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "Content18",
                         "{newguid}",
                         "slug1",
@@ -319,7 +319,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-            table28.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "Content19",
                         "{newguid}",
                         "slug1",
@@ -331,7 +331,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-            table28.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "Content20",
                         "{newguid}",
                         "slug1",
@@ -343,7 +343,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-            table28.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "Content21",
                         "{newguid}",
                         "slug1",
@@ -355,7 +355,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-            table28.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "Content22",
                         "{newguid}",
                         "slug1",
@@ -367,7 +367,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-            table28.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "Content23",
                         "{newguid}",
                         "slug1",
@@ -379,7 +379,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-            table28.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "Content24",
                         "{newguid}",
                         "slug1",
@@ -391,7 +391,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-            table28.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "Content25",
                         "{newguid}",
                         "slug1",
@@ -403,7 +403,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-            table28.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "Content26",
                         "{newguid}",
                         "slug1",
@@ -415,7 +415,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-            table28.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "Content27",
                         "{newguid}",
                         "slug1",
@@ -427,7 +427,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-            table28.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "Content28",
                         "{newguid}",
                         "slug1",
@@ -439,7 +439,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-            table28.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "Content29",
                         "{newguid}",
                         "slug1",
@@ -452,9 +452,9 @@ namespace Marain.ContentManagement.Specs.Features
                         "en-GB",
                         "This is the fragment of text"});
 #line 7
- testRunner.Given("content items have been created", ((string)(null)), table28, "Given ");
+ testRunner.Given("content items have been created", ((string)(null)), table33, "Given ");
 #line hidden
-            TechTalk.SpecFlow.Table table29 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table34 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name",
                         "Id",
                         "ContentId",
@@ -463,7 +463,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "StateName",
                         "ChangedBy.Name",
                         "ChangedBy.Id"});
-            table29.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "Content0-State",
                         "{newguid}",
                         "{Content0.Id}",
@@ -472,7 +472,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "draft",
                         "Frodo Baggins",
                         "{newguid}"});
-            table29.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "Content1-State",
                         "{newguid}",
                         "{Content1.Id}",
@@ -481,7 +481,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "draft",
                         "Frodo Baggins",
                         "{newguid}"});
-            table29.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "Content2-State",
                         "{newguid}",
                         "{Content2.Id}",
@@ -490,7 +490,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "draft",
                         "Frodo Baggins",
                         "{newguid}"});
-            table29.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "Content3-State",
                         "{newguid}",
                         "{Content3.Id}",
@@ -499,7 +499,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "draft",
                         "Frodo Baggins",
                         "{newguid}"});
-            table29.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "Content4-State",
                         "{newguid}",
                         "{Content4.Id}",
@@ -508,7 +508,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "published",
                         "Frodo Baggins",
                         "{newguid}"});
-            table29.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "Content5-State",
                         "{newguid}",
                         "{Content5.Id}",
@@ -517,7 +517,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "published",
                         "Frodo Baggins",
                         "{newguid}"});
-            table29.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "Content6-State",
                         "{newguid}",
                         "{Content6.Id}",
@@ -526,7 +526,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "published",
                         "Frodo Baggins",
                         "{newguid}"});
-            table29.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "Content7-State",
                         "{newguid}",
                         "{Content7.Id}",
@@ -535,7 +535,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "published",
                         "Frodo Baggins",
                         "{newguid}"});
-            table29.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "Content8-State",
                         "{newguid}",
                         "{Content8.Id}",
@@ -544,7 +544,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "published",
                         "Frodo Baggins",
                         "{newguid}"});
-            table29.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "Content9-State",
                         "{newguid}",
                         "{Content9.Id}",
@@ -553,7 +553,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "published",
                         "Frodo Baggins",
                         "{newguid}"});
-            table29.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "Content10-State",
                         "{newguid}",
                         "{Content10.Id}",
@@ -562,7 +562,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "published",
                         "Frodo Baggins",
                         "{newguid}"});
-            table29.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "Content11-State",
                         "{newguid}",
                         "{Content11.Id}",
@@ -571,7 +571,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "published",
                         "Frodo Baggins",
                         "{newguid}"});
-            table29.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "Content12-State",
                         "{newguid}",
                         "{Content12.Id}",
@@ -580,7 +580,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "published",
                         "Frodo Baggins",
                         "{newguid}"});
-            table29.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "Content13-State",
                         "{newguid}",
                         "{Content13.Id}",
@@ -589,7 +589,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "published",
                         "Frodo Baggins",
                         "{newguid}"});
-            table29.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "Content14-State",
                         "{newguid}",
                         "{Content14.Id}",
@@ -598,7 +598,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "published",
                         "Frodo Baggins",
                         "{newguid}"});
-            table29.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "Content15-State",
                         "{newguid}",
                         "{Content15.Id}",
@@ -607,7 +607,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "published",
                         "Frodo Baggins",
                         "{newguid}"});
-            table29.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "Content16-State",
                         "{newguid}",
                         "{Content16.Id}",
@@ -616,7 +616,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "published",
                         "Frodo Baggins",
                         "{newguid}"});
-            table29.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "Content17-State",
                         "{newguid}",
                         "{Content17.Id}",
@@ -625,7 +625,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "published",
                         "Frodo Baggins",
                         "{newguid}"});
-            table29.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "Content18-State",
                         "{newguid}",
                         "{Content18.Id}",
@@ -634,7 +634,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "published",
                         "Frodo Baggins",
                         "{newguid}"});
-            table29.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "Content19-State",
                         "{newguid}",
                         "{Content19.Id}",
@@ -643,7 +643,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "published",
                         "Frodo Baggins",
                         "{newguid}"});
-            table29.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "Content20-State",
                         "{newguid}",
                         "{Content20.Id}",
@@ -652,7 +652,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "published",
                         "Frodo Baggins",
                         "{newguid}"});
-            table29.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "Content21-State",
                         "{newguid}",
                         "{Content21.Id}",
@@ -661,7 +661,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "published",
                         "Frodo Baggins",
                         "{newguid}"});
-            table29.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "Content22-State",
                         "{newguid}",
                         "{Content22.Id}",
@@ -670,7 +670,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "published",
                         "Frodo Baggins",
                         "{newguid}"});
-            table29.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "Content23-State",
                         "{newguid}",
                         "{Content23.Id}",
@@ -679,7 +679,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "published",
                         "Frodo Baggins",
                         "{newguid}"});
-            table29.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "Content24-State",
                         "{newguid}",
                         "{Content24.Id}",
@@ -688,7 +688,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "published",
                         "Frodo Baggins",
                         "{newguid}"});
-            table29.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "Content25-State",
                         "{newguid}",
                         "{Content25.Id}",
@@ -697,7 +697,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "published",
                         "Frodo Baggins",
                         "{newguid}"});
-            table29.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "Content26-State",
                         "{newguid}",
                         "{Content26.Id}",
@@ -706,7 +706,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "published",
                         "Frodo Baggins",
                         "{newguid}"});
-            table29.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "Content27-State",
                         "{newguid}",
                         "{Content27.Id}",
@@ -715,7 +715,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "published",
                         "Frodo Baggins",
                         "{newguid}"});
-            table29.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "Content28-State",
                         "{newguid}",
                         "{Content28.Id}",
@@ -724,7 +724,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "published",
                         "Frodo Baggins",
                         "{newguid}"});
-            table29.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "Content29-State",
                         "{newguid}",
                         "{Content29.Id}",
@@ -734,7 +734,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "Frodo Baggins",
                         "{newguid}"});
 #line 39
- testRunner.And("workflow states have been set for the content items", ((string)(null)), table29, "And ");
+ testRunner.And("workflow states have been set for the content items", ((string)(null)), table34, "And ");
 #line hidden
         }
         

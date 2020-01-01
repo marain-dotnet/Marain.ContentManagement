@@ -137,30 +137,6 @@ this.ScenarioInitialize(scenarioInfo);
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            this.ScenarioCleanup();
-        }
-        
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Create a new content item with a new slug and an existing Id")]
-        public virtual void CreateANewContentItemWithANewSlugAndAnExistingId()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a new content item with a new slug and an existing Id", null, ((string[])(null)));
-#line 20
-this.ScenarioInitialize(scenarioInfo);
-            this.ScenarioStart();
-#line hidden
-            this.ScenarioCleanup();
-        }
-        
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Creating a content item with an existing slug and Id fails")]
-        public virtual void CreatingAContentItemWithAnExistingSlugAndIdFails()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Creating a content item with an existing slug and Id fails", null, ((string[])(null)));
-#line 22
-this.ScenarioInitialize(scenarioInfo);
-            this.ScenarioStart();
-#line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name",
                         "Id",
@@ -174,6 +150,166 @@ this.ScenarioInitialize(scenarioInfo);
                         "Culture",
                         "Fragment"});
             table2.AddRow(new string[] {
+                        "Existing",
+                        "myid",
+                        "myslug",
+                        "First tag; Second tag",
+                        "/standard/content;/books/hobbit;/books/lotr",
+                        "Bilbo Baggins",
+                        "{newguid}",
+                        "This is the title",
+                        "A description of the content",
+                        "en-GB",
+                        "This is the fragment of text"});
+#line 19
+ testRunner.Given("a content item has been created", ((string)(null)), table2, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name",
+                        "Id",
+                        "Slug",
+                        "Tags",
+                        "CategoryPaths",
+                        "Author.Name",
+                        "Author.Id",
+                        "Title",
+                        "Description",
+                        "Culture",
+                        "Fragment"});
+            table3.AddRow(new string[] {
+                        "Expected",
+                        "myotherid",
+                        "myslug",
+                        "First tag; Second tag",
+                        "/standard/content;/books/hobbit;/books/lotr",
+                        "Bilbo Baggins",
+                        "{newguid}",
+                        "This is the modified title",
+                        "A description of the content",
+                        "en-GB",
+                        "This is the fragment of text"});
+#line 22
+ testRunner.And("I have a new content item", ((string)(null)), table3, "And ");
+#line 25
+ testRunner.When("I request that the content \'Expected\' is created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 26
+ testRunner.Then("the response should have a status of \'201\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 27
+ testRunner.And("the response body should contain the content item \'Expected\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 28
+ testRunner.And("the Location header should be set", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 29
+ testRunner.And("the response should contain a \'self\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 30
+ testRunner.And("the location header should match the response \'self\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 31
+ testRunner.And("the ETag header should be set", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Create a new content item with a new slug and an existing Id")]
+        public virtual void CreateANewContentItemWithANewSlugAndAnExistingId()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a new content item with a new slug and an existing Id", null, ((string[])(null)));
+#line 33
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name",
+                        "Id",
+                        "Slug",
+                        "Tags",
+                        "CategoryPaths",
+                        "Author.Name",
+                        "Author.Id",
+                        "Title",
+                        "Description",
+                        "Culture",
+                        "Fragment"});
+            table4.AddRow(new string[] {
+                        "Existing",
+                        "myid",
+                        "myslug",
+                        "First tag; Second tag",
+                        "/standard/content;/books/hobbit;/books/lotr",
+                        "Bilbo Baggins",
+                        "{newguid}",
+                        "This is the title",
+                        "A description of the content",
+                        "en-GB",
+                        "This is the fragment of text"});
+#line 34
+ testRunner.Given("a content item has been created", ((string)(null)), table4, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name",
+                        "Id",
+                        "Slug",
+                        "Tags",
+                        "CategoryPaths",
+                        "Author.Name",
+                        "Author.Id",
+                        "Title",
+                        "Description",
+                        "Culture",
+                        "Fragment"});
+            table5.AddRow(new string[] {
+                        "Expected",
+                        "myid",
+                        "myotherslug",
+                        "First tag; Second tag",
+                        "/standard/content;/books/hobbit;/books/lotr",
+                        "Bilbo Baggins",
+                        "{newguid}",
+                        "This is the title",
+                        "A description of the content",
+                        "en-GB",
+                        "This is the fragment of text"});
+#line 37
+ testRunner.And("I have a new content item", ((string)(null)), table5, "And ");
+#line 40
+ testRunner.When("I request that the content \'Expected\' is created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 41
+ testRunner.Then("the response should have a status of \'201\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 42
+ testRunner.And("the response body should contain the content item \'Expected\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 43
+ testRunner.And("the Location header should be set", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 44
+ testRunner.And("the response should contain a \'self\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 45
+ testRunner.And("the location header should match the response \'self\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 46
+ testRunner.And("the ETag header should be set", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Creating a content item with an existing slug and Id fails")]
+        public virtual void CreatingAContentItemWithAnExistingSlugAndIdFails()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Creating a content item with an existing slug and Id fails", null, ((string[])(null)));
+#line 48
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name",
+                        "Id",
+                        "Slug",
+                        "Tags",
+                        "CategoryPaths",
+                        "Author.Name",
+                        "Author.Id",
+                        "Title",
+                        "Description",
+                        "Culture",
+                        "Fragment"});
+            table6.AddRow(new string[] {
                         "Expected",
                         "myid",
                         "myslug",
@@ -185,26 +321,60 @@ this.ScenarioInitialize(scenarioInfo);
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-#line 23
- testRunner.Given("I have a new content item", ((string)(null)), table2, "Given ");
-#line 26
+#line 49
+ testRunner.Given("I have a new content item", ((string)(null)), table6, "Given ");
+#line 52
  testRunner.And("I have requested that the content \'Expected\' is created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 27
+#line 53
  testRunner.When("I issue a second request that the content \'Expected\' is created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 28
+#line 54
  testRunner.Then("the response should have a status of \'409\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("New item validation")]
-        public virtual void NewItemValidation()
+        [NUnit.Framework.DescriptionAttribute("Attempting to create a new item with invalid data fails")]
+        [NUnit.Framework.TestCaseAttribute("Missing Id", "{null}", "myslug", "First tag; Second tag", "/standard/content;/books/hobbit;/books/lotr", "Bilbo Baggins", "{newguid}", "{null}", "A description of the content", "en-GB", "This is the fragment of text", null)]
+        [NUnit.Framework.TestCaseAttribute("Missing title", "myid", "myslug", "First tag; Second tag", "/standard/content;/books/hobbit;/books/lotr", "Bilbo Baggins", "{newguid}", "{null}", "A description of the content", "en-GB", "This is the fragment of text", null)]
+        [NUnit.Framework.TestCaseAttribute("Missing user id", "myid", "myslug", "First tag; Second tag", "/standard/content;/books/hobbit;/books/lotr", "Bilbo Baggins", "{null}", "This is the title", "A description of the content", "en-GB", "This is the fragment of text", null)]
+        public virtual void AttemptingToCreateANewItemWithInvalidDataFails(string name, string id, string slug, string tags, string categoryPaths, string author_Name, string author_Id, string title, string description, string culture, string fragment, string[] exampleTags)
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("New item validation", null, ((string[])(null)));
-#line 30
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Attempting to create a new item with invalid data fails", null, exampleTags);
+#line 56
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name",
+                        "Id",
+                        "Slug",
+                        "Tags",
+                        "CategoryPaths",
+                        "Author.Name",
+                        "Author.Id",
+                        "Title",
+                        "Description",
+                        "Culture",
+                        "Fragment"});
+            table7.AddRow(new string[] {
+                        "Expected",
+                        string.Format("{0}", id),
+                        string.Format("{0}", slug),
+                        string.Format("{0}", tags),
+                        string.Format("{0}", categoryPaths),
+                        string.Format("{0}", author_Name),
+                        string.Format("{0}", author_Id),
+                        string.Format("{0}", title),
+                        string.Format("{0}", description),
+                        string.Format("{0}", culture),
+                        string.Format("{0}", fragment)});
+#line 57
+ testRunner.Given("I have a new content item", ((string)(null)), table7, "Given ");
+#line 60
+ testRunner.When("I request that the content \'Expected\' is created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 61
+ testRunner.Then("the response should have a status of \'400\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

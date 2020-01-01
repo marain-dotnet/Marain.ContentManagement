@@ -33,7 +33,7 @@ namespace Marain.ContentManagement.Specs.Steps
             string resolvedSlug = ContentDriver.GetObjectValue<string>(this.scenarioContext, slug);
 
             ContentClient client = this.scenarioContext.Get<ContentClient>();
-            SwaggerResponse<ContentSummaries> response = await client.GetContentHistoryAsync(
+            SwaggerResponse<ContentSummariesResponse> response = await client.GetContentHistoryAsync(
                 this.scenarioContext.GetCurrentTenantId(),
                 resolvedSlug,
                 null,
@@ -46,7 +46,7 @@ namespace Marain.ContentManagement.Specs.Steps
         [When("I request content history for slug '(.*)' with the contination token from the previous response")]
         public async Task WhenIRequestContentHistoryForSlugWithTheContinationTokenFromThePreviousResponse(string slug)
         {
-            SwaggerResponse<ContentSummaries> previousResponse = this.scenarioContext.GetLastApiResponse<ContentSummaries>();
+            SwaggerResponse<ContentSummariesResponse> previousResponse = this.scenarioContext.GetLastApiResponse<ContentSummariesResponse>();
 
             string continuationToken = previousResponse.Result.ExtractContinuationToken();
 
@@ -57,7 +57,7 @@ namespace Marain.ContentManagement.Specs.Steps
             string resolvedSlug = ContentDriver.GetObjectValue<string>(this.scenarioContext, slug);
 
             ContentClient client = this.scenarioContext.Get<ContentClient>();
-            SwaggerResponse<ContentSummaries> response = await client.GetContentHistoryAsync(
+            SwaggerResponse<ContentSummariesResponse> response = await client.GetContentHistoryAsync(
                 this.scenarioContext.GetCurrentTenantId(),
                 resolvedSlug,
                 null,
@@ -73,7 +73,7 @@ namespace Marain.ContentManagement.Specs.Steps
             string resolvedSlug = ContentDriver.GetObjectValue<string>(this.scenarioContext, slug);
 
             ContentClient client = this.scenarioContext.Get<ContentClient>();
-            SwaggerResponse<ContentSummaries> response = await client.GetContentHistoryAsync(
+            SwaggerResponse<ContentSummariesResponse> response = await client.GetContentHistoryAsync(
                 this.scenarioContext.GetCurrentTenantId(),
                 resolvedSlug,
                 limit,

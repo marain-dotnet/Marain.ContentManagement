@@ -527,6 +527,8 @@ components:
           $ref: '#/components/schemas/PropertyBag'
       required:
         - id
+        - title
+        - author
 
     ############################################################################
     # Response documents: generally these are internal data types returned as a

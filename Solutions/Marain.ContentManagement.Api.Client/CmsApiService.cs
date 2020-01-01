@@ -387,7 +387,7 @@ namespace Marain.Cms.Api.Client
         /// <param name="if_None_Match">The ETag of the last known version.</param>
         /// <returns>Successful operation</returns>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<SwaggerResponse<ContentSummaries>> GetContentHistoryAsync(string tenantId, string slug, int? limit, string continuationToken, string if_None_Match)
+        public System.Threading.Tasks.Task<SwaggerResponse<ContentSummariesResponse>> GetContentHistoryAsync(string tenantId, string slug, int? limit, string continuationToken, string if_None_Match)
         {
             return GetContentHistoryAsync(tenantId, slug, limit, continuationToken, if_None_Match, System.Threading.CancellationToken.None);
         }
@@ -401,7 +401,7 @@ namespace Marain.Cms.Api.Client
         /// <param name="if_None_Match">The ETag of the last known version.</param>
         /// <returns>Successful operation</returns>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<SwaggerResponse<ContentSummaries>> GetContentHistoryAsync(string tenantId, string slug, int? limit, string continuationToken, string if_None_Match, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<SwaggerResponse<ContentSummariesResponse>> GetContentHistoryAsync(string tenantId, string slug, int? limit, string continuationToken, string if_None_Match, System.Threading.CancellationToken cancellationToken)
         {
             if (tenantId == null)
                 throw new System.ArgumentNullException("tenantId");
@@ -453,8 +453,8 @@ namespace Marain.Cms.Api.Client
                         var status_ = ((int)response_.StatusCode).ToString();
                         if (status_ == "200") 
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<ContentSummaries>(response_, headers_).ConfigureAwait(false);
-                            return new SwaggerResponse<ContentSummaries>((int)response_.StatusCode, headers_, objectResponse_.Object);
+                            var objectResponse_ = await ReadObjectResponseAsync<ContentSummariesResponse>(response_, headers_).ConfigureAwait(false);
+                            return new SwaggerResponse<ContentSummariesResponse>((int)response_.StatusCode, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == "304") 
@@ -487,7 +487,7 @@ namespace Marain.Cms.Api.Client
                             throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
             
-                        return new SwaggerResponse<ContentSummaries>((int)response_.StatusCode, headers_, default(ContentSummaries)); 
+                        return new SwaggerResponse<ContentSummariesResponse>((int)response_.StatusCode, headers_, default(ContentSummariesResponse)); 
                     }
                     finally
                     {
@@ -1082,7 +1082,7 @@ namespace Marain.Cms.Api.Client
         private string _hreflang;
     
         /// <summary>Either a URI [RFC3986] or URI Template [RFC6570] of the target resource.</summary>
-        [Newtonsoft.Json.JsonProperty("href", Required = Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonProperty("href", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public string Href
         {
@@ -1483,7 +1483,7 @@ namespace Marain.Cms.Api.Client
         private string _dateTimeOffset1;
         private double _unixTime;
     
-        [Newtonsoft.Json.JsonProperty("dateTimeOffset", Required = Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonProperty("dateTimeOffset", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public string DateTimeOffset1
         {
@@ -1498,7 +1498,7 @@ namespace Marain.Cms.Api.Client
             }
         }
     
-        [Newtonsoft.Json.JsonProperty("unixTime", Required = Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonProperty("unixTime", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public double UnixTime
         {
             get { return _unixTime; }
@@ -1556,7 +1556,7 @@ namespace Marain.Cms.Api.Client
         private string _culture;
     
         /// <summary>The unique ID of the tenant. This forms a path with parent tenants.</summary>
-        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public string Id
         {
@@ -1613,7 +1613,7 @@ namespace Marain.Cms.Api.Client
             }
         }
     
-        [Newtonsoft.Json.JsonProperty("slug", Required = Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonProperty("slug", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public string Slug
         {
@@ -2266,7 +2266,7 @@ namespace Marain.Cms.Api.Client
         private string _userId;
         private string _userName;
     
-        [Newtonsoft.Json.JsonProperty("userId", Required = Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonProperty("userId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public string UserId
         {
@@ -2332,7 +2332,7 @@ namespace Marain.Cms.Api.Client
         private string _eTag;
         private System.Collections.ObjectModel.ObservableCollection<string> _categoryPaths;
         private System.Collections.ObjectModel.ObservableCollection<string> _tags;
-        private CmsIdentity _author;
+        private CmsIdentity _author = new CmsIdentity();
         private string _title;
         private string _description;
         private string _culture;
@@ -2340,7 +2340,7 @@ namespace Marain.Cms.Api.Client
         private PropertyBag _metadata;
     
         /// <summary>The unique ID of the tenant. This forms a path with parent tenants.</summary>
-        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public string Id
         {
@@ -2398,6 +2398,7 @@ namespace Marain.Cms.Api.Client
         }
     
         [Newtonsoft.Json.JsonProperty("author", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Required]
         public CmsIdentity Author
         {
             get { return _author; }
@@ -2412,6 +2413,7 @@ namespace Marain.Cms.Api.Client
         }
     
         [Newtonsoft.Json.JsonProperty("title", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public string Title
         {
             get { return _title; }
@@ -2525,7 +2527,7 @@ namespace Marain.Cms.Api.Client
         private string _culture;
     
         /// <summary>The unique ID of the tenant. This forms a path with parent tenants.</summary>
-        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public string Id
         {
@@ -2582,7 +2584,7 @@ namespace Marain.Cms.Api.Client
             }
         }
     
-        [Newtonsoft.Json.JsonProperty("slug", Required = Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonProperty("slug", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public string Slug
         {
@@ -3181,7 +3183,7 @@ namespace Marain.Cms.Api.Client
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.2.0 (Newtonsoft.Json v11.0.0.0)")]
-    public partial class ContentSummaries : Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ContentSummariesResponse : Resource, System.ComponentModel.INotifyPropertyChanged
     {
         private System.Collections.ObjectModel.ObservableCollection<ContentSummaryResponse> _summaries;
     
@@ -3213,9 +3215,9 @@ namespace Marain.Cms.Api.Client
             return Newtonsoft.Json.JsonConvert.SerializeObject(this);
         }
     
-        public static ContentSummaries FromJson(string data)
+        public static ContentSummariesResponse FromJson(string data)
         {
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<ContentSummaries>(data);
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<ContentSummariesResponse>(data);
         }
     
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
@@ -3288,7 +3290,7 @@ namespace Marain.Cms.Api.Client
         private string _type;
         private System.Collections.ObjectModel.ObservableCollection<object> _validationErrors;
     
-        [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int Status
         {
             get { return _status; }
@@ -3302,7 +3304,7 @@ namespace Marain.Cms.Api.Client
             }
         }
     
-        [Newtonsoft.Json.JsonProperty("detail", Required = Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonProperty("detail", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public string Detail
         {

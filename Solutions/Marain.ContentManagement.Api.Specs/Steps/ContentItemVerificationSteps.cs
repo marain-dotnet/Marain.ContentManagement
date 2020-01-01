@@ -27,7 +27,7 @@ namespace Marain.ContentManagement.Specs.Steps
         [Then("the response should contain (.*) embedded content summaries")]
         public void ThenTheResponseShouldContainContentSummaries(int expectedCount)
         {
-            SwaggerResponse<ContentSummaries> response = this.scenarioContext.GetLastApiResponse<ContentSummaries>();
+            SwaggerResponse<ContentSummariesResponse> response = this.scenarioContext.GetLastApiResponse<ContentSummariesResponse>();
 
             ObservableCollection<ContentSummaryResponse> summaries = response.Result.Summaries;
 
@@ -40,7 +40,7 @@ namespace Marain.ContentManagement.Specs.Steps
         [Then("the response should contain another (.*) embedded content summaries")]
         public void ThenTheResponseShouldContainAnotherContentSummaries(int expectedCount)
         {
-            SwaggerResponse<ContentSummaries> response = this.scenarioContext.GetLastApiResponse<ContentSummaries>();
+            SwaggerResponse<ContentSummariesResponse> response = this.scenarioContext.GetLastApiResponse<ContentSummariesResponse>();
 
             ObservableCollection<ContentSummaryResponse> summaries = response.Result.Summaries;
 

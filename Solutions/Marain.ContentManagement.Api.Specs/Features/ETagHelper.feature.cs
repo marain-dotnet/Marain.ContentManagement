@@ -121,35 +121,35 @@ this.ScenarioInitialize(scenarioInfo);
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
                         "ETag"});
-            table3.AddRow(new string[] {
+            table8.AddRow(new string[] {
                         "etag1"});
-            table3.AddRow(new string[] {
+            table8.AddRow(new string[] {
                         "etag2"});
-            table3.AddRow(new string[] {
+            table8.AddRow(new string[] {
                         "etag3"});
-            table3.AddRow(new string[] {
+            table8.AddRow(new string[] {
                         "etag4"});
-            table3.AddRow(new string[] {
+            table8.AddRow(new string[] {
                         "etag5"});
 #line 17
- testRunner.Given("I build an etag from discriminator \'Content\' and a list of etags", ((string)(null)), table3, "Given ");
+ testRunner.Given("I build an etag from discriminator \'Content\' and a list of etags", ((string)(null)), table8, "Given ");
 #line hidden
-            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
                         "ETag"});
-            table4.AddRow(new string[] {
+            table9.AddRow(new string[] {
                         "etag1"});
-            table4.AddRow(new string[] {
+            table9.AddRow(new string[] {
                         "etag2"});
-            table4.AddRow(new string[] {
+            table9.AddRow(new string[] {
                         "etag3"});
-            table4.AddRow(new string[] {
+            table9.AddRow(new string[] {
                         "etag4"});
-            table4.AddRow(new string[] {
+            table9.AddRow(new string[] {
                         "etag5"});
 #line 24
- testRunner.And("I build an etag from discriminator \'Content\' and a list of etags", ((string)(null)), table4, "And ");
+ testRunner.And("I build an etag from discriminator \'Content\' and a list of etags", ((string)(null)), table9, "And ");
 #line 31
  testRunner.Then("the generated etags are the same", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -167,35 +167,35 @@ this.ScenarioInitialize(scenarioInfo);
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
                         "ETag"});
-            table5.AddRow(new string[] {
+            table10.AddRow(new string[] {
                         "etag1"});
-            table5.AddRow(new string[] {
+            table10.AddRow(new string[] {
                         "etag2"});
-            table5.AddRow(new string[] {
+            table10.AddRow(new string[] {
                         "etag3"});
-            table5.AddRow(new string[] {
+            table10.AddRow(new string[] {
                         "etag4"});
-            table5.AddRow(new string[] {
+            table10.AddRow(new string[] {
                         "etag5"});
 #line 34
- testRunner.Given("I build an etag from discriminator \'Content\' and a list of etags", ((string)(null)), table5, "Given ");
+ testRunner.Given("I build an etag from discriminator \'Content\' and a list of etags", ((string)(null)), table10, "Given ");
 #line hidden
-            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
                         "ETag"});
-            table6.AddRow(new string[] {
+            table11.AddRow(new string[] {
                         "etag2"});
-            table6.AddRow(new string[] {
+            table11.AddRow(new string[] {
                         "etag3"});
-            table6.AddRow(new string[] {
+            table11.AddRow(new string[] {
                         "etag4"});
-            table6.AddRow(new string[] {
+            table11.AddRow(new string[] {
                         "etag5"});
-            table6.AddRow(new string[] {
+            table11.AddRow(new string[] {
                         "etag1"});
 #line 41
- testRunner.And("I build an etag from discriminator \'Content\' and a list of etags", ((string)(null)), table6, "And ");
+ testRunner.And("I build an etag from discriminator \'Content\' and a list of etags", ((string)(null)), table11, "And ");
 #line 48
  testRunner.Then("the generated etags are distinct", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -213,29 +213,29 @@ this.ScenarioInitialize(scenarioInfo);
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
                         "ETag"});
-            table7.AddRow(new string[] {
+            table12.AddRow(new string[] {
                         "etag1"});
-            table7.AddRow(new string[] {
+            table12.AddRow(new string[] {
                         "etag2"});
-            table7.AddRow(new string[] {
+            table12.AddRow(new string[] {
                         "etag3"});
-            table7.AddRow(new string[] {
+            table12.AddRow(new string[] {
                         "etag4"});
-            table7.AddRow(new string[] {
+            table12.AddRow(new string[] {
                         "etag5"});
 #line 51
- testRunner.Given("I build an etag from discriminator \'Content\' and a list of etags", ((string)(null)), table7, "Given ");
+ testRunner.Given("I build an etag from discriminator \'Content\' and a list of etags", ((string)(null)), table12, "Given ");
 #line hidden
-            TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
                         "ETag"});
-            table8.AddRow(new string[] {
+            table13.AddRow(new string[] {
                         "etag10"});
-            table8.AddRow(new string[] {
+            table13.AddRow(new string[] {
                         "etag11"});
 #line 58
- testRunner.And("I build an etag from discriminator \'Content\' and a list of etags", ((string)(null)), table8, "And ");
+ testRunner.And("I build an etag from discriminator \'Content\' and a list of etags", ((string)(null)), table13, "And ");
 #line 62
  testRunner.Then("the generated etags are distinct", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden

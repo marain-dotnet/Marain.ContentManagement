@@ -52,7 +52,7 @@
       "generateResponseClasses": true,
       "responseClass": "SwaggerResponse",
       "namespace": "Marain.Cms.Api.Client",
-      "requiredPropertiesMustBeDefined": true,
+      "requiredPropertiesMustBeDefined": false,
       "dateType": "System.DateTime",
       "jsonConverters": null,
       "anyType": "object",
