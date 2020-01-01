@@ -34,7 +34,7 @@ namespace Marain.ContentManagement.Specs.Steps
         public async Task GivenAContentItemHasBeenCreated(Table table)
         {
             ITenantedContentStoreFactory contentStoreFactory = this.scenarioContext.ServiceProvider().GetRequiredService<ITenantedContentStoreFactory>();
-            IContentStore store = await contentStoreFactory.GetContentStoreForTenantAsync(this.scenarioContext.GetTransientTenantId()).ConfigureAwait(false);
+            IContentStore store = await contentStoreFactory.GetContentStoreForTenantAsync(this.scenarioContext.GetCurrentTenantId()).ConfigureAwait(false);
 
             foreach (TableRow row in table.Rows)
             {
@@ -59,7 +59,7 @@ namespace Marain.ContentManagement.Specs.Steps
         public async Task GivenAWorkflowStateHasBeenSetForTheContentItem(Table table)
         {
             ITenantedContentStoreFactory contentStoreFactory = this.scenarioContext.ServiceProvider().GetRequiredService<ITenantedContentStoreFactory>();
-            IContentStore store = await contentStoreFactory.GetContentStoreForTenantAsync(this.scenarioContext.GetTransientTenantId()).ConfigureAwait(false);
+            IContentStore store = await contentStoreFactory.GetContentStoreForTenantAsync(this.scenarioContext.GetCurrentTenantId()).ConfigureAwait(false);
 
             foreach (TableRow row in table.Rows)
             {

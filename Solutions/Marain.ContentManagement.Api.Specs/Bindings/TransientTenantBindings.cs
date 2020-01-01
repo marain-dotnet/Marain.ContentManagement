@@ -26,7 +26,7 @@ namespace Marain.ContentManagement.Specs.Bindings
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         /// <remarks>
         /// The newly created tenant is added to the <see cref="ScenarioContext"/>. Access it via the helper methods
-        /// <see cref="GetTransientTenant(ScenarioContext)"/> or <see cref="GetTransientTenantId(ScenarioContext)"/>.
+        /// <see cref="GetTransientTenant(ScenarioContext)"/> or <see cref="GetCurrentTenantId(ScenarioContext)"/>.
         /// </remarks>
         [BeforeScenario("useTransientTenant", Order = 10)]
         public static async Task SetupTransientTenant(ScenarioContext context)
@@ -90,7 +90,7 @@ namespace Marain.ContentManagement.Specs.Bindings
         /// <param name="context">The current <see cref="ScenarioContext"/>.</param>
         /// <returns>The Id of the <see cref="ITenant"/>.</returns>
         /// <exception cref="ArgumentNullException">There is no current tenant.</exception>
-        public static string GetTransientTenantId(this ScenarioContext context)
+        public static string GetCurrentTenantId(this ScenarioContext context)
         {
             return context.GetTransientTenant().Id;
         }

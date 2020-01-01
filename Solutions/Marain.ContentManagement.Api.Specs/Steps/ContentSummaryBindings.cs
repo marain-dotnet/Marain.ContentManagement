@@ -34,7 +34,7 @@ namespace Marain.ContentManagement.Specs.Steps
 
             ContentClient client = this.scenarioContext.Get<ContentClient>();
             SwaggerResponse<ContentSummaries> response = await client.GetContentHistoryAsync(
-                this.scenarioContext.GetTransientTenantId(),
+                this.scenarioContext.GetCurrentTenantId(),
                 resolvedSlug,
                 null,
                 null,
@@ -58,7 +58,7 @@ namespace Marain.ContentManagement.Specs.Steps
 
             ContentClient client = this.scenarioContext.Get<ContentClient>();
             SwaggerResponse<ContentSummaries> response = await client.GetContentHistoryAsync(
-                this.scenarioContext.GetTransientTenantId(),
+                this.scenarioContext.GetCurrentTenantId(),
                 resolvedSlug,
                 null,
                 continuationToken,
@@ -74,7 +74,7 @@ namespace Marain.ContentManagement.Specs.Steps
 
             ContentClient client = this.scenarioContext.Get<ContentClient>();
             SwaggerResponse<ContentSummaries> response = await client.GetContentHistoryAsync(
-                this.scenarioContext.GetTransientTenantId(),
+                this.scenarioContext.GetCurrentTenantId(),
                 resolvedSlug,
                 limit,
                 null,
@@ -93,7 +93,7 @@ namespace Marain.ContentManagement.Specs.Steps
 
             ContentClient client = this.scenarioContext.Get<ContentClient>();
             SwaggerResponse<ContentSummariesWithStateResponse> response = await client.GetWorkflowStateHistoryAsync(
-                this.scenarioContext.GetTransientTenantId(),
+                this.scenarioContext.GetCurrentTenantId(),
                 resolvedWorkflowId,
                 resolvedStateName,
                 resolvedSlug,
@@ -112,7 +112,7 @@ namespace Marain.ContentManagement.Specs.Steps
 
             ContentClient client = this.scenarioContext.Get<ContentClient>();
             SwaggerResponse<ContentSummariesWithStateResponse> response = await client.GetWorkflowHistoryAsync(
-                this.scenarioContext.GetTransientTenantId(),
+                this.scenarioContext.GetCurrentTenantId(),
                 resolvedWorkflowId,
                 resolvedSlug,
                 null,
@@ -138,7 +138,7 @@ namespace Marain.ContentManagement.Specs.Steps
 
             ContentClient client = this.scenarioContext.Get<ContentClient>();
             SwaggerResponse<ContentSummariesWithStateResponse> response = await client.GetWorkflowStateHistoryAsync(
-                this.scenarioContext.GetTransientTenantId(),
+                this.scenarioContext.GetCurrentTenantId(),
                 resolvedWorkflowId,
                 resolvedStateName,
                 resolvedSlug,
@@ -164,7 +164,7 @@ namespace Marain.ContentManagement.Specs.Steps
 
             ContentClient client = this.scenarioContext.Get<ContentClient>();
             SwaggerResponse<ContentSummariesWithStateResponse> response = await client.GetWorkflowHistoryAsync(
-                this.scenarioContext.GetTransientTenantId(),
+                this.scenarioContext.GetCurrentTenantId(),
                 resolvedWorkflowId,
                 resolvedSlug,
                 null,
@@ -182,7 +182,7 @@ namespace Marain.ContentManagement.Specs.Steps
 
             ContentClient client = this.scenarioContext.Get<ContentClient>();
             SwaggerResponse<ContentSummariesWithStateResponse> response = await client.GetWorkflowStateHistoryAsync(
-                this.scenarioContext.GetTransientTenantId(),
+                this.scenarioContext.GetCurrentTenantId(),
                 resolvedWorkflowId,
                 resolvedStateName,
                 resolvedSlug,
@@ -200,7 +200,7 @@ namespace Marain.ContentManagement.Specs.Steps
 
             ContentClient client = this.scenarioContext.Get<ContentClient>();
             SwaggerResponse<ContentSummariesWithStateResponse> response = await client.GetWorkflowHistoryAsync(
-                this.scenarioContext.GetTransientTenantId(),
+                this.scenarioContext.GetCurrentTenantId(),
                 resolvedWorkflowId,
                 resolvedSlug,
                 limit,
@@ -220,7 +220,7 @@ namespace Marain.ContentManagement.Specs.Steps
             {
                 ContentClient client = this.scenarioContext.Get<ContentClient>();
                 SwaggerResponse<ContentSummaryResponse> response = await client.GetContentSummaryAsync(
-                    this.scenarioContext.GetTransientTenantId(),
+                    this.scenarioContext.GetCurrentTenantId(),
                     resolvedSlug,
                     resolvedId,
                     null).ConfigureAwait(false);
@@ -248,7 +248,7 @@ namespace Marain.ContentManagement.Specs.Steps
             try
             {
                 SwaggerResponse<ContentSummaryResponse> response = await client.GetContentSummaryAsync(
-                    this.scenarioContext.GetTransientTenantId(),
+                    this.scenarioContext.GetCurrentTenantId(),
                     resolvedSlug,
                     resolvedId,
                     lastEtag).ConfigureAwait(false);
@@ -271,7 +271,7 @@ namespace Marain.ContentManagement.Specs.Steps
             {
                 ContentClient client = this.scenarioContext.Get<ContentClient>();
                 SwaggerResponse<ContentSummaryResponse> response = await client.GetContentSummaryAsync(
-                    this.scenarioContext.GetTransientTenantId(),
+                    this.scenarioContext.GetCurrentTenantId(),
                     resolvedSlug,
                     resolvedId,
                     Guid.NewGuid().ToString()).ConfigureAwait(false);

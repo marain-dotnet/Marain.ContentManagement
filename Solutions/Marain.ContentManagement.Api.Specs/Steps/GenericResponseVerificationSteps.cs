@@ -89,8 +89,6 @@ namespace Marain.ContentManagement.Specs.Steps
             string etagHeader = response.Headers["ETag"]?.First();
 
             Assert.IsNotNull(etagHeader);
-
-            Assert.IsNotNull(etagHeader);
             Assert.IsNotEmpty(etagHeader);
         }
 
@@ -99,11 +97,6 @@ namespace Marain.ContentManagement.Specs.Steps
         {
             SwaggerResponse response = this.scenarioContext.GetLastApiResponse();
             string etagHeader = response.Headers["ETag"]?.First();
-
-            Assert.IsNotNull(etagHeader);
-
-            Assert.IsNotNull(etagHeader);
-            Assert.IsNotEmpty(etagHeader);
 
             string expected = ContentDriver.GetObjectValue<string>(this.scenarioContext, property);
             Assert.AreEqual(expected, etagHeader);
