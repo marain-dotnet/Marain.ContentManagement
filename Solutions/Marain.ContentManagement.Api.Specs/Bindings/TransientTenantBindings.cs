@@ -37,6 +37,7 @@ namespace Marain.ContentManagement.Specs.Bindings
 
             // In order to ensure the Cosmos aspects of the Tenancy setup are fully configured, we need to resolve
             // the ITenantCosmosContainerFactory, which triggers setting default config to the root tenant.
+            // HACK: This is a hack until we can come up with a better way of handling deferred initialisation.
             provider.GetRequiredService<ITenantCosmosContainerFactory>();
 
             ITenant rootTenant = tenantProvider.Root;
