@@ -65,5 +65,18 @@ namespace Marain.Cms.Api.Services
             /// </summary>
             public const string ContinuationToken = "continuationToken";
         }
+
+        /// <summary>
+        /// Standard values used when returning the Cache-Control header with content.
+        /// </summary>
+        public static class CacheControlHeaderOptions
+        {
+            /// <summary>
+            /// Using this header will set the max-age of the content to about a year. RFC 2616 advises a year as the standard
+            /// maximum value (see 14.21 - although this discusses the Expires header, it can be considered a valid approach
+            /// for the Cache-Control header too.
+            /// </summary>
+            public const string NeverExpire = "max-age=31536000";
+        }
     }
 }

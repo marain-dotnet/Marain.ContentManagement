@@ -63,7 +63,9 @@ namespace Marain.Cms.Api.Services
 
             OpenApiResult response = this.OkResult(resultDocument);
             response.Results.Add(HeaderNames.ETag, etag);
-            response.Results.Add(HeaderNames.CacheControl, "max-age=31536000");
+
+            // Since content is immutable we can allow clients to cache it indefinitely.
+            response.Results.Add(HeaderNames.CacheControl, Constants.CacheControlHeaderOptions.NeverExpire);
 
             return response;
         }
