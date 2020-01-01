@@ -10,6 +10,7 @@ namespace Marain.ContentManagement.Specs.Steps
     using Marain.Cms.Api.Client;
     using Marain.ContentManagement.Specs.Bindings;
     using Marain.ContentManagement.Specs.Drivers;
+    using Marain.ContentManagement.Specs.Helpers;
     using TechTalk.SpecFlow;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member

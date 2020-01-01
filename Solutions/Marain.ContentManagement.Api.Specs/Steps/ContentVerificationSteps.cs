@@ -8,8 +8,8 @@ namespace Marain.ContentManagement.Specs.Steps
 #pragma warning disable SA1600 // Elements should be documented
 
     using Marain.Cms.Api.Client;
-    using Marain.ContentManagement.Specs.Bindings;
     using Marain.ContentManagement.Specs.Drivers;
+    using Marain.ContentManagement.Specs.Helpers;
     using NUnit.Framework;
     using TechTalk.SpecFlow;
 

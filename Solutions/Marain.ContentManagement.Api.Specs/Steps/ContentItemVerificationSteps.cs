@@ -7,7 +7,7 @@ namespace Marain.ContentManagement.Specs.Steps
     using System.Collections.ObjectModel;
     using System.Linq;
     using Marain.Cms.Api.Client;
-    using Marain.ContentManagement.Specs.Bindings;
+    using Marain.ContentManagement.Specs.Helpers;
     using NUnit.Framework;
     using TechTalk.SpecFlow;
 

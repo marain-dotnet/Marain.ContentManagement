@@ -10,6 +10,7 @@ namespace Marain.ContentManagement.Specs.Bindings
     using Corvus.SpecFlow.Extensions;
     using Marain.Cms.Api.Client;
     using Marain.Cms.Api.Host;
+    using Marain.ContentManagement.Specs.Helpers;
     using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;
     using TechTalk.SpecFlow;
@@ -28,10 +29,6 @@ namespace Marain.ContentManagement.Specs.Bindings
         /// The base Url that can be used to access the in-memory API.
         /// </summary>
         public const string BaseUrl = "http://localhost:8765";
-
-        private const string LastApiResponseKey = "LastApiResponse";
-
-        private const string LastApiExceptionKey = "LastApiException";
 
         /// <summary>
         /// Sets up and runs the function, using the <see cref="Startup"/> class to initialise the service provider.
@@ -98,86 +95,17 @@ namespace Marain.ContentManagement.Specs.Bindings
         }
 
         /// <summary>
-        /// Helper method to access the current <see cref="HttpClient"/>. Prefer to use one of the other helper methods
-        /// in this class to create HTTP requests and read responses.
+        /// Helper method to access the current <see cref="ContentClient"/>.
         /// </summary>
         /// <param name="context">The current <see cref="ScenarioContext"/>.</param>
-        /// <returns>The current <see cref="HttpClient"/>.</returns>
+        /// <returns>The current <see cref="ContentClient"/>.</returns>
+        /// <remarks>
+        /// There are further extension methods for <c>ScenarioContext</c> in the <see cref="ScenarioContextApiCallExtensions"/>
+        /// class that make it simpler to work with API responses.
+        /// </remarks>
         public static ContentClient ContentClient(this ScenarioContext context)
         {
             return context.Get<ContentClient>();
-        }
-
-        /// <summary>
-        /// Stores the last API response in the specified scenario context.
-        /// </summary>
-        /// <param name="context">The context to store data in.</param>
-        /// <param name="response">The response to store.</param>
-        public static void StoreLastApiResponse(this ScenarioContext context, SwaggerResponse response)
-        {
-            context.Set(response, LastApiResponseKey);
-        }
-
-        /// <summary>
-        /// Removes any stored API response from the scenario context.
-        /// </summary>
-        /// <param name="context">The context.</param>
-        public static void ClearLastApiResponse(this ScenarioContext context)
-        {
-            context.Remove(LastApiResponseKey);
-            context.Remove(LastApiExceptionKey);
-        }
-
-        /// <summary>
-        /// Retrieves the most recent API response stored in the scenario context.
-        /// </summary>
-        /// <param name="context">The context.</param>
-        /// <returns>The most recently stored <c>SwaggerResponse</c>.</returns>
-        public static SwaggerResponse GetLastApiResponse(this ScenarioContext context)
-        {
-            return context.Get<SwaggerResponse>(LastApiResponseKey);
-        }
-
-        /// <summary>
-        /// Attempts to retrieve the most recent API response stored in the scenario context.
-        /// </summary>
-        /// <param name="context">The context.</param>
-        /// <param name="response">The response.</param>
-        /// <returns>True if there is a response to return, false otherwise.</returns>
-        public static bool TryGetLastApiResponse(this ScenarioContext context, out SwaggerResponse response)
-        {
-            return context.TryGetValue(LastApiResponseKey, out response);
-        }
-
-        /// <summary>
-        /// Retrieves the most recent API response stored in the scenario context.
-        /// </summary>
-        /// <typeparam name="T">The type of the response content.</typeparam>
-        /// <param name="context">The context.</param>
-        /// <returns>The most recently stored <c>SwaggerResponse</c>.</returns>
-        public static SwaggerResponse<T> GetLastApiResponse<T>(this ScenarioContext context)
-        {
-            return context.Get<SwaggerResponse<T>>(LastApiResponseKey);
-        }
-
-        /// <summary>
-        /// Stores the given exception in the context.
-        /// </summary>
-        /// <param name="context">The context.</param>
-        /// <param name="ex">The exception to store.</param>
-        public static void StoreLastApiException(this ScenarioContext context, SwaggerException ex)
-        {
-            context.Set(ex, LastApiExceptionKey);
-        }
-
-        /// <summary>
-        /// Retrieves the most recent API response stored in the scenario context.
-        /// </summary>
-        /// <param name="context">The context.</param>
-        /// <returns>The API response.</returns>
-        public static SwaggerException GetLastApiException(this ScenarioContext context)
-        {
-            return context.Get<SwaggerException>(LastApiExceptionKey);
         }
     }
 }
