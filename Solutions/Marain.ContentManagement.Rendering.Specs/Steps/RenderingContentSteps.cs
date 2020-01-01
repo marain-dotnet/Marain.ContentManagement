@@ -1,4 +1,8 @@
-﻿namespace Marain.ContentManagement.Specs.Steps
+﻿// <copyright file="RenderingContentSteps.cs" company="Endjin Limited">
+// Copyright (c) Endjin Limited. All rights reserved.
+// </copyright>
+
+namespace Marain.ContentManagement.Specs.Steps
 {
     using System.IO;
     using System.Text;
@@ -12,6 +16,9 @@
     using Newtonsoft.Json.Linq;
     using NUnit.Framework;
     using TechTalk.SpecFlow;
+
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+#pragma warning disable SA1600 // Elements should be documented
 
     [Binding]
     public class RenderingContentSteps
@@ -55,6 +62,7 @@
                 {
                     ContentDriver.SetContentLiquidMarkdown(content, row);
                 }
+
                 this.scenarioContext.Set(content, name);
             }
         }
@@ -103,3 +111,6 @@
         }
     }
 }
+
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+#pragma warning restore SA1600 // Elements should be documented

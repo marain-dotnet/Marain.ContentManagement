@@ -10,7 +10,6 @@ namespace Marain.Cms.Api.Host
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Azure.WebJobs;
     using Microsoft.Azure.WebJobs.Extensions.Http;
-    using Microsoft.Extensions.DependencyInjection;
 
     /// <summary>
     /// The host for Content Management services.

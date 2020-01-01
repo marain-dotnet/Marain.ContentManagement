@@ -1,5 +1,5 @@
-﻿// <copyright file="ContentManagementCosmosDbBindings.cs" company="Endjin">
-// Copyright (c) Endjin. All rights reserved.
+﻿// <copyright file="ContentManagementCosmosContainerBindings.cs" company="Endjin Limited">
+// Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
 namespace Marain.ContentManagement.Specs.Bindings
@@ -21,9 +21,13 @@ namespace Marain.ContentManagement.Specs.Bindings
     public static class ContentManagementCosmosContainerBindings
     {
         /// <summary>
-        /// The key for the claims permissions container in the feature context
+        /// The key for the specs container in the feature context.
         /// </summary>
         public const string ContentManagementSpecsContainer = "ContentManagementSpecsContainer";
+
+        /// <summary>
+        /// The key for the content store in the feature context.
+        /// </summary>
         public const string ContentManagementSpecsContentStore = "ContentManagementSpecsContentStore";
 
         /// <summary>
@@ -47,6 +51,7 @@ namespace Marain.ContentManagement.Specs.Bindings
         /// </summary>
         /// <param name="featureContext">The feature context.</param>
         /// <remarks>Note that this sets up a resource in Azure and will incur cost. Ensure the corresponding tear down operation is always run, or verify manually after a test run.</remarks>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [BeforeFeature("@setupTenantedCosmosContainer", Order = ContainerBeforeFeatureOrder.ServiceProviderAvailable)]
         public static async Task SetupCosmosContainerForRootTenant(FeatureContext featureContext)
         {

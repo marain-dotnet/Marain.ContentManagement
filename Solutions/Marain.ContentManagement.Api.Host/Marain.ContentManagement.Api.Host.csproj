@@ -1,10 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
+
+  <Import Project="..\Common.NetStandard_2_0.proj" />
+  
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
+  
   <PropertyGroup>
     <AzureFunctionsVersion>v2</AzureFunctionsVersion>
   </PropertyGroup>
+  
   <PropertyGroup>
     <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
     <PackageDescription>
@@ -14,13 +19,15 @@
     <PackageReleaseNotes>
     </PackageReleaseNotes>
   </PropertyGroup>
-  <Import Project="..\Common.NetStandard_2_0.proj" />
+  
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="1.0.28" />
   </ItemGroup>
+  
   <ItemGroup>
     <ProjectReference Include="..\Marain.ContentManagement.Api.Services.AspNetCore\Marain.ContentManagement.Api.Services.AspNetCore.csproj" />
   </ItemGroup>
+  
   <ItemGroup>
     <None Update="host.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -34,4 +41,5 @@
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </None>
   </ItemGroup>
+
 </Project>

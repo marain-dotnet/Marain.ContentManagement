@@ -12,7 +12,7 @@ namespace Marain.ContentManagement.Specs.Bindings
     using TechTalk.SpecFlow;
 
     /// <summary>
-    ///     Container related bindings to configure the service provider for features.
+    /// Container related bindings to configure the service provider for features.
     /// </summary>
     [Binding]
     public static class ContentManagementContainerBindings

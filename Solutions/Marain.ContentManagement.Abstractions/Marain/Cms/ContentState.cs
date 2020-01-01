@@ -5,7 +5,6 @@
 namespace Marain.Cms
 {
     using System;
-    using Corvus.Extensions;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 

@@ -7,8 +7,6 @@ namespace Marain.ContentManagement.Specs.Steps
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 #pragma warning disable SA1600 // Elements should be documented
 
-    using System.Threading.Tasks;
-    using Marain.Cms;
     using Marain.Cms.Api.Client;
     using Marain.ContentManagement.Specs.Bindings;
     using Marain.ContentManagement.Specs.Drivers;

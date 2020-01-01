@@ -8,7 +8,6 @@ namespace Marain.ContentManagement.Specs.Steps
 #pragma warning disable SA1600 // Elements should be documented
 
     using System.Linq;
-    using System.Reflection;
     using Marain.Cms.Api.Client;
     using Marain.ContentManagement.Specs.Bindings;
     using Marain.ContentManagement.Specs.Drivers;

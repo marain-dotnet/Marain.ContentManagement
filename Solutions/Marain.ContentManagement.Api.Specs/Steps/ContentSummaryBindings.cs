@@ -6,10 +6,7 @@ namespace Marain.ContentManagement.Specs.Steps
 {
     using System;
     using System.Linq;
-    using System.Net.Http;
-    using System.Net.Http.Headers;
     using System.Threading.Tasks;
-    using System.Web;
     using Marain.Cms.Api.Client;
     using Marain.ContentManagement.Specs.Bindings;
     using Marain.ContentManagement.Specs.Drivers;
