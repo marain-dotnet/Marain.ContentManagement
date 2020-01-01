@@ -1,4 +1,6 @@
-﻿Feature: Get workflow state history
+﻿@useTransientTenant
+@useContentManagementApi
+Feature: Get workflow state history
 
 Background:
 	Given content items have been created

@@ -28,7 +28,7 @@ namespace Marain.ContentManagement.Specs.Bindings
         /// The newly created tenant is added to the <see cref="ScenarioContext"/>. Access it via the helper methods
         /// <see cref="CurrentTenant(ScenarioContext)"/> or <see cref="CurrentTenantId(ScenarioContext)"/>.
         /// </remarks>
-        [BeforeScenario(Order = 10)]
+        [BeforeScenario("useTransientTenant", Order = 10)]
         public static async Task SetupTransientTenant(ScenarioContext context)
         {
             // This needs to run after the ServiceProvider has been constructed
@@ -57,7 +57,7 @@ namespace Marain.ContentManagement.Specs.Bindings
         /// </summary>
         /// <param name="context">The current <see cref="ScenarioContext"/>.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        [AfterScenario]
+        [AfterScenario("useTransientTenant")]
         public static Task TearDownTransientTenant(ScenarioContext context)
         {
             return context.RunAndStoreExceptionsAsync(() =>
@@ -71,21 +71,24 @@ namespace Marain.ContentManagement.Specs.Bindings
         }
 
         /// <summary>
-        /// Retrieves the transient tenant created for the current scenario from the supplied <see cref="ScenarioContext"/>.
+        /// Retrieves the transient tenant created for the current scenario from the supplied <see cref="ScenarioContext"/>,
+        /// or null if there is none.
         /// </summary>
         /// <param name="context">The current <see cref="ScenarioContext"/>.</param>
         /// <returns>The <see cref="ITenant"/>.</returns>
         public static ITenant CurrentTenant(this ScenarioContext context)
         {
-            return context.Get<ITenant>();
+            context.TryGetValue(out ITenant result);
+            return result;
         }
 
         /// <summary>
-        /// Retrieves the Id of the transient tenant created for the current scenario from the supplied
+        /// Retrieves the Id of the transient tenant created for the current scenario from the supplied scenario context.
         /// <see cref="ScenarioContext"/>.
         /// </summary>
         /// <param name="context">The current <see cref="ScenarioContext"/>.</param>
         /// <returns>The Id of the <see cref="ITenant"/>.</returns>
+        /// <exception cref="ArgumentNullException">There is no current tenant.</exception>
         public static string CurrentTenantId(this ScenarioContext context)
         {
             return context.CurrentTenant().Id;

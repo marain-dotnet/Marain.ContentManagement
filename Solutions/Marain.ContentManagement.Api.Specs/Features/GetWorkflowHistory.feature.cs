@@ -19,6 +19,8 @@ namespace Marain.ContentManagement.Specs.Features
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
     [NUnit.Framework.DescriptionAttribute("Get workflow history")]
+    [NUnit.Framework.CategoryAttribute("useTransientTenant")]
+    [NUnit.Framework.CategoryAttribute("useContentManagementApi")]
     public partial class GetWorkflowHistoryFeature
     {
         
@@ -31,7 +33,9 @@ namespace Marain.ContentManagement.Specs.Features
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Get workflow history", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Get workflow history", null, ProgrammingLanguage.CSharp, new string[] {
+                        "useTransientTenant",
+                        "useContentManagementApi"});
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -71,7 +75,7 @@ namespace Marain.ContentManagement.Specs.Features
         
         public virtual void FeatureBackground()
         {
-#line 3
+#line 5
 #line hidden
             TechTalk.SpecFlow.Table table28 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name",
@@ -445,7 +449,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "A description of the content",
                         "fr-FR",
                         "This is the fragment of text"});
-#line 4
+#line 6
  testRunner.Given("content items have been created", ((string)(null)), table28, "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table29 = new TechTalk.SpecFlow.Table(new string[] {
@@ -727,7 +731,7 @@ namespace Marain.ContentManagement.Specs.Features
                         "archived",
                         "Frodo Baggins",
                         "{newguid}"});
-#line 36
+#line 38
  testRunner.And("workflow states have been set for the content items", ((string)(null)), table29, "And ");
 #line hidden
         }
@@ -739,21 +743,21 @@ namespace Marain.ContentManagement.Specs.Features
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Basic history with state retrieval by state name, without specifying a limit or c" +
                     "ontinuation token", null, ((string[])(null)));
-#line 69
+#line 71
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 3
+#line 5
 this.FeatureBackground();
-#line 70
+#line 72
  testRunner.When("I request content history with state for slug \'{Content0.Slug}\' and workflow Id \'" +
                     "workflow1Id\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 71
- testRunner.Then("the response should have a status of \'200\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 72
- testRunner.And("the response should contain 20 embedded content summaries with state", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 73
- testRunner.And("the response should contain a \'self\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.Then("the response should have a status of \'200\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 74
+ testRunner.And("the response should contain 20 embedded content summaries with state", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 75
+ testRunner.And("the response should contain a \'self\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 76
  testRunner.And("the response should contain a \'next\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -764,22 +768,22 @@ this.FeatureBackground();
         public virtual void HistoryRetrievalSpecifyingAContinuationToken()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("History retrieval specifying a continuation token", null, ((string[])(null)));
-#line 76
+#line 78
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 3
+#line 5
 this.FeatureBackground();
-#line 77
+#line 79
  testRunner.Given("I have requested content history with state for slug \'{Content0.Slug}\' and workfl" +
                     "ow Id \'workflow1Id\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 78
+#line 80
  testRunner.When("I request content history with state for slug \'{Content0.Slug}\' and workflow Id \'" +
                     "workflow1Id\' with the contination token from the previous response", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 79
- testRunner.Then("the response should have a status of \'200\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 80
- testRunner.And("the response should contain another 10 embedded content summaries with state", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 81
+ testRunner.Then("the response should have a status of \'200\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 82
+ testRunner.And("the response should contain another 10 embedded content summaries with state", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 83
  testRunner.And("the response should contain a \'self\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -790,21 +794,21 @@ this.FeatureBackground();
         public virtual void HistoryRetrievalSpecifyingALimit()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("History retrieval specifying a limit", null, ((string[])(null)));
-#line 83
+#line 85
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 3
+#line 5
 this.FeatureBackground();
-#line 84
+#line 86
  testRunner.When("I request content history with state for slug \'{Content0.Slug}\' and workflow Id \'" +
                     "workflow1Id\' with a limit of 5 items", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 85
- testRunner.Then("the response should have a status of \'200\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 86
- testRunner.And("the response should contain 5 embedded content summaries with state", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 87
- testRunner.And("the response should contain a \'self\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.Then("the response should have a status of \'200\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 88
+ testRunner.And("the response should contain 5 embedded content summaries with state", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 89
+ testRunner.And("the response should contain a \'self\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 90
  testRunner.And("the response should contain a \'next\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -817,21 +821,21 @@ this.FeatureBackground();
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("History retrieval with fewer items than the limit doesn\'t include a continuation " +
                     "token", null, ((string[])(null)));
-#line 90
+#line 92
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 3
+#line 5
 this.FeatureBackground();
-#line 91
+#line 93
  testRunner.When("I request content history with state for slug \'{Content0.Slug}\' and workflow Id \'" +
                     "workflow1Id\' with a limit of 50 items", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 92
- testRunner.Then("the response should have a status of \'200\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 93
- testRunner.And("the response should contain 30 embedded content summaries with state", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 94
- testRunner.And("the response should contain a \'self\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.Then("the response should have a status of \'200\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 95
+ testRunner.And("the response should contain 30 embedded content summaries with state", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 96
+ testRunner.And("the response should contain a \'self\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 97
  testRunner.And("the response should not contain a \'next\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();

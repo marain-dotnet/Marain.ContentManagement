@@ -19,6 +19,8 @@ namespace Marain.ContentManagement.Specs.Features
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
     [NUnit.Framework.DescriptionAttribute("Get content summary")]
+    [NUnit.Framework.CategoryAttribute("useTransientTenant")]
+    [NUnit.Framework.CategoryAttribute("useContentManagementApi")]
     public partial class GetContentSummaryFeature
     {
         
@@ -31,7 +33,9 @@ namespace Marain.ContentManagement.Specs.Features
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Get content summary", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Get content summary", null, ProgrammingLanguage.CSharp, new string[] {
+                        "useTransientTenant",
+                        "useContentManagementApi"});
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -74,14 +78,14 @@ namespace Marain.ContentManagement.Specs.Features
         public virtual void RequestingItemThatDoesNotExistReturnsA404NotFound()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting item that does not exist returns a 404 Not Found", null, ((string[])(null)));
-#line 3
+#line 5
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 4
- testRunner.Given("there is no content available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 5
- testRunner.When("I request the content summary with slug \'thisismyslug\' and Id \'thisismyid\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 6
+ testRunner.Given("there is no content available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 7
+ testRunner.When("I request the content summary with slug \'thisismyslug\' and Id \'thisismyid\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 8
  testRunner.Then("the response should have a status of \'404\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -92,7 +96,7 @@ this.ScenarioInitialize(scenarioInfo);
         public virtual void RequestingAnItemBySlugAndIdReturnsTheItem()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting an item by slug and Id returns the item", null, ((string[])(null)));
-#line 8
+#line 10
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -120,17 +124,17 @@ this.ScenarioInitialize(scenarioInfo);
                         "A description of the content",
                         "fr-FR",
                         "This is the fragment of text"});
-#line 9
+#line 11
  testRunner.Given("a content item has been created", ((string)(null)), table18, "Given ");
-#line 12
- testRunner.When("I request the content summary with slug \'{Expected.Slug}\' and Id \'{Expected.Id}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 13
- testRunner.Then("the response should have a status of \'200\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 14
- testRunner.And("the response body should contain a summary of the content item \'Expected\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.When("I request the content summary with slug \'{Expected.Slug}\' and Id \'{Expected.Id}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 15
- testRunner.And("the ETag header should be set", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.Then("the response should have a status of \'200\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 16
+ testRunner.And("the response body should contain a summary of the content item \'Expected\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 17
+ testRunner.And("the ETag header should be set", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 18
  testRunner.And("the Cache header should be set to \'max-age=31536000\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -143,7 +147,7 @@ this.ScenarioInitialize(scenarioInfo);
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting an item by slug and Id with an etag that matches the item returns a 30" +
                     "4 Not Modified", null, ((string[])(null)));
-#line 18
+#line 20
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -171,17 +175,17 @@ this.ScenarioInitialize(scenarioInfo);
                         "A description of the content",
                         "fr-FR",
                         "This is the fragment of text"});
-#line 19
+#line 21
  testRunner.Given("a content item has been created", ((string)(null)), table19, "Given ");
-#line 22
+#line 24
  testRunner.And("I have requested the content summary with slug \'{Expected.Slug}\' and Id \'{Expecte" +
                     "d.Id}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 23
+#line 25
  testRunner.When("I request the content summary with slug \'{Expected.Slug}\' and Id \'{Expected.Id}\' " +
                     "using the etag returned by the previous request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 24
+#line 26
  testRunner.Then("the response should have a status of \'304\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 25
+#line 27
  testRunner.And("there should be no response body", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -194,7 +198,7 @@ this.ScenarioInitialize(scenarioInfo);
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting an item by slug and Id with an etag that does not matches the item ret" +
                     "urns the item", null, ((string[])(null)));
-#line 27
+#line 29
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -222,18 +226,18 @@ this.ScenarioInitialize(scenarioInfo);
                         "A description of the content",
                         "fr-FR",
                         "This is the fragment of text"});
-#line 28
+#line 30
  testRunner.Given("a content item has been created", ((string)(null)), table20, "Given ");
-#line 31
+#line 33
  testRunner.When("I request the content summary with slug \'{Expected.Slug}\' and Id \'{Expected.Id}\' " +
                     "using a random etag", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 32
- testRunner.Then("the response should have a status of \'200\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 33
- testRunner.And("the response body should contain a summary of the content item \'Expected\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 34
- testRunner.And("the ETag header should be set", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.Then("the response should have a status of \'200\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 35
+ testRunner.And("the response body should contain a summary of the content item \'Expected\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 36
+ testRunner.And("the ETag header should be set", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 37
  testRunner.And("the Cache header should be set to \'max-age=31536000\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();

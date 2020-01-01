@@ -19,6 +19,8 @@ namespace Marain.ContentManagement.Specs.Features
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
     [NUnit.Framework.DescriptionAttribute("CreateContent")]
+    [NUnit.Framework.CategoryAttribute("useTransientTenant")]
+    [NUnit.Framework.CategoryAttribute("useContentManagementApi")]
     public partial class CreateContentFeature
     {
         
@@ -31,7 +33,9 @@ namespace Marain.ContentManagement.Specs.Features
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "CreateContent", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "CreateContent", null, ProgrammingLanguage.CSharp, new string[] {
+                        "useTransientTenant",
+                        "useContentManagementApi"});
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -74,7 +78,7 @@ namespace Marain.ContentManagement.Specs.Features
         public virtual void CreateANewContentItemWithANewSlugAndId()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a new content item with a new slug and Id", null, ((string[])(null)));
-#line 3
+#line 5
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -102,21 +106,21 @@ this.ScenarioInitialize(scenarioInfo);
                         "A description of the content",
                         "fr-FR",
                         "This is the fragment of text"});
-#line 4
+#line 6
  testRunner.Given("I have a new content item", ((string)(null)), table1, "Given ");
-#line 7
- testRunner.When("I request that the content \'Expected\' is created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 8
- testRunner.Then("the response should have a status of \'201\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 9
- testRunner.And("the response body should contain the content item \'Expected\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.When("I request that the content \'Expected\' is created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 10
- testRunner.And("the Location header should be set", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.Then("the response should have a status of \'201\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 11
- testRunner.And("the response should contain a \'self\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("the response body should contain the content item \'Expected\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 12
- testRunner.And("the location header should match the response \'self\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("the Location header should be set", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 13
+ testRunner.And("the response should contain a \'self\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 14
+ testRunner.And("the location header should match the response \'self\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 15
  testRunner.And("the ETag header should be set", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -127,7 +131,7 @@ this.ScenarioInitialize(scenarioInfo);
         public virtual void CreateANewContentItemAtAnExistingSlugWithANewId()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a new content item at an existing slug with a new Id", null, ((string[])(null)));
-#line 15
+#line 17
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -139,7 +143,7 @@ this.ScenarioInitialize(scenarioInfo);
         public virtual void CreateANewContentItemWithANewSlugAndAnExistingId()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a new content item with a new slug and an existing Id", null, ((string[])(null)));
-#line 17
+#line 19
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -151,7 +155,7 @@ this.ScenarioInitialize(scenarioInfo);
         public virtual void CreatingAContentItemWithAnExistingSlugAndIdFails()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Creating a content item with an existing slug and Id fails", null, ((string[])(null)));
-#line 19
+#line 21
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -179,13 +183,13 @@ this.ScenarioInitialize(scenarioInfo);
                         "A description of the content",
                         "fr-FR",
                         "This is the fragment of text"});
-#line 20
+#line 22
  testRunner.Given("I have a new content item", ((string)(null)), table2, "Given ");
-#line 23
- testRunner.And("I have requested that the content \'Expected\' is created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 24
- testRunner.When("I issue a second request that the content \'Expected\' is created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 25
+ testRunner.And("I have requested that the content \'Expected\' is created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 26
+ testRunner.When("I issue a second request that the content \'Expected\' is created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 27
  testRunner.Then("the response should have a status of \'409\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -196,7 +200,7 @@ this.ScenarioInitialize(scenarioInfo);
         public virtual void NewItemValidation()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("New item validation", null, ((string[])(null)));
-#line 28
+#line 29
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden

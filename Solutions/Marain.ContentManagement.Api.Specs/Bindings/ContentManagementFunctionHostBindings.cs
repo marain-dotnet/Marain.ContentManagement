@@ -44,7 +44,7 @@ namespace Marain.ContentManagement.Specs.Bindings
         /// As part of the initialisation, an <see cref="HttpClient"/> will be created and stored in
         /// the <see cref="ScenarioContext"/>.
         /// </remarks>
-        [BeforeScenario(Order = 0)]
+        [BeforeScenario("useContentManagementApi", Order = 0)]
         public static async Task StartContentManagementFunction(ScenarioContext context)
         {
             IWebHostBuilder builder = WebHost.CreateDefaultBuilder();
@@ -73,7 +73,7 @@ namespace Marain.ContentManagement.Specs.Bindings
         /// <param name="context">The current <see cref="ScenarioContext"/>.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         /// <remarks>This tears down the service provider too, so needs to happen last.</remarks>
-        [AfterScenario(Order = int.MaxValue)]
+        [AfterScenario("useContentManagementApi", Order = int.MaxValue)]
         public static Task StopContentManagementFunction(ScenarioContext context)
         {
             return context.RunAndStoreExceptionsAsync(async () =>

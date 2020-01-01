@@ -1,4 +1,6 @@
-﻿Feature: Get content history
+﻿@useTransientTenant
+@useContentManagementApi
+Feature: Get content history
 
 Background:
 	Given content items have been created

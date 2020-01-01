@@ -1,4 +1,6 @@
-﻿Feature: GetContent
+﻿@useTransientTenant
+@useContentManagementApi
+Feature: GetContent
 
 Scenario: Requesting an item by slug and Id returns the item
 	Given a content item has been created

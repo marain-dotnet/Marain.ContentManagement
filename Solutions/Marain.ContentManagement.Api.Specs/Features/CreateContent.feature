@@ -1,4 +1,6 @@
-﻿Feature: CreateContent
+﻿@useTransientTenant
+@useContentManagementApi
+Feature: CreateContent
 
 Scenario: Create a new content item with a new slug and Id
 	Given I have a new content item
@@ -23,6 +25,5 @@ Scenario: Creating a content item with an existing slug and Id fails
 	And I have requested that the content 'Expected' is created
 	When I issue a second request that the content 'Expected' is created
 	Then the response should have a status of '409'
-
 
 Scenario: New item validation

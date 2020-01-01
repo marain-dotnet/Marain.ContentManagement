@@ -1,4 +1,6 @@
-﻿Feature: GetContentState
+﻿@useTransientTenant
+@useContentManagementApi
+Feature: GetContentState
 
 Scenario: Requesting an item by slug and workflow Id returns the item
 	Given a content item has been created

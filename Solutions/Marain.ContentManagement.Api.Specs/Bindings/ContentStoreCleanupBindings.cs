@@ -26,6 +26,11 @@ namespace Marain.ContentManagement.Specs.Bindings
         /// </summary>
         /// <param name="context">The current <see cref="ScenarioContext"/>.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <remarks>
+        /// It's critically important that this runs to clean up Cosmos collections created as part of test execution. As such,
+        /// this code runs for every scenario but doesn't do anything if it can't obtain both the tenant and service provider
+        /// from the <c>ScenarioContext</c>.
+        /// </remarks>
         [AfterScenario]
         public static Task ClearDownTransientTenantContentStore(ScenarioContext context)
         {
@@ -33,11 +38,14 @@ namespace Marain.ContentManagement.Specs.Bindings
             {
                 ITenant currentTenant = context.CurrentTenant();
 
-                IServiceProvider serviceProvider = context.ServiceProvider();
-                ITenantCosmosContainerFactory containerFactory = serviceProvider.GetRequiredService<ITenantCosmosContainerFactory>();
-                CosmosContainerDefinition containerDefinition = serviceProvider.GetRequiredService<CosmosContainerDefinition>();
-                Container container = await containerFactory.GetContainerForTenantAsync(currentTenant, containerDefinition).ConfigureAwait(false);
-                await container.DeleteContainerAsync().ConfigureAwait(false);
+                if (currentTenant != null)
+                {
+                    IServiceProvider serviceProvider = context.ServiceProvider();
+                    ITenantCosmosContainerFactory containerFactory = serviceProvider.GetRequiredService<ITenantCosmosContainerFactory>();
+                    CosmosContainerDefinition containerDefinition = serviceProvider.GetRequiredService<CosmosContainerDefinition>();
+                    Container container = await containerFactory.GetContainerForTenantAsync(currentTenant, containerDefinition).ConfigureAwait(false);
+                    await container.DeleteContainerAsync().ConfigureAwait(false);
+                }
             });
         }
     }

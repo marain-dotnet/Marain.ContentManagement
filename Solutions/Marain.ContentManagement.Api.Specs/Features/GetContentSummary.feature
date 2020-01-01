@@ -1,4 +1,6 @@
-﻿Feature: Get content summary
+﻿@useTransientTenant
+@useContentManagementApi
+Feature: Get content summary
 
 Scenario: Requesting item that does not exist returns a 404 Not Found
 	Given there is no content available
