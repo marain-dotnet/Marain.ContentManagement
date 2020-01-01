@@ -36,7 +36,7 @@ namespace Marain.ContentManagement.Specs.Bindings
         {
             return context.RunAndStoreExceptionsAsync(async () =>
             {
-                ITenant currentTenant = context.CurrentTenant();
+                ITenant currentTenant = context.GetTransientTenant();
 
                 if (currentTenant != null)
                 {
