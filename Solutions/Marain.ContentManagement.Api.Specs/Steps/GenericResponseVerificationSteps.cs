@@ -45,7 +45,6 @@ namespace Marain.ContentManagement.Specs.Steps
         {
             SwaggerResponse response = this.scenarioContext.GetLastApiResponse();
             string cacheHeader = response.Headers["Cache-Control"]?.First();
-            Assert.IsNotNull(cacheHeader);
             Assert.AreEqual(expectedValue, cacheHeader);
         }
 
