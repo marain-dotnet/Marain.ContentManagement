@@ -15,13 +15,7 @@ namespace Marain.Cms
         public const string RegisteredContentType = "application/vnd.marain.cms.contentpayload.liquid";
 
         /// <inheritdoc/>
-        public string ContentType
-        {
-            get
-            {
-                return RegisteredContentType;
-            }
-        }
+        public string ContentType => RegisteredContentType;
 
         /// <summary>
         /// Gets or sets the liquid template for the content.
