@@ -65,6 +65,10 @@ namespace Marain.Cms.Internal
                     // TODO: How are we rendering error/invalid/missing states?
                 }
             }
+            else
+            {
+                throw new ArgumentException(nameof(currentPayload));
+            }
         }
 
         private static bool CanRender(ContentWithState content, PublicationStateToRender stateToRender)

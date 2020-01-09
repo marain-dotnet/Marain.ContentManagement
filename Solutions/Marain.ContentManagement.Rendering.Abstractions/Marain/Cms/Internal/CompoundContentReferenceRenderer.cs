@@ -4,6 +4,7 @@
 
 namespace Marain.Cms.Internal
 {
+    using System;
     using System.IO;
     using System.Threading.Tasks;
     using Corvus.Extensions.Json;
@@ -48,6 +49,10 @@ namespace Marain.Cms.Internal
                     IContentRenderer renderer = this.contentRendererFactory.GetRendererFor(content.ContentPayload);
                     await renderer.RenderAsync(output, content, content.ContentPayload, context).ConfigureAwait(false);
                 }
+            }
+            else
+            {
+                throw new ArgumentException(nameof(currentPayload));
             }
         }
     }

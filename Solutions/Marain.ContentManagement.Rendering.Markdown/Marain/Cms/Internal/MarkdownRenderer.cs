@@ -4,6 +4,7 @@
 
 namespace Marain.Cms.Internal
 {
+    using System;
     using System.IO;
     using System.Threading.Tasks;
     using Corvus.Extensions.Json;
@@ -41,6 +42,10 @@ namespace Marain.Cms.Internal
             if (currentPayload is MarkdownPayload markdown)
             {
                 Markdown.ToHtml(markdown.Markdown, output, this.pipeline);
+            }
+            else
+            {
+                return Task.FromException(new ArgumentException(nameof(currentPayload)));
             }
 
             return Task.CompletedTask;

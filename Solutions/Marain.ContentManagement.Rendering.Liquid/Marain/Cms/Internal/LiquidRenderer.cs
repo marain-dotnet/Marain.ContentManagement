@@ -4,6 +4,7 @@
 
 namespace Marain.Cms.Internal
 {
+    using System;
     using System.IO;
     using System.Threading.Tasks;
     using Corvus.Extensions.Json;
@@ -32,6 +33,10 @@ namespace Marain.Cms.Internal
                 var template = Template.Parse(liquid.Template);
                 string rendered = await template.RenderAsync(Hash.FromAnonymousObject(new { content = new ContentDrop(parentContent) })).ConfigureAwait(false);
                 await output.WriteAsync(rendered).ConfigureAwait(false);
+            }
+            else
+            {
+                throw new ArgumentException(nameof(currentPayload));
             }
         }
     }

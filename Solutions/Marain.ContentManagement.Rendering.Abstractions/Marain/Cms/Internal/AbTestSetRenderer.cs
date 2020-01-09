@@ -54,6 +54,10 @@ namespace Marain.Cms.Internal
                 IContentRenderer renderer = this.contentRendererFactory.GetRendererFor(content.ContentPayload);
                 await renderer.RenderAsync(output, content, content.ContentPayload, context).ConfigureAwait(false);
             }
+            else
+            {
+                throw new ArgumentException(nameof(currentPayload));
+            }
         }
     }
 }

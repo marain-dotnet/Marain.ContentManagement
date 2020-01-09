@@ -4,6 +4,7 @@
 
 namespace Marain.Cms.Internal
 {
+    using System;
     using System.IO;
     using System.Threading.Tasks;
     using Corvus.Extensions.Json;
@@ -29,6 +30,10 @@ namespace Marain.Cms.Internal
             if (currentPayload is ContentFragmentPayload fragment)
             {
                 await output.WriteAsync(fragment.Fragment).ConfigureAwait(false);
+            }
+            else
+            {
+                throw new ArgumentException(nameof(currentPayload));
             }
         }
     }
