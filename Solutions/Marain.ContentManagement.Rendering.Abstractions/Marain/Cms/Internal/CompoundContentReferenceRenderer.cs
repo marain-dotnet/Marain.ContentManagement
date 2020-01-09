@@ -10,7 +10,7 @@ namespace Marain.Cms.Internal
     using Corvus.Extensions.Json;
 
     /// <summary>
-    /// Writes a content fragment to the output stream.
+    /// Writes the content for each of the <see cref="CompoundContentReferencePayload.Children"/>, in order, to the output stream.
     /// </summary>
     public class CompoundContentReferenceRenderer : IContentRenderer
     {

@@ -12,7 +12,7 @@ namespace Marain.Cms.Internal
     using Markdig;
 
     /// <summary>
-    /// Writes a content fragment to the output stream.
+    /// Writes a liquid template containing markdown to the output stream.
     /// </summary>
     public class LiquidWithMarkdownRenderer : IContentRenderer
     {

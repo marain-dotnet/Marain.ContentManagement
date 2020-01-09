@@ -11,7 +11,7 @@ namespace Marain.Cms.Internal
     using DotLiquid;
 
     /// <summary>
-    /// Writes a content fragment to the output stream.
+    /// Writes a liquid template to the output stream.
     /// </summary>
     public class LiquidRenderer : IContentRenderer
     {

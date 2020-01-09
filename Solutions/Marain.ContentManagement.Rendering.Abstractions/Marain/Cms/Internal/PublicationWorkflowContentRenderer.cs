@@ -11,7 +11,7 @@ namespace Marain.Cms.Internal
     using Marain.Cms;
 
     /// <summary>
-    /// Writes a content fragment to the output stream.
+    /// Writes the content for the instance of the content in the state in the <see cref="WellKnownWorkflowId.ContentPublication"/> workflow that is specified by the value for the <see cref="PublicationStateContextKey"/> in the context, to the output stream.
     /// </summary>
     public class PublicationWorkflowContentRenderer : IContentRenderer
     {

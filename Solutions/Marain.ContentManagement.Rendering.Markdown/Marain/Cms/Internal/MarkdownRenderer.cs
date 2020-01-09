@@ -11,7 +11,7 @@ namespace Marain.Cms.Internal
     using Markdig;
 
     /// <summary>
-    /// Writes a content fragment to the output stream.
+    /// Writes markdown content to the output stream.
     /// </summary>
     public class MarkdownRenderer : IContentRenderer
     {
