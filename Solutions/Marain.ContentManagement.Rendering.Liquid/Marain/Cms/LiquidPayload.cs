@@ -5,7 +5,7 @@
 namespace Marain.Cms
 {
     /// <summary>
-    /// A <see cref="IContentPayload"/> representing a simple string fragment of content.
+    /// A <see cref="IContentPayload"/> representing a Liquid template (https://shopify.github.io/liquid/).
     /// </summary>
     public class LiquidPayload : IContentPayload
     {
