@@ -9,7 +9,6 @@ namespace Marain.ContentManagement.Specs.Drivers
     using System.Collections.ObjectModel;
     using System.Globalization;
     using System.Linq;
-    using System.Reflection;
     using Corvus.Extensions;
     using Marain.Cms;
     using Marain.Cms.Api.Client;
@@ -113,45 +112,6 @@ namespace Marain.ContentManagement.Specs.Drivers
             Assert.AreEqual(expected.ChangedBy.UserName, actual.ChangedBy.UserName);
         }
 
-        public static T GetObjectValue<T>(ScenarioContext scenarioContext, string property)
-        {
-            property = SubstituteContent(property);
-
-            if (property is null)
-            {
-                return default;
-            }
-
-            if (!(property.StartsWith('{') && property.EndsWith('}')))
-            {
-                // We assume it must be a string as it has no substitution
-                return CastTo<T>.From(property);
-            }
-
-            int indexOfDot = property.IndexOf('.');
-            string contextKey = property.Substring(1, indexOfDot - 1);
-            string propertyName = property.Substring(indexOfDot + 1, property.Length - (indexOfDot + 2));
-
-            object contextValue = scenarioContext.ContainsKey(contextKey) ? scenarioContext[contextKey] : null;
-            if (contextValue is null)
-            {
-                return default;
-            }
-
-            PropertyInfo propertyInfo = contextValue.GetType().GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance);
-            if (propertyInfo == null)
-            {
-                throw new InvalidOperationException($"The property called {propertyName} was not found on an instance of the type {contextValue.GetType().Name}");
-            }
-
-            if (!typeof(T).IsAssignableFrom(propertyInfo.PropertyType))
-            {
-                throw new InvalidOperationException($"The property called {propertyName} of type {propertyInfo.PropertyType.Name} is not an instance of the requested type {typeof(T).Name}");
-            }
-
-            return CastTo<T>.From(propertyInfo.GetValue(contextValue));
-        }
-
         public static CreateContentRequest ContentAsCreateContentRequest(Cms.Content item)
         {
             return new CreateContentRequest
@@ -202,7 +162,7 @@ namespace Marain.ContentManagement.Specs.Drivers
         /// <param name="row">The row from which to get the content fragment.</param>
         public static void SetContentFragment(Cms.Content content, TableRow row)
         {
-            content.ContentPayload = new ContentFragmentPayload { Fragment = SubstituteContent(row["Fragment"]) };
+            content.ContentPayload = new ContentFragmentPayload { Fragment = SpecHelpers.PerformSubstitutions(row["Fragment"]) };
         }
 
         /// <summary>
@@ -212,7 +172,7 @@ namespace Marain.ContentManagement.Specs.Drivers
         /// <param name="row">The row from which to get the slug for the workflow content.</param>
         public static void SetContentWorkflow(Cms.Content content, TableRow row)
         {
-            content.ContentPayload = new PublicationWorkflowContentPayload { Slug = SubstituteContent(row["ContentSlug"]) };
+            content.ContentPayload = new PublicationWorkflowContentPayload { Slug = SpecHelpers.PerformSubstitutions(row["ContentSlug"]) };
         }
 
         /// <summary>
@@ -222,7 +182,7 @@ namespace Marain.ContentManagement.Specs.Drivers
         /// <param name="row">The row from which to get the markdown.</param>
         public static void SetContentMarkdown(Cms.Content content, TableRow row)
         {
-            content.ContentPayload = new MarkdownPayload { Markdown = SubstituteContent(row["Markdown"]) };
+            content.ContentPayload = new MarkdownPayload { Markdown = SpecHelpers.PerformSubstitutions(row["Markdown"]) };
         }
 
         /// <summary>
@@ -232,7 +192,7 @@ namespace Marain.ContentManagement.Specs.Drivers
         /// <param name="row">The row from which to get the markdown.</param>
         public static void SetContentLiquid(Cms.Content content, TableRow row)
         {
-            content.ContentPayload = new LiquidPayload { Template = SubstituteContent(row["Liquid template"]) };
+            content.ContentPayload = new LiquidPayload { Template = SpecHelpers.PerformSubstitutions(row["Liquid template"]) };
         }
 
         /// <summary>
@@ -242,7 +202,7 @@ namespace Marain.ContentManagement.Specs.Drivers
         /// <param name="row">The row from which to get the markdown.</param>
         public static void SetContentLiquidMarkdown(Cms.Content content, TableRow row)
         {
-            content.ContentPayload = new LiquidWithMarkdownPayload { Template = SubstituteContent(row["Liquid with markdown template"]) };
+            content.ContentPayload = new LiquidWithMarkdownPayload { Template = SpecHelpers.PerformSubstitutions(row["Liquid with markdown template"]) };
         }
 
         /// <summary>
@@ -260,16 +220,16 @@ namespace Marain.ContentManagement.Specs.Drivers
         {
             var content = new Cms.Content
             {
-                Id = SubstituteContent(row["Id"]),
-                Author = new Cms.CmsIdentity(SubstituteContent(row["Author.Id"]), SubstituteContent(row["Author.Name"])),
-                Culture = CultureInfo.GetCultureInfo(SubstituteContent(row["Culture"])),
-                Description = SubstituteContent(row["Description"]),
-                Slug = SubstituteContent(row["Slug"]),
-                Title = SubstituteContent(row["Title"]),
+                Id = SpecHelpers.PerformSubstitutions(row["Id"]),
+                Author = new Cms.CmsIdentity(SpecHelpers.PerformSubstitutions(row["Author.Id"]), SpecHelpers.PerformSubstitutions(row["Author.Name"])),
+                Culture = CultureInfo.GetCultureInfo(SpecHelpers.PerformSubstitutions(row["Culture"])),
+                Description = SpecHelpers.PerformSubstitutions(row["Description"]),
+                Slug = SpecHelpers.PerformSubstitutions(row["Slug"]),
+                Title = SpecHelpers.PerformSubstitutions(row["Title"]),
             };
 
-            content.CategoryPaths.AddRange(SplitAndTrim(SubstituteContent(row["CategoryPaths"])));
-            content.Tags.AddRange(SplitAndTrim(SubstituteContent(row["Tags"])));
+            content.CategoryPaths.AddRange(SplitAndTrim(SpecHelpers.PerformSubstitutions(row["CategoryPaths"])));
+            content.Tags.AddRange(SplitAndTrim(SpecHelpers.PerformSubstitutions(row["Tags"])));
 
             return (content, row["Name"]);
         }
@@ -278,25 +238,15 @@ namespace Marain.ContentManagement.Specs.Drivers
         {
             var contentState = new Cms.ContentState
             {
-                Id = SubstituteContent(row["Id"]),
-                ChangedBy = new Cms.CmsIdentity(SubstituteContent(row["ChangedBy.Id"]), SubstituteContent(row["ChangedBy.Name"])),
-                ContentId = SubstituteContent(row["ContentId"]),
-                Slug = SubstituteContent(row["Slug"]),
-                WorkflowId = SubstituteContent(row["WorkflowId"]),
-                StateName = SubstituteContent(row["StateName"]),
+                Id = SpecHelpers.PerformSubstitutions(row["Id"]),
+                ChangedBy = new Cms.CmsIdentity(SpecHelpers.PerformSubstitutions(row["ChangedBy.Id"]), SpecHelpers.PerformSubstitutions(row["ChangedBy.Name"])),
+                ContentId = SpecHelpers.PerformSubstitutions(row["ContentId"]),
+                Slug = SpecHelpers.PerformSubstitutions(row["Slug"]),
+                WorkflowId = SpecHelpers.PerformSubstitutions(row["WorkflowId"]),
+                StateName = SpecHelpers.PerformSubstitutions(row["StateName"]),
             };
 
             return (contentState, row["Name"]);
-        }
-
-        public static string SubstituteContent(string v)
-        {
-            if (v == "{null}")
-            {
-                return null;
-            }
-
-            return v.Replace("{newguid}", Guid.NewGuid().ToString()).Replace(@"\n", "\n").Replace(@"\r", "\r").Replace(@"\t", "\t");
         }
 
         private static IList<string> SplitAndTrim(string value)

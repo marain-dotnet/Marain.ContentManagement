@@ -107,7 +107,7 @@ namespace Marain.ContentManagement.Specs.Steps
         [Then("the output called '(.*)' should match '(.*)'")]
         public void ThenTheOutputCalledShouldMatch(string outputName, string outputString)
         {
-            Assert.AreEqual(ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, outputString), this.scenarioContext.Get<string>(outputName));
+            Assert.AreEqual(SpecHelpers.ParseSpecValue<string>(this.scenarioContext, outputString), this.scenarioContext.Get<string>(outputName));
         }
     }
 }

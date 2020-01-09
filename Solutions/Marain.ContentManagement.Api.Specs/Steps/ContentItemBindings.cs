@@ -30,8 +30,8 @@ namespace Marain.ContentManagement.Specs.Steps
         [Given("I have requested the content with slug '(.*)' and Id '(.*)'")]
         public async Task WhenIRequestTheContentWithSlug(string slug, string id)
         {
-            string resolvedSlug = ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, slug);
-            string resolvedId = ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, id);
+            string resolvedSlug = SpecHelpers.ParseSpecValue<string>(this.scenarioContext, slug);
+            string resolvedId = SpecHelpers.ParseSpecValue<string>(this.scenarioContext, id);
 
             ContentClient client = this.scenarioContext.Get<ContentClient>();
 
@@ -54,8 +54,8 @@ namespace Marain.ContentManagement.Specs.Steps
         [When("I request the content with its state for slug '(.*)' and workflow Id '(.*)'")]
         public async Task WhenIRequestTheContentWithItsStateForSlugAndWorkflowId(string slug, string workflowId)
         {
-            string resolvedSlug = ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, slug);
-            string resolvedWorkflowId = ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, workflowId);
+            string resolvedSlug = SpecHelpers.ParseSpecValue<string>(this.scenarioContext, slug);
+            string resolvedWorkflowId = SpecHelpers.ParseSpecValue<string>(this.scenarioContext, workflowId);
 
             try
             {
@@ -76,8 +76,8 @@ namespace Marain.ContentManagement.Specs.Steps
         [When("I request the content state for slug '(.*)' and workflow Id '(.*)'")]
         public async Task WhenIRequestTheContentStateForSlugAndWorkflowId(string slug, string workflowId)
         {
-            string resolvedSlug = ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, slug);
-            string resolvedWorkflowId = ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, workflowId);
+            string resolvedSlug = SpecHelpers.ParseSpecValue<string>(this.scenarioContext, slug);
+            string resolvedWorkflowId = SpecHelpers.ParseSpecValue<string>(this.scenarioContext, workflowId);
 
             try
             {
@@ -102,8 +102,8 @@ namespace Marain.ContentManagement.Specs.Steps
             string lastEtag = lastResponse.Headers["ETag"].First();
             this.scenarioContext.ClearLastApiResponse();
 
-            string resolvedSlug = ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, slug);
-            string resolvedId = ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, id);
+            string resolvedSlug = SpecHelpers.ParseSpecValue<string>(this.scenarioContext, slug);
+            string resolvedId = SpecHelpers.ParseSpecValue<string>(this.scenarioContext, id);
 
             ContentClient client = this.scenarioContext.Get<ContentClient>();
 
@@ -126,8 +126,8 @@ namespace Marain.ContentManagement.Specs.Steps
         [When("I request the content with slug '(.*)' and Id '(.*)' using a random etag")]
         public async Task WhenIRequestTheContentWithSlugAndIdUsingARandomEtag(string slug, string id)
         {
-            string resolvedSlug = ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, slug);
-            string resolvedId = ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, id);
+            string resolvedSlug = SpecHelpers.ParseSpecValue<string>(this.scenarioContext, slug);
+            string resolvedId = SpecHelpers.ParseSpecValue<string>(this.scenarioContext, id);
 
             ContentClient client = this.scenarioContext.Get<ContentClient>();
 

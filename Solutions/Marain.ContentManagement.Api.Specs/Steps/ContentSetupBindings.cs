@@ -67,7 +67,7 @@ namespace Marain.ContentManagement.Specs.Steps
                 (ContentState state, string name) = ContentSpecHelpers.GetContentStateFor(row);
 
                 // TODO: See if we can/should push this down into ContentDriver.GetContentStateFor
-                state.ContentId = ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, state.ContentId);
+                state.ContentId = SpecHelpers.ParseSpecValue<string>(this.scenarioContext, state.ContentId);
                 ContentState storedContentState = await store.SetContentWorkflowStateAsync(state.Slug, state.ContentId, state.WorkflowId, state.StateName, state.ChangedBy).ConfigureAwait(false);
                 this.scenarioContext.Set(storedContentState, name);
             }
