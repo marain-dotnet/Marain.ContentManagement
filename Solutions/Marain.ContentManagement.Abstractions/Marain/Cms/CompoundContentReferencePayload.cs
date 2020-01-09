@@ -7,7 +7,7 @@ namespace Marain.Cms
     using System.Collections.Generic;
 
     /// <summary>
-    /// A <see cref="IContentPayload"/> representing content composed from an ordered set of specific content instances.
+    /// A <see cref="IContentPayload"/> representing content composed from an ordered set of specific content references.
     /// </summary>
     public class CompoundContentReferencePayload : IContentPayload
     {
@@ -31,7 +31,7 @@ namespace Marain.Cms
         /// </summary>
         public List<ContentReference> Children
         {
-            get { return this.children ?? (this.children = new List<ContentReference>()); }
+            get { return this.children ??= new List<ContentReference>(); }
             set { this.children = value; }
         }
 
