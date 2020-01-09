@@ -38,6 +38,8 @@ namespace Marain.Cms
         /// <inheritdoc/>
         public IContentPayload Copy(bool replaceId)
         {
+            // This is a shallow copy of the references i.e. we are copying the references, not cloning the things
+            // to which they are referring and providing new references.
             return new CompoundContentReferencePayload() { Children = new List<ContentReference>(this.Children) };
         }
 
