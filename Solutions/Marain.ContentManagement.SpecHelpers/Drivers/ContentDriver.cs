@@ -26,16 +26,11 @@ namespace Marain.ContentManagement.Specs.Drivers
     {
         public static void Compare(Cms.Content expected, Cms.Content actual)
         {
+            CompareCommonElements(expected, actual);
+            ComparePayloads(expected.ContentPayload, actual.ContentPayload);
             Assert.AreEqual(expected.Id, actual.Id);
             Assert.AreEqual(expected.Slug, actual.Slug);
-            Assert.AreEqual(expected.Author, actual.Author);
-            Assert.AreEqual(string.Join(';', expected.CategoryPaths), string.Join(';', actual.CategoryPaths));
-            Assert.AreEqual(string.Join(';', expected.Tags), string.Join(';', actual.Tags));
-            Assert.AreEqual(expected.Culture, actual.Culture);
-            Assert.AreEqual(expected.Description, actual.Description);
-            Assert.AreEqual(expected.Title, actual.Title);
             Assert.AreEqual(expected.OriginalSource, actual.OriginalSource);
-            ComparePayloads(expected.ContentPayload, actual.ContentPayload);
         }
 
         public static void Compare(Cms.Content expected, Cms.Api.Client.Content actual)
@@ -67,12 +62,7 @@ namespace Marain.ContentManagement.Specs.Drivers
         public static void CompareACopy(Cms.Content expected, Cms.Content actual)
         {
             // The slug and ID are expected to differ.
-            Assert.AreEqual(expected.Author, actual.Author);
-            Assert.AreEqual(string.Join(';', expected.CategoryPaths), string.Join(';', actual.CategoryPaths));
-            Assert.AreEqual(string.Join(';', expected.Tags), string.Join(';', actual.Tags));
-            Assert.AreEqual(expected.Culture, actual.Culture);
-            Assert.AreEqual(expected.Description, actual.Description);
-            Assert.AreEqual(expected.Title, actual.Title);
+            CompareCommonElements(expected, actual);
             ComparePayloads(expected.ContentPayload, actual.ContentPayload);
             Assert.AreEqual(new ContentReference(expected.Slug, expected.Id), actual.OriginalSource.Value);
         }
@@ -312,6 +302,16 @@ namespace Marain.ContentManagement.Specs.Drivers
         private static IList<string> SplitAndTrim(string value)
         {
             return value.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToList();
+        }
+
+        private static void CompareCommonElements(Cms.Content expected, Cms.Content actual)
+        {
+            Assert.AreEqual(expected.Author, actual.Author);
+            Assert.AreEqual(string.Join(';', expected.CategoryPaths), string.Join(';', actual.CategoryPaths));
+            Assert.AreEqual(string.Join(';', expected.Tags), string.Join(';', actual.Tags));
+            Assert.AreEqual(expected.Culture, actual.Culture);
+            Assert.AreEqual(expected.Description, actual.Description);
+            Assert.AreEqual(expected.Title, actual.Title);
         }
 
         private static void ComparePayloads(IContentPayload expected, IContentPayload actual)
