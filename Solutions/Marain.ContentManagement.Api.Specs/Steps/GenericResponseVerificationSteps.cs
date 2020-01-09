@@ -96,7 +96,7 @@ namespace Marain.ContentManagement.Specs.Steps
             SwaggerResponse response = this.scenarioContext.GetLastApiResponse();
             string etagHeader = response.Headers["ETag"]?.First();
 
-            string expected = ContentDriver.GetObjectValue<string>(this.scenarioContext, property);
+            string expected = ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, property);
             Assert.AreEqual(expected, etagHeader);
         }
 

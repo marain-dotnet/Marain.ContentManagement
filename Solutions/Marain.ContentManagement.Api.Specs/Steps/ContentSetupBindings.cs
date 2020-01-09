@@ -39,7 +39,7 @@ namespace Marain.ContentManagement.Specs.Steps
 
             foreach (TableRow row in table.Rows)
             {
-                (Content content, string name) = ContentDriver.GetContentFor(row);
+                (Content content, string name) = ContentSpecHelpers.GetContentFor(row);
                 Content storedContent = await store.StoreContentAsync(content).ConfigureAwait(false);
                 this.scenarioContext.Set(storedContent, name);
             }
@@ -50,7 +50,7 @@ namespace Marain.ContentManagement.Specs.Steps
         {
             foreach (TableRow row in table.Rows)
             {
-                (Content content, string name) = ContentDriver.GetContentFor(row);
+                (Content content, string name) = ContentSpecHelpers.GetContentFor(row);
                 this.scenarioContext.Set(content, name);
             }
         }
@@ -64,10 +64,10 @@ namespace Marain.ContentManagement.Specs.Steps
 
             foreach (TableRow row in table.Rows)
             {
-                (ContentState state, string name) = ContentDriver.GetContentStateFor(row);
+                (ContentState state, string name) = ContentSpecHelpers.GetContentStateFor(row);
 
                 // TODO: See if we can/should push this down into ContentDriver.GetContentStateFor
-                state.ContentId = ContentDriver.GetObjectValue<string>(this.scenarioContext, state.ContentId);
+                state.ContentId = ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, state.ContentId);
                 ContentState storedContentState = await store.SetContentWorkflowStateAsync(state.Slug, state.ContentId, state.WorkflowId, state.StateName, state.ChangedBy).ConfigureAwait(false);
                 this.scenarioContext.Set(storedContentState, name);
             }

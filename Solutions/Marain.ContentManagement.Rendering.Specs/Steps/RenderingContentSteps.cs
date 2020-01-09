@@ -37,30 +37,30 @@ namespace Marain.ContentManagement.Specs.Steps
         {
             foreach (TableRow row in contentTable.Rows)
             {
-                (Content content, string name) = ContentDriver.GetContentFor(row);
+                (Content content, string name) = ContentSpecHelpers.GetContentFor(row);
                 if (row.ContainsKey("ContentSlug"))
                 {
-                    ContentDriver.SetContentWorkflow(content, row);
+                    ContentSpecHelpers.SetContentWorkflow(content, row);
                 }
                 else if (row.ContainsKey("Fragment"))
                 {
-                    ContentDriver.SetContentFragment(content, row);
+                    ContentSpecHelpers.SetContentFragment(content, row);
                 }
                 else if (row.ContainsKey("AbTestSetName"))
                 {
-                    ContentDriver.SetAbTestSet(this.scenarioContext, content, row);
+                    ContentSpecHelpers.SetAbTestSet(this.scenarioContext, content, row);
                 }
                 else if (row.ContainsKey("Markdown"))
                 {
-                    ContentDriver.SetContentMarkdown(content, row);
+                    ContentSpecHelpers.SetContentMarkdown(content, row);
                 }
                 else if (row.ContainsKey("Liquid template"))
                 {
-                    ContentDriver.SetContentLiquid(content, row);
+                    ContentSpecHelpers.SetContentLiquid(content, row);
                 }
                 else if (row.ContainsKey("Liquid with markdown template"))
                 {
-                    ContentDriver.SetContentLiquidMarkdown(content, row);
+                    ContentSpecHelpers.SetContentLiquidMarkdown(content, row);
                 }
 
                 this.scenarioContext.Set(content, name);
@@ -107,7 +107,7 @@ namespace Marain.ContentManagement.Specs.Steps
         [Then("the output called '(.*)' should match '(.*)'")]
         public void ThenTheOutputCalledShouldMatch(string outputName, string outputString)
         {
-            Assert.AreEqual(ContentDriver.GetObjectValue<string>(this.scenarioContext, outputString), this.scenarioContext.Get<string>(outputName));
+            Assert.AreEqual(ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, outputString), this.scenarioContext.Get<string>(outputName));
         }
     }
 }

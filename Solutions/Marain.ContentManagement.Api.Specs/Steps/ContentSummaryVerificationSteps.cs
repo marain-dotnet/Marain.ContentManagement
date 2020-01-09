@@ -31,7 +31,7 @@ namespace Marain.ContentManagement.Specs.Steps
 
             Cms.Content expected = this.scenarioContext.Get<Cms.Content>(itemName);
 
-            ContentDriver.Compare(expected, actual.Result);
+            ContentSpecHelpers.Compare(expected, actual.Result);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿// <copyright file="ContentDriver.cs" company="Endjin Limited">
+﻿// <copyright file="ContentSpecHelpers.cs" company="Endjin Limited">
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
@@ -20,9 +20,9 @@ namespace Marain.ContentManagement.Specs.Drivers
 #pragma warning disable SA1600 // Elements should be documented
 
     /// <summary>
-    /// Spec Driver for the content store.
+    /// Helpers for content-related specs.
     /// </summary>
-    public static class ContentDriver
+    public static class ContentSpecHelpers
     {
         public static void Compare(Cms.Content expected, Cms.Content actual)
         {

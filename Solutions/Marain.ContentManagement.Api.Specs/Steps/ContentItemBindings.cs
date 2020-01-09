@@ -30,8 +30,8 @@ namespace Marain.ContentManagement.Specs.Steps
         [Given("I have requested the content with slug '(.*)' and Id '(.*)'")]
         public async Task WhenIRequestTheContentWithSlug(string slug, string id)
         {
-            string resolvedSlug = ContentDriver.GetObjectValue<string>(this.scenarioContext, slug);
-            string resolvedId = ContentDriver.GetObjectValue<string>(this.scenarioContext, id);
+            string resolvedSlug = ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, slug);
+            string resolvedId = ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, id);
 
             ContentClient client = this.scenarioContext.Get<ContentClient>();
 
@@ -54,8 +54,8 @@ namespace Marain.ContentManagement.Specs.Steps
         [When("I request the content with its state for slug '(.*)' and workflow Id '(.*)'")]
         public async Task WhenIRequestTheContentWithItsStateForSlugAndWorkflowId(string slug, string workflowId)
         {
-            string resolvedSlug = ContentDriver.GetObjectValue<string>(this.scenarioContext, slug);
-            string resolvedWorkflowId = ContentDriver.GetObjectValue<string>(this.scenarioContext, workflowId);
+            string resolvedSlug = ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, slug);
+            string resolvedWorkflowId = ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, workflowId);
 
             try
             {
@@ -76,8 +76,8 @@ namespace Marain.ContentManagement.Specs.Steps
         [When("I request the content state for slug '(.*)' and workflow Id '(.*)'")]
         public async Task WhenIRequestTheContentStateForSlugAndWorkflowId(string slug, string workflowId)
         {
-            string resolvedSlug = ContentDriver.GetObjectValue<string>(this.scenarioContext, slug);
-            string resolvedWorkflowId = ContentDriver.GetObjectValue<string>(this.scenarioContext, workflowId);
+            string resolvedSlug = ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, slug);
+            string resolvedWorkflowId = ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, workflowId);
 
             try
             {
@@ -102,8 +102,8 @@ namespace Marain.ContentManagement.Specs.Steps
             string lastEtag = lastResponse.Headers["ETag"].First();
             this.scenarioContext.ClearLastApiResponse();
 
-            string resolvedSlug = ContentDriver.GetObjectValue<string>(this.scenarioContext, slug);
-            string resolvedId = ContentDriver.GetObjectValue<string>(this.scenarioContext, id);
+            string resolvedSlug = ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, slug);
+            string resolvedId = ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, id);
 
             ContentClient client = this.scenarioContext.Get<ContentClient>();
 
@@ -126,8 +126,8 @@ namespace Marain.ContentManagement.Specs.Steps
         [When("I request the content with slug '(.*)' and Id '(.*)' using a random etag")]
         public async Task WhenIRequestTheContentWithSlugAndIdUsingARandomEtag(string slug, string id)
         {
-            string resolvedSlug = ContentDriver.GetObjectValue<string>(this.scenarioContext, slug);
-            string resolvedId = ContentDriver.GetObjectValue<string>(this.scenarioContext, id);
+            string resolvedSlug = ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, slug);
+            string resolvedId = ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, id);
 
             ContentClient client = this.scenarioContext.Get<ContentClient>();
 
@@ -153,7 +153,7 @@ namespace Marain.ContentManagement.Specs.Steps
         public async Task WhenIRequestThatTheContentIsCreated(string contentItem)
         {
             Cms.Content item = this.scenarioContext.Get<Cms.Content>(contentItem);
-            CreateContentRequest createContentRequest = ContentDriver.ContentAsCreateContentRequest(item);
+            CreateContentRequest createContentRequest = ContentSpecHelpers.ContentAsCreateContentRequest(item);
 
             ContentClient client = this.scenarioContext.Get<ContentClient>();
 

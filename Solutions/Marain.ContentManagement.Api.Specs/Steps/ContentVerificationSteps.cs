@@ -31,7 +31,7 @@ namespace Marain.ContentManagement.Specs.Steps
 
             Cms.Content expected = this.scenarioContext.Get<Cms.Content>(itemName);
 
-            ContentDriver.Compare(expected, actual.Result);
+            ContentSpecHelpers.Compare(expected, actual.Result);
         }
 
         [Then("the response body should contain content and state matching content '(.*)' and state '(.*)'")]
@@ -43,8 +43,8 @@ namespace Marain.ContentManagement.Specs.Steps
             Cms.Content expectedContent = this.scenarioContext.Get<Cms.Content>(itemName);
             Cms.ContentState expectedState = this.scenarioContext.Get<Cms.ContentState>(stateName);
 
-            ContentDriver.Compare(expectedContent, actual.Result.Content);
-            ContentDriver.Compare(expectedState, actual.Result);
+            ContentSpecHelpers.Compare(expectedContent, actual.Result.Content);
+            ContentSpecHelpers.Compare(expectedState, actual.Result);
         }
 
         [Then("the response body should content state matching '(.*)'")]
@@ -55,7 +55,7 @@ namespace Marain.ContentManagement.Specs.Steps
 
             Cms.ContentState expectedState = this.scenarioContext.Get<Cms.ContentState>(stateName);
 
-            ContentDriver.Compare(expectedState, actual.Result);
+            ContentSpecHelpers.Compare(expectedState, actual.Result);
         }
     }
 }

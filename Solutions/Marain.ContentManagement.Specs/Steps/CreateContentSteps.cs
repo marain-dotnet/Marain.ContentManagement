@@ -33,8 +33,8 @@ namespace Marain.ContentManagement.Specs.Steps
             IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
             foreach (TableRow row in contentTable.Rows)
             {
-                (Content content, string name) = ContentDriver.GetContentFor(row);
-                ContentDriver.SetContentFragment(content, row);
+                (Content content, string name) = ContentSpecHelpers.GetContentFor(row);
+                ContentSpecHelpers.SetContentFragment(content, row);
                 await store.StoreContentAsync(content).ConfigureAwait(false);
                 this.scenarioContext.Set(content, name);
             }
@@ -47,8 +47,8 @@ namespace Marain.ContentManagement.Specs.Steps
 
             Assert.ThrowsAsync<ContentNotFoundException>(
                 () => store.GetContentAsync(
-                    ContentDriver.GetObjectValue<string>(this.scenarioContext, contentId),
-                    ContentDriver.GetObjectValue<string>(this.scenarioContext, slug)),
+                    ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, contentId),
+                    ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, slug)),
                 "ContentNotFoundException should have been thrown.");
         }
 
@@ -58,8 +58,8 @@ namespace Marain.ContentManagement.Specs.Steps
             IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
 
             Content content = await store.GetContentAsync(
-                ContentDriver.GetObjectValue<string>(this.scenarioContext, id),
-                ContentDriver.GetObjectValue<string>(this.scenarioContext, slug)).ConfigureAwait(false);
+                ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, id),
+                ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, slug)).ConfigureAwait(false);
 
             this.scenarioContext.Set(content, contentName);
         }
@@ -70,14 +70,14 @@ namespace Marain.ContentManagement.Specs.Steps
             Content expected = this.scenarioContext.Get<Content>(expectedName);
             Content actual = this.scenarioContext.Get<Content>(actualName);
 
-            ContentDriver.Compare(expected, actual);
+            ContentSpecHelpers.Compare(expected, actual);
         }
 
         [When("I get the content summaries for Slug '(.*)' with limit '(.*)' and continuationToken '(.*)' and call it '(.*)'")]
         public async Task WhenIGetTheContentSummariesForSlugWithLimitAndContinuationTokenAndCallIt(string slug, int limit, string continuationToken, string contentSummariesName)
         {
             IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
-            ContentSummaries summaries = await store.GetContentSummariesAsync(ContentDriver.GetObjectValue<string>(this.scenarioContext, slug), limit, ContentDriver.GetObjectValue<string>(this.scenarioContext, continuationToken)).ConfigureAwait(false);
+            ContentSummaries summaries = await store.GetContentSummariesAsync(ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, slug), limit, ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, continuationToken)).ConfigureAwait(false);
             this.scenarioContext.Set(summaries, contentSummariesName);
         }
 
@@ -86,7 +86,7 @@ namespace Marain.ContentManagement.Specs.Steps
         {
             ContentSummaries summaries = this.scenarioContext.Get<ContentSummaries>(contentSummariesName);
             var expected = table.Rows.Select(s => this.scenarioContext.Get<Content>(s["ContentName"])).ToList();
-            ContentDriver.MatchSummariesToContent(expected, summaries);
+            ContentSpecHelpers.MatchSummariesToContent(expected, summaries);
         }
 
         [Given("I publish the content with Slug '(.*)' and id '(.*)'")]
@@ -94,8 +94,8 @@ namespace Marain.ContentManagement.Specs.Steps
         {
             IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
             await store.PublishContentAsync(
-                ContentDriver.GetObjectValue<string>(this.scenarioContext, slug),
-                ContentDriver.GetObjectValue<string>(this.scenarioContext, id),
+                ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, slug),
+                ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, id),
                 new CmsIdentity("SomeId", "SomeName")).ConfigureAwait(false);
         }
 
@@ -103,7 +103,7 @@ namespace Marain.ContentManagement.Specs.Steps
         public async Task WhenIGetThePublishedContentForSlugAndCallIt(string slug, string contentName)
         {
             IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
-            Content content = await store.GetPublishedContentAsync(ContentDriver.GetObjectValue<string>(this.scenarioContext, slug)).ConfigureAwait(false);
+            Content content = await store.GetPublishedContentAsync(ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, slug)).ConfigureAwait(false);
             this.scenarioContext.Set(content, contentName);
         }
 
@@ -112,7 +112,7 @@ namespace Marain.ContentManagement.Specs.Steps
         {
             IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
             Assert.ThrowsAsync<ContentNotFoundException>(
-                () => store.GetPublishedContentAsync(ContentDriver.GetObjectValue<string>(this.scenarioContext, slug)),
+                () => store.GetPublishedContentAsync(ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, slug)),
                 "ContentNotFoundException should have been thrown.");
         }
 
@@ -122,7 +122,7 @@ namespace Marain.ContentManagement.Specs.Steps
         {
             IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
             await store.ArchiveContentAsync(
-                ContentDriver.GetObjectValue<string>(this.scenarioContext, slug),
+                ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, slug),
                 new CmsIdentity("SomeId", "SomeName")).ConfigureAwait(false);
         }
 
@@ -131,7 +131,7 @@ namespace Marain.ContentManagement.Specs.Steps
         {
             IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
             await store.MakeDraftContentAsync(
-                ContentDriver.GetObjectValue<string>(this.scenarioContext, slug),
+                ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, slug),
                 new CmsIdentity("SomeId", "SomeName")).ConfigureAwait(false);
         }
 
@@ -139,7 +139,7 @@ namespace Marain.ContentManagement.Specs.Steps
         public async Task WhenIGetThePublicationHistoryForSlugAndCallIt(string slug, int limit, string continuationToken, string contentSummariesName)
         {
             IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
-            ContentSummariesWithState summaries = await store.GetPublicationHistory(ContentDriver.GetObjectValue<string>(this.scenarioContext, slug), limit, ContentDriver.GetObjectValue<string>(this.scenarioContext, continuationToken)).ConfigureAwait(false);
+            ContentSummariesWithState summaries = await store.GetPublicationHistory(ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, slug), limit, ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, continuationToken)).ConfigureAwait(false);
             this.scenarioContext.Set(summaries, contentSummariesName);
         }
 
@@ -147,7 +147,7 @@ namespace Marain.ContentManagement.Specs.Steps
         public async Task WhenIGetThePublishedHistoryForSlugAndCallIt(string slug, int limit, string continuationToken, string contentSummariesName)
         {
             IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
-            ContentSummariesWithState summaries = await store.GetPublishedHistory(ContentDriver.GetObjectValue<string>(this.scenarioContext, slug), limit, ContentDriver.GetObjectValue<string>(this.scenarioContext, continuationToken)).ConfigureAwait(false);
+            ContentSummariesWithState summaries = await store.GetPublishedHistory(ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, slug), limit, ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, continuationToken)).ConfigureAwait(false);
             this.scenarioContext.Set(summaries, contentSummariesName);
         }
 
@@ -165,8 +165,8 @@ namespace Marain.ContentManagement.Specs.Steps
         {
             IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
             Content result = await store.MoveContentForPublicationAsync(
-                    ContentDriver.GetObjectValue<string>(this.scenarioContext, destinationSlug),
-                    ContentDriver.GetObjectValue<string>(this.scenarioContext, sourceSlug),
+                    ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, destinationSlug),
+                    ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, sourceSlug),
                     new CmsIdentity("SomeId", "SomeName")).ConfigureAwait(false);
             this.scenarioContext.Set(result, copyName);
         }
@@ -176,8 +176,8 @@ namespace Marain.ContentManagement.Specs.Steps
         {
             IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
             Content result = await store.CopyContentForPublicationAsync(
-                    ContentDriver.GetObjectValue<string>(this.scenarioContext, destinationSlug),
-                    ContentDriver.GetObjectValue<string>(this.scenarioContext, sourceSlug),
+                    ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, destinationSlug),
+                    ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, sourceSlug),
                     new CmsIdentity("SomeId", "SomeName")).ConfigureAwait(false);
             this.scenarioContext.Set(result, copyName);
         }
@@ -188,14 +188,14 @@ namespace Marain.ContentManagement.Specs.Steps
             Content expected = this.scenarioContext.Get<Content>(expectedName);
             Content actual = this.scenarioContext.Get<Content>(actualName);
 
-            ContentDriver.CompareACopy(expected, actual);
+            ContentSpecHelpers.CompareACopy(expected, actual);
         }
 
         [When("I get the content for Slug '(.*)' and call it '(.*)'")]
         public async Task WhenIGetTheContentForSlugAndCallItAsync(string slug, string contentName)
         {
             IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
-            ContentWithState content = await store.GetContentWithStateAsync(ContentDriver.GetObjectValue<string>(this.scenarioContext, slug)).ConfigureAwait(false);
+            ContentWithState content = await store.GetContentWithStateAsync(ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, slug)).ConfigureAwait(false);
             this.scenarioContext.Set(content, contentName);
         }
 
@@ -211,7 +211,7 @@ namespace Marain.ContentManagement.Specs.Steps
         {
             IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
             Assert.ThrowsAsync<ContentNotFoundException>(
-                () => store.GetContentWorkflowStateAsync(ContentDriver.GetObjectValue<string>(this.scenarioContext, slug), WellKnownWorkflowId.ContentPublication),
+                () => store.GetContentWorkflowStateAsync(ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, slug), WellKnownWorkflowId.ContentPublication),
                 "ContentNotFoundException should have been thrown.");
         }
 
@@ -220,7 +220,7 @@ namespace Marain.ContentManagement.Specs.Steps
         {
             IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
             Assert.ThrowsAsync<ContentNotFoundException>(
-                () => store.GetContentForWorkflowAsync(ContentDriver.GetObjectValue<string>(this.scenarioContext, slug), WellKnownWorkflowId.ContentPublication),
+                () => store.GetContentForWorkflowAsync(ContentSpecHelpers.GetObjectValue<string>(this.scenarioContext, slug), WellKnownWorkflowId.ContentPublication),
                 "ContentNotFoundException should have been thrown.");
         }
 
@@ -230,7 +230,7 @@ namespace Marain.ContentManagement.Specs.Steps
             Content expected = this.scenarioContext.Get<Content>(expectedName);
             ContentWithState actual = this.scenarioContext.Get<ContentWithState>(actualName);
 
-            ContentDriver.Compare(expected, actual.Content);
+            ContentSpecHelpers.Compare(expected, actual.Content);
         }
 
         [Then("the content called '(.*)' should be copied to the content with state called '(.*)'")]
@@ -239,7 +239,7 @@ namespace Marain.ContentManagement.Specs.Steps
             Content expected = this.scenarioContext.Get<Content>(expectedName);
             ContentWithState actual = this.scenarioContext.Get<ContentWithState>(actualName);
 
-            ContentDriver.CompareACopy(expected, actual.Content);
+            ContentSpecHelpers.CompareACopy(expected, actual.Content);
         }
     }
 }

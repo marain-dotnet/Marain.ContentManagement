@@ -47,8 +47,8 @@ namespace Marain.ContentManagement.Specs.Steps
             IContentStore store = ContentManagementCosmosContainerBindings.GetContentStore(this.featureContext);
             foreach (TableRow row in contentTable.Rows)
             {
-                (Content content, string name) = ContentDriver.GetContentFor(row);
-                ContentDriver.SetAbTestSet(this.scenarioContext, content, row);
+                (Content content, string name) = ContentSpecHelpers.GetContentFor(row);
+                ContentSpecHelpers.SetAbTestSet(this.scenarioContext, content, row);
                 await store.StoreContentAsync(content).ConfigureAwait(false);
                 this.scenarioContext.Set(content, name);
             }
