@@ -8,7 +8,7 @@ namespace Marain.Cms
     using Corvus.Tenancy;
 
     /// <summary>
-    /// Interface for a factory that knows how to construct a content factory for
+    /// Interface for a factory that knows how to provide a content store for
     /// a specific tenant.
     /// </summary>
     public interface ITenantedContentStoreFactory
