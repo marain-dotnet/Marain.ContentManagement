@@ -10,7 +10,8 @@ namespace Marain.Cms.Internal
     using Corvus.Extensions.Json;
 
     /// <summary>
-    /// Writes a content fragment to the output stream.
+    /// Based on the <see cref="AbTestIdContextKey"/> in the context, selects a piece of content
+    /// from a given set, and renderes it to the output.
     /// </summary>
     public class AbTestSetRenderer : IContentRenderer
     {
