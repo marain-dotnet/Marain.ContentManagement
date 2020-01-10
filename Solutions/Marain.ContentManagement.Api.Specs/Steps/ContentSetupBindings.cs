@@ -19,10 +19,12 @@ namespace Marain.ContentManagement.Specs.Steps
     public class ContentSetupBindings
     {
         private readonly ScenarioContext scenarioContext;
+        private readonly FeatureContext featureContext;
 
-        public ContentSetupBindings(ScenarioContext scenarioContext)
+        public ContentSetupBindings(FeatureContext featureContext, ScenarioContext scenarioContext)
         {
             this.scenarioContext = scenarioContext;
+            this.featureContext = featureContext;
         }
 
         [Given("there is no content available")]
@@ -34,8 +36,8 @@ namespace Marain.ContentManagement.Specs.Steps
         [Given("content items have been created")]
         public async Task GivenAContentItemHasBeenCreated(Table table)
         {
-            ITenantedContentStoreFactory contentStoreFactory = ContainerBindings.GetServiceProvider(this.scenarioContext).GetRequiredService<ITenantedContentStoreFactory>();
-            IContentStore store = await contentStoreFactory.GetContentStoreForTenantAsync(this.scenarioContext.GetCurrentTenantId()).ConfigureAwait(false);
+            ITenantedContentStoreFactory contentStoreFactory = ContainerBindings.GetServiceProvider(this.featureContext).GetRequiredService<ITenantedContentStoreFactory>();
+            IContentStore store = await contentStoreFactory.GetContentStoreForTenantAsync(this.featureContext.GetCurrentTenantId()).ConfigureAwait(false);
 
             foreach (TableRow row in table.Rows)
             {
@@ -59,15 +61,15 @@ namespace Marain.ContentManagement.Specs.Steps
         [Given("workflow states have been set for the content items")]
         public async Task GivenAWorkflowStateHasBeenSetForTheContentItem(Table table)
         {
-            ITenantedContentStoreFactory contentStoreFactory = ContainerBindings.GetServiceProvider(this.scenarioContext).GetRequiredService<ITenantedContentStoreFactory>();
-            IContentStore store = await contentStoreFactory.GetContentStoreForTenantAsync(this.scenarioContext.GetCurrentTenantId()).ConfigureAwait(false);
+            ITenantedContentStoreFactory contentStoreFactory = ContainerBindings.GetServiceProvider(this.featureContext).GetRequiredService<ITenantedContentStoreFactory>();
+            IContentStore store = await contentStoreFactory.GetContentStoreForTenantAsync(this.featureContext.GetCurrentTenantId()).ConfigureAwait(false);
 
             foreach (TableRow row in table.Rows)
             {
                 (ContentState state, string name) = ContentSpecHelpers.GetContentStateFor(row);
 
-                // TODO: See if we can/should push this down into ContentDriver.GetContentStateFor
                 state.ContentId = SpecHelpers.ParseSpecValue<string>(this.scenarioContext, state.ContentId);
+                state.ContentId = SpecHelpers.ParseSpecValue<string>(this.featureContext, state.ContentId);
                 ContentState storedContentState = await store.SetContentWorkflowStateAsync(state.Slug, state.ContentId, state.WorkflowId, state.StateName, state.ChangedBy).ConfigureAwait(false);
                 this.scenarioContext.Set(storedContentState, name);
             }

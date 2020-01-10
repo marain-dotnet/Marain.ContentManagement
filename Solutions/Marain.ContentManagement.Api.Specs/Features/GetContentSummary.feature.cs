@@ -19,7 +19,7 @@ namespace Marain.ContentManagement.Specs.Features
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
     [NUnit.Framework.DescriptionAttribute("Get content summary")]
-    [NUnit.Framework.CategoryAttribute("perScenarioContainer")]
+    [NUnit.Framework.CategoryAttribute("perFeatureContainer")]
     [NUnit.Framework.CategoryAttribute("useTransientTenant")]
     [NUnit.Framework.CategoryAttribute("useContentManagementApi")]
     public partial class GetContentSummaryFeature
@@ -35,7 +35,7 @@ namespace Marain.ContentManagement.Specs.Features
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
             TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Get content summary", null, ProgrammingLanguage.CSharp, new string[] {
-                        "perScenarioContainer",
+                        "perFeatureContainer",
                         "useTransientTenant",
                         "useContentManagementApi"});
             testRunner.OnFeatureStart(featureInfo);
@@ -102,7 +102,7 @@ this.ScenarioInitialize(scenarioInfo);
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table23 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table22 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name",
                         "Id",
                         "Slug",
@@ -114,10 +114,10 @@ this.ScenarioInitialize(scenarioInfo);
                         "Description",
                         "Culture",
                         "Fragment"});
-            table23.AddRow(new string[] {
+            table22.AddRow(new string[] {
                         "Expected",
-                        "myid",
-                        "myslug",
+                        "myid1",
+                        "myslug1",
                         "First tag; Second tag",
                         "/standard/content;/books/hobbit;/books/lotr",
                         "Bilbo Baggins",
@@ -127,7 +127,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "en-GB",
                         "This is the fragment of text"});
 #line 12
- testRunner.Given("a content item has been created", ((string)(null)), table23, "Given ");
+ testRunner.Given("a content item has been created", ((string)(null)), table22, "Given ");
 #line 15
  testRunner.When("I request the content summary with slug \'{Expected.Slug}\' and Id \'{Expected.Id}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 16
@@ -153,7 +153,7 @@ this.ScenarioInitialize(scenarioInfo);
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table24 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table23 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name",
                         "Id",
                         "Slug",
@@ -165,10 +165,10 @@ this.ScenarioInitialize(scenarioInfo);
                         "Description",
                         "Culture",
                         "Fragment"});
-            table24.AddRow(new string[] {
+            table23.AddRow(new string[] {
                         "Expected",
-                        "myid",
-                        "myslug",
+                        "myid2",
+                        "myslug2",
                         "First tag; Second tag",
                         "/standard/content;/books/hobbit;/books/lotr",
                         "Bilbo Baggins",
@@ -178,7 +178,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "en-GB",
                         "This is the fragment of text"});
 #line 22
- testRunner.Given("a content item has been created", ((string)(null)), table24, "Given ");
+ testRunner.Given("a content item has been created", ((string)(null)), table23, "Given ");
 #line 25
  testRunner.And("I have requested the content summary with slug \'{Expected.Slug}\' and Id \'{Expecte" +
                     "d.Id}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -204,7 +204,7 @@ this.ScenarioInitialize(scenarioInfo);
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table25 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table24 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name",
                         "Id",
                         "Slug",
@@ -216,10 +216,10 @@ this.ScenarioInitialize(scenarioInfo);
                         "Description",
                         "Culture",
                         "Fragment"});
-            table25.AddRow(new string[] {
+            table24.AddRow(new string[] {
                         "Expected",
-                        "myid",
-                        "myslug",
+                        "myid3",
+                        "myslug3",
                         "First tag; Second tag",
                         "/standard/content;/books/hobbit;/books/lotr",
                         "Bilbo Baggins",
@@ -229,7 +229,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "en-GB",
                         "This is the fragment of text"});
 #line 31
- testRunner.Given("a content item has been created", ((string)(null)), table25, "Given ");
+ testRunner.Given("a content item has been created", ((string)(null)), table24, "Given ");
 #line 34
  testRunner.When("I request the content summary with slug \'{Expected.Slug}\' and Id \'{Expected.Id}\' " +
                     "using a random etag", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");

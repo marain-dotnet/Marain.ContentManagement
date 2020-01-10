@@ -16,7 +16,7 @@ namespace Marain.ContentManagement.Specs.Bindings
     /// <summary>
     /// Cleans up the tenant-specific content store that will likely have been created as a result of calls to the API. This
     /// is intended to be used in conjunction with <see cref="TransientTenantBindings"/>, which will create and tear down a
-    /// tenant specifically for the current scenario.
+    /// tenant specifically for the current feature.
     /// </summary>
     [Binding]
     public static class ContentStoreCleanupBindings
@@ -24,15 +24,15 @@ namespace Marain.ContentManagement.Specs.Bindings
         /// <summary>
         /// Gets a reference to the tenant container used for this test, then deletes it.
         /// </summary>
-        /// <param name="context">The current <see cref="ScenarioContext"/>.</param>
+        /// <param name="context">The current <see cref="FeatureContext"/>.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         /// <remarks>
         /// It's critically important that this runs to clean up Cosmos collections created as part of test execution. As such,
-        /// this code runs for every scenario but doesn't do anything if it can't obtain both the tenant and service provider
-        /// from the <c>ScenarioContext</c>.
+        /// this code runs for every feature but doesn't do anything if it can't obtain both the tenant and service provider
+        /// from the <c>FeatureContext</c>.
         /// </remarks>
-        [AfterScenario]
-        public static Task ClearDownTransientTenantContentStore(ScenarioContext context)
+        [AfterFeature]
+        public static Task ClearDownTransientTenantContentStore(FeatureContext context)
         {
             return context.RunAndStoreExceptionsAsync(async () =>
             {

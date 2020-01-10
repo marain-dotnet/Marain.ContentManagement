@@ -31,14 +31,14 @@ namespace Marain.ContentManagement.Specs.Bindings
         /// <summary>
         /// Sets up and runs the function, using the <see cref="Startup"/> class to initialise the service provider.
         /// </summary>
-        /// <param name="context">The current <see cref="ScenarioContext"/>.</param>
+        /// <param name="context">The current <see cref="FeatureContext"/>.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         /// <remarks>
         /// As part of the initialisation, an <see cref="HttpClient"/> will be created and stored in
-        /// the <see cref="ScenarioContext"/>.
+        /// the <see cref="FeatureContext"/>.
         /// </remarks>
-        [BeforeScenario("useContentManagementApi", Order = ContainerBeforeScenarioOrder.ServiceProviderAvailable)]
-        public static async Task StartContentManagementFunction(ScenarioContext context)
+        [BeforeFeature("useContentManagementApi", Order = ContainerBeforeFeatureOrder.ServiceProviderAvailable)]
+        public static async Task StartContentManagementFunction(FeatureContext context)
         {
             await OpenApiWebHostManager.GetInstance(context).StartFunctionAsync<Startup>(BaseUrl).ConfigureAwait(false);
 
@@ -56,10 +56,10 @@ namespace Marain.ContentManagement.Specs.Bindings
         /// <summary>
         /// Tears down the in-memory service.
         /// </summary>
-        /// <param name="context">The current <see cref="ScenarioContext"/>.</param>
+        /// <param name="context">The current <see cref="FeatureContext"/>.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        [AfterScenario("useContentManagementApi")]
-        public static Task StopContentManagementFunction(ScenarioContext context)
+        [AfterFeature("useContentManagementApi")]
+        public static Task StopContentManagementFunction(FeatureContext context)
         {
             return context.RunAndStoreExceptionsAsync(async () =>
             {
@@ -73,13 +73,13 @@ namespace Marain.ContentManagement.Specs.Bindings
         /// <summary>
         /// Helper method to access the current <see cref="GetContentClient"/>.
         /// </summary>
-        /// <param name="context">The current <see cref="ScenarioContext"/>.</param>
+        /// <param name="context">The current <see cref="FeatureContext"/>.</param>
         /// <returns>The current <see cref="GetContentClient"/>.</returns>
         /// <remarks>
-        /// There are further extension methods for <c>ScenarioContext</c> in the <see cref="ScenarioContextApiCallExtensions"/>
+        /// There are extension methods for <c>ScenarioContext</c> in the <see cref="ScenarioContextApiCallExtensions"/>
         /// class that make it simpler to work with API responses.
         /// </remarks>
-        public static ContentClient GetContentClient(this ScenarioContext context)
+        public static ContentClient GetContentClient(this FeatureContext context)
         {
             return context.Get<ContentClient>();
         }

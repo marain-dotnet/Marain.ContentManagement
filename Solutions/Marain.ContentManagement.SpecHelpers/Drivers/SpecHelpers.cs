@@ -14,7 +14,7 @@ namespace Marain.ContentManagement.Specs.Drivers
 
     public static class SpecHelpers
     {
-        public static T ParseSpecValue<T>(ScenarioContext scenarioContext, string property)
+        public static T ParseSpecValue<T>(SpecFlowContext scenarioContext, string property)
         {
             property = PerformSubstitutions(property);
 

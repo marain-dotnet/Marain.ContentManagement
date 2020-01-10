@@ -19,10 +19,14 @@ namespace Marain.ContentManagement.Specs.Steps
     [Binding]
     public class ContentItemBindings
     {
+        private readonly FeatureContext featureContext;
         private readonly ScenarioContext scenarioContext;
 
-        public ContentItemBindings(ScenarioContext scenarioContext)
+        public ContentItemBindings(
+            FeatureContext featureContext,
+            ScenarioContext scenarioContext)
         {
+            this.featureContext = featureContext;
             this.scenarioContext = scenarioContext;
         }
 
@@ -33,12 +37,12 @@ namespace Marain.ContentManagement.Specs.Steps
             string resolvedSlug = SpecHelpers.ParseSpecValue<string>(this.scenarioContext, slug);
             string resolvedId = SpecHelpers.ParseSpecValue<string>(this.scenarioContext, id);
 
-            ContentClient client = this.scenarioContext.Get<ContentClient>();
+            ContentClient client = this.featureContext.Get<ContentClient>();
 
             try
             {
                 SwaggerResponse<ContentResponse> response = await client.GetContentAsync(
-                    this.scenarioContext.GetCurrentTenantId(),
+                    this.featureContext.GetCurrentTenantId(),
                     resolvedSlug,
                     resolvedId,
                     null).ConfigureAwait(false);
@@ -59,9 +63,9 @@ namespace Marain.ContentManagement.Specs.Steps
 
             try
             {
-                ContentClient client = this.scenarioContext.Get<ContentClient>();
+                ContentClient client = this.featureContext.Get<ContentClient>();
                 SwaggerResponse<ContentWithStateResponse> response = await client.GetWorkflowContentAsync(
-                    this.scenarioContext.GetCurrentTenantId(),
+                    this.featureContext.GetCurrentTenantId(),
                     resolvedSlug,
                     resolvedWorkflowId).ConfigureAwait(false);
 
@@ -81,9 +85,9 @@ namespace Marain.ContentManagement.Specs.Steps
 
             try
             {
-                ContentClient client = this.scenarioContext.Get<ContentClient>();
+                ContentClient client = this.featureContext.Get<ContentClient>();
                 SwaggerResponse<ContentStateResponse> response = await client.GetWorkflowStateAsync(
-                    this.scenarioContext.GetCurrentTenantId(),
+                    this.featureContext.GetCurrentTenantId(),
                     resolvedSlug,
                     resolvedWorkflowId).ConfigureAwait(false);
 
@@ -105,12 +109,12 @@ namespace Marain.ContentManagement.Specs.Steps
             string resolvedSlug = SpecHelpers.ParseSpecValue<string>(this.scenarioContext, slug);
             string resolvedId = SpecHelpers.ParseSpecValue<string>(this.scenarioContext, id);
 
-            ContentClient client = this.scenarioContext.Get<ContentClient>();
+            ContentClient client = this.featureContext.Get<ContentClient>();
 
             try
             {
                 SwaggerResponse<ContentResponse> response = await client.GetContentAsync(
-                    this.scenarioContext.GetCurrentTenantId(),
+                    this.featureContext.GetCurrentTenantId(),
                     resolvedSlug,
                     resolvedId,
                     lastEtag).ConfigureAwait(false);
@@ -129,12 +133,12 @@ namespace Marain.ContentManagement.Specs.Steps
             string resolvedSlug = SpecHelpers.ParseSpecValue<string>(this.scenarioContext, slug);
             string resolvedId = SpecHelpers.ParseSpecValue<string>(this.scenarioContext, id);
 
-            ContentClient client = this.scenarioContext.Get<ContentClient>();
+            ContentClient client = this.featureContext.Get<ContentClient>();
 
             try
             {
                 SwaggerResponse<ContentResponse> response = await client.GetContentAsync(
-                    this.scenarioContext.GetCurrentTenantId(),
+                    this.featureContext.GetCurrentTenantId(),
                     resolvedSlug,
                     resolvedId,
                     Guid.NewGuid().ToString()).ConfigureAwait(false);
@@ -155,12 +159,12 @@ namespace Marain.ContentManagement.Specs.Steps
             Cms.Content item = this.scenarioContext.Get<Cms.Content>(contentItem);
             CreateContentRequest createContentRequest = ContentSpecHelpers.ContentAsCreateContentRequest(item);
 
-            ContentClient client = this.scenarioContext.Get<ContentClient>();
+            ContentClient client = this.featureContext.Get<ContentClient>();
 
             try
             {
                 SwaggerResponse<ContentResponse> response = await client.CreateContentAsync(
-                    this.scenarioContext.GetCurrentTenantId(),
+                    this.featureContext.GetCurrentTenantId(),
                     item.Slug,
                     createContentRequest).ConfigureAwait(false);
 

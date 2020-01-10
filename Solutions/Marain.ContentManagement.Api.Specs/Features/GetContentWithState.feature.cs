@@ -19,7 +19,7 @@ namespace Marain.ContentManagement.Specs.Features
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
     [NUnit.Framework.DescriptionAttribute("GetContentWithState")]
-    [NUnit.Framework.CategoryAttribute("perScenarioContainer")]
+    [NUnit.Framework.CategoryAttribute("perFeatureContainer")]
     [NUnit.Framework.CategoryAttribute("useTransientTenant")]
     [NUnit.Framework.CategoryAttribute("useContentManagementApi")]
     public partial class GetContentWithStateFeature
@@ -35,7 +35,7 @@ namespace Marain.ContentManagement.Specs.Features
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
             TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "GetContentWithState", null, ProgrammingLanguage.CSharp, new string[] {
-                        "perScenarioContainer",
+                        "perFeatureContainer",
                         "useTransientTenant",
                         "useContentManagementApi"});
             testRunner.OnFeatureStart(featureInfo);
@@ -84,7 +84,7 @@ namespace Marain.ContentManagement.Specs.Features
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table26 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table25 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name",
                         "Id",
                         "Slug",
@@ -96,10 +96,10 @@ this.ScenarioInitialize(scenarioInfo);
                         "Description",
                         "Culture",
                         "Fragment"});
-            table26.AddRow(new string[] {
+            table25.AddRow(new string[] {
                         "Expected",
-                        "myid",
-                        "myslug",
+                        "myid1",
+                        "myslug1",
                         "First tag; Second tag",
                         "/standard/content;/books/hobbit;/books/lotr",
                         "Bilbo Baggins",
@@ -109,9 +109,9 @@ this.ScenarioInitialize(scenarioInfo);
                         "en-GB",
                         "This is the fragment of text"});
 #line 7
- testRunner.Given("a content item has been created", ((string)(null)), table26, "Given ");
+ testRunner.Given("a content item has been created", ((string)(null)), table25, "Given ");
 #line hidden
-            TechTalk.SpecFlow.Table table27 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table26 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name",
                         "Id",
                         "ContentId",
@@ -120,17 +120,17 @@ this.ScenarioInitialize(scenarioInfo);
                         "StateName",
                         "ChangedBy.Name",
                         "ChangedBy.Id"});
-            table27.AddRow(new string[] {
+            table26.AddRow(new string[] {
                         "Expected-State",
                         "{newguid}",
-                        "myid",
-                        "myslug",
+                        "myid1",
+                        "myslug1",
                         "{newguid}",
                         "retired",
                         "Frodo Baggins",
                         "{newguid}"});
 #line 10
- testRunner.And("a workflow state has been set for the content item", ((string)(null)), table27, "And ");
+ testRunner.And("a workflow state has been set for the content item", ((string)(null)), table26, "And ");
 #line 13
  testRunner.When("I request the content with its state for slug \'{Expected.Slug}\' and workflow Id \'" +
                     "{Expected-State.WorkflowId}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -173,7 +173,7 @@ this.ScenarioInitialize(scenarioInfo);
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table28 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table27 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name",
                         "Id",
                         "Slug",
@@ -185,10 +185,10 @@ this.ScenarioInitialize(scenarioInfo);
                         "Description",
                         "Culture",
                         "Fragment"});
-            table28.AddRow(new string[] {
+            table27.AddRow(new string[] {
                         "Expected",
-                        "myid",
-                        "myslug",
+                        "myid2",
+                        "myslug2",
                         "First tag; Second tag",
                         "/standard/content;/books/hobbit;/books/lotr",
                         "Bilbo Baggins",
@@ -198,7 +198,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "en-GB",
                         "This is the fragment of text"});
 #line 23
- testRunner.Given("a content item has been created", ((string)(null)), table28, "Given ");
+ testRunner.Given("a content item has been created", ((string)(null)), table27, "Given ");
 #line 26
  testRunner.When("I request the content with its state for slug \'{Expected.Slug}\' and workflow Id \'" +
                     "{newguid}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -219,7 +219,7 @@ this.ScenarioInitialize(scenarioInfo);
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table29 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table28 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name",
                         "Id",
                         "Slug",
@@ -231,10 +231,10 @@ this.ScenarioInitialize(scenarioInfo);
                         "Description",
                         "Culture",
                         "Fragment"});
-            table29.AddRow(new string[] {
+            table28.AddRow(new string[] {
                         "Expected",
-                        "myid",
-                        "myslug",
+                        "myid3",
+                        "myslug3",
                         "First tag; Second tag",
                         "/standard/content;/books/hobbit;/books/lotr",
                         "Bilbo Baggins",
@@ -244,9 +244,9 @@ this.ScenarioInitialize(scenarioInfo);
                         "en-GB",
                         "This is the fragment of text"});
 #line 30
- testRunner.Given("a content item has been created", ((string)(null)), table29, "Given ");
+ testRunner.Given("a content item has been created", ((string)(null)), table28, "Given ");
 #line hidden
-            TechTalk.SpecFlow.Table table30 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table29 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name",
                         "Id",
                         "ContentId",
@@ -255,17 +255,17 @@ this.ScenarioInitialize(scenarioInfo);
                         "StateName",
                         "ChangedBy.Name",
                         "ChangedBy.Id"});
-            table30.AddRow(new string[] {
+            table29.AddRow(new string[] {
                         "Expected-State",
                         "{newguid}",
-                        "myid",
-                        "myslug",
+                        "myid3",
+                        "myslug3",
                         "{newguid}",
                         "retired",
                         "Frodo Baggins",
                         "{newguid}"});
 #line 33
- testRunner.And("a workflow state has been set for the content item", ((string)(null)), table30, "And ");
+ testRunner.And("a workflow state has been set for the content item", ((string)(null)), table29, "And ");
 #line 36
  testRunner.When("I request the content with its state for slug \'{Expected.Slug}\' and workflow Id \'" +
                     "{newguid}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -286,7 +286,7 @@ this.ScenarioInitialize(scenarioInfo);
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table31 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table30 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name",
                         "Id",
                         "Slug",
@@ -298,10 +298,10 @@ this.ScenarioInitialize(scenarioInfo);
                         "Description",
                         "Culture",
                         "Fragment"});
-            table31.AddRow(new string[] {
+            table30.AddRow(new string[] {
                         "Expected",
-                        "myid",
-                        "myslug",
+                        "myid4",
+                        "myslug4",
                         "First tag; Second tag",
                         "/standard/content;/books/hobbit;/books/lotr",
                         "Bilbo Baggins",
@@ -311,9 +311,9 @@ this.ScenarioInitialize(scenarioInfo);
                         "en-GB",
                         "This is the fragment of text"});
 #line 40
- testRunner.Given("a content item has been created", ((string)(null)), table31, "Given ");
+ testRunner.Given("a content item has been created", ((string)(null)), table30, "Given ");
 #line hidden
-            TechTalk.SpecFlow.Table table32 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table31 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name",
                         "Id",
                         "ContentId",
@@ -322,17 +322,17 @@ this.ScenarioInitialize(scenarioInfo);
                         "StateName",
                         "ChangedBy.Name",
                         "ChangedBy.Id"});
-            table32.AddRow(new string[] {
+            table31.AddRow(new string[] {
                         "Expected-State",
                         "{newguid}",
-                        "myid",
-                        "myslug",
+                        "myid4",
+                        "myslug4",
                         "{newguid}",
                         "retired",
                         "Frodo Baggins",
                         "{newguid}"});
 #line 43
- testRunner.And("a workflow state has been set for the content item", ((string)(null)), table32, "And ");
+ testRunner.And("a workflow state has been set for the content item", ((string)(null)), table31, "And ");
 #line 46
  testRunner.When("I request the content with its state for slug \'myotherslug\' and workflow Id \'{Exp" +
                     "ected-State.WorkflowId}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");

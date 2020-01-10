@@ -19,7 +19,7 @@ namespace Marain.ContentManagement.Specs.Features
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
     [NUnit.Framework.DescriptionAttribute("GetContent")]
-    [NUnit.Framework.CategoryAttribute("perScenarioContainer")]
+    [NUnit.Framework.CategoryAttribute("perFeatureContainer")]
     [NUnit.Framework.CategoryAttribute("useTransientTenant")]
     [NUnit.Framework.CategoryAttribute("useContentManagementApi")]
     public partial class GetContentFeature
@@ -35,7 +35,7 @@ namespace Marain.ContentManagement.Specs.Features
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
             TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "GetContent", null, ProgrammingLanguage.CSharp, new string[] {
-                        "perScenarioContainer",
+                        "perFeatureContainer",
                         "useTransientTenant",
                         "useContentManagementApi"});
             testRunner.OnFeatureStart(featureInfo);
@@ -98,8 +98,8 @@ this.ScenarioInitialize(scenarioInfo);
                         "Fragment"});
             table14.AddRow(new string[] {
                         "Expected",
-                        "myid",
-                        "myslug",
+                        "myid1",
+                        "myslug1",
                         "First tag; Second tag",
                         "/standard/content;/books/hobbit;/books/lotr",
                         "Bilbo Baggins",
@@ -149,8 +149,8 @@ this.ScenarioInitialize(scenarioInfo);
                         "Fragment"});
             table15.AddRow(new string[] {
                         "Expected",
-                        "myid",
-                        "myslug",
+                        "myid2",
+                        "myslug2",
                         "First tag; Second tag",
                         "/standard/content;/books/hobbit;/books/lotr",
                         "Bilbo Baggins",
@@ -199,8 +199,8 @@ this.ScenarioInitialize(scenarioInfo);
                         "Fragment"});
             table16.AddRow(new string[] {
                         "Expected",
-                        "myid",
-                        "myslug",
+                        "myid3",
+                        "myslug3",
                         "First tag; Second tag",
                         "/standard/content;/books/hobbit;/books/lotr",
                         "Bilbo Baggins",
@@ -267,8 +267,8 @@ this.ScenarioInitialize(scenarioInfo);
                         "Fragment"});
             table17.AddRow(new string[] {
                         "Expected",
-                        "myid",
-                        "myslug",
+                        "myid4",
+                        "myslug4",
                         "First tag; Second tag",
                         "/standard/content;/books/hobbit;/books/lotr",
                         "Bilbo Baggins",
@@ -310,8 +310,8 @@ this.ScenarioInitialize(scenarioInfo);
                         "Fragment"});
             table18.AddRow(new string[] {
                         "Expected",
-                        "myid",
-                        "myslug",
+                        "myid5",
+                        "myslug5",
                         "First tag; Second tag",
                         "/standard/content;/books/hobbit;/books/lotr",
                         "Bilbo Baggins",

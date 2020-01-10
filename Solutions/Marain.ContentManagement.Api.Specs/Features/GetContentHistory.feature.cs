@@ -19,9 +19,10 @@ namespace Marain.ContentManagement.Specs.Features
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
     [NUnit.Framework.DescriptionAttribute("Get content history")]
-    [NUnit.Framework.CategoryAttribute("perScenarioContainer")]
+    [NUnit.Framework.CategoryAttribute("perFeatureContainer")]
     [NUnit.Framework.CategoryAttribute("useTransientTenant")]
     [NUnit.Framework.CategoryAttribute("useContentManagementApi")]
+    [NUnit.Framework.CategoryAttribute("addTestContentData")]
     public partial class GetContentHistoryFeature
     {
         
@@ -35,9 +36,10 @@ namespace Marain.ContentManagement.Specs.Features
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
             TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Get content history", null, ProgrammingLanguage.CSharp, new string[] {
-                        "perScenarioContainer",
+                        "perFeatureContainer",
                         "useTransientTenant",
-                        "useContentManagementApi"});
+                        "useContentManagementApi",
+                        "addTestContentData"});
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -75,408 +77,25 @@ namespace Marain.ContentManagement.Specs.Features
             testRunner.CollectScenarioErrors();
         }
         
-        public virtual void FeatureBackground()
-        {
-#line 6
-#line hidden
-            TechTalk.SpecFlow.Table table19 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Name",
-                        "Id",
-                        "Slug",
-                        "Tags",
-                        "CategoryPaths",
-                        "Author.Name",
-                        "Author.Id",
-                        "Title",
-                        "Description",
-                        "Culture",
-                        "Fragment"});
-            table19.AddRow(new string[] {
-                        "Content0",
-                        "{newguid}",
-                        "slug1",
-                        "First tag; Second tag",
-                        "/standard/content;/books/hobbit;/books/lotr",
-                        "Bilbo Baggins",
-                        "{newguid}",
-                        "This is the title",
-                        "A description of the content",
-                        "en-GB",
-                        "This is the fragment of text"});
-            table19.AddRow(new string[] {
-                        "Content1",
-                        "{newguid}",
-                        "slug1",
-                        "First tag; Second tag",
-                        "/standard/content;/books/hobbit;/books/lotr",
-                        "Bilbo Baggins",
-                        "{newguid}",
-                        "This is the title",
-                        "A description of the content",
-                        "en-GB",
-                        "This is the fragment of text"});
-            table19.AddRow(new string[] {
-                        "Content2",
-                        "{newguid}",
-                        "slug1",
-                        "First tag; Second tag",
-                        "/standard/content;/books/hobbit;/books/lotr",
-                        "Bilbo Baggins",
-                        "{newguid}",
-                        "This is the title",
-                        "A description of the content",
-                        "en-GB",
-                        "This is the fragment of text"});
-            table19.AddRow(new string[] {
-                        "Content3",
-                        "{newguid}",
-                        "slug1",
-                        "First tag; Second tag",
-                        "/standard/content;/books/hobbit;/books/lotr",
-                        "Bilbo Baggins",
-                        "{newguid}",
-                        "This is the title",
-                        "A description of the content",
-                        "en-GB",
-                        "This is the fragment of text"});
-            table19.AddRow(new string[] {
-                        "Content4",
-                        "{newguid}",
-                        "slug1",
-                        "First tag; Second tag",
-                        "/standard/content;/books/hobbit;/books/lotr",
-                        "Bilbo Baggins",
-                        "{newguid}",
-                        "This is the title",
-                        "A description of the content",
-                        "en-GB",
-                        "This is the fragment of text"});
-            table19.AddRow(new string[] {
-                        "Content5",
-                        "{newguid}",
-                        "slug1",
-                        "First tag; Second tag",
-                        "/standard/content;/books/hobbit;/books/lotr",
-                        "Bilbo Baggins",
-                        "{newguid}",
-                        "This is the title",
-                        "A description of the content",
-                        "en-GB",
-                        "This is the fragment of text"});
-            table19.AddRow(new string[] {
-                        "Content6",
-                        "{newguid}",
-                        "slug1",
-                        "First tag; Second tag",
-                        "/standard/content;/books/hobbit;/books/lotr",
-                        "Bilbo Baggins",
-                        "{newguid}",
-                        "This is the title",
-                        "A description of the content",
-                        "en-GB",
-                        "This is the fragment of text"});
-            table19.AddRow(new string[] {
-                        "Content7",
-                        "{newguid}",
-                        "slug1",
-                        "First tag; Second tag",
-                        "/standard/content;/books/hobbit;/books/lotr",
-                        "Bilbo Baggins",
-                        "{newguid}",
-                        "This is the title",
-                        "A description of the content",
-                        "en-GB",
-                        "This is the fragment of text"});
-            table19.AddRow(new string[] {
-                        "Content8",
-                        "{newguid}",
-                        "slug1",
-                        "First tag; Second tag",
-                        "/standard/content;/books/hobbit;/books/lotr",
-                        "Bilbo Baggins",
-                        "{newguid}",
-                        "This is the title",
-                        "A description of the content",
-                        "en-GB",
-                        "This is the fragment of text"});
-            table19.AddRow(new string[] {
-                        "Content9",
-                        "{newguid}",
-                        "slug1",
-                        "First tag; Second tag",
-                        "/standard/content;/books/hobbit;/books/lotr",
-                        "Bilbo Baggins",
-                        "{newguid}",
-                        "This is the title",
-                        "A description of the content",
-                        "en-GB",
-                        "This is the fragment of text"});
-            table19.AddRow(new string[] {
-                        "Content10",
-                        "{newguid}",
-                        "slug1",
-                        "First tag; Second tag",
-                        "/standard/content;/books/hobbit;/books/lotr",
-                        "Bilbo Baggins",
-                        "{newguid}",
-                        "This is the title",
-                        "A description of the content",
-                        "en-GB",
-                        "This is the fragment of text"});
-            table19.AddRow(new string[] {
-                        "Content11",
-                        "{newguid}",
-                        "slug1",
-                        "First tag; Second tag",
-                        "/standard/content;/books/hobbit;/books/lotr",
-                        "Bilbo Baggins",
-                        "{newguid}",
-                        "This is the title",
-                        "A description of the content",
-                        "en-GB",
-                        "This is the fragment of text"});
-            table19.AddRow(new string[] {
-                        "Content12",
-                        "{newguid}",
-                        "slug1",
-                        "First tag; Second tag",
-                        "/standard/content;/books/hobbit;/books/lotr",
-                        "Bilbo Baggins",
-                        "{newguid}",
-                        "This is the title",
-                        "A description of the content",
-                        "en-GB",
-                        "This is the fragment of text"});
-            table19.AddRow(new string[] {
-                        "Content13",
-                        "{newguid}",
-                        "slug1",
-                        "First tag; Second tag",
-                        "/standard/content;/books/hobbit;/books/lotr",
-                        "Bilbo Baggins",
-                        "{newguid}",
-                        "This is the title",
-                        "A description of the content",
-                        "en-GB",
-                        "This is the fragment of text"});
-            table19.AddRow(new string[] {
-                        "Content14",
-                        "{newguid}",
-                        "slug1",
-                        "First tag; Second tag",
-                        "/standard/content;/books/hobbit;/books/lotr",
-                        "Bilbo Baggins",
-                        "{newguid}",
-                        "This is the title",
-                        "A description of the content",
-                        "en-GB",
-                        "This is the fragment of text"});
-            table19.AddRow(new string[] {
-                        "Content15",
-                        "{newguid}",
-                        "slug1",
-                        "First tag; Second tag",
-                        "/standard/content;/books/hobbit;/books/lotr",
-                        "Bilbo Baggins",
-                        "{newguid}",
-                        "This is the title",
-                        "A description of the content",
-                        "en-GB",
-                        "This is the fragment of text"});
-            table19.AddRow(new string[] {
-                        "Content16",
-                        "{newguid}",
-                        "slug1",
-                        "First tag; Second tag",
-                        "/standard/content;/books/hobbit;/books/lotr",
-                        "Bilbo Baggins",
-                        "{newguid}",
-                        "This is the title",
-                        "A description of the content",
-                        "en-GB",
-                        "This is the fragment of text"});
-            table19.AddRow(new string[] {
-                        "Content17",
-                        "{newguid}",
-                        "slug1",
-                        "First tag; Second tag",
-                        "/standard/content;/books/hobbit;/books/lotr",
-                        "Bilbo Baggins",
-                        "{newguid}",
-                        "This is the title",
-                        "A description of the content",
-                        "en-GB",
-                        "This is the fragment of text"});
-            table19.AddRow(new string[] {
-                        "Content18",
-                        "{newguid}",
-                        "slug1",
-                        "First tag; Second tag",
-                        "/standard/content;/books/hobbit;/books/lotr",
-                        "Bilbo Baggins",
-                        "{newguid}",
-                        "This is the title",
-                        "A description of the content",
-                        "en-GB",
-                        "This is the fragment of text"});
-            table19.AddRow(new string[] {
-                        "Content19",
-                        "{newguid}",
-                        "slug1",
-                        "First tag; Second tag",
-                        "/standard/content;/books/hobbit;/books/lotr",
-                        "Bilbo Baggins",
-                        "{newguid}",
-                        "This is the title",
-                        "A description of the content",
-                        "en-GB",
-                        "This is the fragment of text"});
-            table19.AddRow(new string[] {
-                        "Content20",
-                        "{newguid}",
-                        "slug1",
-                        "First tag; Second tag",
-                        "/standard/content;/books/hobbit;/books/lotr",
-                        "Bilbo Baggins",
-                        "{newguid}",
-                        "This is the title",
-                        "A description of the content",
-                        "en-GB",
-                        "This is the fragment of text"});
-            table19.AddRow(new string[] {
-                        "Content21",
-                        "{newguid}",
-                        "slug1",
-                        "First tag; Second tag",
-                        "/standard/content;/books/hobbit;/books/lotr",
-                        "Bilbo Baggins",
-                        "{newguid}",
-                        "This is the title",
-                        "A description of the content",
-                        "en-GB",
-                        "This is the fragment of text"});
-            table19.AddRow(new string[] {
-                        "Content22",
-                        "{newguid}",
-                        "slug1",
-                        "First tag; Second tag",
-                        "/standard/content;/books/hobbit;/books/lotr",
-                        "Bilbo Baggins",
-                        "{newguid}",
-                        "This is the title",
-                        "A description of the content",
-                        "en-GB",
-                        "This is the fragment of text"});
-            table19.AddRow(new string[] {
-                        "Content23",
-                        "{newguid}",
-                        "slug1",
-                        "First tag; Second tag",
-                        "/standard/content;/books/hobbit;/books/lotr",
-                        "Bilbo Baggins",
-                        "{newguid}",
-                        "This is the title",
-                        "A description of the content",
-                        "en-GB",
-                        "This is the fragment of text"});
-            table19.AddRow(new string[] {
-                        "Content24",
-                        "{newguid}",
-                        "slug1",
-                        "First tag; Second tag",
-                        "/standard/content;/books/hobbit;/books/lotr",
-                        "Bilbo Baggins",
-                        "{newguid}",
-                        "This is the title",
-                        "A description of the content",
-                        "en-GB",
-                        "This is the fragment of text"});
-            table19.AddRow(new string[] {
-                        "Content25",
-                        "{newguid}",
-                        "slug1",
-                        "First tag; Second tag",
-                        "/standard/content;/books/hobbit;/books/lotr",
-                        "Bilbo Baggins",
-                        "{newguid}",
-                        "This is the title",
-                        "A description of the content",
-                        "en-GB",
-                        "This is the fragment of text"});
-            table19.AddRow(new string[] {
-                        "Content26",
-                        "{newguid}",
-                        "slug1",
-                        "First tag; Second tag",
-                        "/standard/content;/books/hobbit;/books/lotr",
-                        "Bilbo Baggins",
-                        "{newguid}",
-                        "This is the title",
-                        "A description of the content",
-                        "en-GB",
-                        "This is the fragment of text"});
-            table19.AddRow(new string[] {
-                        "Content27",
-                        "{newguid}",
-                        "slug1",
-                        "First tag; Second tag",
-                        "/standard/content;/books/hobbit;/books/lotr",
-                        "Bilbo Baggins",
-                        "{newguid}",
-                        "This is the title",
-                        "A description of the content",
-                        "en-GB",
-                        "This is the fragment of text"});
-            table19.AddRow(new string[] {
-                        "Content28",
-                        "{newguid}",
-                        "slug1",
-                        "First tag; Second tag",
-                        "/standard/content;/books/hobbit;/books/lotr",
-                        "Bilbo Baggins",
-                        "{newguid}",
-                        "This is the title",
-                        "A description of the content",
-                        "en-GB",
-                        "This is the fragment of text"});
-            table19.AddRow(new string[] {
-                        "Content29",
-                        "{newguid}",
-                        "slug1",
-                        "First tag; Second tag",
-                        "/standard/content;/books/hobbit;/books/lotr",
-                        "Bilbo Baggins",
-                        "{newguid}",
-                        "This is the title",
-                        "A description of the content",
-                        "en-GB",
-                        "This is the fragment of text"});
-#line 7
- testRunner.Given("content items have been created", ((string)(null)), table19, "Given ");
-#line hidden
-        }
-        
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Basic history retrieval without specifying a limit or continuation token")]
         public virtual void BasicHistoryRetrievalWithoutSpecifyingALimitOrContinuationToken()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Basic history retrieval without specifying a limit or continuation token", null, ((string[])(null)));
-#line 40
+#line 7
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 6
-this.FeatureBackground();
-#line 41
+#line 8
  testRunner.When("I request content history for slug \'{Content0.Slug}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 42
+#line 9
  testRunner.Then("the response should have a status of \'200\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 43
+#line 10
  testRunner.And("the response should contain 20 embedded content summaries", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 44
+#line 11
  testRunner.And("the ETag header should be set", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 45
+#line 12
  testRunner.And("the response should contain a \'self\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 46
+#line 13
  testRunner.And("the response should contain a \'next\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -487,23 +106,21 @@ this.FeatureBackground();
         public virtual void HistoryRetrievalSpecifyingAContinuationToken()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("History retrieval specifying a continuation token", null, ((string[])(null)));
-#line 48
+#line 15
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 6
-this.FeatureBackground();
-#line 49
+#line 16
  testRunner.Given("I have requested content history for slug \'{Content0.Slug}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 50
+#line 17
  testRunner.When("I request content history for slug \'{Content0.Slug}\' with the contination token f" +
                     "rom the previous response", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 51
+#line 18
  testRunner.Then("the response should have a status of \'200\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 52
+#line 19
  testRunner.And("the response should contain another 10 embedded content summaries", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 53
+#line 20
  testRunner.And("the ETag header should be set", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 54
+#line 21
  testRunner.And("the response should contain a \'self\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -514,22 +131,20 @@ this.FeatureBackground();
         public virtual void HistoryRetrievalSpecifyingALimit()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("History retrieval specifying a limit", null, ((string[])(null)));
-#line 56
+#line 23
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 6
-this.FeatureBackground();
-#line 57
+#line 24
  testRunner.When("I request content history for slug \'{Content0.Slug}\' with a limit of 5 items", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 58
+#line 25
  testRunner.Then("the response should have a status of \'200\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 59
+#line 26
  testRunner.And("the response should contain 5 embedded content summaries", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 60
+#line 27
  testRunner.And("the ETag header should be set", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 61
+#line 28
  testRunner.And("the response should contain a \'self\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 62
+#line 29
  testRunner.And("the response should contain a \'next\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -542,22 +157,20 @@ this.FeatureBackground();
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("History retrieval with fewer items than the limit doesn\'t include a continuation " +
                     "token", null, ((string[])(null)));
-#line 64
+#line 31
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 6
-this.FeatureBackground();
-#line 65
+#line 32
  testRunner.When("I request content history for slug \'{Content0.Slug}\' with a limit of 50 items", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 66
+#line 33
  testRunner.Then("the response should have a status of \'200\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 67
+#line 34
  testRunner.And("the response should contain 30 embedded content summaries", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 68
+#line 35
  testRunner.And("the ETag header should be set", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 69
+#line 36
  testRunner.And("the response should contain a \'self\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 70
+#line 37
  testRunner.And("the response should not contain a \'next\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();

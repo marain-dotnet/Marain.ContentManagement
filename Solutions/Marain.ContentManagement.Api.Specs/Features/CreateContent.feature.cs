@@ -19,7 +19,7 @@ namespace Marain.ContentManagement.Specs.Features
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
     [NUnit.Framework.DescriptionAttribute("CreateContent")]
-    [NUnit.Framework.CategoryAttribute("perScenarioContainer")]
+    [NUnit.Framework.CategoryAttribute("perFeatureContainer")]
     [NUnit.Framework.CategoryAttribute("useTransientTenant")]
     [NUnit.Framework.CategoryAttribute("useContentManagementApi")]
     public partial class CreateContentFeature
@@ -35,7 +35,7 @@ namespace Marain.ContentManagement.Specs.Features
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
             TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "CreateContent", null, ProgrammingLanguage.CSharp, new string[] {
-                        "perScenarioContainer",
+                        "perFeatureContainer",
                         "useTransientTenant",
                         "useContentManagementApi"});
             testRunner.OnFeatureStart(featureInfo);
@@ -98,7 +98,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "Fragment"});
             table1.AddRow(new string[] {
                         "Expected",
-                        "myid",
+                        "myid1",
                         "myslug",
                         "First tag; Second tag",
                         "/standard/content;/books/hobbit;/books/lotr",
@@ -151,8 +151,8 @@ this.ScenarioInitialize(scenarioInfo);
                         "Fragment"});
             table2.AddRow(new string[] {
                         "Existing",
-                        "myid",
-                        "myslug",
+                        "myid2",
+                        "myslug1",
                         "First tag; Second tag",
                         "/standard/content;/books/hobbit;/books/lotr",
                         "Bilbo Baggins",
@@ -178,8 +178,8 @@ this.ScenarioInitialize(scenarioInfo);
                         "Fragment"});
             table3.AddRow(new string[] {
                         "Expected",
-                        "myotherid",
-                        "myslug",
+                        "myotherid2",
+                        "myslug1",
                         "First tag; Second tag",
                         "/standard/content;/books/hobbit;/books/lotr",
                         "Bilbo Baggins",
@@ -231,8 +231,8 @@ this.ScenarioInitialize(scenarioInfo);
                         "Fragment"});
             table4.AddRow(new string[] {
                         "Existing",
-                        "myid",
-                        "myslug",
+                        "myid3",
+                        "myslug1",
                         "First tag; Second tag",
                         "/standard/content;/books/hobbit;/books/lotr",
                         "Bilbo Baggins",
@@ -258,8 +258,8 @@ this.ScenarioInitialize(scenarioInfo);
                         "Fragment"});
             table5.AddRow(new string[] {
                         "Expected",
-                        "myid",
-                        "myotherslug",
+                        "myid3",
+                        "myotherslug1",
                         "First tag; Second tag",
                         "/standard/content;/books/hobbit;/books/lotr",
                         "Bilbo Baggins",
@@ -312,7 +312,7 @@ this.ScenarioInitialize(scenarioInfo);
             table6.AddRow(new string[] {
                         "Expected",
                         "myid",
-                        "myslug",
+                        "myslug2",
                         "First tag; Second tag",
                         "/standard/content;/books/hobbit;/books/lotr",
                         "Bilbo Baggins",
@@ -335,9 +335,9 @@ this.ScenarioInitialize(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Attempting to create a new item with invalid data fails")]
-        [NUnit.Framework.TestCaseAttribute("Missing Id", "{null}", "myslug", "First tag; Second tag", "/standard/content;/books/hobbit;/books/lotr", "Bilbo Baggins", "{newguid}", "{null}", "A description of the content", "en-GB", "This is the fragment of text", null)]
-        [NUnit.Framework.TestCaseAttribute("Missing title", "myid", "myslug", "First tag; Second tag", "/standard/content;/books/hobbit;/books/lotr", "Bilbo Baggins", "{newguid}", "{null}", "A description of the content", "en-GB", "This is the fragment of text", null)]
-        [NUnit.Framework.TestCaseAttribute("Missing user id", "myid", "myslug", "First tag; Second tag", "/standard/content;/books/hobbit;/books/lotr", "Bilbo Baggins", "{null}", "This is the title", "A description of the content", "en-GB", "This is the fragment of text", null)]
+        [NUnit.Framework.TestCaseAttribute("Missing Id", "{null}", "myslug3", "First tag; Second tag", "/standard/content;/books/hobbit;/books/lotr", "Bilbo Baggins", "{newguid}", "{null}", "A description of the content", "en-GB", "This is the fragment of text", null)]
+        [NUnit.Framework.TestCaseAttribute("Missing title", "myid4", "myslug4", "First tag; Second tag", "/standard/content;/books/hobbit;/books/lotr", "Bilbo Baggins", "{newguid}", "{null}", "A description of the content", "en-GB", "This is the fragment of text", null)]
+        [NUnit.Framework.TestCaseAttribute("Missing user id", "myid5", "myslug5", "First tag; Second tag", "/standard/content;/books/hobbit;/books/lotr", "Bilbo Baggins", "{null}", "This is the title", "A description of the content", "en-GB", "This is the fragment of text", null)]
         public virtual void AttemptingToCreateANewItemWithInvalidDataFails(string name, string id, string slug, string tags, string categoryPaths, string author_Name, string author_Id, string title, string description, string culture, string fragment, string[] exampleTags)
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Attempting to create a new item with invalid data fails", null, exampleTags);

@@ -13,20 +13,20 @@ namespace Marain.ContentManagement.Specs.Bindings
     /// SpecFlow binding to set up the container for content management tests.
     /// </summary>
     [Binding]
-    public class ContainerSetupBindings
+    public static class ContainerSetupBindings
     {
         /// <summary>
         /// Adds necessary services to the container so that they can be made available for test setup.
         /// </summary>
-        /// <param name="context">The current <c>ScenarioContext</c>.</param>
+        /// <param name="context">The current <c>FeatureContext</c>.</param>
         /// <remarks>
         /// We add the services required for content management so that we can setup test data via the content store directly.
-        /// We also add tenant services so that we can create transient tenants for the scenarios and clean them up after
-        /// each scenario. These have to have the same configuration as is being used in the service itself for everything
+        /// We also add tenant services so that we can create transient tenants for the features and clean them up after
+        /// each feature. These have to have the same configuration as is being used in the service itself for everything
         /// to work as intended.
         /// </remarks>
-        [BeforeScenario("@perScenarioContainer", Order = ContainerBeforeScenarioOrder.PopulateServiceCollection)]
-        public void PopulateScenarioServiceCollection(ScenarioContext context)
+        [BeforeFeature("@perFeatureContainer", Order = ContainerBeforeFeatureOrder.PopulateServiceCollection)]
+        public static void PopulateFeatureServiceCollection(FeatureContext context)
         {
             ContainerBindings.ConfigureServices(context, services =>
             {
