@@ -12,6 +12,7 @@ namespace Microsoft.Extensions.DependencyInjection
     using Marain.Cms.Api.Services;
     using Marain.Cms.Api.Services.Internal;
     using Menes;
+    using Menes.Exceptions;
     using Microsoft.Extensions.Configuration;
     using Microsoft.OpenApi.Models;
     using Microsoft.OpenApi.Readers;
@@ -105,9 +106,10 @@ namespace Microsoft.Extensions.DependencyInjection
         private static void AddContentManagementServiceDefinition(this IOpenApiHostConfiguration config)
         {
             Type contentServiceType = typeof(ContentService);
-            using Stream apiYamlStream = contentServiceType.Assembly.GetManifestResourceStream($"{contentServiceType.Namespace}.ContentManagementServices.yaml");
-            var reader = new OpenApiStreamReader();
-            OpenApiDocument apiYamlDoc = reader.Read(apiYamlStream, out OpenApiDiagnostic diagnostic);
+            OpenApiDocument apiYamlDoc = OpenApiServiceDefinitions.GetOpenApiServiceFromEmbeddedDefinition(
+                contentServiceType.Assembly,
+                $"{contentServiceType.Namespace}.ContentManagementServices.yaml");
+
             config.Documents.Add(apiYamlDoc);
         }
 
