@@ -47,14 +47,14 @@ namespace Marain.Cms.Api.Services
         /// <summary>
         /// Create the given content at the slug.
         /// </summary>
-        /// <param name="context">The context for the request.</param>
+        /// <param name="tenantId">The tenantId for the request.</param>
         /// <param name="slug">The slug at which to create the content.</param>
         /// <param name="body">The content.</param>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [OperationId(CreateContentOperationId)]
-        public async Task<OpenApiResult> CreateContent(IOpenApiContext context, string slug, CreateContentRequest body)
+        public async Task<OpenApiResult> CreateContent(string tenantId, string slug, CreateContentRequest body)
         {
-            IContentStore contentStore = await this.contentStoreFactory.GetContentStoreForTenantAsync(context.CurrentTenantId).ConfigureAwait(false);
+            IContentStore contentStore = await this.contentStoreFactory.GetContentStoreForTenantAsync(tenantId).ConfigureAwait(false);
 
             Content request = body.AsContent(slug);
 
@@ -62,7 +62,7 @@ namespace Marain.Cms.Api.Services
 
             string etag = EtagHelper.BuildEtag(nameof(Content), result.ETag);
 
-            HalDocument resultDocument = this.contentMapper.Map(result, context);
+            HalDocument resultDocument = this.contentMapper.Map(result, new ResponseMappingContext { TenantId = tenantId });
 
             WebLink location = resultDocument.GetLinksForRelation("self").First();
 
@@ -75,15 +75,15 @@ namespace Marain.Cms.Api.Services
         /// <summary>
         /// Get the content at the slug with the given ID.
         /// </summary>
-        /// <param name="context">The context for the request.</param>
+        /// <param name="tenantId">The tenantId for the request.</param>
         /// <param name="slug">The slug at which to create the content.</param>
         /// <param name="contentId">The contentId for the content at the slug.</param>
         /// <param name="ifNoneMatch">The value from the If-None-Match header, if provided.</param>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [OperationId(GetContentOperationId)]
-        public async Task<OpenApiResult> GetContent(IOpenApiContext context, string slug, string contentId, string ifNoneMatch)
+        public async Task<OpenApiResult> GetContent(string tenantId, string slug, string contentId, string ifNoneMatch)
         {
-            IContentStore contentStore = await this.contentStoreFactory.GetContentStoreForTenantAsync(context.CurrentTenantId).ConfigureAwait(false);
+            IContentStore contentStore = await this.contentStoreFactory.GetContentStoreForTenantAsync(tenantId).ConfigureAwait(false);
 
             Content result = await contentStore.GetContentAsync(contentId, slug).ConfigureAwait(false);
 
@@ -95,7 +95,7 @@ namespace Marain.Cms.Api.Services
                 return this.NotModifiedResult();
             }
 
-            HalDocument resultDocument = this.contentMapper.Map(result, context);
+            HalDocument resultDocument = this.contentMapper.Map(result, new ResponseMappingContext { TenantId = tenantId });
 
             OpenApiResult response = this.OkResult(resultDocument);
             response.Results.Add(HeaderNames.ETag, etag);

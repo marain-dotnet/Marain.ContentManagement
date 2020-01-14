@@ -30,9 +30,14 @@ namespace Marain.Cms.Api.Services
             public const string Content = "content";
 
             /// <summary>
-            /// Link relation for "next" links.
+            /// Link relation for "contentsummary" links.
             /// </summary>
             public const string ContentSummary = "contentsummary";
+
+            /// <summary>
+            /// Link relation for "history" links.
+            /// </summary>
+            public const string History = "history";
         }
 
         /// <summary>
@@ -74,6 +79,11 @@ namespace Marain.Cms.Api.Services
             /// Continuation token for the current search request.
             /// </summary>
             public const string ContinuationToken = "continuationToken";
+
+            /// <summary>
+            /// Embedding instruction for the current search request.
+            /// </summary>
+            public const string Embed = "embed";
         }
 
         /// <summary>

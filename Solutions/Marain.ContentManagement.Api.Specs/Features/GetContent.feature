@@ -12,6 +12,9 @@ Scenario: Requesting an item by slug and Id returns the item
 	And the response body should contain the content item 'Expected'
 	And the ETag header should be set
 	And the Cache header should be set to 'max-age=31536000'
+	And the response should contain a 'self' link
+	And the response should contain a 'contentsummary' link
+	And the response should contain a 'history' link
 	
 Scenario: Requesting an item by slug and Id with an etag that matches the item returns a 304 Not Modified
 	Given a content item has been created
@@ -31,6 +34,9 @@ Scenario: Requesting an item by slug and Id with an etag that does not matches t
 	And the response body should contain the content item 'Expected'
 	And the ETag header should be set
 	And the Cache header should be set to 'max-age=31536000'
+	And the response should contain a 'self' link
+	And the response should contain a 'contentsummary' link
+	And the response should contain a 'history' link
 
 Scenario: Requesting item that does not exist returns a 404 Not Found
 	Given there is no content available

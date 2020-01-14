@@ -39,7 +39,7 @@ namespace Marain.ContentManagement.Specs.Bindings
 
         public Task<Content> GetContentAsync(string contentId, string slug)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(this.contentBySlug[slug]);
         }
 
         public Task<ContentSummary> GetContentSummaryAsync(string contentId, string slug)

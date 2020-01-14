@@ -438,6 +438,9 @@ components:
     ContentState:
       type: object
       properties:
+        id:
+          type: string
+          description: The unique ID of the state instance
         stateName:
           type: string
         workflowId:
@@ -448,17 +451,6 @@ components:
           $ref: '#/components/schemas/CmsIdentity'
         timestamp:
           $ref: '#/components/schemas/DateTimeOffset'
-    ContentWithState:
-      type: object
-      properties:
-        content:
-          $ref: '#/components/schemas/Content'
-        stateName:
-          type: string
-        timestamp:
-          $ref: '#/components/schemas/DateTimeOffset'
-        workflowId:
-          type: string
     CmsIdentity:
       type: object
       properties:
@@ -538,7 +530,7 @@ components:
       - $ref: '#/components/schemas/Resource'
       - type: object
         properties:
-          summaries:
+          states:
             type: array
             items:
               $ref: '#/components/schemas/ContentStateResponse'

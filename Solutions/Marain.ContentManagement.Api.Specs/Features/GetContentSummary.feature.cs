@@ -102,7 +102,7 @@ this.ScenarioInitialize(scenarioInfo);
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table22 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table19 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name",
                         "Id",
                         "Slug",
@@ -114,7 +114,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "Description",
                         "Culture",
                         "Fragment"});
-            table22.AddRow(new string[] {
+            table19.AddRow(new string[] {
                         "Expected",
                         "myid1",
                         "myslug1",
@@ -127,7 +127,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "en-GB",
                         "This is the fragment of text"});
 #line 12
- testRunner.Given("a content item has been created", ((string)(null)), table22, "Given ");
+ testRunner.Given("a content item has been created", ((string)(null)), table19, "Given ");
 #line 15
  testRunner.When("I request the content summary with slug \'{Expected.Slug}\' and Id \'{Expected.Id}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 16
@@ -138,6 +138,12 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.And("the ETag header should be set", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 19
  testRunner.And("the Cache header should be set to \'max-age=31536000\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 20
+ testRunner.And("the response should contain a \'self\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 21
+ testRunner.And("the response should contain a \'content\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 22
+ testRunner.And("the response should contain a \'history\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -149,11 +155,11 @@ this.ScenarioInitialize(scenarioInfo);
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting an item by slug and Id with an etag that matches the item returns a 30" +
                     "4 Not Modified", null, ((string[])(null)));
-#line 21
+#line 24
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table23 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table20 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name",
                         "Id",
                         "Slug",
@@ -165,7 +171,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "Description",
                         "Culture",
                         "Fragment"});
-            table23.AddRow(new string[] {
+            table20.AddRow(new string[] {
                         "Expected",
                         "myid2",
                         "myslug2",
@@ -177,17 +183,17 @@ this.ScenarioInitialize(scenarioInfo);
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-#line 22
- testRunner.Given("a content item has been created", ((string)(null)), table23, "Given ");
 #line 25
+ testRunner.Given("a content item has been created", ((string)(null)), table20, "Given ");
+#line 28
  testRunner.And("I have requested the content summary with slug \'{Expected.Slug}\' and Id \'{Expecte" +
                     "d.Id}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 26
+#line 29
  testRunner.When("I request the content summary with slug \'{Expected.Slug}\' and Id \'{Expected.Id}\' " +
                     "using the etag returned by the previous request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 27
+#line 30
  testRunner.Then("the response should have a status of \'304\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 28
+#line 31
  testRunner.And("there should be no response body", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -200,11 +206,11 @@ this.ScenarioInitialize(scenarioInfo);
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting an item by slug and Id with an etag that does not matches the item ret" +
                     "urns the item", null, ((string[])(null)));
-#line 30
+#line 33
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table24 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table21 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name",
                         "Id",
                         "Slug",
@@ -216,7 +222,7 @@ this.ScenarioInitialize(scenarioInfo);
                         "Description",
                         "Culture",
                         "Fragment"});
-            table24.AddRow(new string[] {
+            table21.AddRow(new string[] {
                         "Expected",
                         "myid3",
                         "myslug3",
@@ -228,19 +234,25 @@ this.ScenarioInitialize(scenarioInfo);
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-#line 31
- testRunner.Given("a content item has been created", ((string)(null)), table24, "Given ");
 #line 34
+ testRunner.Given("a content item has been created", ((string)(null)), table21, "Given ");
+#line 37
  testRunner.When("I request the content summary with slug \'{Expected.Slug}\' and Id \'{Expected.Id}\' " +
                     "using a random etag", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 35
- testRunner.Then("the response should have a status of \'200\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 36
- testRunner.And("the response body should contain a summary of the content item \'Expected\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 37
- testRunner.And("the ETag header should be set", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 38
+ testRunner.Then("the response should have a status of \'200\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 39
+ testRunner.And("the response body should contain a summary of the content item \'Expected\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 40
+ testRunner.And("the ETag header should be set", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 41
  testRunner.And("the Cache header should be set to \'max-age=31536000\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 42
+ testRunner.And("the response should contain a \'self\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 43
+ testRunner.And("the response should contain a \'content\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 44
+ testRunner.And("the response should contain a \'history\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

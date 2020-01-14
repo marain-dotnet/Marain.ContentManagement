@@ -57,7 +57,7 @@ namespace Marain.Cms.Internal
                 ContentState contentState = await this.contentStore.GetContentStateForWorkflowAsync(payload.Slug, WellKnownWorkflowId.ContentPublication).ConfigureAwait(false);
                 if (CanRender(contentState, stateToRender))
                 {
-                    Content content = await this.contentStore.GetContentAsync(contentState.Slug, contentState.ContentId).ConfigureAwait(false);
+                    Content content = await this.contentStore.GetContentAsync(contentState.ContentId, contentState.Slug).ConfigureAwait(false);
                     IContentRenderer renderer = this.contentRendererFactory.GetRendererFor(content.ContentPayload);
                     await renderer.RenderAsync(output, content, content.ContentPayload, context).ConfigureAwait(false);
                 }

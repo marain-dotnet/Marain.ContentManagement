@@ -11,7 +11,7 @@ namespace Marain.Cms.Api.Services.Internal
     /// <summary>
     /// Maps <see cref="Content"/> to and from a <see cref="HalDocument"/>.
     /// </summary>
-    public class ContentResponseMapper : IHalDocumentMapper<Content, IOpenApiContext>
+    public class ContentResponseMapper : IHalDocumentMapper<Content, ResponseMappingContext>
     {
         private readonly IHalDocumentFactory halDocumentFactory;
         private readonly IOpenApiWebLinkResolver linkResolver;
@@ -30,20 +30,38 @@ namespace Marain.Cms.Api.Services.Internal
         /// <inheritdoc/>
         public void ConfigureLinkMap(IOpenApiLinkOperationMap links)
         {
-            links.MapByContentTypeAndRelationTypeAndOperationId<Content>("self", ContentService.GetContentOperationId);
+            links.MapByContentTypeAndRelationTypeAndOperationId<Content>(Constants.LinkRelations.Self, ContentService.GetContentOperationId);
+            links.MapByContentTypeAndRelationTypeAndOperationId<Content>(Constants.LinkRelations.ContentSummary, ContentSummaryService.GetContentSummaryOperationId);
+            links.MapByContentTypeAndRelationTypeAndOperationId<Content>(Constants.LinkRelations.History, ContentHistoryService.GetContentHistoryOperationId);
         }
 
         /// <inheritdoc/>
-        public HalDocument Map(Content resource, IOpenApiContext context)
+        public HalDocument Map(Content resource, ResponseMappingContext context)
         {
             HalDocument response = this.halDocumentFactory.CreateHalDocumentFrom(resource);
+
             response.ResolveAndAddByOwnerAndRelationType(
                 this.linkResolver,
                 resource,
-                "self",
-                ("tenantId", context.CurrentTenantId),
+                Constants.LinkRelations.Self,
+                ("tenantId", context.TenantId),
                 ("slug", resource.Slug),
                 ("contentId", resource.Id));
+
+            response.ResolveAndAddByOwnerAndRelationType(
+                this.linkResolver,
+                resource,
+                Constants.LinkRelations.ContentSummary,
+                ("tenantId", context.TenantId),
+                ("slug", resource.Slug),
+                ("contentId", resource.Id));
+
+            response.ResolveAndAddByOwnerAndRelationType(
+                this.linkResolver,
+                resource,
+                Constants.LinkRelations.History,
+                ("tenantId", context.TenantId),
+                ("slug", resource.Slug));
 
             return response;
         }

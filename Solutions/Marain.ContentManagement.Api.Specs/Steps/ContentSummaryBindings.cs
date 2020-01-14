@@ -5,12 +5,14 @@
 namespace Marain.ContentManagement.Specs.Steps
 {
     using System;
+    using System.Collections.ObjectModel;
     using System.Linq;
     using System.Threading.Tasks;
     using Marain.Cms.Api.Client;
     using Marain.ContentManagement.Specs.Bindings;
     using Marain.ContentManagement.Specs.Drivers;
     using Marain.ContentManagement.Specs.Helpers;
+    using NUnit.Framework;
     using TechTalk.SpecFlow;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
@@ -77,138 +79,6 @@ namespace Marain.ContentManagement.Specs.Steps
             ContentClient client = this.featureContext.Get<ContentClient>();
             SwaggerResponse<ContentSummariesResponse> response = await client.GetContentHistoryAsync(
                 this.featureContext.GetCurrentTenantId(),
-                resolvedSlug,
-                limit,
-                null,
-                null).ConfigureAwait(false);
-
-            this.scenarioContext.StoreLastApiResponse(response);
-        }
-
-        [Given("I have requested content state history for slug '(.*)', workflow Id '(.*)' and state name '(.*)'")]
-        [When("I request content state history for slug '(.*)', workflow Id '(.*)' and state name '(.*)'")]
-        public async Task WhenIRequestContentHistoryWithStateForSlugWorkflowIdAndState(string slug, string workflowId, string stateName)
-        {
-            string resolvedSlug = SpecHelpers.ParseSpecValue<string>(this.featureContext, slug);
-            string resolvedWorkflowId = SpecHelpers.ParseSpecValue<string>(this.featureContext, workflowId);
-            string resolvedStateName = SpecHelpers.ParseSpecValue<string>(this.featureContext, stateName);
-
-            ContentClient client = this.featureContext.Get<ContentClient>();
-            SwaggerResponse<ContentStatesResponse> response = await client.GetWorkflowStateHistoryAsync(
-                this.featureContext.GetCurrentTenantId(),
-                resolvedWorkflowId,
-                resolvedStateName,
-                resolvedSlug,
-                null,
-                null,
-                null).ConfigureAwait(false);
-
-            this.scenarioContext.StoreLastApiResponse(response);
-        }
-
-        [Given("I have requested content history with state for slug '(.*)' and workflow Id '(.*)'")]
-        [When("I request content history with state for slug '(.*)' and workflow Id '(.*)'")]
-        public async Task WhenIRequestContentHistoryWithStateForSlugAndWorkflowId(string slug, string workflowId)
-        {
-            string resolvedSlug = SpecHelpers.ParseSpecValue<string>(this.featureContext, slug);
-            string resolvedWorkflowId = SpecHelpers.ParseSpecValue<string>(this.featureContext, workflowId);
-
-            ContentClient client = this.featureContext.Get<ContentClient>();
-            SwaggerResponse<ContentStatesResponse> response = await client.GetWorkflowHistoryAsync(
-                this.featureContext.GetCurrentTenantId(),
-                resolvedWorkflowId,
-                resolvedSlug,
-                null,
-                null,
-                null).ConfigureAwait(false);
-
-            this.scenarioContext.StoreLastApiResponse(response);
-        }
-
-        [When("I request content history with state for slug '(.*)', workflow Id '(.*)' and state name '(.*)' with the contination token from the previous response")]
-        public async Task WhenIRequestContentHistoryWithStateForSlugWorkflowIdAndStateNameWithTheContinationTokenFromThePreviousResponse(string slug, string workflowId, string stateName)
-        {
-            SwaggerResponse<ContentStatesResponse> previousResponse = this.scenarioContext.GetLastApiResponse<ContentStatesResponse>();
-
-            string continuationToken = previousResponse.Result.ExtractContinuationToken();
-
-            // Now stash the summaries themselves so we can verify that the ones we get back when we call using the
-            // continuation token aren't the same.
-            this.scenarioContext.Set(previousResponse.Result.Summaries.ToArray());
-
-            string resolvedSlug = SpecHelpers.ParseSpecValue<string>(this.featureContext, slug);
-            string resolvedWorkflowId = SpecHelpers.ParseSpecValue<string>(this.featureContext, workflowId);
-            string resolvedStateName = SpecHelpers.ParseSpecValue<string>(this.featureContext, stateName);
-
-            ContentClient client = this.featureContext.Get<ContentClient>();
-            SwaggerResponse<ContentStatesResponse> response = await client.GetWorkflowStateHistoryAsync(
-                this.featureContext.GetCurrentTenantId(),
-                resolvedWorkflowId,
-                resolvedStateName,
-                resolvedSlug,
-                null,
-                continuationToken,
-                null).ConfigureAwait(false);
-
-            this.scenarioContext.StoreLastApiResponse(response);
-        }
-
-        [When("I request content history with state for slug '(.*)' and workflow Id '(.*)' with the contination token from the previous response")]
-        public async Task WhenIRequestContentHistoryWithStateForSlugAndWorkflowIdWithTheContinationTokenFromThePreviousResponse(string slug, string workflowId)
-        {
-            SwaggerResponse<ContentStatesResponse> previousResponse = this.scenarioContext.GetLastApiResponse<ContentStatesResponse>();
-
-            string continuationToken = previousResponse.Result.ExtractContinuationToken();
-
-            // Now stash the summaries themselves so we can verify that the ones we get back when we call using the
-            // continuation token aren't the same.
-            this.scenarioContext.Set(previousResponse.Result.Summaries.ToArray());
-
-            string resolvedSlug = SpecHelpers.ParseSpecValue<string>(this.featureContext, slug);
-            string resolvedWorkflowId = SpecHelpers.ParseSpecValue<string>(this.featureContext, workflowId);
-
-            ContentClient client = this.featureContext.Get<ContentClient>();
-            SwaggerResponse<ContentStatesResponse> response = await client.GetWorkflowHistoryAsync(
-                this.featureContext.GetCurrentTenantId(),
-                resolvedWorkflowId,
-                resolvedSlug,
-                null,
-                continuationToken,
-                null).ConfigureAwait(false);
-
-            this.scenarioContext.StoreLastApiResponse(response);
-        }
-
-        [When("I request content history with state for slug '(.*)', workflow Id '(.*)' and state name '(.*)' with a limit of (.*) items")]
-        public async Task WhenIRequestContentHistoryWithStateForSlugWorkflowIdAndStateNameWithALimitOfItems(string slug, string workflowId, string stateName, int limit)
-        {
-            string resolvedSlug = SpecHelpers.ParseSpecValue<string>(this.featureContext, slug);
-            string resolvedWorkflowId = SpecHelpers.ParseSpecValue<string>(this.featureContext, workflowId);
-            string resolvedStateName = SpecHelpers.ParseSpecValue<string>(this.featureContext, stateName);
-
-            ContentClient client = this.featureContext.Get<ContentClient>();
-            SwaggerResponse<ContentStatesResponse> response = await client.GetWorkflowStateHistoryAsync(
-                this.featureContext.GetCurrentTenantId(),
-                resolvedWorkflowId,
-                resolvedStateName,
-                resolvedSlug,
-                limit,
-                null,
-                null).ConfigureAwait(false);
-
-            this.scenarioContext.StoreLastApiResponse(response);
-        }
-
-        [When("I request content history with state for slug '(.*)' and workflow Id '(.*)' with a limit of (.*) items")]
-        public async Task WhenIRequestContentHistoryWithStateForSlugAndWorkflowIdWithALimitOfItems(string slug, string workflowId, int limit)
-        {
-            string resolvedSlug = SpecHelpers.ParseSpecValue<string>(this.featureContext, slug);
-            string resolvedWorkflowId = SpecHelpers.ParseSpecValue<string>(this.featureContext, workflowId);
-
-            ContentClient client = this.featureContext.Get<ContentClient>();
-            SwaggerResponse<ContentStatesResponse> response = await client.GetWorkflowHistoryAsync(
-                this.featureContext.GetCurrentTenantId(),
-                resolvedWorkflowId,
                 resolvedSlug,
                 limit,
                 null,
@@ -290,6 +160,59 @@ namespace Marain.ContentManagement.Specs.Steps
             {
                 this.scenarioContext.StoreLastApiException(ex);
             }
+        }
+
+        [Then("the response body should contain a summary of the content item '(.*)'")]
+        public void ThenTheResponseBodyShouldContainTheContentItem(string itemName)
+        {
+            SwaggerResponse<ContentSummaryResponse> actual = this.scenarioContext.GetLastApiResponse<ContentSummaryResponse>();
+            Assert.IsNotNull(actual);
+
+            Cms.Content expected = this.scenarioContext.Get<Cms.Content>(itemName);
+
+            ContentSpecHelpers.Compare(expected, actual.Result);
+        }
+
+        [Then("the response should contain (.*) content summaries")]
+        public void ThenTheResponseShouldContainContentSummaries(int expectedCount)
+        {
+            SwaggerResponse<ContentSummariesResponse> response = this.scenarioContext.GetLastApiResponse<ContentSummariesResponse>();
+
+            ObservableCollection<ContentSummaryResponse> summaries = response.Result.Summaries;
+
+            Assert.IsNotNull(summaries);
+            Assert.IsNotEmpty(summaries);
+
+            Assert.AreEqual(expectedCount, summaries.Count);
+        }
+
+        [Then("the response should contain another (.*) content summaries")]
+        public void ThenTheResponseShouldContainAnotherContentSummaries(int expectedCount)
+        {
+            SwaggerResponse<ContentSummariesResponse> response = this.scenarioContext.GetLastApiResponse<ContentSummariesResponse>();
+
+            ObservableCollection<ContentSummaryResponse> summaries = response.Result.Summaries;
+
+            Assert.IsNotNull(summaries);
+            Assert.IsNotEmpty(summaries);
+
+            Assert.AreEqual(expectedCount, summaries.Count);
+
+            // Compare against previous set, which have been stored in the scenario context.
+            ContentSummaryResponse[] previousSummaries = this.scenarioContext.Get<ContentSummaryResponse[]>();
+
+            foreach (ContentSummaryResponse current in summaries)
+            {
+                Assert.IsFalse(previousSummaries.Any(x => x.Id == current.Id));
+            }
+        }
+
+        [Then("each content summary in the response should contain a '(.*)' link")]
+        public void ThenEachContentSummaryInTheResponseShouldContainALink(string linkRel)
+        {
+            SwaggerResponse<ContentSummariesResponse> response = this.scenarioContext.GetLastApiResponse<ContentSummariesResponse>();
+
+            Assert.IsTrue(response.Result.Summaries.All(x => x._links.ContainsKey(linkRel)));
         }
     }
 }

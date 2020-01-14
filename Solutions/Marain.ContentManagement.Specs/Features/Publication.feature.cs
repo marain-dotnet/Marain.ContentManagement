@@ -891,8 +891,7 @@ this.ScenarioInitialize(scenarioInfo);
                     "\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 158
  testRunner.When("I get the publication history and corresponding content summaries for Slug \'{Expe" +
-                    "ctedFirst.Slug}\' with limit \'20\' and continuationToken \'{null}\' and call it \'Act" +
-                    "ual\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+                    "ctedFirst.Slug}\' with limit \'20\' and call it \'Actual\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table22 = new TechTalk.SpecFlow.Table(new string[] {
                         "ContentName",

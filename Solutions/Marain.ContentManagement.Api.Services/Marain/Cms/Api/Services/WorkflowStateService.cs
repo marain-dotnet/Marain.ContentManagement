@@ -1,4 +1,4 @@
-﻿// <copyright file="WorkflowContentService.cs" company="Endjin Limited">
+﻿// <copyright file="WorkflowStateService.cs" company="Endjin Limited">
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
@@ -12,7 +12,7 @@ namespace Marain.Cms.Api.Services
     /// <summary>
     /// Handles requests to create and retrieve content with state information.
     /// </summary>
-    public class WorkflowContentService : IOpenApiService
+    public class WorkflowStateService : IOpenApiService
     {
         /// <summary>
         /// The ID for the getWorkflowState operation.
@@ -23,11 +23,11 @@ namespace Marain.Cms.Api.Services
         private readonly ContentStateResponseMapper contentStateMapper;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WorkflowContentService"/> class.
+        /// Initializes a new instance of the <see cref="WorkflowStateService"/> class.
         /// </summary>
         /// <param name="contentStoreFactory">The content store for the service.</param>
         /// <param name="contentStateMapper">The mapper for <see cref="ContentState"/> results.</param>
-        public WorkflowContentService(
+        public WorkflowStateService(
             ITenantedContentStoreFactory contentStoreFactory,
             ContentStateResponseMapper contentStateMapper)
         {
@@ -39,18 +39,30 @@ namespace Marain.Cms.Api.Services
         /// Get the content at the slug with the given ID, combined with state information from the
         /// workflow with the given ID.
         /// </summary>
-        /// <param name="context">The context for the request.</param>
+        /// <param name="tenantId">The tenant Id for the request.</param>
         /// <param name="slug">The slug at which to create the content.</param>
         /// <param name="workflowId">The Id of the workflow the content is part of.</param>
+        /// <param name="embed">The name of a link relation to embed in the response.</param>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [OperationId(GetWorkflowStateOperationId)]
-        public async Task<OpenApiResult> GetWorkflowState(IOpenApiContext context, string slug, string workflowId)
+        public async Task<OpenApiResult> GetWorkflowState(string tenantId, string slug, string workflowId, string embed)
         {
-            IContentStore contentStore = await this.contentStoreFactory.GetContentStoreForTenantAsync(context.CurrentTenantId).ConfigureAwait(false);
+            IContentStore contentStore = await this.contentStoreFactory.GetContentStoreForTenantAsync(tenantId).ConfigureAwait(false);
 
             ContentState result = await contentStore.GetContentStateForWorkflowAsync(slug, workflowId).ConfigureAwait(false);
 
-            HalDocument resultDocument = this.contentStateMapper.Map(result, context);
+            var mappingContext = new ContentStateResponseMappingContext { TenantId = tenantId, Embed = embed };
+
+            if (embed == Constants.LinkRelations.Content)
+            {
+                mappingContext.Content = await contentStore.GetContentAsync(result.ContentId, result.Slug).ConfigureAwait(false);
+            }
+            else if (embed == Constants.LinkRelations.ContentSummary)
+            {
+                mappingContext.ContentSummary = await contentStore.GetContentSummaryAsync(result.ContentId, result.Slug).ConfigureAwait(false);
+            }
+
+            HalDocument resultDocument = this.contentStateMapper.Map(result, mappingContext);
 
             return this.OkResult(resultDocument);
         }

@@ -155,7 +155,7 @@ Scenario: Get a publication history
 	And I archive the content with Slug '{ExpectedFirst.Slug}'
 	And I publish the content with Slug '{ExpectedSecond.Slug}' and id '{ExpectedSecond.Id}'
 	And I publish the content with Slug '{ExpectedThird.Slug}' and id '{ExpectedThird.Id}'
-	When I get the publication history and corresponding content summaries for Slug '{ExpectedFirst.Slug}' with limit '20' and continuationToken '{null}' and call it 'Actual'
+	When I get the publication history and corresponding content summaries for Slug '{ExpectedFirst.Slug}' with limit '20' and call it 'Actual'
 	Then the publication state histories and corresponding content summaries called 'Actual' should match
 		| ContentName    | StateName |
 		| ExpectedThird  | published |

@@ -7,10 +7,14 @@ namespace Marain.ContentManagement.Specs.Steps
     using System;
     using System.Linq;
     using System.Threading.Tasks;
+    using Corvus.SpecFlow.Extensions;
+    using Marain.Cms;
     using Marain.Cms.Api.Client;
     using Marain.ContentManagement.Specs.Bindings;
     using Marain.ContentManagement.Specs.Drivers;
     using Marain.ContentManagement.Specs.Helpers;
+    using Microsoft.Extensions.DependencyInjection;
+    using NUnit.Framework;
     using TechTalk.SpecFlow;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
@@ -28,6 +32,36 @@ namespace Marain.ContentManagement.Specs.Steps
         {
             this.featureContext = featureContext;
             this.scenarioContext = scenarioContext;
+        }
+
+        [Given("there is no content available")]
+        public void GivenThereIsNoContentAvailable()
+        {
+        }
+
+        [Given("a content item has been created")]
+        [Given("content items have been created")]
+        public async Task GivenAContentItemHasBeenCreated(Table table)
+        {
+            ITenantedContentStoreFactory contentStoreFactory = ContainerBindings.GetServiceProvider(this.featureContext).GetRequiredService<ITenantedContentStoreFactory>();
+            IContentStore store = await contentStoreFactory.GetContentStoreForTenantAsync(this.featureContext.GetCurrentTenantId()).ConfigureAwait(false);
+
+            foreach (TableRow row in table.Rows)
+            {
+                (Cms.Content content, string name) = ContentSpecHelpers.GetContentFor(row);
+                Cms.Content storedContent = await store.StoreContentAsync(content).ConfigureAwait(false);
+                this.scenarioContext.Set(storedContent, name);
+            }
+        }
+
+        [Given("I have a new content item")]
+        public void GivenIHaveANewContentItem(Table table)
+        {
+            foreach (TableRow row in table.Rows)
+            {
+                (Cms.Content content, string name) = ContentSpecHelpers.GetContentFor(row);
+                this.scenarioContext.Set(content, name);
+            }
         }
 
         [When("I request the content with slug '(.*)' and Id '(.*)'")]
@@ -55,11 +89,18 @@ namespace Marain.ContentManagement.Specs.Steps
             }
         }
 
-        [When("I request the content state for slug '(.*)' and workflow Id '(.*)'")]
-        public async Task WhenIRequestTheContentStateForSlugAndWorkflowId(string slug, string workflowId)
+        [When("I request the workflow state for slug '(.*)' and workflow Id '(.*)'")]
+        public Task WhenIRequestTheWorkflowStateForSlugAndWorkflowId(string slug, string workflowId)
+        {
+            return this.WhenIRequestTheWorkflowStateForSlugAndWorkflowIdWithEmbedded(null, slug, workflowId);
+        }
+
+        [When("I request the workflow state with embedded '(.*)' for slug '(.*)' and workflow Id '(.*)'")]
+        public async Task WhenIRequestTheWorkflowStateForSlugAndWorkflowIdWithEmbedded(string embed, string slug, string workflowId)
         {
             string resolvedSlug = SpecHelpers.ParseSpecValue<string>(this.scenarioContext, slug);
             string resolvedWorkflowId = SpecHelpers.ParseSpecValue<string>(this.scenarioContext, workflowId);
+            Embed? resolvedEmbed = string.IsNullOrEmpty(embed) ? (Embed?)null : Enum.Parse<Embed>(embed, true);
 
             try
             {
@@ -68,7 +109,7 @@ namespace Marain.ContentManagement.Specs.Steps
                     this.featureContext.GetCurrentTenantId(),
                     resolvedSlug,
                     resolvedWorkflowId,
-                    null).ConfigureAwait(false);
+                    resolvedEmbed).ConfigureAwait(false);
 
                 this.scenarioContext.StoreLastApiResponse(response);
             }
@@ -153,6 +194,17 @@ namespace Marain.ContentManagement.Specs.Steps
             {
                 this.scenarioContext.StoreLastApiException(ex);
             }
+        }
+
+        [Then("the response body should contain the content item '(.*)'")]
+        public void ThenTheResponseBodyShouldContainTheContentItem(string itemName)
+        {
+            SwaggerResponse<ContentResponse> actual = this.scenarioContext.GetLastApiResponse<ContentResponse>();
+            Assert.IsNotNull(actual);
+
+            Cms.Content expected = this.scenarioContext.Get<Cms.Content>(itemName);
+
+            ContentSpecHelpers.Compare(expected, actual.Result);
         }
     }
 }

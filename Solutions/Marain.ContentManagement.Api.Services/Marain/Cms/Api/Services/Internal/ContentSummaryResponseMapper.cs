@@ -32,6 +32,7 @@ namespace Marain.Cms.Api.Services.Internal
         {
             links.MapByContentTypeAndRelationTypeAndOperationId<ContentSummary>(Constants.LinkRelations.Self, ContentSummaryService.GetContentSummaryOperationId);
             links.MapByContentTypeAndRelationTypeAndOperationId<ContentSummary>(Constants.LinkRelations.Content, ContentService.GetContentOperationId);
+            links.MapByContentTypeAndRelationTypeAndOperationId<ContentSummary>(Constants.LinkRelations.History, ContentHistoryService.GetContentHistoryOperationId);
         }
 
         /// <inheritdoc/>
@@ -54,6 +55,13 @@ namespace Marain.Cms.Api.Services.Internal
                 (Constants.ParameterNames.TenantId, context.TenantId),
                 (Constants.ParameterNames.Slug, resource.Slug),
                 (Constants.ParameterNames.ContentId, resource.Id));
+
+            response.ResolveAndAddByOwnerAndRelationType(
+                this.linkResolver,
+                resource,
+                Constants.LinkRelations.History,
+                (Constants.ParameterNames.TenantId, context.TenantId),
+                (Constants.ParameterNames.Slug, resource.Slug));
 
             return response;
         }

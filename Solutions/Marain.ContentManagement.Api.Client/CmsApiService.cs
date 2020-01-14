@@ -1968,11 +1968,27 @@ namespace Marain.Cms.Api.Client
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.2.0 (Newtonsoft.Json v11.0.0.0)")]
     public partial class ContentState : System.ComponentModel.INotifyPropertyChanged
     {
+        private string _id;
         private string _stateName;
         private string _workflowId;
         private string _slug;
         private CmsIdentity _changedBy;
         private DateTimeOffset _timestamp;
+    
+        /// <summary>The unique ID of the state instance</summary>
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Id
+        {
+            get { return _id; }
+            set 
+            {
+                if (_id != value)
+                {
+                    _id = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
     
         [Newtonsoft.Json.JsonProperty("stateName", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string StateName
@@ -2061,100 +2077,6 @@ namespace Marain.Cms.Api.Client
         public static ContentState FromJson(string data)
         {
             return Newtonsoft.Json.JsonConvert.DeserializeObject<ContentState>(data);
-        }
-    
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected virtual void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
-        {
-            var handler = PropertyChanged;
-            if (handler != null) 
-                handler(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-        }
-    
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.2.0 (Newtonsoft.Json v11.0.0.0)")]
-    public partial class ContentWithState : System.ComponentModel.INotifyPropertyChanged
-    {
-        private Content _content;
-        private string _stateName;
-        private DateTimeOffset _timestamp;
-        private string _workflowId;
-    
-        [Newtonsoft.Json.JsonProperty("content", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Content Content
-        {
-            get { return _content; }
-            set 
-            {
-                if (_content != value)
-                {
-                    _content = value; 
-                    RaisePropertyChanged();
-                }
-            }
-        }
-    
-        [Newtonsoft.Json.JsonProperty("stateName", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string StateName
-        {
-            get { return _stateName; }
-            set 
-            {
-                if (_stateName != value)
-                {
-                    _stateName = value; 
-                    RaisePropertyChanged();
-                }
-            }
-        }
-    
-        [Newtonsoft.Json.JsonProperty("timestamp", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DateTimeOffset Timestamp
-        {
-            get { return _timestamp; }
-            set 
-            {
-                if (_timestamp != value)
-                {
-                    _timestamp = value; 
-                    RaisePropertyChanged();
-                }
-            }
-        }
-    
-        [Newtonsoft.Json.JsonProperty("workflowId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string WorkflowId
-        {
-            get { return _workflowId; }
-            set 
-            {
-                if (_workflowId != value)
-                {
-                    _workflowId = value; 
-                    RaisePropertyChanged();
-                }
-            }
-        }
-    
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-    
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
-    
-        public string ToJson() 
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
-        }
-    
-        public static ContentWithState FromJson(string data)
-        {
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<ContentWithState>(data);
         }
     
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
@@ -2796,11 +2718,27 @@ namespace Marain.Cms.Api.Client
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.2.0 (Newtonsoft.Json v11.0.0.0)")]
     public partial class ContentStateResponse : Resource, System.ComponentModel.INotifyPropertyChanged
     {
+        private string _id;
         private string _stateName;
         private string _workflowId;
         private string _slug;
         private CmsIdentity _changedBy;
         private DateTimeOffset _timestamp;
+    
+        /// <summary>The unique ID of the state instance</summary>
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Id
+        {
+            get { return _id; }
+            set 
+            {
+                if (_id != value)
+                {
+                    _id = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
     
         [Newtonsoft.Json.JsonProperty("stateName", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string StateName
@@ -2954,17 +2892,17 @@ namespace Marain.Cms.Api.Client
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.2.0 (Newtonsoft.Json v11.0.0.0)")]
     public partial class ContentStatesResponse : Resource, System.ComponentModel.INotifyPropertyChanged
     {
-        private System.Collections.ObjectModel.ObservableCollection<ContentStateResponse> _summaries;
+        private System.Collections.ObjectModel.ObservableCollection<ContentStateResponse> _states;
     
-        [Newtonsoft.Json.JsonProperty("summaries", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.ObjectModel.ObservableCollection<ContentStateResponse> Summaries
+        [Newtonsoft.Json.JsonProperty("states", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.ObjectModel.ObservableCollection<ContentStateResponse> States
         {
-            get { return _summaries; }
+            get { return _states; }
             set 
             {
-                if (_summaries != value)
+                if (_states != value)
                 {
-                    _summaries = value; 
+                    _states = value; 
                     RaisePropertyChanged();
                 }
             }

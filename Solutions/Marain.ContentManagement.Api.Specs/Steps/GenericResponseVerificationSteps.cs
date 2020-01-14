@@ -68,7 +68,7 @@ namespace Marain.ContentManagement.Specs.Steps
 
             resource._links.TryGetValue(linkRel, out ResourceLink link);
 
-            Assert.IsNotNull(link);
+            Assert.IsNotNull(link, $"Expected the response to contain a link relation called '{linkRel}' but none was found");
         }
 
         [Then("the response should not contain a '(.*)' link")]
@@ -78,6 +78,17 @@ namespace Marain.ContentManagement.Specs.Steps
             Resource resource = response.ResultAs<Resource>();
 
             Assert.IsFalse(resource._links.TryGetValue(linkRel, out _));
+        }
+
+        [Then("the response should contain an embedded resource called '(.*)'")]
+        public void ThenTheResponseShouldContainAnEmbeddedResourceCalled(string linkRel)
+        {
+            SwaggerResponse response = this.scenarioContext.GetLastApiResponse();
+            Resource resource = response.ResultAs<Resource>();
+
+            resource._embedded.TryGetValue(linkRel, out ResourceEmbeddedResource embeddedResource);
+
+            Assert.IsNotNull(embeddedResource, $"Expected the response to contain an embedded resource called '{linkRel}' but none was found");
         }
 
         [Then("the ETag header should be set")]
@@ -122,6 +133,30 @@ namespace Marain.ContentManagement.Specs.Steps
             string selfLinkUrl = (string)link.AdditionalProperties["href"];
 
             Assert.AreEqual(locationHeader, selfLinkUrl);
+        }
+
+        [Then("the embedded resource called '(.*)' should be a summary of the content called '(.*)'")]
+        public void ThenTheEmbeddedResourceCalledShouldBeASummaryOfTheContentCalled(string linkRel, string expectedKey)
+        {
+            SwaggerResponse response = this.scenarioContext.GetLastApiResponse();
+            Resource resource = response.ResultAs<Resource>();
+
+            ContentSummaryResponse actual = resource.GetEmbeddedDocument<ContentSummaryResponse>(linkRel);
+            Cms.Content expected = this.scenarioContext.Get<Cms.Content>(expectedKey);
+
+            ContentSpecHelpers.Compare(expected, actual);
+        }
+
+        [Then("the embedded resource called '(.*)' should match the content called '(.*)'")]
+        public void ThenTheEmbeddedResourceCalledShouldMatchTheContentCalled(string linkRel, string expectedKey)
+        {
+            SwaggerResponse response = this.scenarioContext.GetLastApiResponse();
+            Resource resource = response.ResultAs<Resource>();
+
+            ContentResponse actual = resource.GetEmbeddedDocument<ContentResponse>(linkRel);
+            Cms.Content expected = this.scenarioContext.Get<Cms.Content>(expectedKey);
+
+            ContentSpecHelpers.Compare(expected, actual);
         }
     }
 }

@@ -120,6 +120,12 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.And("the ETag header should be set", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 14
  testRunner.And("the Cache header should be set to \'max-age=31536000\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 15
+ testRunner.And("the response should contain a \'self\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 16
+ testRunner.And("the response should contain a \'contentsummary\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 17
+ testRunner.And("the response should contain a \'history\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -131,7 +137,7 @@ this.ScenarioInitialize(scenarioInfo);
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting an item by slug and Id with an etag that matches the item returns a 30" +
                     "4 Not Modified", null, ((string[])(null)));
-#line 16
+#line 19
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -159,16 +165,16 @@ this.ScenarioInitialize(scenarioInfo);
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-#line 17
- testRunner.Given("a content item has been created", ((string)(null)), table15, "Given ");
 #line 20
+ testRunner.Given("a content item has been created", ((string)(null)), table15, "Given ");
+#line 23
  testRunner.And("I have requested the content with slug \'{Expected.Slug}\' and Id \'{Expected.Id}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 21
+#line 24
  testRunner.When("I request the content with slug \'{Expected.Slug}\' and Id \'{Expected.Id}\' using th" +
                     "e etag returned by the previous request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 22
+#line 25
  testRunner.Then("the response should have a status of \'304\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 23
+#line 26
  testRunner.And("there should be no response body", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -181,7 +187,7 @@ this.ScenarioInitialize(scenarioInfo);
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting an item by slug and Id with an etag that does not matches the item ret" +
                     "urns the item", null, ((string[])(null)));
-#line 25
+#line 28
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -209,19 +215,25 @@ this.ScenarioInitialize(scenarioInfo);
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-#line 26
- testRunner.Given("a content item has been created", ((string)(null)), table16, "Given ");
 #line 29
+ testRunner.Given("a content item has been created", ((string)(null)), table16, "Given ");
+#line 32
  testRunner.When("I request the content with slug \'{Expected.Slug}\' and Id \'{Expected.Id}\' using a " +
                     "random etag", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 30
- testRunner.Then("the response should have a status of \'200\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 31
- testRunner.And("the response body should contain the content item \'Expected\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 32
- testRunner.And("the ETag header should be set", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 33
+ testRunner.Then("the response should have a status of \'200\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 34
+ testRunner.And("the response body should contain the content item \'Expected\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 35
+ testRunner.And("the ETag header should be set", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 36
  testRunner.And("the Cache header should be set to \'max-age=31536000\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 37
+ testRunner.And("the response should contain a \'self\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 38
+ testRunner.And("the response should contain a \'contentsummary\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 39
+ testRunner.And("the response should contain a \'history\' link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -231,14 +243,14 @@ this.ScenarioInitialize(scenarioInfo);
         public virtual void RequestingItemThatDoesNotExistReturnsA404NotFound()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting item that does not exist returns a 404 Not Found", null, ((string[])(null)));
-#line 35
+#line 41
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 36
+#line 42
  testRunner.Given("there is no content available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 37
+#line 43
  testRunner.When("I request the content with slug \'thisismyslug\' and Id \'thisismyid\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 38
+#line 44
  testRunner.Then("the response should have a status of \'404\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -249,7 +261,7 @@ this.ScenarioInitialize(scenarioInfo);
         public virtual void RequestingItemWithAValidSlugButInvalidIdReturnsA404NotFound()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting item with a valid slug but invalid Id returns a 404 Not Found", null, ((string[])(null)));
-#line 40
+#line 46
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -277,11 +289,11 @@ this.ScenarioInitialize(scenarioInfo);
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-#line 41
+#line 47
  testRunner.Given("a content item has been created", ((string)(null)), table17, "Given ");
-#line 44
+#line 50
  testRunner.When("I request the content with slug \'{Expected.Slug}\' and Id \'myotherid\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 45
+#line 51
  testRunner.Then("the response should have a status of \'404\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -292,7 +304,7 @@ this.ScenarioInitialize(scenarioInfo);
         public virtual void RequestingItemWithAValidIdButValidSlugReturnsA404NotFound()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting item with a valid Id but valid slug returns a 404 Not Found", null, ((string[])(null)));
-#line 47
+#line 53
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
@@ -320,11 +332,11 @@ this.ScenarioInitialize(scenarioInfo);
                         "A description of the content",
                         "en-GB",
                         "This is the fragment of text"});
-#line 48
+#line 54
  testRunner.Given("a content item has been created", ((string)(null)), table18, "Given ");
-#line 51
+#line 57
  testRunner.When("I request the content with slug \'myotherslug\' and Id \'{Expected.Id}\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 52
+#line 58
  testRunner.Then("the response should have a status of \'404\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
