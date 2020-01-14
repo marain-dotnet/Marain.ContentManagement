@@ -300,10 +300,10 @@ this.ScenarioInitialize(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Requesting item with a valid Id but valid slug returns a 404 Not Found")]
-        public virtual void RequestingItemWithAValidIdButValidSlugReturnsA404NotFound()
+        [NUnit.Framework.DescriptionAttribute("Requesting item with a valid Id but invalid slug returns a 404 Not Found")]
+        public virtual void RequestingItemWithAValidIdButInvalidSlugReturnsA404NotFound()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting item with a valid Id but valid slug returns a 404 Not Found", null, ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting item with a valid Id but invalid slug returns a 404 Not Found", null, ((string[])(null)));
 #line 53
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();

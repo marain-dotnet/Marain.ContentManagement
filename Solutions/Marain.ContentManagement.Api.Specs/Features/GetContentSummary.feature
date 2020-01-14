@@ -30,7 +30,7 @@ Scenario: Requesting an item by slug and Id with an etag that matches the item r
 	Then the response should have a status of '304'
 	And there should be no response body
 
-Scenario: Requesting an item by slug and Id with an etag that does not matches the item returns the item
+Scenario: Requesting an item by slug and Id with an etag that does not match the item returns the item
 	Given a content item has been created
 	| Name     | Id    | Slug    | Tags                  | CategoryPaths                               | Author.Name   | Author.Id | Title             | Description                  | Culture | Fragment                     |
 	| Expected | myid3 | myslug3 | First tag; Second tag | /standard/content;/books/hobbit;/books/lotr | Bilbo Baggins | {newguid} | This is the title | A description of the content | en-GB   | This is the fragment of text |

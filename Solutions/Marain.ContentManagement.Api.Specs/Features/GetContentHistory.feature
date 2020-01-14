@@ -15,7 +15,7 @@ Scenario: Basic history retrieval without specifying a limit or continuation tok
 	And each content summary in the response should contain a 'content' link
 	And each content summary in the response should contain a 'history' link
 
-Scenario: History retrieval specifying a continuation token
+Scenario: History retrieval specifying a continuation token to retrieve the last page of results
 	Given I have requested content history for slug '{Content0.Slug}'
 	When I request content history for slug '{Content0.Slug}' with the contination token from the previous response
 	Then the response should have a status of '200'

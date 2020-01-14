@@ -200,12 +200,12 @@ this.ScenarioInitialize(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Requesting an item by slug and Id with an etag that does not matches the item ret" +
-            "urns the item")]
-        public virtual void RequestingAnItemBySlugAndIdWithAnEtagThatDoesNotMatchesTheItemReturnsTheItem()
+        [NUnit.Framework.DescriptionAttribute("Requesting an item by slug and Id with an etag that does not match the item retur" +
+            "ns the item")]
+        public virtual void RequestingAnItemBySlugAndIdWithAnEtagThatDoesNotMatchTheItemReturnsTheItem()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting an item by slug and Id with an etag that does not matches the item ret" +
-                    "urns the item", null, ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting an item by slug and Id with an etag that does not match the item retur" +
+                    "ns the item", null, ((string[])(null)));
 #line 33
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();

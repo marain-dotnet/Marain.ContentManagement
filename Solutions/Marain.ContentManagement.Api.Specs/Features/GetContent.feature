@@ -50,7 +50,7 @@ Scenario: Requesting item with a valid slug but invalid Id returns a 404 Not Fou
 	When I request the content with slug '{Expected.Slug}' and Id 'myotherid'
 	Then the response should have a status of '404'
 
-Scenario: Requesting item with a valid Id but valid slug returns a 404 Not Found
+Scenario: Requesting item with a valid Id but invalid slug returns a 404 Not Found
 	Given a content item has been created
 	| Name     | Id    | Slug    | Tags                  | CategoryPaths                               | Author.Name   | Author.Id | Title             | Description                  | Culture | Fragment                     |
 	| Expected | myid5 | myslug5 | First tag; Second tag | /standard/content;/books/hobbit;/books/lotr | Bilbo Baggins | {newguid} | This is the title | A description of the content | en-GB   | This is the fragment of text |

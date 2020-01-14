@@ -108,10 +108,12 @@ this.ScenarioInitialize(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("History retrieval specifying a continuation token")]
-        public virtual void HistoryRetrievalSpecifyingAContinuationToken()
+        [NUnit.Framework.DescriptionAttribute("History retrieval specifying a continuation token to retrieve the last page of re" +
+            "sults")]
+        public virtual void HistoryRetrievalSpecifyingAContinuationTokenToRetrieveTheLastPageOfResults()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("History retrieval specifying a continuation token", null, ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("History retrieval specifying a continuation token to retrieve the last page of re" +
+                    "sults", null, ((string[])(null)));
 #line 18
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
