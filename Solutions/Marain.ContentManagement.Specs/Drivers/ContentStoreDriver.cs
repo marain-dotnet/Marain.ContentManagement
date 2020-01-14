@@ -5,6 +5,7 @@
 namespace Marain.ContentManagement.Specs.Drivers
 {
     using System.Collections.Generic;
+    using System.Linq;
     using Corvus.Extensions;
     using Marain.Cms;
     using NUnit.Framework;
@@ -29,29 +30,23 @@ namespace Marain.ContentManagement.Specs.Drivers
             Assert.AreEqual(expected.Title, actual.Title);
         }
 
-        public static void Compare(Content expectedContent, string expectedStateName, ContentSummaryWithState actual)
+        public static void MatchStatesAndSummariesToContent(
+            List<Content> expectedContents,
+            List<string> expectedStates,
+            List<ContentSummary> actualSummaries,
+            List<ContentState> actualStates)
         {
-            Assert.AreEqual(expectedContent.Id, actual.ContentSummary.Id);
-            Assert.AreEqual(expectedContent.Slug, actual.ContentSummary.Slug);
-            Assert.AreEqual(expectedContent.Author, actual.ContentSummary.Author);
-            Assert.AreEqual(string.Join(';', expectedContent.CategoryPaths), string.Join(';', actual.ContentSummary.CategoryPaths));
-            Assert.AreEqual(string.Join(';', expectedContent.Tags), string.Join(';', actual.ContentSummary.Tags));
-            Assert.AreEqual(expectedContent.Culture, actual.ContentSummary.Culture);
-            Assert.AreEqual(expectedContent.Description, actual.ContentSummary.Description);
-            Assert.AreEqual(expectedContent.Title, actual.ContentSummary.Title);
-            Assert.AreEqual(expectedStateName, actual.StateName);
-        }
+            Assert.AreEqual(expectedStates.Count, actualStates.Count);
 
-        public static void MatchSummariesToContent(List<Content> expected, ContentSummaries summaries)
-        {
-            Assert.AreEqual(expected.Count, summaries.Summaries.Count);
-            expected.ForEachAtIndex((expectedContent, i) => Compare(expectedContent, summaries.Summaries[i]));
-        }
+            expectedStates.ForEachAtIndex((expectedState, i) =>
+            {
+                Assert.AreEqual(expectedState, actualStates[i].StateName);
 
-        internal static void MatchSummariesToContent(List<Content> expectedContent, List<string> expectedStates, ContentSummariesWithState summaries)
-        {
-            Assert.AreEqual(expectedContent.Count, summaries.Summaries.Count);
-            expectedContent.ForEachAtIndex((ec, i) => Compare(ec, expectedStates[i], summaries.Summaries[i]));
+                Content expectedContent = expectedContents[i];
+                ContentSummary actualContent = actualSummaries.First(x => x.Id == actualStates[i].ContentId && x.Slug == actualStates[i].Slug);
+
+                Compare(expectedContent, actualContent);
+            });
         }
     }
 }

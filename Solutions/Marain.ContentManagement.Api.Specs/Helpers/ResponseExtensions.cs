@@ -4,9 +4,11 @@
 
 namespace Marain.ContentManagement.Specs.Helpers
 {
+    using System;
     using System.Reflection;
     using System.Web;
     using Marain.Cms.Api.Client;
+    using Newtonsoft.Json.Linq;
 
     /// <summary>
     /// Extension methods for the <see cref="SwaggerResponse"/> class.
@@ -39,6 +41,28 @@ namespace Marain.ContentManagement.Specs.Helpers
             int endIndex = nextUri.IndexOf("&", startIndex);
             int length = endIndex == -1 ? nextUri.Length - startIndex : endIndex - startIndex;
             return HttpUtility.UrlDecode(nextUri.Substring(startIndex, length));
+        }
+
+        /// <summary>
+        /// Retrieves the embedded document with the given rel.
+        /// </summary>
+        /// <typeparam name="T">The type of the embedded document.</typeparam>
+        /// <param name="resource">The resource containing the embedded document.</param>
+        /// <param name="rel">The name of the embedded document.</param>
+        /// <returns>The embedded document.</returns>
+        public static T GetEmbeddedDocument<T>(this Resource resource, string rel)
+            where T : Resource
+        {
+            if (resource._embedded.TryGetValue(rel, out ResourceEmbeddedResource val))
+            {
+                // Problem here: The result could be either a single Resource or an array. As a result, it's not possible
+                // to directly cast it to the specified type.
+                // The easiest way to get it there is to serialize it to a JObject and then back to the required type.
+                var serialized = JObject.FromObject(val);
+                return serialized.ToObject<T>();
+            }
+
+            throw new ArgumentException("There is no embedded resource with the specified relation name.");
         }
     }
 }

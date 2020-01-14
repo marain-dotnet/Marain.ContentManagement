@@ -85,8 +85,8 @@ namespace Marain.ContentManagement.Specs.Steps
             this.scenarioContext.StoreLastApiResponse(response);
         }
 
-        [Given("I have requested content history with state for slug '(.*)', workflow Id '(.*)' and state name '(.*)'")]
-        [When("I request content history with state for slug '(.*)', workflow Id '(.*)' and state name '(.*)'")]
+        [Given("I have requested content state history for slug '(.*)', workflow Id '(.*)' and state name '(.*)'")]
+        [When("I request content state history for slug '(.*)', workflow Id '(.*)' and state name '(.*)'")]
         public async Task WhenIRequestContentHistoryWithStateForSlugWorkflowIdAndState(string slug, string workflowId, string stateName)
         {
             string resolvedSlug = SpecHelpers.ParseSpecValue<string>(this.featureContext, slug);
@@ -94,11 +94,12 @@ namespace Marain.ContentManagement.Specs.Steps
             string resolvedStateName = SpecHelpers.ParseSpecValue<string>(this.featureContext, stateName);
 
             ContentClient client = this.featureContext.Get<ContentClient>();
-            SwaggerResponse<ContentSummariesWithStateResponse> response = await client.GetWorkflowStateHistoryAsync(
+            SwaggerResponse<ContentStatesResponse> response = await client.GetWorkflowStateHistoryAsync(
                 this.featureContext.GetCurrentTenantId(),
                 resolvedWorkflowId,
                 resolvedStateName,
                 resolvedSlug,
+                null,
                 null,
                 null).ConfigureAwait(false);
 
@@ -113,10 +114,11 @@ namespace Marain.ContentManagement.Specs.Steps
             string resolvedWorkflowId = SpecHelpers.ParseSpecValue<string>(this.featureContext, workflowId);
 
             ContentClient client = this.featureContext.Get<ContentClient>();
-            SwaggerResponse<ContentSummariesWithStateResponse> response = await client.GetWorkflowHistoryAsync(
+            SwaggerResponse<ContentStatesResponse> response = await client.GetWorkflowHistoryAsync(
                 this.featureContext.GetCurrentTenantId(),
                 resolvedWorkflowId,
                 resolvedSlug,
+                null,
                 null,
                 null).ConfigureAwait(false);
 
@@ -126,7 +128,7 @@ namespace Marain.ContentManagement.Specs.Steps
         [When("I request content history with state for slug '(.*)', workflow Id '(.*)' and state name '(.*)' with the contination token from the previous response")]
         public async Task WhenIRequestContentHistoryWithStateForSlugWorkflowIdAndStateNameWithTheContinationTokenFromThePreviousResponse(string slug, string workflowId, string stateName)
         {
-            SwaggerResponse<ContentSummariesWithStateResponse> previousResponse = this.scenarioContext.GetLastApiResponse<ContentSummariesWithStateResponse>();
+            SwaggerResponse<ContentStatesResponse> previousResponse = this.scenarioContext.GetLastApiResponse<ContentStatesResponse>();
 
             string continuationToken = previousResponse.Result.ExtractContinuationToken();
 
@@ -139,13 +141,14 @@ namespace Marain.ContentManagement.Specs.Steps
             string resolvedStateName = SpecHelpers.ParseSpecValue<string>(this.featureContext, stateName);
 
             ContentClient client = this.featureContext.Get<ContentClient>();
-            SwaggerResponse<ContentSummariesWithStateResponse> response = await client.GetWorkflowStateHistoryAsync(
+            SwaggerResponse<ContentStatesResponse> response = await client.GetWorkflowStateHistoryAsync(
                 this.featureContext.GetCurrentTenantId(),
                 resolvedWorkflowId,
                 resolvedStateName,
                 resolvedSlug,
                 null,
-                continuationToken).ConfigureAwait(false);
+                continuationToken,
+                null).ConfigureAwait(false);
 
             this.scenarioContext.StoreLastApiResponse(response);
         }
@@ -153,7 +156,7 @@ namespace Marain.ContentManagement.Specs.Steps
         [When("I request content history with state for slug '(.*)' and workflow Id '(.*)' with the contination token from the previous response")]
         public async Task WhenIRequestContentHistoryWithStateForSlugAndWorkflowIdWithTheContinationTokenFromThePreviousResponse(string slug, string workflowId)
         {
-            SwaggerResponse<ContentSummariesWithStateResponse> previousResponse = this.scenarioContext.GetLastApiResponse<ContentSummariesWithStateResponse>();
+            SwaggerResponse<ContentStatesResponse> previousResponse = this.scenarioContext.GetLastApiResponse<ContentStatesResponse>();
 
             string continuationToken = previousResponse.Result.ExtractContinuationToken();
 
@@ -165,12 +168,13 @@ namespace Marain.ContentManagement.Specs.Steps
             string resolvedWorkflowId = SpecHelpers.ParseSpecValue<string>(this.featureContext, workflowId);
 
             ContentClient client = this.featureContext.Get<ContentClient>();
-            SwaggerResponse<ContentSummariesWithStateResponse> response = await client.GetWorkflowHistoryAsync(
+            SwaggerResponse<ContentStatesResponse> response = await client.GetWorkflowHistoryAsync(
                 this.featureContext.GetCurrentTenantId(),
                 resolvedWorkflowId,
                 resolvedSlug,
                 null,
-                continuationToken).ConfigureAwait(false);
+                continuationToken,
+                null).ConfigureAwait(false);
 
             this.scenarioContext.StoreLastApiResponse(response);
         }
@@ -183,12 +187,13 @@ namespace Marain.ContentManagement.Specs.Steps
             string resolvedStateName = SpecHelpers.ParseSpecValue<string>(this.featureContext, stateName);
 
             ContentClient client = this.featureContext.Get<ContentClient>();
-            SwaggerResponse<ContentSummariesWithStateResponse> response = await client.GetWorkflowStateHistoryAsync(
+            SwaggerResponse<ContentStatesResponse> response = await client.GetWorkflowStateHistoryAsync(
                 this.featureContext.GetCurrentTenantId(),
                 resolvedWorkflowId,
                 resolvedStateName,
                 resolvedSlug,
                 limit,
+                null,
                 null).ConfigureAwait(false);
 
             this.scenarioContext.StoreLastApiResponse(response);
@@ -201,11 +206,12 @@ namespace Marain.ContentManagement.Specs.Steps
             string resolvedWorkflowId = SpecHelpers.ParseSpecValue<string>(this.featureContext, workflowId);
 
             ContentClient client = this.featureContext.Get<ContentClient>();
-            SwaggerResponse<ContentSummariesWithStateResponse> response = await client.GetWorkflowHistoryAsync(
+            SwaggerResponse<ContentStatesResponse> response = await client.GetWorkflowHistoryAsync(
                 this.featureContext.GetCurrentTenantId(),
                 resolvedWorkflowId,
                 resolvedSlug,
                 limit,
+                null,
                 null).ConfigureAwait(false);
 
             this.scenarioContext.StoreLastApiResponse(response);

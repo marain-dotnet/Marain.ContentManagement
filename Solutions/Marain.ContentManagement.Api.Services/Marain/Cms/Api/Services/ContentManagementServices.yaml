@@ -151,32 +151,6 @@ paths:
           description: Forbidden
         '404':
           description: Not found    
-  /{tenantId}/marain/content/workflow/{workflowId}/content/{slug}:
-    get:
-      tags:
-        - Content Workflow
-      summary: Get the current content for the workflow at the slug
-      description: Gets the content associated with the given workflowId in the current state. The response includes the content and the state information.
-      operationId: getWorkflowContent
-      parameters:
-        - $ref: '#/components/parameters/tenantId'
-        - $ref: '#/components/parameters/slug'
-        - $ref: '#/components/parameters/workflowId'
-      responses:
-        '200':
-          description: Successful operation        
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ContentWithStateResponse'
-        '304':
-          description: Not modified
-        '400':
-          description: Bad request
-        '403':
-          description: Forbidden
-        '404':
-          description: Not found
   /{tenantId}/marain/content/workflow/{workflowId}/state/{slug}:
     get:
       tags:
@@ -188,6 +162,7 @@ paths:
         - $ref: '#/components/parameters/tenantId'
         - $ref: '#/components/parameters/slug'
         - $ref: '#/components/parameters/workflowId'
+        - $ref: '#/components/parameters/embedContentOrSummary'
       responses:
         '200':
           description: Successful operation        
@@ -216,13 +191,14 @@ paths:
         - $ref: '#/components/parameters/slug'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/continuationToken'
+        - $ref: '#/components/parameters/embedSummaryOnly'
       responses:
         '200':
           description: Successful operation        
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ContentSummariesWithStateResponse'
+                $ref: '#/components/schemas/ContentStatesResponse'
         '304':
           description: Not modified
         '400':
@@ -245,13 +221,14 @@ paths:
         - $ref: '#/components/parameters/slug'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/continuationToken'
+        - $ref: '#/components/parameters/embedSummaryOnly'
       responses:
         '200':
           description: Successful operation        
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ContentSummariesWithStateResponse'
+                $ref: '#/components/schemas/ContentStatesResponse'
         '304':
           description: Not modified
         '400':
@@ -542,14 +519,6 @@ components:
       allOf: 
       - $ref: '#/components/schemas/Resource'
       - $ref: '#/components/schemas/Content'
-    ContentWithStateResponse:
-      allOf: 
-      - $ref: '#/components/schemas/Resource'
-      - $ref: '#/components/schemas/ContentWithState'
-    ContentSummaryWithStateResponse:
-      allOf: 
-      - $ref: '#/components/schemas/Resource'
-      - $ref: '#/components/schemas/ContentSummaryWithState'
     ContentStateResponse:
       allOf:
       - $ref: '#/components/schemas/Resource'
@@ -564,7 +533,7 @@ components:
             items:
               $ref: '#/components/schemas/ContentSummaryResponse'
         additionalProperties: true
-    ContentSummariesWithStateResponse:
+    ContentStatesResponse:
       allOf:
       - $ref: '#/components/schemas/Resource'
       - type: object
@@ -572,7 +541,7 @@ components:
           summaries:
             type: array
             items:
-              $ref: '#/components/schemas/ContentSummaryWithStateResponse'
+              $ref: '#/components/schemas/ContentStateResponse'
         additionalProperties: true
 
     ############################################################################
@@ -667,3 +636,24 @@ components:
       required: false
       schema:
         type: string
+    embedSummaryOnly:
+      name: embed
+      in: query
+      x-ms-parameter-location: method
+      description: Allows the client to specify link relations which should be returned in the _embedded section of the response
+      required: false
+      schema:
+        type: string
+        enum:
+        - contentsummary
+    embedContentOrSummary:
+      name: embed
+      in: query
+      x-ms-parameter-location: method
+      description: Allows the client to specify link relations which should be returned in the _embedded section of the response
+      required: false
+      schema:
+        type: string
+        enum:
+        - content
+        - contentsummary

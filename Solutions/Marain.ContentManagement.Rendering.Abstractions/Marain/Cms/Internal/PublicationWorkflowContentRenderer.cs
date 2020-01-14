@@ -54,11 +54,12 @@ namespace Marain.Cms.Internal
 
             if (currentPayload is PublicationWorkflowContentPayload payload)
             {
-                ContentWithState content = await this.contentStore.GetContentForWorkflowAsync(payload.Slug, WellKnownWorkflowId.ContentPublication).ConfigureAwait(false);
-                if (CanRender(content, stateToRender))
+                ContentState contentState = await this.contentStore.GetContentStateForWorkflowAsync(payload.Slug, WellKnownWorkflowId.ContentPublication).ConfigureAwait(false);
+                if (CanRender(contentState, stateToRender))
                 {
-                    IContentRenderer renderer = this.contentRendererFactory.GetRendererFor(content.Content.ContentPayload);
-                    await renderer.RenderAsync(output, content.Content, content.Content.ContentPayload, context).ConfigureAwait(false);
+                    Content content = await this.contentStore.GetContentAsync(contentState.Slug, contentState.ContentId).ConfigureAwait(false);
+                    IContentRenderer renderer = this.contentRendererFactory.GetRendererFor(content.ContentPayload);
+                    await renderer.RenderAsync(output, content, content.ContentPayload, context).ConfigureAwait(false);
                 }
                 else
                 {
@@ -71,7 +72,7 @@ namespace Marain.Cms.Internal
             }
         }
 
-        private static bool CanRender(ContentWithState content, PublicationStateToRender stateToRender)
+        private static bool CanRender(ContentState content, PublicationStateToRender stateToRender)
         {
             return
                  content.StateName == ContentPublicationContentState.Published ||

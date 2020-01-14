@@ -501,25 +501,27 @@ namespace Marain.Cms.Api.Client
             }
         }
     
-        /// <summary>Get the current content for the workflow at the slug</summary>
+        /// <summary>Get the current state for the workflow at the slug</summary>
         /// <param name="tenantId">The tenant within which the request should operate</param>
         /// <param name="slug">The slug for the content</param>
         /// <param name="workflowId">The id of the workflow relating to the request</param>
+        /// <param name="embed">Allows the client to specify link relations which should be returned in the _embedded section of the response</param>
         /// <returns>Successful operation</returns>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<SwaggerResponse<ContentWithStateResponse>> GetWorkflowContentAsync(string tenantId, string slug, string workflowId)
+        public System.Threading.Tasks.Task<SwaggerResponse<ContentStateResponse>> GetWorkflowStateAsync(string tenantId, string slug, string workflowId, Embed? embed)
         {
-            return GetWorkflowContentAsync(tenantId, slug, workflowId, System.Threading.CancellationToken.None);
+            return GetWorkflowStateAsync(tenantId, slug, workflowId, embed, System.Threading.CancellationToken.None);
         }
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>Get the current content for the workflow at the slug</summary>
+        /// <summary>Get the current state for the workflow at the slug</summary>
         /// <param name="tenantId">The tenant within which the request should operate</param>
         /// <param name="slug">The slug for the content</param>
         /// <param name="workflowId">The id of the workflow relating to the request</param>
+        /// <param name="embed">Allows the client to specify link relations which should be returned in the _embedded section of the response</param>
         /// <returns>Successful operation</returns>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<SwaggerResponse<ContentWithStateResponse>> GetWorkflowContentAsync(string tenantId, string slug, string workflowId, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<SwaggerResponse<ContentStateResponse>> GetWorkflowStateAsync(string tenantId, string slug, string workflowId, Embed? embed, System.Threading.CancellationToken cancellationToken)
         {
             if (tenantId == null)
                 throw new System.ArgumentNullException("tenantId");
@@ -531,121 +533,15 @@ namespace Marain.Cms.Api.Client
                 throw new System.ArgumentNullException("workflowId");
     
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/{tenantId}/marain/content/workflow/{workflowId}/content/{slug}");
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/{tenantId}/marain/content/workflow/{workflowId}/state/{slug}?");
             urlBuilder_.Replace("{tenantId}", System.Uri.EscapeDataString(ConvertToString(tenantId, System.Globalization.CultureInfo.InvariantCulture)));
             urlBuilder_.Replace("{slug}", System.Uri.EscapeDataString(ConvertToString(slug, System.Globalization.CultureInfo.InvariantCulture)));
             urlBuilder_.Replace("{workflowId}", System.Uri.EscapeDataString(ConvertToString(workflowId, System.Globalization.CultureInfo.InvariantCulture)));
-    
-            var client_ = _httpClient;
-            try
+            if (embed != null) 
             {
-                using (var request_ = new System.Net.Http.HttpRequestMessage())
-                {
-                    request_.Method = new System.Net.Http.HttpMethod("GET");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-    
-                    PrepareRequest(client_, request_, urlBuilder_);
-                    var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
-                    PrepareRequest(client_, request_, url_);
-    
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
-                    {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
-                        {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
-    
-                        ProcessResponse(client_, response_);
-    
-                        var status_ = ((int)response_.StatusCode).ToString();
-                        if (status_ == "200") 
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ContentWithStateResponse>(response_, headers_).ConfigureAwait(false);
-                            return new SwaggerResponse<ContentWithStateResponse>((int)response_.StatusCode, headers_, objectResponse_.Object);
-                        }
-                        else
-                        if (status_ == "304") 
-                        {
-                            string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("Not modified", (int)response_.StatusCode, responseText_, headers_, null);
-                        }
-                        else
-                        if (status_ == "400") 
-                        {
-                            string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("Bad request", (int)response_.StatusCode, responseText_, headers_, null);
-                        }
-                        else
-                        if (status_ == "403") 
-                        {
-                            string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("Forbidden", (int)response_.StatusCode, responseText_, headers_, null);
-                        }
-                        else
-                        if (status_ == "404") 
-                        {
-                            string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("Not found", (int)response_.StatusCode, responseText_, headers_, null);
-                        }
-                        else
-                        if (status_ != "200" && status_ != "204")
-                        {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false); 
-                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
-                        }
-            
-                        return new SwaggerResponse<ContentWithStateResponse>((int)response_.StatusCode, headers_, default(ContentWithStateResponse)); 
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
-                    }
-                }
+                urlBuilder_.Append(System.Uri.EscapeDataString("embed") + "=").Append(System.Uri.EscapeDataString(ConvertToString(embed, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
-            finally
-            {
-            }
-        }
-    
-        /// <summary>Get the current state for the workflow at the slug</summary>
-        /// <param name="tenantId">The tenant within which the request should operate</param>
-        /// <param name="slug">The slug for the content</param>
-        /// <param name="workflowId">The id of the workflow relating to the request</param>
-        /// <returns>Successful operation</returns>
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<SwaggerResponse<ContentStateResponse>> GetWorkflowStateAsync(string tenantId, string slug, string workflowId)
-        {
-            return GetWorkflowStateAsync(tenantId, slug, workflowId, System.Threading.CancellationToken.None);
-        }
-    
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>Get the current state for the workflow at the slug</summary>
-        /// <param name="tenantId">The tenant within which the request should operate</param>
-        /// <param name="slug">The slug for the content</param>
-        /// <param name="workflowId">The id of the workflow relating to the request</param>
-        /// <returns>Successful operation</returns>
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<SwaggerResponse<ContentStateResponse>> GetWorkflowStateAsync(string tenantId, string slug, string workflowId, System.Threading.CancellationToken cancellationToken)
-        {
-            if (tenantId == null)
-                throw new System.ArgumentNullException("tenantId");
-    
-            if (slug == null)
-                throw new System.ArgumentNullException("slug");
-    
-            if (workflowId == null)
-                throw new System.ArgumentNullException("workflowId");
-    
-            var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/{tenantId}/marain/content/workflow/{workflowId}/state/{slug}");
-            urlBuilder_.Replace("{tenantId}", System.Uri.EscapeDataString(ConvertToString(tenantId, System.Globalization.CultureInfo.InvariantCulture)));
-            urlBuilder_.Replace("{slug}", System.Uri.EscapeDataString(ConvertToString(slug, System.Globalization.CultureInfo.InvariantCulture)));
-            urlBuilder_.Replace("{workflowId}", System.Uri.EscapeDataString(ConvertToString(workflowId, System.Globalization.CultureInfo.InvariantCulture)));
+            urlBuilder_.Length--;
     
             var client_ = _httpClient;
             try
@@ -729,11 +625,12 @@ namespace Marain.Cms.Api.Client
         /// <param name="slug">The slug for the content</param>
         /// <param name="limit">The maximum number of items to return in the batch</param>
         /// <param name="continuationToken">The continuation token for the next batch</param>
+        /// <param name="embed">Allows the client to specify link relations which should be returned in the _embedded section of the response</param>
         /// <returns>Successful operation</returns>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<SwaggerResponse<ContentSummariesWithStateResponse>> GetWorkflowHistoryAsync(string tenantId, string workflowId, string slug, int? limit, string continuationToken)
+        public System.Threading.Tasks.Task<SwaggerResponse<ContentStatesResponse>> GetWorkflowHistoryAsync(string tenantId, string workflowId, string slug, int? limit, string continuationToken, Embed2? embed)
         {
-            return GetWorkflowHistoryAsync(tenantId, workflowId, slug, limit, continuationToken, System.Threading.CancellationToken.None);
+            return GetWorkflowHistoryAsync(tenantId, workflowId, slug, limit, continuationToken, embed, System.Threading.CancellationToken.None);
         }
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -743,9 +640,10 @@ namespace Marain.Cms.Api.Client
         /// <param name="slug">The slug for the content</param>
         /// <param name="limit">The maximum number of items to return in the batch</param>
         /// <param name="continuationToken">The continuation token for the next batch</param>
+        /// <param name="embed">Allows the client to specify link relations which should be returned in the _embedded section of the response</param>
         /// <returns>Successful operation</returns>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<SwaggerResponse<ContentSummariesWithStateResponse>> GetWorkflowHistoryAsync(string tenantId, string workflowId, string slug, int? limit, string continuationToken, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<SwaggerResponse<ContentStatesResponse>> GetWorkflowHistoryAsync(string tenantId, string workflowId, string slug, int? limit, string continuationToken, Embed2? embed, System.Threading.CancellationToken cancellationToken)
         {
             if (tenantId == null)
                 throw new System.ArgumentNullException("tenantId");
@@ -768,6 +666,10 @@ namespace Marain.Cms.Api.Client
             if (continuationToken != null) 
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("continuationToken") + "=").Append(System.Uri.EscapeDataString(ConvertToString(continuationToken, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (embed != null) 
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("embed") + "=").Append(System.Uri.EscapeDataString(ConvertToString(embed, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             urlBuilder_.Length--;
     
@@ -799,8 +701,8 @@ namespace Marain.Cms.Api.Client
                         var status_ = ((int)response_.StatusCode).ToString();
                         if (status_ == "200") 
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<ContentSummariesWithStateResponse>(response_, headers_).ConfigureAwait(false);
-                            return new SwaggerResponse<ContentSummariesWithStateResponse>((int)response_.StatusCode, headers_, objectResponse_.Object);
+                            var objectResponse_ = await ReadObjectResponseAsync<ContentStatesResponse>(response_, headers_).ConfigureAwait(false);
+                            return new SwaggerResponse<ContentStatesResponse>((int)response_.StatusCode, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == "304") 
@@ -833,7 +735,7 @@ namespace Marain.Cms.Api.Client
                             throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
             
-                        return new SwaggerResponse<ContentSummariesWithStateResponse>((int)response_.StatusCode, headers_, default(ContentSummariesWithStateResponse)); 
+                        return new SwaggerResponse<ContentStatesResponse>((int)response_.StatusCode, headers_, default(ContentStatesResponse)); 
                     }
                     finally
                     {
@@ -854,11 +756,12 @@ namespace Marain.Cms.Api.Client
         /// <param name="slug">The slug for the content</param>
         /// <param name="limit">The maximum number of items to return in the batch</param>
         /// <param name="continuationToken">The continuation token for the next batch</param>
+        /// <param name="embed">Allows the client to specify link relations which should be returned in the _embedded section of the response</param>
         /// <returns>Successful operation</returns>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<SwaggerResponse<ContentSummariesWithStateResponse>> GetWorkflowStateHistoryAsync(string tenantId, string workflowId, string stateName, string slug, int? limit, string continuationToken)
+        public System.Threading.Tasks.Task<SwaggerResponse<ContentStatesResponse>> GetWorkflowStateHistoryAsync(string tenantId, string workflowId, string stateName, string slug, int? limit, string continuationToken, Embed2? embed)
         {
-            return GetWorkflowStateHistoryAsync(tenantId, workflowId, stateName, slug, limit, continuationToken, System.Threading.CancellationToken.None);
+            return GetWorkflowStateHistoryAsync(tenantId, workflowId, stateName, slug, limit, continuationToken, embed, System.Threading.CancellationToken.None);
         }
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -869,9 +772,10 @@ namespace Marain.Cms.Api.Client
         /// <param name="slug">The slug for the content</param>
         /// <param name="limit">The maximum number of items to return in the batch</param>
         /// <param name="continuationToken">The continuation token for the next batch</param>
+        /// <param name="embed">Allows the client to specify link relations which should be returned in the _embedded section of the response</param>
         /// <returns>Successful operation</returns>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<SwaggerResponse<ContentSummariesWithStateResponse>> GetWorkflowStateHistoryAsync(string tenantId, string workflowId, string stateName, string slug, int? limit, string continuationToken, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<SwaggerResponse<ContentStatesResponse>> GetWorkflowStateHistoryAsync(string tenantId, string workflowId, string stateName, string slug, int? limit, string continuationToken, Embed2? embed, System.Threading.CancellationToken cancellationToken)
         {
             if (tenantId == null)
                 throw new System.ArgumentNullException("tenantId");
@@ -899,6 +803,10 @@ namespace Marain.Cms.Api.Client
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("continuationToken") + "=").Append(System.Uri.EscapeDataString(ConvertToString(continuationToken, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
+            if (embed != null) 
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("embed") + "=").Append(System.Uri.EscapeDataString(ConvertToString(embed, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
             urlBuilder_.Length--;
     
             var client_ = _httpClient;
@@ -929,8 +837,8 @@ namespace Marain.Cms.Api.Client
                         var status_ = ((int)response_.StatusCode).ToString();
                         if (status_ == "200") 
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<ContentSummariesWithStateResponse>(response_, headers_).ConfigureAwait(false);
-                            return new SwaggerResponse<ContentSummariesWithStateResponse>((int)response_.StatusCode, headers_, objectResponse_.Object);
+                            var objectResponse_ = await ReadObjectResponseAsync<ContentStatesResponse>(response_, headers_).ConfigureAwait(false);
+                            return new SwaggerResponse<ContentStatesResponse>((int)response_.StatusCode, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == "304") 
@@ -963,7 +871,7 @@ namespace Marain.Cms.Api.Client
                             throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
             
-                        return new SwaggerResponse<ContentSummariesWithStateResponse>((int)response_.StatusCode, headers_, default(ContentSummariesWithStateResponse)); 
+                        return new SwaggerResponse<ContentStatesResponse>((int)response_.StatusCode, headers_, default(ContentStatesResponse)); 
                     }
                     finally
                     {
@@ -2886,194 +2794,6 @@ namespace Marain.Cms.Api.Client
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.2.0 (Newtonsoft.Json v11.0.0.0)")]
-    public partial class ContentWithStateResponse : Resource, System.ComponentModel.INotifyPropertyChanged
-    {
-        private Content _content;
-        private string _stateName;
-        private DateTimeOffset _timestamp;
-        private string _workflowId;
-    
-        [Newtonsoft.Json.JsonProperty("content", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Content Content
-        {
-            get { return _content; }
-            set 
-            {
-                if (_content != value)
-                {
-                    _content = value; 
-                    RaisePropertyChanged();
-                }
-            }
-        }
-    
-        [Newtonsoft.Json.JsonProperty("stateName", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string StateName
-        {
-            get { return _stateName; }
-            set 
-            {
-                if (_stateName != value)
-                {
-                    _stateName = value; 
-                    RaisePropertyChanged();
-                }
-            }
-        }
-    
-        [Newtonsoft.Json.JsonProperty("timestamp", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DateTimeOffset Timestamp
-        {
-            get { return _timestamp; }
-            set 
-            {
-                if (_timestamp != value)
-                {
-                    _timestamp = value; 
-                    RaisePropertyChanged();
-                }
-            }
-        }
-    
-        [Newtonsoft.Json.JsonProperty("workflowId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string WorkflowId
-        {
-            get { return _workflowId; }
-            set 
-            {
-                if (_workflowId != value)
-                {
-                    _workflowId = value; 
-                    RaisePropertyChanged();
-                }
-            }
-        }
-    
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-    
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
-    
-        public string ToJson() 
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
-        }
-    
-        public static ContentWithStateResponse FromJson(string data)
-        {
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<ContentWithStateResponse>(data);
-        }
-    
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected virtual void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
-        {
-            var handler = PropertyChanged;
-            if (handler != null) 
-                handler(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-        }
-    
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.2.0 (Newtonsoft.Json v11.0.0.0)")]
-    public partial class ContentSummaryWithStateResponse : Resource, System.ComponentModel.INotifyPropertyChanged
-    {
-        private ContentSummary _contentSummary;
-        private string _stateName;
-        private DateTimeOffset _timestamp;
-        private string _workflowId;
-    
-        [Newtonsoft.Json.JsonProperty("contentSummary", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public ContentSummary ContentSummary
-        {
-            get { return _contentSummary; }
-            set 
-            {
-                if (_contentSummary != value)
-                {
-                    _contentSummary = value; 
-                    RaisePropertyChanged();
-                }
-            }
-        }
-    
-        [Newtonsoft.Json.JsonProperty("stateName", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string StateName
-        {
-            get { return _stateName; }
-            set 
-            {
-                if (_stateName != value)
-                {
-                    _stateName = value; 
-                    RaisePropertyChanged();
-                }
-            }
-        }
-    
-        [Newtonsoft.Json.JsonProperty("timestamp", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DateTimeOffset Timestamp
-        {
-            get { return _timestamp; }
-            set 
-            {
-                if (_timestamp != value)
-                {
-                    _timestamp = value; 
-                    RaisePropertyChanged();
-                }
-            }
-        }
-    
-        [Newtonsoft.Json.JsonProperty("workflowId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string WorkflowId
-        {
-            get { return _workflowId; }
-            set 
-            {
-                if (_workflowId != value)
-                {
-                    _workflowId = value; 
-                    RaisePropertyChanged();
-                }
-            }
-        }
-    
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-    
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
-    
-        public string ToJson() 
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
-        }
-    
-        public static ContentSummaryWithStateResponse FromJson(string data)
-        {
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<ContentSummaryWithStateResponse>(data);
-        }
-    
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected virtual void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
-        {
-            var handler = PropertyChanged;
-            if (handler != null) 
-                handler(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-        }
-    
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.2.0 (Newtonsoft.Json v11.0.0.0)")]
     public partial class ContentStateResponse : Resource, System.ComponentModel.INotifyPropertyChanged
     {
         private string _stateName;
@@ -3232,12 +2952,12 @@ namespace Marain.Cms.Api.Client
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.2.0 (Newtonsoft.Json v11.0.0.0)")]
-    public partial class ContentSummariesWithStateResponse : Resource, System.ComponentModel.INotifyPropertyChanged
+    public partial class ContentStatesResponse : Resource, System.ComponentModel.INotifyPropertyChanged
     {
-        private System.Collections.ObjectModel.ObservableCollection<ContentSummaryWithStateResponse> _summaries;
+        private System.Collections.ObjectModel.ObservableCollection<ContentStateResponse> _summaries;
     
         [Newtonsoft.Json.JsonProperty("summaries", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.ObjectModel.ObservableCollection<ContentSummaryWithStateResponse> Summaries
+        public System.Collections.ObjectModel.ObservableCollection<ContentStateResponse> Summaries
         {
             get { return _summaries; }
             set 
@@ -3264,9 +2984,9 @@ namespace Marain.Cms.Api.Client
             return Newtonsoft.Json.JsonConvert.SerializeObject(this);
         }
     
-        public static ContentSummariesWithStateResponse FromJson(string data)
+        public static ContentStatesResponse FromJson(string data)
         {
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<ContentSummariesWithStateResponse>(data);
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<ContentStatesResponse>(data);
         }
     
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
@@ -3402,6 +3122,25 @@ namespace Marain.Cms.Api.Client
             if (handler != null) 
                 handler(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
         }
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.2.0 (Newtonsoft.Json v11.0.0.0)")]
+    public enum Embed
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"content")]
+        Content = 0,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"contentsummary")]
+        Contentsummary = 1,
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.2.0 (Newtonsoft.Json v11.0.0.0)")]
+    public enum Embed2
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"contentsummary")]
+        Contentsummary = 0,
     
     }
 

@@ -30,9 +30,9 @@ namespace Marain.Cms.Api.Services.Internal
         /// <inheritdoc/>
         public void ConfigureLinkMap(IOpenApiLinkOperationMap links)
         {
-            links.MapByContentTypeAndRelationTypeAndOperationId<ContentState>(Constants.LinkRelations.Self, WorkflowContentService.GetWorkflowContentOperationId);
-            links.MapByContentTypeAndRelationTypeAndOperationId<ContentState>("content", ContentService.GetContentOperationId);
-            links.MapByContentTypeAndRelationTypeAndOperationId<ContentState>("content-with-state", WorkflowContentService.GetWorkflowContentOperationId);
+            links.MapByContentTypeAndRelationTypeAndOperationId<ContentState>(Constants.LinkRelations.Self, WorkflowContentService.GetWorkflowStateOperationId);
+            links.MapByContentTypeAndRelationTypeAndOperationId<ContentState>(Constants.LinkRelations.Content, ContentService.GetContentOperationId);
+            links.MapByContentTypeAndRelationTypeAndOperationId<ContentState>(Constants.LinkRelations.ContentSummary, ContentSummaryService.GetContentSummaryOperationId);
         }
 
         /// <inheritdoc/>
@@ -51,7 +51,7 @@ namespace Marain.Cms.Api.Services.Internal
             response.ResolveAndAddByOwnerAndRelationType(
                 this.linkResolver,
                 resource,
-                "content",
+                Constants.LinkRelations.Content,
                 (Constants.ParameterNames.TenantId, context.CurrentTenantId),
                 (Constants.ParameterNames.Slug, resource.Slug),
                 (Constants.ParameterNames.ContentId, resource.Id));
@@ -59,7 +59,7 @@ namespace Marain.Cms.Api.Services.Internal
             response.ResolveAndAddByOwnerAndRelationType(
                 this.linkResolver,
                 resource,
-                "content-with-state",
+                Constants.LinkRelations.ContentSummary,
                 (Constants.ParameterNames.TenantId, context.CurrentTenantId),
                 (Constants.ParameterNames.Slug, resource.Slug),
                 (Constants.ParameterNames.ContentId, resource.Id));

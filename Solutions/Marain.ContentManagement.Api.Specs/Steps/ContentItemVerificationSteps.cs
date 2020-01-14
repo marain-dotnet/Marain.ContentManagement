@@ -61,9 +61,9 @@ namespace Marain.ContentManagement.Specs.Steps
         [Then("the response should contain (.*) embedded content summaries with state")]
         public void ThenTheResponseShouldContainEmbeddedContentSummariesWithState(int expectedCount)
         {
-            SwaggerResponse<ContentSummariesWithStateResponse> response = this.scenarioContext.GetLastApiResponse<ContentSummariesWithStateResponse>();
+            SwaggerResponse<ContentStatesResponse> response = this.scenarioContext.GetLastApiResponse<ContentStatesResponse>();
 
-            ObservableCollection<ContentSummaryWithStateResponse> summaries = response.Result.Summaries;
+            ObservableCollection<ContentStateResponse> summaries = response.Result.Summaries;
 
             Assert.IsNotNull(summaries);
             Assert.IsNotEmpty(summaries);
@@ -74,9 +74,9 @@ namespace Marain.ContentManagement.Specs.Steps
         [Then("the response should contain another (.*) embedded content summaries with state")]
         public void ThenTheResponseShouldContainAnotherEmbeddedContentSummariesWithState(int expectedCount)
         {
-            SwaggerResponse<ContentSummariesWithStateResponse> response = this.scenarioContext.GetLastApiResponse<ContentSummariesWithStateResponse>();
+            SwaggerResponse<ContentStatesResponse> response = this.scenarioContext.GetLastApiResponse<ContentStatesResponse>();
 
-            ObservableCollection<ContentSummaryWithStateResponse> summaries = response.Result.Summaries;
+            ObservableCollection<ContentStateResponse> summaries = response.Result.Summaries;
 
             Assert.IsNotNull(summaries);
             Assert.IsNotEmpty(summaries);
@@ -84,11 +84,12 @@ namespace Marain.ContentManagement.Specs.Steps
             Assert.AreEqual(expectedCount, summaries.Count);
 
             // Compare against previous set, which have been stored in the scenario context.
-            ContentSummaryWithStateResponse[] previousSummaries = this.scenarioContext.Get<ContentSummaryWithStateResponse[]>();
+            ContentStateResponse[] previousSummaries = this.scenarioContext.Get<ContentStateResponse[]>();
 
-            foreach (ContentSummaryWithStateResponse current in summaries)
+            foreach (ContentStateResponse current in summaries)
             {
-                Assert.IsFalse(previousSummaries.Any(x => x.ContentSummary.Id == current.ContentSummary.Id));
+                ContentSummaryResponse currentSummary = current.GetEmbeddedDocument<ContentSummaryResponse>("summary");
+                Assert.IsFalse(previousSummaries.Any(x => x.GetEmbeddedDocument<ContentSummaryResponse>("summary").Id == currentSummary.Id));
             }
         }
     }

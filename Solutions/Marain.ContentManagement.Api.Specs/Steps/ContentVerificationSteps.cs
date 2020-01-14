@@ -37,13 +37,15 @@ namespace Marain.ContentManagement.Specs.Steps
         [Then("the response body should contain content and state matching content '(.*)' and state '(.*)'")]
         public void ThenTheResponseBodyShouldContainTheContentItemWithState(string itemName, string stateName)
         {
-            SwaggerResponse<ContentWithStateResponse> actual = this.scenarioContext.GetLastApiResponse<ContentWithStateResponse>();
+            SwaggerResponse<ContentStateResponse> actual = this.scenarioContext.GetLastApiResponse<ContentStateResponse>();
             Assert.IsNotNull(actual);
 
             Cms.Content expectedContent = this.scenarioContext.Get<Cms.Content>(itemName);
             Cms.ContentState expectedState = this.scenarioContext.Get<Cms.ContentState>(stateName);
 
-            ContentSpecHelpers.Compare(expectedContent, actual.Result.Content);
+            ContentResponse actualContent = actual.Result.GetEmbeddedDocument<ContentResponse>("content");
+
+            ContentSpecHelpers.Compare(expectedContent, actualContent);
             ContentSpecHelpers.Compare(expectedState, actual.Result);
         }
 

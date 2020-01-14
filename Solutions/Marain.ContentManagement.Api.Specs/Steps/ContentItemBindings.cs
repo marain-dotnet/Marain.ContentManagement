@@ -55,28 +55,6 @@ namespace Marain.ContentManagement.Specs.Steps
             }
         }
 
-        [When("I request the content with its state for slug '(.*)' and workflow Id '(.*)'")]
-        public async Task WhenIRequestTheContentWithItsStateForSlugAndWorkflowId(string slug, string workflowId)
-        {
-            string resolvedSlug = SpecHelpers.ParseSpecValue<string>(this.scenarioContext, slug);
-            string resolvedWorkflowId = SpecHelpers.ParseSpecValue<string>(this.scenarioContext, workflowId);
-
-            try
-            {
-                ContentClient client = this.featureContext.Get<ContentClient>();
-                SwaggerResponse<ContentWithStateResponse> response = await client.GetWorkflowContentAsync(
-                    this.featureContext.GetCurrentTenantId(),
-                    resolvedSlug,
-                    resolvedWorkflowId).ConfigureAwait(false);
-
-                this.scenarioContext.StoreLastApiResponse(response);
-            }
-            catch (SwaggerException ex)
-            {
-                this.scenarioContext.StoreLastApiException(ex);
-            }
-        }
-
         [When("I request the content state for slug '(.*)' and workflow Id '(.*)'")]
         public async Task WhenIRequestTheContentStateForSlugAndWorkflowId(string slug, string workflowId)
         {
@@ -89,7 +67,8 @@ namespace Marain.ContentManagement.Specs.Steps
                 SwaggerResponse<ContentStateResponse> response = await client.GetWorkflowStateAsync(
                     this.featureContext.GetCurrentTenantId(),
                     resolvedSlug,
-                    resolvedWorkflowId).ConfigureAwait(false);
+                    resolvedWorkflowId,
+                    null).ConfigureAwait(false);
 
                 this.scenarioContext.StoreLastApiResponse(response);
             }

@@ -59,7 +59,7 @@ namespace Marain.Cms
                 throw new ArgumentNullException(nameof(slug));
             }
 
-            ContentState contentState = await contentStore.GetContentWorkflowStateAsync(slug, WellKnownWorkflowId.ContentPublication).ConfigureAwait(false);
+            ContentState contentState = await contentStore.GetContentStateForWorkflowAsync(slug, WellKnownWorkflowId.ContentPublication).ConfigureAwait(false);
 
             if (contentState.StateName != ContentPublicationContentState.Archived)
             {
@@ -86,7 +86,7 @@ namespace Marain.Cms
                 throw new ArgumentNullException(nameof(slug));
             }
 
-            ContentState contentState = await contentStore.GetContentWorkflowStateAsync(slug, WellKnownWorkflowId.ContentPublication).ConfigureAwait(false);
+            ContentState contentState = await contentStore.GetContentStateForWorkflowAsync(slug, WellKnownWorkflowId.ContentPublication).ConfigureAwait(false);
             await contentStore.SetContentWorkflowStateAsync(slug, contentState.ContentId, WellKnownWorkflowId.ContentPublication, ContentPublicationContentState.Draft, stateChangedBy).ConfigureAwait(false);
         }
 
@@ -112,13 +112,15 @@ namespace Marain.Cms
                 throw new ArgumentNullException(nameof(slug));
             }
 
-            ContentWithState result = await contentStore.GetContentForWorkflowAsync(slug, WellKnownWorkflowId.ContentPublication).ConfigureAwait(false);
-            if (result?.StateName != ContentPublicationContentState.Published)
+            ContentState state = await contentStore.GetContentStateForWorkflowAsync(slug, WellKnownWorkflowId.ContentPublication).ConfigureAwait(false);
+            if (state?.StateName != ContentPublicationContentState.Published)
             {
                 throw new ContentNotFoundException();
             }
 
-            return result?.Content ?? throw new ContentNotFoundException();
+            Content result = await contentStore.GetContentAsync(state.ContentId, state.Slug).ConfigureAwait(false);
+
+            return result ?? throw new ContentNotFoundException();
         }
 
         /// <summary>
@@ -131,7 +133,7 @@ namespace Marain.Cms
         /// <remarks>
         /// <para>This will return the relevant content if the ContentPublication workflow for that slug is in the <see cref="ContentPublicationContentState.Published"/> state.</para>
         /// </remarks>
-        public static async Task<ContentWithState> GetContentWithStateAsync(this IContentStore contentStore, string slug)
+        public static async Task<ContentState> GetContentPublicationStateAsync(this IContentStore contentStore, string slug)
         {
             if (contentStore is null)
             {
@@ -143,7 +145,7 @@ namespace Marain.Cms
                 throw new ArgumentNullException(nameof(slug));
             }
 
-            return await contentStore.GetContentForWorkflowAsync(slug, WellKnownWorkflowId.ContentPublication).ConfigureAwait(false);
+            return await contentStore.GetContentStateForWorkflowAsync(slug, WellKnownWorkflowId.ContentPublication).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -155,7 +157,7 @@ namespace Marain.Cms
         /// <param name="limit">The maximum number of items to return in a batch.</param>
         /// <param name="continuationToken">The continuation token for the batch.</param>
         /// <returns>A <see cref="Task{ContentSummariesWithState}"/> which, when complete, returns the content.</returns>
-        public static async Task<ContentSummariesWithState> GetPublishedHistory(this IContentStore contentStore, string slug, int limit = 20, string continuationToken = null)
+        public static async Task<ContentStates> GetPublishedHistory(this IContentStore contentStore, string slug, int limit = 20, string continuationToken = null)
         {
             if (contentStore is null)
             {
@@ -167,7 +169,7 @@ namespace Marain.Cms
                 throw new ArgumentNullException(nameof(slug));
             }
 
-            return await contentStore.GetContentSummariesForWorkflowAsync(slug, WellKnownWorkflowId.ContentPublication, ContentPublicationContentState.Published, limit, continuationToken).ConfigureAwait(false);
+            return await contentStore.GetContentStatesForWorkflowAsync(slug, WellKnownWorkflowId.ContentPublication, ContentPublicationContentState.Published, limit, continuationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -179,7 +181,7 @@ namespace Marain.Cms
         /// <param name="limit">The maximum number of items to return in a batch.</param>
         /// <param name="continuationToken">The continuation token for the batch.</param>
         /// <returns>A <see cref="Task{ContentSummariesWithState}"/> which, when complete, returns the content.</returns>
-        public static async Task<ContentSummariesWithState> GetPublicationHistory(this IContentStore contentStore, string slug, int limit = 20, string continuationToken = null)
+        public static async Task<ContentStates> GetPublicationHistory(this IContentStore contentStore, string slug, int limit = 20, string continuationToken = null)
         {
             if (contentStore is null)
             {
@@ -191,7 +193,7 @@ namespace Marain.Cms
                 throw new ArgumentNullException(nameof(slug));
             }
 
-            return await contentStore.GetContentSummariesForWorkflowAsync(slug, WellKnownWorkflowId.ContentPublication, null, limit, continuationToken).ConfigureAwait(false);
+            return await contentStore.GetContentStatesForWorkflowAsync(slug, WellKnownWorkflowId.ContentPublication, null, limit, continuationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -219,7 +221,7 @@ namespace Marain.Cms
                 throw new ArgumentNullException(nameof(originalSlug));
             }
 
-            ContentState state = await contentStore.GetContentWorkflowStateAsync(originalSlug, WellKnownWorkflowId.ContentPublication).ConfigureAwait(false);
+            ContentState state = await contentStore.GetContentStateForWorkflowAsync(originalSlug, WellKnownWorkflowId.ContentPublication).ConfigureAwait(false);
 
             Content copiedContent = await contentStore.CopyContentAsync(targetSlug, state.ContentId, originalSlug).ConfigureAwait(false);
 
@@ -257,7 +259,7 @@ namespace Marain.Cms
                 throw new ArgumentNullException(nameof(originalSlug));
             }
 
-            ContentState state = await contentStore.GetContentWorkflowStateAsync(originalSlug, WellKnownWorkflowId.ContentPublication).ConfigureAwait(false);
+            ContentState state = await contentStore.GetContentStateForWorkflowAsync(originalSlug, WellKnownWorkflowId.ContentPublication).ConfigureAwait(false);
 
             Content copiedContent = await contentStore.CopyContentAsync(targetSlug, state.ContentId, originalSlug).ConfigureAwait(false);
 

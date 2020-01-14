@@ -21,7 +21,6 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             factory.RegisterTransientContent<Content>();
             factory.RegisterTransientContent<ContentState>();
-            factory.RegisterTransientContent<ContentWithState>();
             factory.RegisterTransientContent<ContentFragmentPayload>();
             factory.RegisterTransientContent<AbTestSetPayload>();
             factory.RegisterTransientContent<CompoundPayload>();

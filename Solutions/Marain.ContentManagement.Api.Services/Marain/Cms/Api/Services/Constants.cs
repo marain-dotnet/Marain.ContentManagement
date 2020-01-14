@@ -23,6 +23,16 @@ namespace Marain.Cms.Api.Services
             /// Link relation for "next" links.
             /// </summary>
             public const string Next = "next";
+
+            /// <summary>
+            /// Link relation for "content" links.
+            /// </summary>
+            public const string Content = "content";
+
+            /// <summary>
+            /// Link relation for "next" links.
+            /// </summary>
+            public const string ContentSummary = "contentsummary";
         }
 
         /// <summary>

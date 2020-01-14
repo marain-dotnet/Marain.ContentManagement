@@ -1,4 +1,4 @@
-﻿// <copyright file="ContentSummariesWithState.cs" company="Endjin Limited">
+﻿// <copyright file="ContentStates.cs" company="Endjin Limited">
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
@@ -9,9 +9,9 @@ namespace Marain.Cms
     /// <summary>
     /// A batch of <see cref="ContentSummary"/> instances returned from a query.
     /// </summary>
-    public class ContentSummariesWithState
+    public class ContentStates
     {
-        private List<ContentSummaryWithState> summaries;
+        private List<ContentState> states;
 
         /// <summary>
         /// Gets or sets the continuation token for the next batch of requests.
@@ -19,12 +19,12 @@ namespace Marain.Cms
         public string ContinuationToken { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of <see cref="ContentSummaryWithState"/> instances in this batch.
+        /// Gets or sets the list of <see cref="ContentState"/> instances in this batch.
         /// </summary>
-        public List<ContentSummaryWithState> Summaries
+        public List<ContentState> States
         {
-            get => this.summaries ?? (this.summaries = new List<ContentSummaryWithState>());
-            set => this.summaries = value;
+            get => this.states ?? (this.states = new List<ContentState>());
+            set => this.states = value;
         }
     }
 }

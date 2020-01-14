@@ -15,30 +15,29 @@ namespace Marain.ContentManagement.Specs.Bindings
 
     internal class FakeContentStore : IContentStore
     {
-        private readonly Dictionary<string, ContentWithState> contentBySlug = new Dictionary<string, ContentWithState>();
+        private readonly Dictionary<string, ContentState> contentStateBySlug = new Dictionary<string, ContentState>();
+
+        private readonly Dictionary<string, Content> contentBySlug = new Dictionary<string, Content>();
 
         public void SetContentState(Content content, string stateName)
         {
-            this.contentBySlug[content.Slug] =
-                new ContentWithState(content, stateName, DateTimeOffset.UtcNow, WellKnownWorkflowId.ContentPublication);
+            this.contentBySlug[content.Slug] = content;
+            this.contentStateBySlug[content.Slug] = new ContentState
+            {
+                ContentId = content.Id,
+                Slug = content.Slug,
+                StateName = stateName,
+                UnixTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
+                WorkflowId = WellKnownWorkflowId.ContentPublication,
+            };
+        }
+
+        public Task<ContentState> GetContentStateForWorkflowAsync(string slug, string workflowId)
+        {
+            return Task.FromResult(this.contentStateBySlug[slug]);
         }
 
         public Task<Content> GetContentAsync(string contentId, string slug)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ContentWithState> GetContentForWorkflowAsync(string slug, string workflowId)
-        {
-            return Task.FromResult(this.contentBySlug[slug]);
-        }
-
-        public Task<ContentSummaries> GetContentSummariesAsync(string slug, int limit = 20, string continuationToken = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ContentSummariesWithState> GetContentSummariesForWorkflowAsync(string slug, string workflowId, string stateName = null, int limit = 20, string continuationToken = null)
         {
             throw new NotImplementedException();
         }
@@ -48,7 +47,7 @@ namespace Marain.ContentManagement.Specs.Bindings
             throw new NotImplementedException();
         }
 
-        public Task<ContentState> GetContentWorkflowStateAsync(string slug, string workflowId)
+        public Task<ContentSummaries> GetContentSummariesAsync(string slug, int limit = 20, string continuationToken = null)
         {
             throw new NotImplementedException();
         }
@@ -59,6 +58,16 @@ namespace Marain.ContentManagement.Specs.Bindings
         }
 
         public Task<Content> StoreContentAsync(Content content)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ContentStates> GetContentStatesForWorkflowAsync(string slug, string workflowId, string stateName = null, int limit = 20, string continuationToken = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<ContentSummary>> GetContentSummariesForStatesAsync(IList<ContentState> states)
         {
             throw new NotImplementedException();
         }

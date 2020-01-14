@@ -91,18 +91,6 @@ namespace Marain.ContentManagement.Specs.Drivers
             Assert.AreEqual(expected.Title, actual.Title);
         }
 
-        public static void Compare(Cms.ContentState expected, Cms.ContentWithState actual)
-        {
-            Assert.AreEqual(expected.WorkflowId, actual.WorkflowId);
-            Assert.AreEqual(expected.StateName, actual.StateName);
-        }
-
-        public static void Compare(Cms.ContentState expected, ContentWithStateResponse actual)
-        {
-            Assert.AreEqual(expected.WorkflowId, actual.WorkflowId);
-            Assert.AreEqual(expected.StateName, actual.StateName);
-        }
-
         public static void Compare(Cms.ContentState expected, ContentStateResponse actual)
         {
             Assert.AreEqual(expected.WorkflowId, actual.WorkflowId);

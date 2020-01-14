@@ -98,7 +98,7 @@ namespace Marain.Cms
         }
 
         /// <inheritdoc/>
-        public async Task<ContentState> GetContentWorkflowStateAsync(string slug, string workflowId)
+        public async Task<ContentState> GetContentStateForWorkflowAsync(string slug, string workflowId)
         {
             if (slug is null)
             {
@@ -154,41 +154,7 @@ namespace Marain.Cms
         }
 
         /// <inheritdoc/>
-        public async Task<ContentWithState> GetContentForWorkflowAsync(string slug, string workflowId)
-        {
-            if (slug is null)
-            {
-                throw new ArgumentNullException(nameof(slug));
-            }
-
-            if (string.IsNullOrEmpty(workflowId))
-            {
-                throw new ArgumentException("message", nameof(workflowId));
-            }
-
-            QueryDefinition queryDefinition =
-                new QueryDefinition(SingleContentStateQuery)
-                    .WithParameter("@slug", slug)
-                    .WithParameter("@workflowId", workflowId);
-
-            FeedIterator<ContentState> iterator = this.container.GetItemQueryIterator<ContentState>(queryDefinition, null, new QueryRequestOptions { MaxItemCount = 1 });
-
-            if (iterator.HasMoreResults)
-            {
-                FeedResponse<ContentState> results = await iterator.ReadNextAsync().ConfigureAwait(false);
-                ContentState state = results.Resource.FirstOrDefault();
-                if (!(state is null))
-                {
-                    Content content = await this.GetContentAsync<Content>(state.ContentId, state.Slug).ConfigureAwait(false);
-                    return new ContentWithState(content, state);
-                }
-            }
-
-            throw new ContentNotFoundException();
-        }
-
-        /// <inheritdoc/>
-        public async Task<ContentSummariesWithState> GetContentSummariesForWorkflowAsync(string slug, string workflowId, string stateName = null, int limit = 20, string continuationToken = null)
+        public async Task<ContentStates> GetContentStatesForWorkflowAsync(string slug, string workflowId, string stateName = null, int limit = 20, string continuationToken = null)
         {
             if (slug is null)
             {
@@ -205,17 +171,14 @@ namespace Marain.Cms
 
             FeedIterator<ContentState> iterator = this.container.GetItemQueryIterator<ContentState>(queryDefinition, continuationToken, new QueryRequestOptions { MaxItemCount = limit });
 
-            var summaries = new ContentSummariesWithState();
-            var states = new List<ContentState>();
+            var summaries = new ContentStates();
 
             if (iterator.HasMoreResults)
             {
                 FeedResponse<ContentState> results = await iterator.ReadNextAsync().ConfigureAwait(false);
                 summaries.ContinuationToken = results.ContinuationToken;
-                states.AddRange(results.Resource);
+                summaries.States.AddRange(results.Resource);
             }
-
-            summaries.Summaries = await this.GetContentSummariesAsync(slug, states).ConfigureAwait(false);
 
             return summaries;
         }
@@ -235,25 +198,15 @@ namespace Marain.Cms
             return await this.GetContentSummariesAsync(limit, continuationToken, queryDefinition).ConfigureAwait(false);
         }
 
-        private static QueryDefinition GetWorkflowStateQueryDefinition(string slug, string workflowId, string stateName)
+        /// <inheritdoc/>
+        public async Task<List<ContentSummary>> GetContentSummariesForStatesAsync(IList<ContentState> states)
         {
-            if (string.IsNullOrEmpty(stateName))
+            // All of the states should have the same slug.
+            if (states.Distinct(x => x.Slug).Count() != 1)
             {
-                return new QueryDefinition(ContentStateQuery)
-                                               .WithParameter("@slug", slug)
-                                               .WithParameter("@workflowId", workflowId);
+                throw new ArgumentException("All of the supplied states should be for the same content slug.", nameof(states));
             }
-            else
-            {
-                return new QueryDefinition(ContentStateQueryWithStateNameFilter)
-                                               .WithParameter("@slug", slug)
-                                               .WithParameter("@workflowId", workflowId)
-                                               .WithParameter("@stateName", stateName);
-            }
-        }
 
-        private async Task<List<ContentSummaryWithState>> GetContentSummariesAsync(string slug, IList<ContentState> states)
-        {
             var queryBuilder = new StringBuilder("SELECT ");
             queryBuilder.Append(ContentSummaryProperties);
             queryBuilder.Append(" FROM c WHERE c.slug = @slug AND c.contentType = '");
@@ -273,14 +226,30 @@ namespace Marain.Cms
 
             QueryDefinition queryDefinition =
                            new QueryDefinition(queryBuilder.ToString())
-                               .WithParameter("@slug", slug);
+                               .WithParameter("@slug", states[0].Slug);
 
             contentIds.ForEachAtIndex((s, i) => queryDefinition = queryDefinition.WithParameter($"@id{i}", s));
 
             ContentSummaries summaries = await this.GetContentSummariesAsync(states.Count, null, queryDefinition).ConfigureAwait(false);
-            var summaryDictionary = summaries.Summaries.ToDictionary(s => s.Id);
 
-            return states.Select(s => new ContentSummaryWithState(summaryDictionary[s.ContentId], s)).ToList();
+            return summaries.Summaries;
+        }
+
+        private static QueryDefinition GetWorkflowStateQueryDefinition(string slug, string workflowId, string stateName)
+        {
+            if (string.IsNullOrEmpty(stateName))
+            {
+                return new QueryDefinition(ContentStateQuery)
+                                               .WithParameter("@slug", slug)
+                                               .WithParameter("@workflowId", workflowId);
+            }
+            else
+            {
+                return new QueryDefinition(ContentStateQueryWithStateNameFilter)
+                                               .WithParameter("@slug", slug)
+                                               .WithParameter("@workflowId", workflowId)
+                                               .WithParameter("@stateName", stateName);
+            }
         }
 
         private async Task<ContentSummaries> GetContentSummariesAsync(int limit, string continuationToken, QueryDefinition queryDefinition)
