@@ -2,12 +2,10 @@
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
-namespace Marain.ContentManagement.Specs.Bindings
+namespace Marain.ContentManagement.Rendering.Specs.Bindings
 {
-    using System.Collections.Generic;
     using Corvus.SpecFlow.Extensions;
     using Marain.Cms;
-    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using TechTalk.SpecFlow;
 
@@ -28,21 +26,9 @@ namespace Marain.ContentManagement.Specs.Bindings
                 featureContext,
                 serviceCollection =>
                 {
-                    var configData = new Dictionary<string, string>
-                    {
-                        //// Add configuration value pairs here
-                        ////{ "STORAGEACCOUNTCONNECTIONSTRING", "UseDevelopmentStorage=true" },
-                    };
-                    IConfigurationRoot config = new ConfigurationBuilder()
-                        .AddInMemoryCollection(configData)
-                        .AddEnvironmentVariables()
-                        .AddJsonFile("local.settings.json", true, true)
-                        .Build();
-
                     // Register the fake content store as the content store
                     serviceCollection.AddSingleton<FakeContentStore>();
                     serviceCollection.AddSingleton<IContentStore>(s => s.GetService<FakeContentStore>());
-                    serviceCollection.AddSingleton(config);
                     serviceCollection.AddLiquidRenderer();
                     serviceCollection.AddMarkdownRenderer();
                 });

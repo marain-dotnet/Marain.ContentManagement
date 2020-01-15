@@ -2,7 +2,7 @@
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
-namespace Marain.ContentManagement.Specs.Bindings
+namespace Marain.ContentManagement.Rendering.Specs.Bindings
 {
     using System;
     using System.Collections.Generic;

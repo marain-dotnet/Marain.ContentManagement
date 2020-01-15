@@ -2,7 +2,7 @@
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
-namespace Marain.ContentManagement.Specs.Steps
+namespace Marain.ContentManagement.Rendering.Specs.Steps
 {
     using System.IO;
     using System.Text;
@@ -10,7 +10,7 @@ namespace Marain.ContentManagement.Specs.Steps
     using Corvus.Extensions.Json;
     using Corvus.SpecFlow.Extensions;
     using Marain.Cms;
-    using Marain.ContentManagement.Specs.Bindings;
+    using Marain.ContentManagement.Rendering.Specs.Bindings;
     using Marain.ContentManagement.Specs.Drivers;
     using Microsoft.Extensions.DependencyInjection;
     using Newtonsoft.Json.Linq;

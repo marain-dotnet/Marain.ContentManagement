@@ -4,7 +4,7 @@
 
   <PropertyGroup>
     <IsPackable>false</IsPackable>
-    <RootNamespace>Marain.ContentManagement.Specs</RootNamespace>
+    <RootNamespace>Marain.ContentManagement.Rendering.Specs</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
