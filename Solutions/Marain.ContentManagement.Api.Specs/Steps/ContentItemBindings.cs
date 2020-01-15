@@ -66,109 +66,25 @@ namespace Marain.ContentManagement.Specs.Steps
 
         [When("I request the content with slug '(.*)' and Id '(.*)'")]
         [Given("I have requested the content with slug '(.*)' and Id '(.*)'")]
-        public async Task WhenIRequestTheContentWithSlug(string slug, string id)
+        public Task WhenIRequestTheContentWithSlug(string slug, string id)
         {
-            string resolvedSlug = SpecHelpers.ParseSpecValue<string>(this.scenarioContext, slug);
-            string resolvedId = SpecHelpers.ParseSpecValue<string>(this.scenarioContext, id);
-
-            ContentClient client = this.featureContext.Get<ContentClient>();
-
-            try
-            {
-                SwaggerResponse<ContentResponse> response = await client.GetContentAsync(
-                    this.featureContext.GetCurrentTenantId(),
-                    resolvedSlug,
-                    resolvedId,
-                    null).ConfigureAwait(false);
-
-                this.scenarioContext.StoreLastApiResponse(response);
-            }
-            catch (SwaggerException ex)
-            {
-                this.scenarioContext.StoreLastApiException(ex);
-            }
-        }
-
-        [When("I request the workflow state for slug '(.*)' and workflow Id '(.*)'")]
-        public Task WhenIRequestTheWorkflowStateForSlugAndWorkflowId(string slug, string workflowId)
-        {
-            return this.WhenIRequestTheWorkflowStateForSlugAndWorkflowIdWithEmbedded(null, slug, workflowId);
-        }
-
-        [When("I request the workflow state with embedded '(.*)' for slug '(.*)' and workflow Id '(.*)'")]
-        public async Task WhenIRequestTheWorkflowStateForSlugAndWorkflowIdWithEmbedded(string embed, string slug, string workflowId)
-        {
-            string resolvedSlug = SpecHelpers.ParseSpecValue<string>(this.scenarioContext, slug);
-            string resolvedWorkflowId = SpecHelpers.ParseSpecValue<string>(this.scenarioContext, workflowId);
-            Embed? resolvedEmbed = string.IsNullOrEmpty(embed) ? (Embed?)null : Enum.Parse<Embed>(embed, true);
-
-            try
-            {
-                ContentClient client = this.featureContext.Get<ContentClient>();
-                SwaggerResponse<ContentStateResponse> response = await client.GetWorkflowStateAsync(
-                    this.featureContext.GetCurrentTenantId(),
-                    resolvedSlug,
-                    resolvedWorkflowId,
-                    resolvedEmbed).ConfigureAwait(false);
-
-                this.scenarioContext.StoreLastApiResponse(response);
-            }
-            catch (SwaggerException ex)
-            {
-                this.scenarioContext.StoreLastApiException(ex);
-            }
+            return this.RequestContentItemAndStoreResponseAsync(slug, id, null);
         }
 
         [When("I request the content with slug '(.*)' and Id '(.*)' using the etag returned by the previous request")]
-        public async Task WhenIRequestTheContentWithSlugAndIdUsingTheEtagReturnedByThePreviousRequest(string slug, string id)
+        public Task WhenIRequestTheContentWithSlugAndIdUsingTheEtagReturnedByThePreviousRequest(string slug, string id)
         {
             SwaggerResponse<ContentResponse> lastResponse = this.scenarioContext.GetLastApiResponse<ContentResponse>();
             string lastEtag = lastResponse.Headers["ETag"].First();
             this.scenarioContext.ClearLastApiResponse();
 
-            string resolvedSlug = SpecHelpers.ParseSpecValue<string>(this.scenarioContext, slug);
-            string resolvedId = SpecHelpers.ParseSpecValue<string>(this.scenarioContext, id);
-
-            ContentClient client = this.featureContext.Get<ContentClient>();
-
-            try
-            {
-                SwaggerResponse<ContentResponse> response = await client.GetContentAsync(
-                    this.featureContext.GetCurrentTenantId(),
-                    resolvedSlug,
-                    resolvedId,
-                    lastEtag).ConfigureAwait(false);
-
-                this.scenarioContext.StoreLastApiResponse(response);
-            }
-            catch (SwaggerException ex)
-            {
-                this.scenarioContext.StoreLastApiException(ex);
-            }
+            return this.RequestContentItemAndStoreResponseAsync(slug, id, lastEtag);
         }
 
         [When("I request the content with slug '(.*)' and Id '(.*)' using a random etag")]
-        public async Task WhenIRequestTheContentWithSlugAndIdUsingARandomEtag(string slug, string id)
+        public Task WhenIRequestTheContentWithSlugAndIdUsingARandomEtag(string slug, string id)
         {
-            string resolvedSlug = SpecHelpers.ParseSpecValue<string>(this.scenarioContext, slug);
-            string resolvedId = SpecHelpers.ParseSpecValue<string>(this.scenarioContext, id);
-
-            ContentClient client = this.featureContext.Get<ContentClient>();
-
-            try
-            {
-                SwaggerResponse<ContentResponse> response = await client.GetContentAsync(
-                    this.featureContext.GetCurrentTenantId(),
-                    resolvedSlug,
-                    resolvedId,
-                    Guid.NewGuid().ToString()).ConfigureAwait(false);
-
-                this.scenarioContext.StoreLastApiResponse(response);
-            }
-            catch (SwaggerException ex)
-            {
-                this.scenarioContext.StoreLastApiException(ex);
-            }
+            return this.RequestContentItemAndStoreResponseAsync(slug, id, Guid.NewGuid().ToString());
         }
 
         [Given("I have requested that the content '(.*)' is created")]
@@ -205,6 +121,29 @@ namespace Marain.ContentManagement.Specs.Steps
             Cms.Content expected = this.scenarioContext.Get<Cms.Content>(itemName);
 
             ContentSpecHelpers.Compare(expected, actual.Result);
+        }
+
+        private async Task RequestContentItemAndStoreResponseAsync(string slug, string id, string etag)
+        {
+            string resolvedSlug = SpecHelpers.ParseSpecValue<string>(this.scenarioContext, slug);
+            string resolvedId = SpecHelpers.ParseSpecValue<string>(this.scenarioContext, id);
+
+            ContentClient client = this.featureContext.Get<ContentClient>();
+
+            try
+            {
+                SwaggerResponse<ContentResponse> response = await client.GetContentAsync(
+                    this.featureContext.GetCurrentTenantId(),
+                    resolvedSlug,
+                    resolvedId,
+                    etag).ConfigureAwait(false);
+
+                this.scenarioContext.StoreLastApiResponse(response);
+            }
+            catch (SwaggerException ex)
+            {
+                this.scenarioContext.StoreLastApiException(ex);
+            }
         }
     }
 }
