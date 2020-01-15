@@ -52,6 +52,3 @@ namespace Marain.ContentManagement.Specs.Bindings
         }
     }
 }
-#pragma warning restore RCS1079 // Throwing of new NotImplementedException.
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning restore SA1600 // Elements should be documented
