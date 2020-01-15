@@ -23,15 +23,9 @@ namespace Marain.Cms
         public string Template { get; set; }
 
         /// <inheritdoc/>
-        public IContentPayload Copy(bool replaceId)
-        {
-            return new LiquidPayload { Template = this.Template };
-        }
+        public IContentPayload Copy(bool replaceId) => new LiquidPayload { Template = this.Template };
 
         /// <inheritdoc/>
-        public string GetFullTextSearchContent()
-        {
-            return this.Template;
-        }
+        public string GetFullTextSearchContent() => this.Template;
     }
 }

@@ -15,13 +15,7 @@ namespace Marain.Cms
         public const string RegisteredContentType = "application/vnd.marain.cms.contentpayload.liquidwithmarkdown";
 
         /// <inheritdoc/>
-        public string ContentType
-        {
-            get
-            {
-                return RegisteredContentType;
-            }
-        }
+        public string ContentType => RegisteredContentType;
 
         /// <summary>
         /// Gets or sets the liquid with markdown template for the content.
@@ -29,15 +23,9 @@ namespace Marain.Cms
         public string Template { get; set; }
 
         /// <inheritdoc/>
-        public IContentPayload Copy(bool replaceId)
-        {
-            return new LiquidPayload { Template = this.Template };
-        }
+        public IContentPayload Copy(bool replaceId) => new LiquidPayload { Template = this.Template };
 
         /// <inheritdoc/>
-        public string GetFullTextSearchContent()
-        {
-            return this.Template;
-        }
+        public string GetFullTextSearchContent() => this.Template;
     }
 }

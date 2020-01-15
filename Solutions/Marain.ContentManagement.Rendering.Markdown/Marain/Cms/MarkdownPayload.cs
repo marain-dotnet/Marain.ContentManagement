@@ -15,13 +15,7 @@ namespace Marain.Cms
         public const string RegisteredContentType = "application/vnd.marain.cms.contentpayload.markdown";
 
         /// <inheritdoc/>
-        public string ContentType
-        {
-            get
-            {
-                return RegisteredContentType;
-            }
-        }
+        public string ContentType => RegisteredContentType;
 
         /// <summary>
         /// Gets or sets the markdown for the content.
@@ -29,15 +23,9 @@ namespace Marain.Cms
         public string Markdown { get; set; }
 
         /// <inheritdoc/>
-        public IContentPayload Copy(bool replaceId)
-        {
-            return new MarkdownPayload { Markdown = this.Markdown };
-        }
+        public IContentPayload Copy(bool replaceId) => new MarkdownPayload { Markdown = this.Markdown };
 
         /// <inheritdoc/>
-        public string GetFullTextSearchContent()
-        {
-            return this.Markdown;
-        }
+        public string GetFullTextSearchContent() => this.Markdown;
     }
 }
