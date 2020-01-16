@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
+
+  <Import Project="..\Common.NetStandard_2_0.proj" />
+  
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
+    <PackageDescription>
+    </PackageDescription>
+    <PackageTags>
+    </PackageTags>
+    <PackageReleaseNotes>
+    </PackageReleaseNotes>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <None Remove="Marain\Cms\Api\ContentManagementServices.yaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Marain\Cms\Api\Services\ContentManagementServices.yaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Menes.Abstractions" Version="0.10.0-preview.8" />
+    <PackageReference Include="Microsoft.ApplicationInsights" Version="2.10.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.2.0" />
+    <PackageReference Include="Corvus.Tenancy.Abstractions" Version="0.19.0" />
+    <PackageReference Include="Microsoft.Net.Http.Headers" Version="2.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Marain.ContentManagement.Abstractions\Marain.ContentManagement.Abstractions.csproj" />
+    <ProjectReference Include="..\Marain.ContentManagement.Tenancy.Abstractions\Marain.ContentManagement.Tenancy.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

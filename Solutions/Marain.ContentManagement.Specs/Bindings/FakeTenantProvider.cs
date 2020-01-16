@@ -1,10 +1,18 @@
-﻿namespace Marain.ContentManagement.Specs.Bindings
+﻿// <copyright file="FakeTenantProvider.cs" company="Endjin Limited">
+// Copyright (c) Endjin Limited. All rights reserved.
+// </copyright>
+
+namespace Marain.ContentManagement.Specs.Bindings
 {
     using System;
     using System.Threading.Tasks;
     using Corvus.Tenancy;
 
-    class FakeTenantProvider : ITenantProvider
+#pragma warning disable RCS1079 // Throwing of new NotImplementedException.
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+#pragma warning disable SA1600 // Elements should be documented
+
+    internal class FakeTenantProvider : ITenantProvider
     {
         public FakeTenantProvider(RootTenant rootTenant)
         {

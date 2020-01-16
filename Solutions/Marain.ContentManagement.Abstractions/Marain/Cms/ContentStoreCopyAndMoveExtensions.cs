@@ -44,7 +44,7 @@ namespace Marain.Cms
             Content originalContent = await contentStore.GetContentAsync(originalContentId, originalSlug).ConfigureAwait(false);
             Content newContent = originalContent.Copy(true);
             newContent.Slug = targetSlug;
-            newContent.OriginalSource = new ContentSource(originalContent.Slug, originalContent.Id);
+            newContent.OriginalSource = new ContentReference(originalContent.Slug, originalContent.Id);
 
             return await contentStore.StoreContentAsync(newContent).ConfigureAwait(false);
         }

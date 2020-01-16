@@ -5,7 +5,6 @@
 namespace Marain.Cms
 {
     using System;
-    using Corvus.Extensions;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 
@@ -18,6 +17,8 @@ namespace Marain.Cms
         /// The registered content type of the content for the <see cref="Corvus.ContentHandling.ContentFactory"/> pattern.
         /// </summary>
         public const string RegisteredContentType = "application/vnd.marain.content.contentstate";
+
+        private string slug;
 
         /// <summary>
         /// Gets or sets the unique ID of the state instance.
@@ -37,7 +38,18 @@ namespace Marain.Cms
         /// <summary>
         /// Gets or sets the slug for the content.
         /// </summary>
-        public string Slug { get; set; }
+        public string Slug
+        {
+            get
+            {
+                return this.slug ?? string.Empty;
+            }
+
+            set
+            {
+                this.slug = new Slug(value).ToString();
+            }
+        }
 
         /// <summary>
         /// Gets or sets the identity that changed the state.
@@ -47,7 +59,7 @@ namespace Marain.Cms
         /// <summary>
         /// Gets the partition key for the content.
         /// </summary>
-        public string PartitionKey => this.Slug.Base64UrlEncode();
+        public string PartitionKey => PartitionKeyHelper.GetPartitionKeyFromSlug(this.Slug);
 
         /// <summary>
         /// Gets or sets the <see cref="Content.Id"/> to which the state applies.

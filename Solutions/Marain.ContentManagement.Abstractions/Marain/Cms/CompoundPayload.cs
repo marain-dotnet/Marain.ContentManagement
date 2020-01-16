@@ -9,7 +9,7 @@ namespace Marain.Cms
     using System.Text;
 
     /// <summary>
-    /// A <see cref="IContentPayload"/> representing a composition of other content.
+    /// A <see cref="IContentPayload"/> representing an ordered collection of content payload instances.
     /// </summary>
     public class CompoundPayload : IContentPayload
     {

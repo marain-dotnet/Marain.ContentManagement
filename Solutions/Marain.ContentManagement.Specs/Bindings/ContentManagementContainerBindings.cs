@@ -7,13 +7,12 @@ namespace Marain.ContentManagement.Specs.Bindings
     using System.Collections.Generic;
     using Corvus.SpecFlow.Extensions;
     using Corvus.Tenancy;
-    using Marain.Cms;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using TechTalk.SpecFlow;
 
     /// <summary>
-    ///     Container related bindings to configure the service provider for features.
+    /// Container related bindings to configure the service provider for features.
     /// </summary>
     [Binding]
     public static class ContentManagementContainerBindings

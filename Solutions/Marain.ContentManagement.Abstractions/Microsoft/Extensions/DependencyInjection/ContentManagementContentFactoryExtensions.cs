@@ -21,8 +21,11 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             factory.RegisterTransientContent<Content>();
             factory.RegisterTransientContent<ContentState>();
-            factory.RegisterTransientContent<ContentFragment>();
-            factory.RegisterTransientContent<AbTestSet>();
+            factory.RegisterTransientContent<ContentFragmentPayload>();
+            factory.RegisterTransientContent<AbTestSetPayload>();
+            factory.RegisterTransientContent<CompoundPayload>();
+            factory.RegisterTransientContent<CompoundContentReferencePayload>();
+            factory.RegisterTransientContent<PublicationWorkflowContentPayload>();
             return factory;
         }
 
@@ -33,10 +36,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <returns>The service collection wth the content added.</returns>
         public static IServiceCollection AddContentManagementContent(this IServiceCollection serviceCollection)
         {
-            return serviceCollection.AddContent(factory =>
-            {
-                factory.RegisterContentManagementContent();
-            });
+            return serviceCollection.AddContent(factory => factory.RegisterContentManagementContent());
         }
     }
 }

@@ -1,0 +1,651 @@
+﻿openapi: '3.0.0'
+info:
+  version: 1.0.0
+  title: Content Management Service
+servers:
+  - url: https://content.marain.io
+paths:
+  /{tenantId}/marain/content/{slug}:
+    post:
+      tags:
+        - Content
+      summary: Create content at the slug
+      description: Creates a new content instance for the slug
+      operationId: createContent
+      parameters:
+        - $ref: '#/components/parameters/tenantId'
+        - $ref: '#/components/parameters/slug'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateContentRequest'
+      responses:
+        '201':
+          description: Successful operation
+          headers:
+            Location:
+              description: The location of the created content
+              schema:
+                type: string
+            ETag:
+              description: The etag for the content
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentResponse'
+        '400':
+          description: Bad request
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+        '403':
+          description: Forbidden
+        '409':
+          description: Conflict - content with the given ID and Slug has already been created.
+    get:
+      tags:
+        - Content
+      summary: Get the content at the slug with the given ID
+      description: Gets a new content instance for the slug
+      operationId: getContent
+      parameters:
+        - $ref: '#/components/parameters/tenantId'
+        - $ref: '#/components/parameters/slug'
+        - $ref: '#/components/parameters/contentId'
+        - $ref: '#/components/parameters/ifNoneMatch'
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            ETag:
+              description: The etag for the content
+              schema:
+                type: string
+            Cache-Control:
+              description: The etag for the content
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentResponse'
+        '304':
+          description: Not modified
+        '400':
+          description: Bad request
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found    
+  /{tenantId}/marain/content/summary/{slug}:
+    get:
+      tags:
+        - Content
+      summary: Get the content at the slug with the given ID
+      description: Gets a new content instance for the slug
+      operationId: getContentSummary
+      parameters:
+        - $ref: '#/components/parameters/tenantId'
+        - $ref: '#/components/parameters/slug'
+        - $ref: '#/components/parameters/contentId'
+        - $ref: '#/components/parameters/ifNoneMatch'
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            ETag:
+              description: The etag for the content
+              schema:
+                type: string
+            Cache-Control:
+              description: The etag for the content
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentSummaryResponse'
+        '304':
+          description: Not modified
+        '400':
+          description: Bad request
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found    
+  /{tenantId}/marain/content/history/{slug}:
+    get:
+      tags:
+        - Content
+      summary: Get content history at slug
+      description: Get the history of the content at the given slug
+      operationId: getContentHistory
+      parameters:
+        - $ref: '#/components/parameters/tenantId'
+        - $ref: '#/components/parameters/slug'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/continuationToken'
+        - $ref: '#/components/parameters/ifNoneMatch'
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            ETag:
+              description: The etag for the content
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentSummariesResponse'
+        '304':
+          description: Not modified
+        '400':
+          description: Bad request
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found    
+  /{tenantId}/marain/content/workflow/{workflowId}/state/{slug}:
+    get:
+      tags:
+        - Content Workflow
+      summary: Get the current state for the workflow at the slug
+      description: Gets state information associated with the given workflowId for the current state at that slug. The response includes a link to the content associated with that state.
+      operationId: getWorkflowState
+      parameters:
+        - $ref: '#/components/parameters/tenantId'
+        - $ref: '#/components/parameters/slug'
+        - $ref: '#/components/parameters/workflowId'
+        - $ref: '#/components/parameters/embedContentOrSummary'
+      responses:
+        '200':
+          description: Successful operation        
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentStateResponse'
+        '304':
+          description: Not modified
+        '400':
+          description: Bad request
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+  /{tenantId}/marain/content/workflow/{workflowId}/history/{slug}:
+    get:
+      tags:
+        - Content Workflow
+      summary: Get the state history for the given workflow at the slug with the given ID
+      description: Gets the state history for the given workflow at the slug. The history includes links to the content associated with those states.
+      operationId: getWorkflowHistory
+      parameters:
+        - $ref: '#/components/parameters/tenantId'
+        - $ref: '#/components/parameters/workflowId'
+        - $ref: '#/components/parameters/slug'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/continuationToken'
+        - $ref: '#/components/parameters/embedSummaryOnly'
+      responses:
+        '200':
+          description: Successful operation        
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentStatesResponse'
+        '304':
+          description: Not modified
+        '400':
+          description: Bad request
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+  /{tenantId}/marain/content/workflow/{workflowId}/{stateName}/history/{slug}:
+    get:
+      tags:
+        - Content Workflow
+      summary: Get the state history for the content at the given slug
+      description: Gets the state history for the content at the given slug in the given workflow, including only those items in the specified state.
+      operationId: getWorkflowStateHistory
+      parameters:
+        - $ref: '#/components/parameters/tenantId'
+        - $ref: '#/components/parameters/workflowId'
+        - $ref: '#/components/parameters/stateName'
+        - $ref: '#/components/parameters/slug'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/continuationToken'
+        - $ref: '#/components/parameters/embedSummaryOnly'
+      responses:
+        '200':
+          description: Successful operation        
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentStatesResponse'
+        '304':
+          description: Not modified
+        '400':
+          description: Bad request
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+components:
+  schemas:
+    ############################################################################
+    # Schemas for responses that follow the HAL specification
+    ############################################################################
+    Link:
+      type: object
+      required:
+        - href
+      properties:
+        href:
+          type: string
+          title: URI of the target resource
+          description: Either a URI [RFC3986] or URI Template [RFC6570] of the target
+            resource.
+        templated:
+          type: boolean
+          default: false
+          title: URI Template
+          description: Is true when the link object's href property is a URI Template.
+            Defaults to false.
+        type:
+          type: string
+          pattern: "^(application|audio|example|image|message|model|multipart|text|video)\\/[a-zA-Z0-9!#\\$&\\.\\+-\\^_]{1,127}$"
+          title: Media type indication of the target resource
+          description: When present, used as a hint to indicate the media type expected
+            when dereferencing the target resource.
+        name:
+          type: string
+          title: Secondary key
+          description: When present, may be used as a secondary key for selecting
+            link objects that contain the same relation type.
+        profile:
+          type: string
+          format: uri
+          title: Additional semantics of the target resource
+          description: A URI that, when dereferenced, results in a profile to allow
+            clients to learn about additional semantics (constraints, conventions,
+            extensions) that are associated with the target resource representation,
+            in addition to those defined by the HAL media type and relations.
+        title:
+          type: string
+          title: Human-readable identifier
+          description: When present, is used to label the destination of a link
+            such that it can be used as a human-readable identifier (e.g. a menu
+            entry) in the language indicated by the Content-Language header (if
+            present).
+        hreflang:
+          type: string
+          pattern: "^([a-zA-Z]{2,3}(-[a-zA-Z]{3}(-[a-zA-Z]{3}){0,2})?(-[a-zA-Z]{4})?(-([a-zA-Z]{2}|[0-9]{3}))?(-([a-zA-Z0-9]{5,8}|[0-9][a-zA-Z0-9]{3}))*([0-9A-WY-Za-wy-z](-[a-zA-Z0-9]{2,8}){1,})*(x-[a-zA-Z0-9]{2,8})?)|(x-[a-zA-Z0-9]{2,8})|(en-GB-oed)|(i-ami)|(i-bnn)|(i-default)|(i-enochian)|(i-hak)|(i-klingon)|(i-lux)|(i-mingo)|(i-navajo)|(i-pwn)|(i-tao)|(i-tay)|(i-tsu)|(sgn-BE-FR)|(sgn-BE-NL)|(sgn-CH-DE)|(art-lojban)|(cel-gaulish)|(no-bok)|(no-nyn)|(zh-guoyu)|(zh-hakka)|(zh-min)|(zh-min-nan)|(zh-xiang)$"
+          title: Language indication of the target resource [RFC5988]
+          description: When present, is a hint in RFC5646 format indicating what
+            the language of the result of dereferencing the link should be.  Note
+            that this is only a hint; for example, it does not override the Content-Language
+            header of a HTTP response obtained by actually following the link.
+    LinkArray:
+      type: array
+      items:
+        $ref: '#/components/schemas/Link'
+    PropertyBag:
+      type: object
+      additionalProperties:
+        oneOf:
+          - type: array
+          - type: boolean
+          - type: integer
+          - type: number
+          - type: object
+          - type: string
+    ResourceLink:
+      title: Resource link
+      anyOf:
+        - $ref: '#/components/schemas/LinkArray'
+        - $ref: '#/components/schemas/Link'
+    ResourceLinks:
+      type: object
+      title: Resource links
+      description: Represents a hyperlink from the containing resource to a URI.
+      additionalProperties:
+        $ref: '#/components/schemas/ResourceLink'
+    ResourceEmbeddedResource:
+      title: Embedded resource
+      anyOf:
+        - $ref: '#/components/schemas/ResourceArray'
+        - $ref: '#/components/schemas/Resource'
+    ResourceEmbeddedResources:
+      type: object
+      title: Embedded resources
+      additionalProperties:
+        $ref: '#/components/schemas/ResourceEmbeddedResource'
+    Resource:
+      type: object
+      properties:
+        _links:
+          $ref: "#/components/schemas/ResourceLinks"
+        _embedded:
+          $ref: "#/components/schemas/ResourceEmbeddedResources"
+      additionalProperties: true
+    ResourceArray:
+      type: array
+      items:
+        $ref: '#/components/schemas/Resource'
+      uniqueItems: true
+
+    ############################################################################
+    # Other internal data types
+    ############################################################################
+    DateTimeOffset:
+      nullable: true
+      properties:
+        dateTimeOffset:
+          type: string
+        unixTime:
+          type: number
+      required: ["dateTimeOffset", "unixTime"]
+
+
+    ############################################################################
+    # Domain data types      
+    ############################################################################
+    ContentSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique ID of the tenant. This forms a path with parent tenants. 
+        eTag:
+          type: string
+        categoryPaths:
+          type: array
+          items:
+            type: string
+        tags:
+          type: array
+          items:
+            type: string
+        slug:
+          type: string          
+        author:
+          $ref: '#/components/schemas/CmsIdentity'
+        title:
+          type: string
+        description:
+          type: string
+        culture:
+          type: string
+      required:
+        - id
+        - slug
+      additionalProperties: true
+    ContentSummaryWithState:
+      type: object
+      properties:
+        contentSummary:
+          $ref: '#/components/schemas/ContentSummary'
+        stateName:
+          type: string
+        timestamp:
+          $ref: '#/components/schemas/DateTimeOffset'
+        workflowId:
+          type: string
+    ContentPayload:
+      type: object
+      properties:
+        contentType:
+          type: string
+      additionalProperties: true
+    Content:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique ID of the tenant. This forms a path with parent tenants. 
+        eTag:
+          type: string
+        categoryPaths:
+          type: array
+          items:
+            type: string
+        tags:
+          type: array
+          items:
+            type: string
+        slug:
+          type: string          
+        author:
+          $ref: '#/components/schemas/CmsIdentity'
+        title:
+          type: string
+        description:
+          type: string
+        culture:
+          type: string
+        contentPayload:
+          $ref: '#/components/schemas/ContentPayload'
+        metadata:
+          $ref: '#/components/schemas/PropertyBag'
+      additionalProperties: true
+    ContentState:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique ID of the state instance
+        stateName:
+          type: string
+        workflowId:
+          type: string
+        slug:
+          type: string
+        changedBy:
+          $ref: '#/components/schemas/CmsIdentity'
+        timestamp:
+          $ref: '#/components/schemas/DateTimeOffset'
+    CmsIdentity:
+      type: object
+      properties:
+        userId:
+          type: string
+        userName:
+          type: string
+      required:
+        - userId
+
+    ############################################################################
+    # Request documents: generally these are slightly cut down versions of
+    # internal data types, reflecting the fact that some properties of these
+    # resources are not set by the client when they are created.
+    ############################################################################
+    CreateContentRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique ID of the tenant. This forms a path with parent tenants. 
+        eTag:
+          type: string
+        categoryPaths:
+          type: array
+          items:
+            type: string
+        tags:
+          type: array
+          items:
+            type: string
+        author:
+          $ref: '#/components/schemas/CmsIdentity'
+        title:
+          type: string
+        description:
+          type: string
+        culture:
+          type: string
+        contentPayload:
+          $ref: '#/components/schemas/ContentPayload'
+        metadata:
+          $ref: '#/components/schemas/PropertyBag'
+      required:
+        - id
+        - title
+        - author
+
+    ############################################################################
+    # Response documents: generally these are internal data types returned as a
+    # Resource
+    ############################################################################
+    ContentSummaryResponse:
+      allOf: 
+      - $ref: '#/components/schemas/Resource'
+      - $ref: '#/components/schemas/ContentSummary'
+    ContentResponse:
+      allOf: 
+      - $ref: '#/components/schemas/Resource'
+      - $ref: '#/components/schemas/Content'
+    ContentStateResponse:
+      allOf:
+      - $ref: '#/components/schemas/Resource'
+      - $ref: '#/components/schemas/ContentState'
+    ContentSummariesResponse:
+      allOf:
+      - $ref: '#/components/schemas/Resource'
+      - type: object
+        properties:
+          summaries:
+            type: array
+            items:
+              $ref: '#/components/schemas/ContentSummaryResponse'
+        additionalProperties: true
+    ContentStatesResponse:
+      allOf:
+      - $ref: '#/components/schemas/Resource'
+      - type: object
+        properties:
+          states:
+            type: array
+            items:
+              $ref: '#/components/schemas/ContentStateResponse'
+        additionalProperties: true
+
+    ############################################################################
+    # RFC 7807 Problem Details response definition
+    # https://tools.ietf.org/html/rfc7807
+    ############################################################################
+    ProblemDetails:
+      required:
+        - status
+        - detail
+      properties:
+        status:
+          type: integer
+          format: int32
+        detail:
+          type: string
+        title:
+          type: string
+        instance:
+          type: string
+          format: url
+        type: 
+          type: string
+          format: url
+        validationErrors: 
+          type: array
+      additionalProperties: true
+  parameters:
+    tenantId:
+      name: tenantId
+      in: path
+      x-ms-parameter-location: method
+      description: The tenant within which the request should operate
+      required: true
+      schema:
+        type: string
+    workflowId:
+      name: workflowId
+      in: path
+      x-ms-parameter-location: method
+      description: The id of the workflow relating to the request
+      required: true
+      schema:
+        type: string
+    stateName:
+      name: stateName
+      in: path
+      x-ms-parameter-location: method
+      description: The name of the state in the workflow
+      required: true
+      schema:
+        type: string
+    slug:
+      name: slug
+      in: path      
+      x-ms-parameter-location: method
+      description: The slug for the content
+      required: true
+      schema:
+        type: string
+    contentId:
+      name: contentId
+      in: query
+      x-ms-parameter-location: method
+      description: The contentId for the content at the slug
+      required: true
+      schema:
+        type: string
+    ifNoneMatch:
+      name: If-None-Match
+      in: header
+      x-ms-parameter-location: method
+      description: The ETag of the last known version.
+      required: false
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      x-ms-parameter-location: method
+      description: The maximum number of items to return in the batch
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+    continuationToken:
+      name: continuationToken
+      in: query
+      x-ms-parameter-location: method
+      description: The continuation token for the next batch
+      required: false
+      schema:
+        type: string
+    embedSummaryOnly:
+      name: embed
+      in: query
+      x-ms-parameter-location: method
+      description: Allows the client to specify link relations which should be returned in the _embedded section of the response
+      required: false
+      schema:
+        type: string
+        enum:
+        - contentsummary
+    embedContentOrSummary:
+      name: embed
+      in: query
+      x-ms-parameter-location: method
+      description: Allows the client to specify link relations which should be returned in the _embedded section of the response
+      required: false
+      schema:
+        type: string
+        enum:
+        - content
+        - contentsummary

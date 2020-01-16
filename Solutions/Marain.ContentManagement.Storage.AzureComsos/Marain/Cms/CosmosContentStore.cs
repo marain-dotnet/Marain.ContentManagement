@@ -51,12 +51,24 @@ namespace Marain.Cms
                 throw new ArgumentNullException(nameof(content));
             }
 
-            ItemResponse<Content> response = await this.container.CreateItemAsync(content, new PartitionKey(content.PartitionKey)).ConfigureAwait(false);
-            return response.Resource;
+            try
+            {
+                ItemResponse<Content> response = await this.container.CreateItemAsync(content, new PartitionKey(content.PartitionKey)).ConfigureAwait(false);
+                return response.Resource;
+            }
+            catch (CosmosException ex) when (ex.StatusCode == HttpStatusCode.Conflict)
+            {
+                throw new ContentConflictException(content.Id, content.Slug, ex);
+            }
         }
 
         /// <inheritdoc/>
-        public Task SetContentWorkflowStateAsync(string slug, string contentId, string workflowId, string stateName, CmsIdentity stateChangedBy)
+        public async Task<ContentState> SetContentWorkflowStateAsync(
+            string slug,
+            string contentId,
+            string workflowId,
+            string stateName,
+            CmsIdentity stateChangedBy)
         {
             if (slug is null)
             {
@@ -78,11 +90,15 @@ namespace Marain.Cms
                 throw new ArgumentException("message", nameof(stateName));
             }
 
-            return this.container.CreateItemAsync(new ContentState { Slug = slug, ContentId = contentId, StateName = stateName, WorkflowId = workflowId, ChangedBy = stateChangedBy }, new PartitionKey(Content.GetPartitionKeyFromSlug(slug)));
+            ItemResponse<ContentState> response = await this.container.CreateItemAsync(
+                new ContentState { Slug = slug, ContentId = contentId, StateName = stateName, WorkflowId = workflowId, ChangedBy = stateChangedBy },
+                new PartitionKey(PartitionKeyHelper.GetPartitionKeyFromSlug(slug))).ConfigureAwait(false);
+
+            return response.Resource;
         }
 
         /// <inheritdoc/>
-        public async Task<ContentState> GetContentWorkflowStateAsync(string slug, string workflowId)
+        public async Task<ContentState> GetContentStateForWorkflowAsync(string slug, string workflowId)
         {
             if (slug is null)
             {
@@ -121,41 +137,24 @@ namespace Marain.Cms
         }
 
         /// <inheritdoc/>
-        public async Task<ContentWithState> GetContentForWorkflowAsync(string slug, string workflowId)
+        public async Task<ContentSummary> GetContentSummaryAsync(string contentId, string slug)
         {
-            if (slug is null)
+            try
             {
-                throw new ArgumentNullException(nameof(slug));
-            }
+                ItemResponse<ContentSummary> response = await this.container.ReadItemAsync<ContentSummary>(
+                    contentId,
+                    new PartitionKey(PartitionKeyHelper.GetPartitionKeyFromSlug(slug))).ConfigureAwait(false);
 
-            if (string.IsNullOrEmpty(workflowId))
+                return response.Resource;
+            }
+            catch (CosmosException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
             {
-                throw new ArgumentException("message", nameof(workflowId));
+                throw new ContentNotFoundException("Content not found.", ex);
             }
-
-            QueryDefinition queryDefinition =
-                new QueryDefinition(SingleContentStateQuery)
-                    .WithParameter("@slug", slug)
-                    .WithParameter("@workflowId", workflowId);
-
-            FeedIterator<ContentState> iterator = this.container.GetItemQueryIterator<ContentState>(queryDefinition, null, new QueryRequestOptions { MaxItemCount = 1 });
-
-            if (iterator.HasMoreResults)
-            {
-                FeedResponse<ContentState> results = await iterator.ReadNextAsync().ConfigureAwait(false);
-                ContentState state = results.Resource.FirstOrDefault();
-                if (!(state is null))
-                {
-                    Content content = await this.GetContentAsync<Content>(state.ContentId, state.Slug);
-                    return new ContentWithState(content, state);
-                }
-            }
-
-            throw new ContentNotFoundException();
         }
 
         /// <inheritdoc/>
-        public async Task<ContentSummariesWithState> GetContentSummariesForWorkflowAsync(string slug, string workflowId, string stateName = null, int limit = 20, string continuationToken = null)
+        public async Task<ContentStates> GetContentStatesForWorkflowAsync(string slug, string workflowId, string stateName = null, int limit = 20, string continuationToken = null)
         {
             if (slug is null)
             {
@@ -172,17 +171,14 @@ namespace Marain.Cms
 
             FeedIterator<ContentState> iterator = this.container.GetItemQueryIterator<ContentState>(queryDefinition, continuationToken, new QueryRequestOptions { MaxItemCount = limit });
 
-            var summaries = new ContentSummariesWithState();
-            var states = new List<ContentState>();
+            var summaries = new ContentStates();
 
             if (iterator.HasMoreResults)
             {
                 FeedResponse<ContentState> results = await iterator.ReadNextAsync().ConfigureAwait(false);
                 summaries.ContinuationToken = results.ContinuationToken;
-                states.AddRange(results.Resource);
+                summaries.States.AddRange(results.Resource);
             }
-
-            summaries.Summaries = await this.GetContentSummariesAsync(slug, states).ConfigureAwait(false);
 
             return summaries;
         }
@@ -199,28 +195,18 @@ namespace Marain.Cms
                            new QueryDefinition(ContentQuery)
                                .WithParameter("@slug", slug);
 
-            return await this.GetContentSummariesAsync(limit, continuationToken, queryDefinition);
+            return await this.GetContentSummariesAsync(limit, continuationToken, queryDefinition).ConfigureAwait(false);
         }
 
-        private static QueryDefinition GetWorkflowStateQueryDefinition(string slug, string workflowId, string stateName)
+        /// <inheritdoc/>
+        public async Task<List<ContentSummary>> GetContentSummariesForStatesAsync(IList<ContentState> states)
         {
-            if (string.IsNullOrEmpty(stateName))
+            // All of the states should have the same slug.
+            if (states.Distinct(x => x.Slug).Count() != 1)
             {
-                return new QueryDefinition(ContentStateQuery)
-                                               .WithParameter("@slug", slug)
-                                               .WithParameter("@workflowId", workflowId);
+                throw new ArgumentException("All of the supplied states should be for the same content slug.", nameof(states));
             }
-            else
-            {
-                return new QueryDefinition(ContentStateQueryWithStateNameFilter)
-                                               .WithParameter("@slug", slug)
-                                               .WithParameter("@workflowId", workflowId)
-                                               .WithParameter("@stateName", stateName);
-            }
-        }
 
-        private async Task<List<ContentSummaryWithState>> GetContentSummariesAsync(string slug, IList<ContentState> states)
-        {
             var queryBuilder = new StringBuilder("SELECT ");
             queryBuilder.Append(ContentSummaryProperties);
             queryBuilder.Append(" FROM c WHERE c.slug = @slug AND c.contentType = '");
@@ -240,17 +226,30 @@ namespace Marain.Cms
 
             QueryDefinition queryDefinition =
                            new QueryDefinition(queryBuilder.ToString())
-                               .WithParameter("@slug", slug);
+                               .WithParameter("@slug", states[0].Slug);
 
-            contentIds.ForEachAtIndex((s, i) =>
+            contentIds.ForEachAtIndex((s, i) => queryDefinition = queryDefinition.WithParameter($"@id{i}", s));
+
+            ContentSummaries summaries = await this.GetContentSummariesAsync(states.Count, null, queryDefinition).ConfigureAwait(false);
+
+            return summaries.Summaries;
+        }
+
+        private static QueryDefinition GetWorkflowStateQueryDefinition(string slug, string workflowId, string stateName)
+        {
+            if (string.IsNullOrEmpty(stateName))
             {
-                queryDefinition = queryDefinition.WithParameter($"@id{i}", s);
-            });
-
-            ContentSummaries summaries = await this.GetContentSummariesAsync(states.Count, null, queryDefinition);
-            var summaryDictionary = summaries.Summaries.ToDictionary(s => s.Id);
-
-            return states.Select(s => new ContentSummaryWithState(summaryDictionary[s.ContentId], s)).ToList();
+                return new QueryDefinition(ContentStateQuery)
+                                               .WithParameter("@slug", slug)
+                                               .WithParameter("@workflowId", workflowId);
+            }
+            else
+            {
+                return new QueryDefinition(ContentStateQueryWithStateNameFilter)
+                                               .WithParameter("@slug", slug)
+                                               .WithParameter("@workflowId", workflowId)
+                                               .WithParameter("@stateName", stateName);
+            }
         }
 
         private async Task<ContentSummaries> GetContentSummariesAsync(int limit, string continuationToken, QueryDefinition queryDefinition)
@@ -274,7 +273,10 @@ namespace Marain.Cms
         {
             try
             {
-                ItemResponse<T> response = await this.container.ReadItemAsync<T>(contentId, new PartitionKey(Content.GetPartitionKeyFromSlug(slug))).ConfigureAwait(false);
+                ItemResponse<T> response = await this.container.ReadItemAsync<T>(
+                    contentId,
+                    new PartitionKey(PartitionKeyHelper.GetPartitionKeyFromSlug(slug))).ConfigureAwait(false);
+
                 return response.Resource;
             }
             catch (CosmosException ex) when (ex.StatusCode == HttpStatusCode.NotFound)

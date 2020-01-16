@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
+
+  <Import Project="..\Common.NetStandard_2_0.proj" />
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
+    <PackageDescription>
+    </PackageDescription>
+    <PackageTags>
+    </PackageTags>
+    <PackageReleaseNotes>
+    </PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Corvus.DotLiquidAsync" Version="1.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Marain.ContentManagement.Rendering.Abstractions\Marain.ContentManagement.Rendering.Abstractions.csproj" />
+    <ProjectReference Include="..\Marain.ContentManagement.Rendering.Markdown\Marain.ContentManagement.Rendering.Markdown.csproj" />
+  </ItemGroup>
+
+</Project>
