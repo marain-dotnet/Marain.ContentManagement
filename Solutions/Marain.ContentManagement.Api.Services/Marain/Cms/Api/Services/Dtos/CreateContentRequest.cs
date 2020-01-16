@@ -52,7 +52,7 @@ namespace Marain.Cms.Api.Services.Dtos
         /// <summary>
         /// Gets or sets the culture for the content.
         /// </summary>
-        public string Culture { get; set; }
+        public CultureInfo Culture { get; set; }
 
         /// <summary>
         /// Gets or sets a payload for the content.
@@ -75,7 +75,7 @@ namespace Marain.Cms.Api.Services.Dtos
             {
                 Author = this.Author,
                 CategoryPaths = this.CategoryPaths,
-                Culture = string.IsNullOrEmpty(this.Culture) ? CultureInfo.CurrentCulture : CultureInfo.CreateSpecificCulture(this.Culture),
+                Culture = this.Culture,
                 Description = this.Description,
                 Id = this.Id,
                 Slug = slug,
