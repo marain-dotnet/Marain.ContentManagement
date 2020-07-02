@@ -1,4 +1,5 @@
-﻿@perFeatureContainer
+﻿@setupContainer
+@perFeatureContainer
 @useTransientTenant
 @useContentManagementApi
 Feature: CreateContent
