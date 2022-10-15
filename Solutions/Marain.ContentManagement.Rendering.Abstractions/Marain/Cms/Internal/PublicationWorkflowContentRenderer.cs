@@ -8,11 +8,12 @@ namespace Marain.Cms.Internal
     using System.IO;
     using System.Threading.Tasks;
     using Corvus.Extensions.Json;
+    using Corvus.Json;
     using Marain.Cms;
 
-    /// <summary>
-    /// Writes the content for the instance of the content in the state in the <see cref="WellKnownWorkflowId.ContentPublication"/> workflow that is specified by the value for the <see cref="PublicationStateContextKey"/> in the context, to the output stream.
-    /// </summary>
+  /// <summary>
+  /// Writes the content for the instance of the content in the state in the <see cref="WellKnownWorkflowId.ContentPublication"/> workflow that is specified by the value for the <see cref="PublicationStateContextKey"/> in the context, to the output stream.
+  /// </summary>
     public class PublicationWorkflowContentRenderer : IContentRenderer
     {
         /// <summary>
@@ -45,7 +46,7 @@ namespace Marain.Cms.Internal
         public string ContentType => RegisteredContentType;
 
         /// <inheritdoc/>
-        public async Task RenderAsync(TextWriter output, Content parentContent, IContentPayload currentPayload, PropertyBag context)
+        public async Task RenderAsync(TextWriter output, Content parentContent, IContentPayload currentPayload, IPropertyBag context)
         {
             if (!context.TryGet(PublicationStateContextKey, out PublicationStateToRender stateToRender))
             {

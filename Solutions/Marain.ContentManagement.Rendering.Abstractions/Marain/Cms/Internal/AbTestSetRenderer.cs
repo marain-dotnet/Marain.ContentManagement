@@ -8,11 +8,12 @@ namespace Marain.Cms.Internal
     using System.IO;
     using System.Threading.Tasks;
     using Corvus.Extensions.Json;
+  using Corvus.Json;
 
-    /// <summary>
-    /// Based on the <see cref="AbTestIdContextKey"/> in the context, selects a piece of content
-    /// from a given set, and renderes it to the output.
-    /// </summary>
+  /// <summary>
+  /// Based on the <see cref="AbTestIdContextKey"/> in the context, selects a piece of content
+  /// from a given set, and renderes it to the output.
+  /// </summary>
     public class AbTestSetRenderer : IContentRenderer
     {
         /// <summary>
@@ -42,7 +43,7 @@ namespace Marain.Cms.Internal
         public string ContentType => RegisteredContentType;
 
         /// <inheritdoc/>
-        public async Task RenderAsync(TextWriter output, Content parentContent, IContentPayload currentPayload, PropertyBag context)
+        public async Task RenderAsync(TextWriter output, Content parentContent, IContentPayload currentPayload, IPropertyBag context)
         {
             if (!context.TryGet(AbTestIdContextKey, out string abTestId))
             {

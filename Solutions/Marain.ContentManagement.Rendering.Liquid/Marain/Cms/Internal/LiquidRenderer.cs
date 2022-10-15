@@ -8,6 +8,7 @@ namespace Marain.Cms.Internal
     using System.IO;
     using System.Threading.Tasks;
     using Corvus.Extensions.Json;
+    using Corvus.Json;
     using DotLiquid;
 
     /// <summary>
@@ -26,7 +27,7 @@ namespace Marain.Cms.Internal
         public string ContentType => RegisteredContentType;
 
         /// <inheritdoc/>
-        public async Task RenderAsync(TextWriter output, Content parentContent, IContentPayload currentPayload, PropertyBag context)
+        public async Task RenderAsync(TextWriter output, Content parentContent, IContentPayload currentPayload, IPropertyBag context)
         {
             if (currentPayload is LiquidPayload liquid)
             {

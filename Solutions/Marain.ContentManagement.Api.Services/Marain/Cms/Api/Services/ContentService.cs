@@ -62,7 +62,7 @@ namespace Marain.Cms.Api.Services
 
             string etag = EtagHelper.BuildEtag(nameof(Content), result.ETag);
 
-            HalDocument resultDocument = this.contentMapper.Map(result, new ResponseMappingContext { TenantId = tenantId });
+            HalDocument resultDocument = await this.contentMapper.MapAsync(result, new ResponseMappingContext { TenantId = tenantId });
 
             WebLink location = resultDocument.GetLinksForRelation("self").First();
 
@@ -95,7 +95,7 @@ namespace Marain.Cms.Api.Services
                 return this.NotModifiedResult();
             }
 
-            HalDocument resultDocument = this.contentMapper.Map(result, new ResponseMappingContext { TenantId = tenantId });
+            HalDocument resultDocument = await this.contentMapper.MapAsync(result, new ResponseMappingContext { TenantId = tenantId });
 
             OpenApiResult response = this.OkResult(resultDocument);
             response.Results.Add(HeaderNames.ETag, etag);

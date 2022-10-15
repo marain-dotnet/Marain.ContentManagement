@@ -7,10 +7,11 @@ namespace Marain.Cms.Api.Services.Dtos
     using System.Collections.Generic;
     using System.Globalization;
     using Corvus.Extensions.Json;
+  using Corvus.Json;
 
-    /// <summary>
-    /// A request to create a new content item in the CMS.
-    /// </summary>
+  /// <summary>
+  /// A request to create a new content item in the CMS.
+  /// </summary>
     public class CreateContentRequest
     {
         /// <summary>
@@ -62,7 +63,7 @@ namespace Marain.Cms.Api.Services.Dtos
         /// <summary>
         /// Gets or sets arbitrary JSON metadata for the content.
         /// </summary>
-        public PropertyBag Metadata { get; set; }
+        public IPropertyBag Metadata { get; set; }
 
         /// <summary>
         /// Converts the DTO to a <see cref="Content"/> object ready to be stored.

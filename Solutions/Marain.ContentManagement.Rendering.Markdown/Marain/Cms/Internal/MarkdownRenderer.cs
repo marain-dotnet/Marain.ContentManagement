@@ -8,6 +8,7 @@ namespace Marain.Cms.Internal
     using System.IO;
     using System.Threading.Tasks;
     using Corvus.Extensions.Json;
+    using Corvus.Json;
     using Markdig;
 
     /// <summary>
@@ -37,7 +38,7 @@ namespace Marain.Cms.Internal
         public string ContentType => RegisteredContentType;
 
         /// <inheritdoc/>
-        public Task RenderAsync(TextWriter output, Content parentContent, IContentPayload currentPayload, PropertyBag context)
+        public Task RenderAsync(TextWriter output, Content parentContent, IContentPayload currentPayload, IPropertyBag context)
         {
             if (currentPayload is MarkdownPayload markdown)
             {

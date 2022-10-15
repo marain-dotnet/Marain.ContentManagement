@@ -59,7 +59,7 @@ namespace Marain.Cms.Api.Services
                 return this.NotModifiedResult();
             }
 
-            HalDocument resultDocument = this.contentSummaryMapper.Map(result, new ResponseMappingContext { TenantId = context.CurrentTenantId });
+            HalDocument resultDocument = await this.contentSummaryMapper.MapAsync(result, new ResponseMappingContext { TenantId = context.CurrentTenantId });
 
             OpenApiResult response = this.OkResult(resultDocument);
             response.Results.Add(HeaderNames.ETag, etag);

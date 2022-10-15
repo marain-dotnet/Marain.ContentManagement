@@ -7,10 +7,11 @@ namespace Marain.Cms
     using System.IO;
     using System.Threading.Tasks;
     using Corvus.Extensions.Json;
+  using Corvus.Json;
 
-    /// <summary>
-    /// Implemented by types that render an <see cref="IContentPayload"/>.
-    /// </summary>
+  /// <summary>
+  /// Implemented by types that render an <see cref="IContentPayload"/>.
+  /// </summary>
     public interface IContentRenderer
     {
         /// <summary>
@@ -21,6 +22,6 @@ namespace Marain.Cms
         /// <param name="currentPayload">The current payload to be rendered.</param>
         /// <param name="context">The context property bag.</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        public Task RenderAsync(TextWriter output, Content parentContent, IContentPayload currentPayload, PropertyBag context);
+        public Task RenderAsync(TextWriter output, Content parentContent, IContentPayload currentPayload, IPropertyBag context);
     }
 }

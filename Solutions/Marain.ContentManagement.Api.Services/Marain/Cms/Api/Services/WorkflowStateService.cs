@@ -62,7 +62,7 @@ namespace Marain.Cms.Api.Services
                 mappingContext.ContentSummary = await contentStore.GetContentSummaryAsync(result.ContentId, result.Slug).ConfigureAwait(false);
             }
 
-            HalDocument resultDocument = this.contentStateMapper.Map(result, mappingContext);
+            HalDocument resultDocument = await this.contentStateMapper.MapAsync(result, mappingContext);
 
             return this.OkResult(resultDocument);
         }

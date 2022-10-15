@@ -6,6 +6,7 @@ namespace Marain.Cms.Api.Services.Internal
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using Menes;
     using Menes.Hal;
     using Menes.Links;
@@ -43,9 +44,9 @@ namespace Marain.Cms.Api.Services.Internal
         }
 
         /// <inheritdoc/>
-        public HalDocument Map(ContentSummaries resource, ContentSummariesResponseMappingContext context)
+        public ValueTask<HalDocument> MapAsync(ContentSummaries resource, ContentSummariesResponseMappingContext context)
         {
-            IEnumerable<HalDocument> mappedSummaries = resource.Summaries.Select(x => this.contentSummaryMapper.Map(x, context));
+            IEnumerable<Task<HalDocument>> mappedSummaries = resource.Summaries.Select(async x => await this.contentSummaryMapper.MapAsync(x, context));
             HalDocument response = this.halDocumentFactory.CreateHalDocumentFrom(new { Summaries = mappedSummaries.ToArray() });
 
             response.ResolveAndAddByOwnerAndRelationType(
@@ -69,7 +70,7 @@ namespace Marain.Cms.Api.Services.Internal
                     (Constants.ParameterNames.ContinuationToken, resource.ContinuationToken));
             }
 
-            return response;
+            return ValueTask.FromResult(response);
         }
     }
 }

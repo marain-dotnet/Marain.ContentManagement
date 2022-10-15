@@ -75,12 +75,12 @@ namespace Marain.Cms.Internal
         /// <summary>
         /// Gets the metadata as a <see cref="JObject"/>.
         /// </summary>
-        public JObject Metadata => this.content.Metadata;
+        public JObject Metadata => this.content.Metadata; // TODO: https://github.com/corvus-dotnet/Corvus.Extensions.Newtonsoft.Json/blob/be42861c19409e86bb4d51a0f9c4ed1eff26a102/Solutions/Corvus.Extensions.Newtonsoft.Json/Corvus/Extensions/Json/Internal/JsonNetPropertyBag.cs
 
-        /// <summary>
-        /// Gets the tags.
-        /// </summary>
-        public IReadOnlyList<string> Tags { get; }
+    /// <summary>
+    /// Gets the tags.
+    /// </summary>
+    public IReadOnlyList<string> Tags { get; }
 
         /// <summary>
         /// Gets the title for the content.

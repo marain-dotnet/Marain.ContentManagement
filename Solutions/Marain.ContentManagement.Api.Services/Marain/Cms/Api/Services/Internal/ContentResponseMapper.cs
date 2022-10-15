@@ -4,6 +4,7 @@
 
 namespace Marain.Cms.Api.Services.Internal
 {
+    using System.Threading.Tasks;
     using Menes;
     using Menes.Hal;
     using Menes.Links;
@@ -36,7 +37,7 @@ namespace Marain.Cms.Api.Services.Internal
         }
 
         /// <inheritdoc/>
-        public HalDocument Map(Content resource, ResponseMappingContext context)
+        public ValueTask<HalDocument> MapAsync(Content resource, ResponseMappingContext context)
         {
             HalDocument response = this.halDocumentFactory.CreateHalDocumentFrom(resource);
 
@@ -63,7 +64,7 @@ namespace Marain.Cms.Api.Services.Internal
                 ("tenantId", context.TenantId),
                 ("slug", resource.Slug));
 
-            return response;
+            return ValueTask.FromResult(response);
         }
     }
 }

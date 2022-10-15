@@ -4,6 +4,7 @@
 
 namespace Marain.Cms.Api.Services.Internal
 {
+    using System.Threading.Tasks;
     using Menes;
     using Menes.Hal;
     using Menes.Links;
@@ -46,7 +47,7 @@ namespace Marain.Cms.Api.Services.Internal
         }
 
         /// <inheritdoc/>
-        public HalDocument Map(ContentState resource, ContentStateResponseMappingContext context)
+        public async ValueTask<HalDocument> MapAsync(ContentState resource, ContentStateResponseMappingContext context)
         {
             HalDocument response = this.halDocumentFactory.CreateHalDocumentFrom(resource);
 
@@ -79,13 +80,13 @@ namespace Marain.Cms.Api.Services.Internal
             {
                 response.AddEmbeddedResource(
                     Constants.LinkRelations.Content,
-                    this.contentResponseMapper.Map(context.Content, context));
+                    await this.contentResponseMapper.MapAsync(context.Content, context).ConfigureAwait(false));
             }
             else if (context.ContentSummary != null)
             {
                 response.AddEmbeddedResource(
                     Constants.LinkRelations.ContentSummary,
-                    this.contentSummaryResponseMapper.Map(context.ContentSummary, context));
+                    await this.contentSummaryResponseMapper.MapAsync(context.ContentSummary, context));
             }
 
             return response;

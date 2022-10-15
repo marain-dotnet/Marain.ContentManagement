@@ -9,6 +9,7 @@ namespace Marain.Cms
     using System.Globalization;
     using Corvus.Extensions;
     using Corvus.Extensions.Json;
+    using Corvus.Json;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 
@@ -145,7 +146,7 @@ namespace Marain.Cms
         /// <summary>
         /// Gets or sets arbitrary JSON metadata for the content.
         /// </summary>
-        public PropertyBag Metadata
+        public IPropertyBag Metadata
         {
             get;
             set;

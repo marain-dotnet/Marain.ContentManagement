@@ -6,6 +6,7 @@ namespace Marain.Cms.Api.Services.Internal
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using Menes;
     using Menes.Hal;
     using Menes.Links;
@@ -64,55 +65,58 @@ namespace Marain.Cms.Api.Services.Internal
         }
 
         /// <inheritdoc/>
-        public HalDocument Map(ContentStates resource, ContentStatesResponseMappingContext context)
+        public async ValueTask<HalDocument> MapAsync(ContentStates resource, ContentStatesResponseMappingContext context)
         {
-            IEnumerable<HalDocument> mappedSummaries = resource.States.Select(state =>
+        List<HalDocument> mappedSummaries = new();
+
+        foreach (ContentState state in resource.States)
+        {
+            var stateContext = new ContentStateResponseMappingContext
             {
-                var stateContext = new ContentStateResponseMappingContext
-                {
-                    TenantId = context.TenantId,
-                    ContentSummary = context.ContentSummaries?.FirstOrDefault(summary => summary.Id == state.ContentId && summary.Slug == state.Slug),
-                };
+                TenantId = context.TenantId,
+                ContentSummary = context.ContentSummaries?.FirstOrDefault(summary => summary.Id == state.ContentId && summary.Slug == state.Slug),
+            };
 
-                return this.contentStateMapper.Map(state, stateContext);
-            });
+            HalDocument result = await this.contentStateMapper.MapAsync(state, stateContext).ConfigureAwait(false);
+            mappedSummaries.Add(result);
+        }
 
-            HalDocument response = this.halDocumentFactory.CreateHalDocumentFrom(new { States = mappedSummaries.ToArray() });
+        HalDocument response = this.halDocumentFactory.CreateHalDocumentFrom(new { States = mappedSummaries.ToArray() });
 
-            string linkMappingContext = string.IsNullOrEmpty(context.StateName)
-                ? MappingContextWithoutState
-                : MappingContextWithState;
+        string linkMappingContext = string.IsNullOrEmpty(context.StateName)
+            ? MappingContextWithoutState
+            : MappingContextWithState;
 
+        response.ResolveAndAddByOwnerAndRelationTypeAndContext(
+            this.linkResolver,
+            resource,
+            Constants.LinkRelations.Self,
+            linkMappingContext,
+            (Constants.ParameterNames.TenantId, context.TenantId),
+            (Constants.ParameterNames.WorkflowId, context.WorkflowId),
+            (Constants.ParameterNames.StateName, context.StateName),
+            (Constants.ParameterNames.Slug, context.Slug),
+            (Constants.ParameterNames.Limit, context.Limit),
+            (Constants.ParameterNames.ContinuationToken, context.ContinuationToken),
+            (Constants.ParameterNames.Embed, context.Embed));
+
+        if (!string.IsNullOrEmpty(resource.ContinuationToken))
+        {
             response.ResolveAndAddByOwnerAndRelationTypeAndContext(
                 this.linkResolver,
                 resource,
-                Constants.LinkRelations.Self,
+                Constants.LinkRelations.Next,
                 linkMappingContext,
                 (Constants.ParameterNames.TenantId, context.TenantId),
                 (Constants.ParameterNames.WorkflowId, context.WorkflowId),
                 (Constants.ParameterNames.StateName, context.StateName),
                 (Constants.ParameterNames.Slug, context.Slug),
                 (Constants.ParameterNames.Limit, context.Limit),
-                (Constants.ParameterNames.ContinuationToken, context.ContinuationToken),
+                (Constants.ParameterNames.ContinuationToken, resource.ContinuationToken),
                 (Constants.ParameterNames.Embed, context.Embed));
+        }
 
-            if (!string.IsNullOrEmpty(resource.ContinuationToken))
-            {
-                response.ResolveAndAddByOwnerAndRelationTypeAndContext(
-                    this.linkResolver,
-                    resource,
-                    Constants.LinkRelations.Next,
-                    linkMappingContext,
-                    (Constants.ParameterNames.TenantId, context.TenantId),
-                    (Constants.ParameterNames.WorkflowId, context.WorkflowId),
-                    (Constants.ParameterNames.StateName, context.StateName),
-                    (Constants.ParameterNames.Slug, context.Slug),
-                    (Constants.ParameterNames.Limit, context.Limit),
-                    (Constants.ParameterNames.ContinuationToken, resource.ContinuationToken),
-                    (Constants.ParameterNames.Embed, context.Embed));
-            }
-
-            return response;
+        return response;
         }
     }
 }
