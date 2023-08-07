@@ -8,6 +8,7 @@
 
     <!-- SpecFlow still fails to annotate generated content with the necessary comments, causing spurious warnings about missing XML doc comments -->
     <NoWarn>CS1591</NoWarn>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
