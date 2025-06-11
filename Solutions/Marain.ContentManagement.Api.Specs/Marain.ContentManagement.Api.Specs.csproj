@@ -9,12 +9,12 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Corvus.SpecFlow.Extensions" Version="0.6.0" />
-    <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Azure.WebJobs" Version="3.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.5" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="3.1.5" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.5" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.5" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.3.0" />
+    <PackageReference Include="Microsoft.Azure.WebJobs" Version="3.0.41" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.6" />
     <PackageReference Include="Corvus.Testing.SpecFlow.NUnit" Version="1.1.0" />
   </ItemGroup>
   <ItemGroup>
