@@ -17,8 +17,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Corvus.Azure.Cosmos.Tenancy" Version="0.19.0" />
-    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.2.0" />
+    <PackageReference Include="Corvus.Azure.Cosmos.Tenancy" Version="2.0.13" />
+    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.51.0" />
   </ItemGroup>
 
   <ItemGroup>
