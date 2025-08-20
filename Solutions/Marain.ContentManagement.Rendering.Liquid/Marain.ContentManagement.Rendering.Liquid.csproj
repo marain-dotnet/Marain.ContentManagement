@@ -1,9 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
 
-  <Import Project="..\Common.NetStandard_2_0.proj" />
-
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -17,12 +15,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Corvus.DotLiquidAsync" Version="1.7.0" />
+    <PackageReference Include="Corvus.DotLiquidAsync" Version="1.7.4" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Marain.ContentManagement.Rendering.Abstractions\Marain.ContentManagement.Rendering.Abstractions.csproj" />
     <ProjectReference Include="..\Marain.ContentManagement.Rendering.Markdown\Marain.ContentManagement.Rendering.Markdown.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.1.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,6 @@
-﻿// <copyright file="ContentManagementHost.cs" company="Endjin Limited">
+﻿using Microsoft.Azure.Functions.Worker;
+using Microsoft.Azure.Functions.Worker.Http;
+// <copyright file="ContentManagementHost.cs" company="Endjin Limited">
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
@@ -8,21 +10,19 @@ namespace Marain.Cms.Api.Host
     using Menes;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Azure.WebJobs;
-    using Microsoft.Azure.WebJobs.Extensions.Http;
 
     /// <summary>
     /// The host for Content Management services.
     /// </summary>
     public class ContentManagementHost
     {
-        private readonly IOpenApiHost<HttpRequest, IActionResult> host;
+        private readonly IOpenApiHost<HttpRequestData, HttpResponseData> host;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContentManagementHost"/> class.
         /// </summary>
         /// <param name="host">The OpenApi host.</param>
-        public ContentManagementHost(IOpenApiHost<HttpRequest, IActionResult> host)
+        public ContentManagementHost(IOpenApiHost<HttpRequestData, HttpResponseData> host)
         {
             this.host = host;
         }
@@ -34,8 +34,8 @@ namespace Marain.Cms.Api.Host
         /// <param name="executionContext">The context for the function execution.</param>
         /// <returns>An action result which comes from executing the function.</returns>
         [FunctionName("ContentManagementHost-OpenApiHostRoot")]
-        public Task<IActionResult> RunAsync(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "put", "delete", Route = "{*path}")]HttpRequest req,
+        public Task<HttpResponseData> RunAsync(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "put", "delete", Route = "{*path}")]HttpRequestData req,
             ExecutionContext executionContext)
         {
             return this.host.HandleRequestAsync(req.Path, req.Method, req, new { ExecutionContext = executionContext });
