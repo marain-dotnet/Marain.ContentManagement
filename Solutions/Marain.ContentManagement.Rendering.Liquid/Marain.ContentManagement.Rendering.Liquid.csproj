@@ -17,7 +17,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Corvus.DotLiquidAsync" Version="1.7.0" />
+    <PackageReference Include="Corvus.DotLiquidAsync" Version="1.7.4" />
   </ItemGroup>
 
   <ItemGroup>
